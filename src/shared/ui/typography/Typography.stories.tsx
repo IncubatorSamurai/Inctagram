@@ -16,7 +16,9 @@ const Variant = [
   'regular_link',
   'small_link',
   'error',
-]
+] as const
+
+export type VariantType = (typeof Variant)[number]
 
 const meta = {
   title: 'Components/Typography',

@@ -2,27 +2,12 @@ import s from './Typography.module.scss'
 import { ComponentProps } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import clsx from 'clsx'
-
-type Variant =
-  | 'large'
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'regular_text_16'
-  | 'bold_text_16'
-  | 'regular_text_14'
-  | 'medium_text_14'
-  | 'bold_text_14'
-  | 'small_text'
-  | 'semi-bold_small_text'
-  | 'regular_link'
-  | 'small_link'
-  | 'error'
+import { VariantType } from '@/shared/ui/typography/Typography.stories'
 
 type Props = {
   asChild?: boolean
   className?: string
-  variant?: Variant
+  variant?: VariantType
 } & ComponentProps<'p'>
 
 export const Typography = ({
