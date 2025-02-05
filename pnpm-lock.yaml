@@ -20,6 +20,9 @@ importers:
       '@reduxjs/toolkit':
         specifier: 2.5.1
         version: 2.5.1(react-redux@9.2.0(@types/react@19.0.8)(react@19.0.0)(redux@5.0.1))(react@19.0.0)
+      '@storybook/addon-actions':
+        specifier: ^8.5.3
+        version: 8.5.3(storybook@8.5.2(prettier@3.4.2))
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1445,6 +1448,11 @@ packages:
     resolution: {integrity: sha512-g0gLesVSFgstUq5QphsLeC1vEdwNHgqo2TE0m+STM47832xbxBwmK6uvBeqi416xZvnt1TTKaaBr4uCRRQ64Ww==}
     peerDependencies:
       storybook: ^8.5.2
+
+  '@storybook/addon-actions@8.5.3':
+    resolution: {integrity: sha512-7a+SD4EZdZocm+NG1Kx4yV6Aw7+YUlRIyGvKcxsGtYMOLaqrUewApqveXF83+FbYWMoezXcoZCLQFROtS/Z6Fw==}
+    peerDependencies:
+      storybook: ^8.5.3
 
   '@storybook/addon-backgrounds@8.5.2':
     resolution: {integrity: sha512-l9WkI4QHfINeFQkW9K0joaM7WweKktwIIyUPEvyoupHT4n9ccJHAlWjH4SBmzwI1j1Zt0G3t+bq8mVk/YK6Fsg==}
@@ -5928,6 +5936,15 @@ snapshots:
   '@rushstack/eslint-patch@1.10.5': {}
 
   '@storybook/addon-actions@8.5.2(storybook@8.5.2(prettier@3.4.2))':
+    dependencies:
+      '@storybook/global': 5.0.0
+      '@types/uuid': 9.0.8
+      dequal: 2.0.3
+      polished: 4.3.1
+      storybook: 8.5.2(prettier@3.4.2)
+      uuid: 9.0.1
+
+  '@storybook/addon-actions@8.5.3(storybook@8.5.2(prettier@3.4.2))':
     dependencies:
       '@storybook/global': 5.0.0
       '@types/uuid': 9.0.8
