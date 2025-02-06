@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Button } from './Button'
 import Image from 'next/image'
-import { Typography } from '@/shared/ui/typography'
 
 const meta = {
   title: 'Components/Button',
@@ -67,13 +66,7 @@ export const Link: Story = {
 
 export const IconButton: Story = {
   args: {
-    asChild: true,
-    children: (
-      <div>
-        <Image src="/globe.svg" alt="icon" width={'24'} height={'24'} />
-        <Typography variant={'h3'}>Icon Button</Typography>
-      </div>
-    ),
+    children: <Image src="/globe.svg" alt="icon" width={24} height={24} />,
     variant: 'icon',
     disabled: false,
   },
