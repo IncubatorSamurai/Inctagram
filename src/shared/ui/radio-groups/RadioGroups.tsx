@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import { ComponentPropsWithoutRef } from 'react'
 
 type Options = {
-  value: string | string
+  value: string
   label: string
   id: string
 }
