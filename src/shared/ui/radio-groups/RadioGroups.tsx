@@ -4,7 +4,7 @@ import { Typography } from '../typography'
 import clsx from 'clsx'
 
 type Options = {
-  value: string | string
+  value: string 
   label: string
   id: string
 }
