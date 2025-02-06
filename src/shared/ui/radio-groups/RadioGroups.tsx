@@ -2,23 +2,24 @@ import * as Radio from '@radix-ui/react-radio-group'
 import s from './RadioGroups.module.scss'
 import { Typography } from '../typography'
 import clsx from 'clsx'
+import { ComponentPropsWithoutRef } from 'react'
 
 type Options = {
-  value: string 
+  value: string | string
   label: string
   id: string
 }
-type Props = {
+export type RadioProps = {
   className?: string
   options: Options[]
-} & Radio.RadioGroupProps
+} & ComponentPropsWithoutRef<typeof Radio.Root>
 
-export const RadioGroups = (props: Props) => {
+export const RadioGroups = (props: RadioProps) => {
   const { options, className, ...rest } = props
   return (
     <Radio.Root className={clsx(s.root, className)} {...rest}>
-      {options.map((radio, i) => (
-        <div key={i} className={s.container}>
+      {options.map(radio => (
+        <div key={radio.id} className={s.container}>
           <Radio.Item className={s.item} value={radio.value} id={radio.id}>
             <Radio.Indicator className={s.indicator} />
           </Radio.Item>

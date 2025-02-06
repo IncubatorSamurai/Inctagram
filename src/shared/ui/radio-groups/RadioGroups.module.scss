@@ -32,28 +32,29 @@ $dark-color: var(--color-dark-100);
   &:active {
     .item {
       background-color: $dark-color;
-      outline: 8px solid $dark-color;
+      outline: 0.5rem solid $dark-color;
     }
   }
   &:hover {
     .item {
-      outline: 8px solid var(--color-dark-300);
+      outline: 0.5rem solid var(--color-dark-300);
+      background-color: var(--color-dark-300);
     }
   }
   &:focus {
     .item {
-      outline: 8px solid var(--color-dark-500);
+      outline: 0.5rem solid var(--color-dark-500);
     }
   }
 }
 .item {
   cursor: pointer;
-  width: 25px;
-  height: 25px;
-  min-width: 25px;
+  width: 1.5rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
   border-radius: 50%;
   background-color: transparent;
-  border: 2px solid $main-color;
+  border: 0.125rem solid $main-color;
 }
 
 .indicator {
@@ -66,8 +67,8 @@ $dark-color: var(--color-dark-100);
   &::after {
     content: '';
     display: block;
-    width: 11px;
-    height: 11px;
+    width: 0.75rem;
+    height: 0.75rem;
     border-radius: 50%;
     background-color: $main-color;
   }
@@ -76,5 +77,5 @@ $dark-color: var(--color-dark-100);
 .label {
   color: $main-color;
   cursor: pointer;
-  padding-left: 10px;
+  padding-left: 0.625rem;
 }

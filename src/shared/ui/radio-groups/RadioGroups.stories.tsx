@@ -1,14 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import { RadioGroups } from './RadioGroups'
-import { RadioGroupProps } from '@radix-ui/react-radio-group'
+import { RadioGroups, RadioProps } from './RadioGroups'
 
 const options = [
   { label: 'RadioGroup 1', value: 'RadioGroup-1', id: 'radio-1' },
   { label: 'RadioGroup 2', value: 'RadioGroup-2', id: 'radio-2' },
 ]
 
-function RadioGroupComponent(args: RadioGroupProps) {
+function RadioGroupComponent(args: RadioProps) {
   return (
     <RadioGroups {...args} style={{ maxWidth: '300px' }} defaultValue="default" options={options} />
   )
