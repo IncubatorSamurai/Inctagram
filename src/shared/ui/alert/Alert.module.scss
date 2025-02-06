@@ -1,0 +1,27 @@
+.container {
+  width: 100%;
+  max-width: 24.188rem;
+  border: 0.063rem solid var(--color-success-500);
+  border-radius: 0.125rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-success-900);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.fullWidth {
+  max-width: 100%;
+}
+.error {
+  background: var(--color-danger-900);
+  border: 0.063rem solid var(--color-danger-500);
+}
+.close {
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  outline: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: center/cover no-repeat url('/icon-close.svg');
+}
