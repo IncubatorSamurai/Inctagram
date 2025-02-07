@@ -7,12 +7,14 @@ type ItemProps = ComponentPropsWithoutRef<typeof SelectRadix.Item>
 
 export const SelectItem = React.forwardRef<ElementRef<typeof SelectRadix.Item>, ItemProps>(
   ({ children, className, ...props }, forwardedRef) => {
+    const classNames = {
+      selectItem: clsx(s.selectItem, className),
+    }
     return (
-      <SelectRadix.Item className={clsx(s.selectItem, className)} {...props} ref={forwardedRef}>
-        <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
-        <SelectRadix.ItemIndicator className={s.ItemIndicator}>
-          {/*<CheckIcon />*/}
-        </SelectRadix.ItemIndicator>
+      <SelectRadix.Item className={s.selectItem} {...props} ref={forwardedRef}>
+        <SelectRadix.ItemText className={classNames.selectItem} ref={forwardedRef}>
+          {children}
+        </SelectRadix.ItemText>
       </SelectRadix.Item>
     )
   }
