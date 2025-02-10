@@ -2,7 +2,7 @@ import React, { SVGProps } from 'react'
 
 type Props = SVGProps<SVGSVGElement>
 
-export const ArrowBackOutline = (props: Props) => {
+export const ArrowBackOutlineIcon = (props: Props) => {
   return (
     <svg
       width="24"
