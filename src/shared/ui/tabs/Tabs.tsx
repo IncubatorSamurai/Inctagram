@@ -2,6 +2,7 @@ import * as TabsRadix from '@radix-ui/react-tabs'
 import s from './Tabs.module.scss'
 import { Typography } from '../typography'
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
+import clsx from 'clsx'
 
 export type TabType = {
   title: string
@@ -9,30 +10,33 @@ export type TabType = {
   disabled?: boolean
 }
 
-// const tabs: TabType[] = [
-//   { title: 'General information', value: 'generalInformation' },
-//   { title: 'Devices', value: 'devices' },
-//   { title: 'Account Management', value: 'accountManagement' },
-//   { title: 'My payments', value: 'payments', disabled: true },
-// ]
-
 type TabsProps = {
-  children: ReactNode
+  children?: ReactNode
   tabs: TabType[]
+  fullWidth?: boolean
 } & ComponentPropsWithoutRef<typeof TabsRadix.Root>
 
-export const Tabs = ({ children, tabs, ...props }: TabsProps) => {
+export const Tabs = ({ children, tabs, fullWidth, className, ...props }: TabsProps) => {
+  const classNames = {
+    root: clsx(s.root, className),
+    list: s.list,
+    trigger: clsx(s.trigger, fullWidth && s.fullWidth),
+    typography: s.typography,
+  }
+
   return (
-    <TabsRadix.Root className={s.root} defaultValue="generalInformation" {...props}>
-      <TabsRadix.List className={s.list} aria-label="Manage your profile">
+    <TabsRadix.Root className={classNames.root} {...props}>
+      <TabsRadix.List className={classNames.list} aria-label="Manage your profile">
         {tabs.map(tab => (
           <TabsRadix.Trigger
             key={tab.value}
-            className={s.trigger}
+            className={classNames.trigger}
             value={tab.value}
             disabled={tab.disabled}
           >
-            <Typography variant="h3" className={s.typography}>{tab.title}</Typography>
+            <Typography variant="h3" className={classNames.typography}>
+              {tab.title}
+            </Typography>
           </TabsRadix.Trigger>
         ))}
       </TabsRadix.List>
@@ -41,12 +45,7 @@ export const Tabs = ({ children, tabs, ...props }: TabsProps) => {
   )
 }
 
-type TabContentProps = {
-  children: ReactNode
-  value: string
-}
-
-export const TabContent = ({ children, value }: TabContentProps) => {
+export const TabContent = ({ children, value }: { children: ReactNode; value: string }) => {
   return (
     <TabsRadix.Content className={s.content} value={value}>
       {children}

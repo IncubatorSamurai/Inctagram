@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { TabContent, Tabs, TabType } from './Tabs'
-import { useState } from 'react'
-import { TabsProps } from '@radix-ui/react-tabs'
 
 const meta = {
   title: 'Components/Tabs',
@@ -11,32 +9,44 @@ const meta = {
 
 export default meta
 
-type Story = StoryObj<typeof Tabs>
+type Story = StoryObj<typeof meta>
 
-const Render = (args: TabsProps) => {
-  const tabs: TabType[] = [
-    { title: 'General', value: 'generalInformation' },
-    { title: 'Devices', value: 'devices' },
-    { title: 'Account', value: 'accountManagement' },
-    { title: 'My payments', value: 'payments', disabled: true },
-  ]
-  // const [defaultValue, setDefaultValue] = useState('generalInformation')
+const defaultTabs: TabType[] = [
+  { title: 'General', value: 'generalInformation' },
+  { title: 'Devices', value: 'devices' },
+  { title: 'Account', value: 'accountManagement' },
+  { title: 'My payments', value: 'payments' },
+]
 
-  return (
-    <Tabs {...args} tabs={tabs}>
-      <>
-        <TabContent value="generalInformation">Content of general information</TabContent>
-        <TabContent value="devices">Content of devices</TabContent>
-        <TabContent value="accountManagement">Content of account management</TabContent>
-        <TabContent value="payments">Content of payments</TabContent>
-      </>
-    </Tabs>
-  )
-}
-
-export const DefaultTabs: Story = {
+export const Default: Story = {
   args: {
     defaultValue: 'generalInformation',
+    tabs: defaultTabs,
+    children: (
+      <>
+        {defaultTabs.map(tab => (
+          <TabContent key={tab.value} value={tab.value}>
+            Content of {tab.title}
+          </TabContent>
+        ))}
+      </>
+    ),
   },
-  render: Render,
+  render: args => <Tabs {...args}>{args.children}</Tabs>,
+}
+
+export const DefaultWithDisabled: Story = {
+  args: {
+    ...Default.args,
+    tabs: defaultTabs.map(tab => (tab.value === 'payments' ? { ...tab, disabled: true } : tab)),
+  },
+  render: args => <Tabs {...args}>{args.children}</Tabs>,
+}
+
+export const DefaultFullWidth: Story = {
+  args: {
+    ...Default.args,
+    fullWidth: true,
+  },
+  render: args => <Tabs {...args}>{args.children}</Tabs>,
 }
