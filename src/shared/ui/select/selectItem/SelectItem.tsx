@@ -19,3 +19,5 @@ export const SelectItem = React.forwardRef<ElementRef<typeof SelectRadix.Item>, 
     )
   }
 )
+
+SelectItem.displayName = 'SelectItem'

@@ -19,14 +19,7 @@ type Props = {
   options: Options[]
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
-export const SelectBox = ({
-  label,
-  placeholder,
-  children,
-  options,
-  disabled = false,
-  ...props
-}: Props) => {
+export const SelectBox = ({ label, placeholder, options, disabled = false, ...props }: Props) => {
   const classNames = {
     selectGroup: clsx(s.selectGroup),
     selectLabel: clsx(s.selectLabel, disabled && s.selectLabelDisabled),
