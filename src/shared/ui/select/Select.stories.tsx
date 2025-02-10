@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { SelectBox } from './Select'
 
-
-
 const meta = {
   title: 'Components/SelectBox',
   component: SelectBox,
@@ -38,8 +36,6 @@ export const selectDisabled: Story = {
   },
 }
 
-
-
 export const selectHover: Story = {
   args: {
     options: [
@@ -52,12 +48,14 @@ export const selectHover: Story = {
     placeholder: 'placeholder',
   },
   render: () => (
-      <SelectBox disabled={false} options={[
+    <SelectBox
+      disabled={false}
+      options={[
         { id: '1', label: 'html' },
         { id: '2', label: 'css' },
         { id: '3', label: 'javascript' },
-      ]} open>
-      </SelectBox>
+      ]}
+      open
+    ></SelectBox>
   ),
 }
-

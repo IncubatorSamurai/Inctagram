@@ -48,7 +48,7 @@ export const SelectBox = ({
               <SelectRadix.Group className={classNames.selectGroup}>
                 {options.map(el => (
                   <SelectItem key={el.id} value={el.id}>
-                    <Typography >{el.label}</Typography>
+                    <Typography className={s.typography}>{el.label}</Typography>
                   </SelectItem>
                 ))}
               </SelectRadix.Group>
