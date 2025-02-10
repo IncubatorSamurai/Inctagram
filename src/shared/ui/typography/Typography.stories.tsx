@@ -1,24 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Typography } from './Typography'
-
-const Variant = [
-  'large',
-  'h1',
-  'h2',
-  'h3',
-  'regular_text_16',
-  'bold_text_16',
-  'regular_text_14',
-  'medium_text_14',
-  'bold_text_14',
-  'small_text',
-  'semi-bold_small_text',
-  'regular_link',
-  'small_link',
-  'error',
-] as const
-
-export type VariantType = (typeof Variant)[number]
+import { Typography, Variant } from './Typography'
 
 const meta = {
   title: 'Components/Typography',
