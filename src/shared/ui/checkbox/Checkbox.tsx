@@ -1,10 +1,9 @@
 import s from './Checkbox.module.scss'
 import clsx from 'clsx'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
-import { Typography } from '../typography'
+import { Typography, VariantType } from '../typography'
 import { CheckIcon } from './icon/check-icon'
 import { ComponentRef, forwardRef, ReactNode } from 'react'
-import { VariantType } from '../typography/Typography.stories'
 
 type BaseCheckboxProps = {
   checked: boolean

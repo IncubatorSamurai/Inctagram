@@ -2,7 +2,25 @@ import s from './Typography.module.scss'
 import { ComponentProps } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import clsx from 'clsx'
-import { VariantType } from '@/shared/ui/typography/Typography.stories'
+
+export const Variant = [
+  'large',
+  'h1',
+  'h2',
+  'h3',
+  'regular_text_16',
+  'bold_text_16',
+  'regular_text_14',
+  'medium_text_14',
+  'bold_text_14',
+  'small_text',
+  'semi-bold_small_text',
+  'regular_link',
+  'small_link',
+  'error',
+] as const
+
+export type VariantType = (typeof Variant)[number]
 
 type Props = {
   asChild?: boolean

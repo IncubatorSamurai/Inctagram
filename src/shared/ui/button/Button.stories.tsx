@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Button } from './button'
+import { Button } from './Button'
+import Image from 'next/image'
 
 const meta = {
   title: 'Components/Button',
@@ -7,7 +8,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     variant: {
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'outline', 'text'],
       control: { type: 'radio' },
     },
   },
@@ -31,6 +32,21 @@ export const Secondary: Story = {
     disabled: false,
   },
 }
+export const Outline: Story = {
+  args: {
+    variant: 'outline',
+    children: 'Outline Button',
+    disabled: false,
+  },
+}
+
+export const Text: Story = {
+  args: {
+    variant: 'text',
+    children: 'Text Button',
+    disabled: false,
+  },
+}
 
 export const FullWidth: Story = {
   args: {
@@ -44,6 +60,14 @@ export const FullWidth: Story = {
 export const Link: Story = {
   args: {
     asChild: true,
-    children: <a>link</a>,
+    children: <a href={'https://www.google.com/'}>link</a>,
+  },
+}
+
+export const IconButton: Story = {
+  args: {
+    children: <Image src="/globe.svg" alt="icon" width={24} height={24} />,
+    variant: 'icon',
+    disabled: false,
   },
 }
