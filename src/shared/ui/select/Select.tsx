@@ -29,7 +29,7 @@ export const SelectBox = ({ label, placeholder, options, disabled = false, ...pr
 
   return (
     <div className={s.selectWrapper}>
-      <Typography className={classNames.selectLabel}>{label}</Typography>
+      {label && <Typography className={classNames.selectLabel}>{label}</Typography>}
       <SelectRadix.Root disabled={disabled} {...props}>
         <SelectRadix.Trigger className={classNames.selectTrigger}>
           <SelectRadix.Value placeholder={placeholder} className={s.selectValue} />
