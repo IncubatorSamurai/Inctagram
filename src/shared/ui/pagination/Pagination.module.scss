@@ -1,0 +1,7 @@
+.test {
+  list-style: none;
+  padding: 2px;
+  &:hover {
+    background-color: black;
+  }
+}
