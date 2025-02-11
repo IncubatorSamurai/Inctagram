@@ -4,8 +4,10 @@ import { ComponentPropsWithoutRef } from 'react'
 import { clsx } from 'clsx'
 import s from './Select.module.scss'
 
-import { Typography } from '@/shared/ui/typography'
+
 import { SelectItem } from './selectItem/SelectItem'
+import {Typography} from "../typography/Typography";
+
 
 type Options = {
   id: string
