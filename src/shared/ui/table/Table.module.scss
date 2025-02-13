@@ -4,11 +4,11 @@
 
   &:not(:has(.empty)) {
     border: 1px solid var(--color-dark-500);
-    border-radius: 2px;
+    border-radius: 0.125rem;
   }
 
   .empty {
-    margin: 80px 0 50px;
+    margin: 5rem 0 3.125rem;
     text-align: center;
   }
 }
@@ -19,13 +19,13 @@
 }
 
 .headCell {
-  padding: 12px 24px;
+  padding: 0.75rem 1.5rem;
   text-align: left;
   background-color: var(--color-dark-500);
 }
 
 .cell {
-  padding: 12px 24px;
+  padding: 0.75rem 1.5rem;
   text-align: left;
 }
 
