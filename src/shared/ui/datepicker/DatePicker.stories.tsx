@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { DatePicker } from '@/shared/ui/datepicker/DatePicker'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { PopoverContent, PopoverRoot, PopoverTrigger } from '@/shared/ui/popover'
-import { CalendarIcon } from '@/shared/assets/icons/CalendarIcon'
 import { format } from 'date-fns'
 import { Calendar } from '@/shared/ui/datepicker/calendar/Calendar'
 import s from './DatePicker.module.scss'
 import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
 import { DateRange } from 'react-day-picker'
+import { CalendarOutlineIcon } from '@/shared/assets/icons/CalendarOutlineIcon'
 
 const meta = {
   title: 'Components/DatePicker',
@@ -22,8 +22,27 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    title: 'Date',
     onChange: () => {},
     value: new Date(),
+  },
+}
+
+export const Error: Story = {
+  args: {
+    title: 'Date',
+    onChange: () => {},
+    value: new Date(),
+    error: 'Error',
+  },
+}
+
+export const Disabled: Story = {
+  args: {
+    title: 'Date',
+    onChange: () => {},
+    value: new Date(),
+    disabled: true,
   },
 }
 
@@ -37,7 +56,7 @@ const SingleMode = () => {
           <Typography variant={'regular_text_16'}>
             {date !== undefined ? format(date, 'dd/MM/yyyy') : 'Pick a date'}
           </Typography>
-          <CalendarIcon />
+          <CalendarOutlineIcon />
         </Button>
       </PopoverTrigger>
       <PopoverContent className={s.content}>
@@ -82,7 +101,7 @@ const RangeMode = () => {
                 : `${format(dateRange.from, 'dd/MM/yyyy')}`
               : 'Pick a date'}
           </Typography>
-          <CalendarIcon />
+          <CalendarOutlineIcon />
         </Button>
       </PopoverTrigger>
       <PopoverContent className={s.content}>

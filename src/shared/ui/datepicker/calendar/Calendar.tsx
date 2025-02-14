@@ -9,7 +9,12 @@ export type CalendarProps = ComponentProps<typeof DayPicker>
 export const Calendar = ({ classNames, className, ...props }: CalendarProps) => {
   return (
     <>
-      <DayPicker className={clsx(s.Calendar, className)} classNames={classNames} {...props} />
+      <DayPicker
+        className={clsx(s.Calendar, className)}
+        classNames={classNames}
+        showOutsideDays
+        {...props}
+      />
     </>
   )
 }
