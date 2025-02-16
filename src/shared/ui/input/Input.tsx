@@ -50,8 +50,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             </div>
           )}
         </div>
-
-        {error && <span className={s.errorMessage}>{error}</span>}
+        {error && <Typography variant="error">{error}</Typography>}
       </div>
     )
   }
