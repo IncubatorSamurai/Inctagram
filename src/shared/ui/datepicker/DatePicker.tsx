@@ -3,11 +3,11 @@ import { PopoverContent, PopoverRoot, PopoverTrigger } from '@/shared/ui/popover
 import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
 import { format } from 'date-fns'
-import { Calendar } from '@/shared/ui/datepicker/calendar/Calendar'
 import s from './DatePicker.module.scss'
 import clsx from 'clsx'
 import { CalendarOutlineIcon } from '@/shared/assets/icons/CalendarOutlineIcon'
 import { CalendarIcon } from '@/shared/assets/icons/CalendarIcon'
+import { Calendar } from '@/shared/ui/datepicker/calendar'
 
 type Props = {
   onChange: (date: string | undefined) => void

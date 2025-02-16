@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { DatePicker } from '@/shared/ui/datepicker/DatePicker'
 import React, { useState } from 'react'
 import { PopoverContent, PopoverRoot, PopoverTrigger } from '@/shared/ui/popover'
 import { format } from 'date-fns'
-import { Calendar } from '@/shared/ui/datepicker/calendar/Calendar'
-import s from './DatePicker.module.scss'
 import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
 import { DateRange } from 'react-day-picker'
 import { CalendarOutlineIcon } from '@/shared/assets/icons/CalendarOutlineIcon'
+import { DatePicker } from '@/shared/ui/datepicker/DatePicker'
+import { Calendar } from '@/shared/ui/datepicker/calendar'
+import s from './DatePicker.module.scss'
 
 const meta = {
   title: 'Components/DatePicker',
