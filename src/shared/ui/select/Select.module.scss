@@ -1,4 +1,9 @@
 .selectWrapper {
+display: flex;
+  flex-direction: row;
+  max-width: 163px;
+
+
   & .selectLabel {
     color: var(--color-light-900);
   }
@@ -13,11 +18,12 @@
 
   display: flex;
   align-items: center;
+
   justify-content: space-between;
 
   box-sizing: border-box;
   width: 100%;
-  height: 2.25rem;
+
   padding: 0.375rem 0.625rem 0.375rem 0.75rem;
 
   color: var(--color-light-900);
@@ -25,6 +31,11 @@
   background-color: inherit;
   border: 1px solid var(--color-dark-300);
   border-radius: 0.125rem;
+
+  span{
+    display: flex;
+    column-gap: 0.5rem;
+  }
 
   &:hover {
     cursor: pointer;
@@ -91,7 +102,20 @@
 }
 
 .selectItem {
+  span{
+    display: flex;
+    column-gap: 0.5rem;
+    flex-direction: row;
+  }
+
   padding: 0.375rem 0.75rem;
 }
-
+.typography {
+margin-right: 28px;
+}
+@media screen and (max-width: 767px) {
+  .typography {
+    display: none;
+  }
+}
 

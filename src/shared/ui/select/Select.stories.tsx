@@ -1,61 +1,59 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import * as SelectRadix from '@radix-ui/react-select'
 import { SelectBox } from './Select'
 
 const meta = {
   title: 'Components/SelectBox',
   component: SelectBox,
   tags: ['autodocs'],
+  argTypes: {
+    disabled: { control: 'boolean' },
+    label: { control: 'text' },
+    placeholder: { control: 'text' },
+  },
 } satisfies Meta<typeof SelectBox>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const def: Story = {
+const options = [
+  { id: '1', label: 'HTML' },
+  { id: '2', label: 'CSS' },
+  { id: '3', label: 'JavaScript' },
+]
+
+// Функция для генерации элементов списка
+const renderOptions = () =>
+    options.map(option => (
+        <SelectRadix.Item key={option.id} value={option.id} className="select-item">
+          {option.label}
+        </SelectRadix.Item>
+    ))
+
+export const Default: Story = {
   args: {
-    options: [
-      { id: '1', label: 'html' },
-      { id: '2', label: 'css' },
-      { id: '3', label: 'javascript' },
-    ],
     disabled: false,
-    label: 'testL',
-    placeholder: 'placeholder',
+    label: 'Select a Technology',
+    placeholder: 'Choose...',
+    children: renderOptions(),
   },
 }
 
-export const selectDisabled: Story = {
+export const Disabled: Story = {
   args: {
-    options: [
-      { id: '1', label: 'html' },
-      { id: '2', label: 'css' },
-      { id: '3', label: 'javascript' },
-    ],
     disabled: true,
-    label: 'testL',
-    placeholder: 'placeholder',
+    label: 'Disabled Select',
+    placeholder: 'Cannot select',
+    children: renderOptions(),
   },
 }
 
-export const selectHover: Story = {
+export const OpenByDefault: Story = {
   args: {
-    options: [
-      { id: '1', label: 'html' },
-      { id: '2', label: 'css' },
-      { id: '3', label: 'javascript' },
-    ],
-    disabled: true,
-    label: 'testL',
-    placeholder: 'placeholder',
+    disabled: false,
+    label: 'Open by default',
+    placeholder: 'Choose...',
+    children: renderOptions(),
   },
-  render: () => (
-    <SelectBox
-      disabled={false}
-      options={[
-        { id: '1', label: 'html' },
-        { id: '2', label: 'css' },
-        { id: '3', label: 'javascript' },
-      ]}
-      open
-    ></SelectBox>
-  ),
+  render: args => <SelectBox {...args} defaultOpen />,
 }

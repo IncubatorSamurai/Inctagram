@@ -3,24 +3,19 @@ import * as SelectRadix from '@radix-ui/react-select'
 import { ComponentPropsWithoutRef } from 'react'
 import { clsx } from 'clsx'
 import s from './Select.module.scss'
-
-import { SelectItem } from './selectItem/SelectItem'
 import { Typography } from '@/shared/ui/typography'
 import { ArrowIosUpIcon } from '@/shared/assets/icons/ArrowIosUpIcon'
-
-type Options = {
-  id: string
-  label: string
-}
 
 type Props = {
   disabled?: boolean
   label?: string
   placeholder?: string
-  options: Options[]
+  children?: React.ReactNode
+
+
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
-export const SelectBox = ({ label, placeholder, options, disabled = false, ...props }: Props) => {
+export const SelectBox = ({ children,label, placeholder, disabled = false, ...props }: Props) => {
   const classNames = {
     selectGroup: clsx(s.selectGroup),
     selectLabel: clsx(s.selectLabel, disabled && s.selectLabelDisabled),
@@ -30,20 +25,16 @@ export const SelectBox = ({ label, placeholder, options, disabled = false, ...pr
   return (
     <div className={s.selectWrapper}>
       {label && <Typography className={classNames.selectLabel}>{label}</Typography>}
-      <SelectRadix.Root disabled={disabled} {...props}>
+      <SelectRadix.Root disabled={disabled}  {...props}>
         <SelectRadix.Trigger className={classNames.selectTrigger}>
-          <SelectRadix.Value placeholder={placeholder} className={s.selectValue} />
+          <SelectRadix.Value  />
           <ArrowIosUpIcon color={'var(--color-light-100)'} className={s.arrow}></ArrowIosUpIcon>
         </SelectRadix.Trigger>
         <SelectRadix.Portal>
           <SelectRadix.Content className={s.selectContent} position={'popper'}>
             <SelectRadix.Viewport>
               <SelectRadix.Group className={classNames.selectGroup}>
-                {options.map(el => (
-                  <SelectItem key={el.id} value={el.id}>
-                    <Typography className={s.typography}>{el.label}</Typography>
-                  </SelectItem>
-                ))}
+                {children}
               </SelectRadix.Group>
             </SelectRadix.Viewport>
           </SelectRadix.Content>
