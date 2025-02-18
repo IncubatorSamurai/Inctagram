@@ -55,14 +55,6 @@
   padding: 0 1rem 0 1.25rem;
 }
 
-// .arrow {
-//   transform-origin: center;
-//   fill: var(--color-light-100);
-
-//   &:hover {
-//     cursor: pointer;
-//   }
-// }
 
 .selected {
   color: var(--color-dark-900);
@@ -87,4 +79,8 @@
   & button {
     margin: 0 0.625rem;
   }
+}
+
+.item {
+  color: var(--color-light-100);
 }

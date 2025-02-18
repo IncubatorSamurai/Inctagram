@@ -7,6 +7,7 @@ import { SelectBox } from '../select';
 import { useEffect } from 'react';
 import { clsx } from 'clsx'
 import { DOTS, usePagination } from './hook/usePagination';
+import { SelectItem } from '../select/selectItem';
 
 
 type Props = {
@@ -91,8 +92,12 @@ export const Pagination = ({ changeCurrentPage,
             <SelectBox
                 defaultValue={options[0].id}
                 onValueChange={onChangeValue}
-                options={options}
             >
+                {options.map(el=>(
+                    <SelectItem key={el.id} value={el.id} className={s.item}>
+                        {el.label}
+                    </SelectItem>
+                ))}
             </SelectBox>
             <Typography className={s.selectWrapper}>
                 на странице
