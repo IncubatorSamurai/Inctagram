@@ -18,7 +18,6 @@ export const TextArea = forwardRef<HTMLTextAreaElement, Props>(
       onChange?.(e)
     }
     const textAreaStyle = clsx(s.textarea, className, error && s.textAreaError)
-
     return (
       <div className={s.container}>
         {title && <Typography className={s.title}>{title}</Typography>}
