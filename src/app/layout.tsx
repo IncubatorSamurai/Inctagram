@@ -5,6 +5,7 @@ import '@fontsource/inter/700.css'
 import '@/app/_styles/ui/index.scss'
 
 import type { Metadata } from 'next'
+import { Header } from '@/widgets/header'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,7 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header headerTitle={'Inctagram'} />
+        {children}
+      </body>
     </html>
   )
 }
