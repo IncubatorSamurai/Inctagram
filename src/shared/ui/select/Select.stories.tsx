@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import * as SelectRadix from '@radix-ui/react-select'
 import { SelectBox } from './Select'
+import { SelectItem } from './selectItem/SelectItem'
 
 const meta = {
   title: 'Components/SelectBox',
@@ -25,9 +25,9 @@ const options = [
 // Функция для генерации элементов списка
 const renderOptions = () =>
     options.map(option => (
-        <SelectRadix.Item key={option.id} value={option.id} className="select-item">
+        <SelectItem key={option.id} value={option.id} className="select-item">
           {option.label}
-        </SelectRadix.Item>
+        </SelectItem>
     ))
 
 export const Default: Story = {
