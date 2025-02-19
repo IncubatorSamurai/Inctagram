@@ -53,6 +53,9 @@ input[type='search']::-webkit-search-decoration {
 }
 
 .error {
+  &:focus:hover {
+    outline: 0.125rem solid var(--color-accent-500);
+  }
   &:hover {
     outline: 1px solid var(--color-danger-500);
   }
