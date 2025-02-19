@@ -55,8 +55,9 @@
   }
 
   &:focus-visible {
-    border: 0.125rem solid var(--color-accent-700);
     border-radius: 0.125rem;
+    outline: 0.125rem solid var(--color-accent-700);
+    outline-offset: -0.125rem;
   }
 
   &[data-disabled] {
