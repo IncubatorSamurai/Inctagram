@@ -27,7 +27,7 @@ export const SelectBox = ({ children,label, placeholder, disabled = false, ...pr
       {label && <Typography className={classNames.selectLabel}>{label}</Typography>}
       <SelectRadix.Root disabled={disabled}  {...props}>
         <SelectRadix.Trigger className={classNames.selectTrigger}>
-          <SelectRadix.Value  />
+          <SelectRadix.Value placeholder={placeholder} />
           <ArrowIosUpIcon color={'var(--color-light-100)'} className={s.arrow}></ArrowIosUpIcon>
         </SelectRadix.Trigger>
         <SelectRadix.Portal>
