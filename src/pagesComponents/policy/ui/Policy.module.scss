@@ -1,0 +1,70 @@
+@use '../../../app/_styles/ui/function' as *;
+
+.policy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: size(24px) calc(15px + (64 - 15) * ((100vw - 360px) / (1320 - 360)));
+}
+
+.policy_header {
+  display: grid;
+  grid-row-gap: size(24px);
+  grid-template-rows: 1fr 1fr;
+  width: 100%;
+
+  a {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.75rem;
+    align-items: center;
+    align-self: flex-start;
+
+    color: var(--color-light-100);
+  }
+
+  .policy_header_text {
+    text-align: center;
+  }
+}
+
+.policy_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: calc(12px + (24 - 12) * ((100vw - 360px) / (1320 - 360)))
+    calc(0px + (64 - 0) * ((100vw - 360px) / (1320 - 360)));
+}
+
+.policy_text {
+  max-width: 954px;
+  text-align: center;
+}
+
+@media screen and (width <= 767px) {
+  .policy_header {
+    position: relative;
+    grid-template-rows: 1fr;
+
+    a {
+      position: absolute;
+      top: 2px;
+      left: 0;
+
+      grid-row: 1/-1;
+
+      width: min-content;
+      padding: 0;
+
+      span {
+        display: none;
+      }
+    }
+
+    .policy_header_text {
+      grid-row: 1/-1;
+      font-size: size(18px);
+      line-height: size(24px);
+    }
+  }
+}
