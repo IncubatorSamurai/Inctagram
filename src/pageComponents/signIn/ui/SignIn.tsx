@@ -12,7 +12,8 @@ export const SignInPage = () => {
         </Typography>
         <div className={s.box}> icons</div>
         <form>
-          <Input label="email" />
+          <Input label="Email" placeholder="Epam@epam.com" />
+          <Input label="Password" placeholder="**********" type="password" />
         </form>
       </Card>
     </div>
