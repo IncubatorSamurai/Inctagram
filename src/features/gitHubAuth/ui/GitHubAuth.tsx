@@ -1,11 +1,10 @@
 import Link from 'next/link'
-import s from './GitHubAuth.module.scss'
 import { GitHubIcon } from '@/shared/assets/icons/GitHubIcon'
 
 export const GitHubAuth = () => {
   return (
     <Link href="#">
-      <GitHubIcon className={s.github} />
+      <GitHubIcon width={36} height={36} color="var(--color-light-100)" />
     </Link>
   )
 }
