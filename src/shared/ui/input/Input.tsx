@@ -1,10 +1,10 @@
 'use client'
-import React, { ComponentProps, forwardRef, useState } from 'react'
-import clsx from 'clsx'
-import { Typography } from '@/shared/ui/typography'
 import { EyeOffIcon } from '@/shared/assets/icons/EyeOffIcon'
 import { EyeOutlineIcon } from '@/shared/assets/icons/EyeOutlineIcon'
 import { SearchIcon } from '@/shared/assets/icons/SearchIcon'
+import { Typography } from '@/shared/ui/typography'
+import clsx from 'clsx'
+import { ComponentProps, forwardRef, useState } from 'react'
 import s from './Input.module.scss'
 
 type Props = {
@@ -46,7 +46,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           )}
           {type === 'password' && (
             <div className={s.eyeIcon} onClick={togglePasswordVisibility}>
-              {isPasswordVisible ? <EyeOffIcon /> : <EyeOutlineIcon />}
+              {isPasswordVisible ? <EyeOutlineIcon /> : <EyeOffIcon />}
             </div>
           )}
         </div>
