@@ -3,8 +3,8 @@ import { TermsOfServiceText } from '@/pagesComponents/policy/ui/TermsOfServiceTe
 
 export default function PrivacyPolicies() {
   return (
-    <div>
+    <>
       <Policy policyHeader={'Terms Of Service'} policyText={<TermsOfServiceText />} />
-    </div>
+    </>
   )
 }

@@ -69,11 +69,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "plugin:storybook/recommended",
-      "next/core-web-vitals"
-    ],
-    "plugins": [
-      "react-hooks"
+      "plugin:storybook/recommended"
     ]
   }
 }
