@@ -4,40 +4,40 @@ import s from './Sidebar.module.scss'
 
 import clsx from 'clsx'
 import { SettingsIcon } from '@/shared/assets/icons/SettingsIcon'
-import {HomeIcon} from "@/shared/assets/icons/HomeIcon";
-import {PlusSquareOutlineIcon} from "@/shared/assets/icons/PlusSquareOutlineIcon";
-import {PersonOutlineIcon} from "@/shared/assets/icons/PersonOutlineIcon";
-import {MessageCircleOutlineIcon} from "@/shared/assets/icons/MessageCircleOutlineIcon";
-import {SearchOutlineIcon} from "@/shared/assets/icons/SearchOutlineIcon";
-import {TrendingUpOutlineIcon} from "@/shared/assets/icons/TrendingUpOutlineIcon";
-import {BookMarkOutlineIcon} from "@/shared/assets/icons/BookMarkOutlineIcon";
-import {LogOutOutlineIcon} from "@/shared/assets/icons/LogOutOutlineIcon";
-import {PersonIcon} from "@/shared/assets/icons/PersonIcon";
-import {CreditCardOutlineIcon} from "@/shared/assets/icons/CreditCardOutlineIcon";
-import {ImageOutlineIcon} from "@/shared/assets/icons/ImageOutlineIcon";
-import {HomeOutlineIcon} from "@/shared/assets/icons/HomeOutlineIcon";
-import {PlusSquareIcon} from "@/shared/assets/icons/PlusSquareIcon";
-import {MessageCircleIcon} from "@/shared/assets/icons/MessageCircleIcon";
-import {SearchIcon} from "@/shared/assets/icons/SearchIcon";
-import {SettingsOutlineIcon} from "@/shared/assets/icons/SettingsOutlineIcon";
-import {TrendingUpIcon} from "@/shared/assets/icons/TrendingUpIcon";
+import { HomeIcon } from '@/shared/assets/icons/HomeIcon'
+import { PlusSquareOutlineIcon } from '@/shared/assets/icons/PlusSquareOutlineIcon'
+import { PersonOutlineIcon } from '@/shared/assets/icons/PersonOutlineIcon'
+import { MessageCircleOutlineIcon } from '@/shared/assets/icons/MessageCircleOutlineIcon'
+import { SearchOutlineIcon } from '@/shared/assets/icons/SearchOutlineIcon'
+import { TrendingUpOutlineIcon } from '@/shared/assets/icons/TrendingUpOutlineIcon'
+import { BookMarkOutlineIcon } from '@/shared/assets/icons/BookMarkOutlineIcon'
+import { LogOutOutlineIcon } from '@/shared/assets/icons/LogOutOutlineIcon'
+import { PersonIcon } from '@/shared/assets/icons/PersonIcon'
+import { CreditCardOutlineIcon } from '@/shared/assets/icons/CreditCardOutlineIcon'
+import { ImageOutlineIcon } from '@/shared/assets/icons/ImageOutlineIcon'
+import { HomeOutlineIcon } from '@/shared/assets/icons/HomeOutlineIcon'
+import { PlusSquareIcon } from '@/shared/assets/icons/PlusSquareIcon'
+import { MessageCircleIcon } from '@/shared/assets/icons/MessageCircleIcon'
+import { SearchIcon } from '@/shared/assets/icons/SearchIcon'
+import { SettingsOutlineIcon } from '@/shared/assets/icons/SettingsOutlineIcon'
+import { TrendingUpIcon } from '@/shared/assets/icons/TrendingUpIcon'
 
-import {LogOutIcon} from "@/shared/assets/icons/LogOutIcon";
-import {CreditCartIcon} from "@/shared/assets/icons/CreditCardIcon";
-import {ImageIcon} from "@/shared/assets/icons/ImageIcon";
-import {BookMarkIcon} from "@/shared/assets/icons/BookMarkIcon";
-import {NavItem} from "@/shared/ui/nav-item";
+import { LogOutIcon } from '@/shared/assets/icons/LogOutIcon'
+import { CreditCartIcon } from '@/shared/assets/icons/CreditCardIcon'
+import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
+import { BookMarkIcon } from '@/shared/assets/icons/BookMarkIcon'
+import { NavItem } from '@/shared/ui/nav-item'
 
 export const sidebarItems = {
   primary: [
     {
       id: uuidv4(),
       name: 'Home',
-      icon: <HomeOutlineIcon/>,
+      icon: <HomeOutlineIcon />,
       href: '/home',
       disabled: false,
       classItem: 'home',
-      activeIcon: <HomeIcon/>,
+      activeIcon: <HomeIcon />,
     },
     {
       id: uuidv4(),
@@ -46,7 +46,7 @@ export const sidebarItems = {
       href: '/create',
       disabled: false,
       classItem: 'create',
-      activeIcon: <PlusSquareIcon/>,
+      activeIcon: <PlusSquareIcon />,
     },
     {
       id: uuidv4(),
@@ -55,7 +55,7 @@ export const sidebarItems = {
       href: '/profile',
       disabled: false,
       classItem: 'profile',
-      activeIcon: <PersonIcon/>,
+      activeIcon: <PersonIcon />,
     },
     {
       id: uuidv4(),
@@ -64,16 +64,16 @@ export const sidebarItems = {
       href: '/messenger',
       disabled: false,
       classItem: 'messenger',
-      activeIcon: <MessageCircleIcon/>,
+      activeIcon: <MessageCircleIcon />,
     },
     {
       id: uuidv4(),
       name: 'Search',
-      icon: <SearchOutlineIcon/>,
+      icon: <SearchOutlineIcon />,
       href: '/search',
       disabled: false,
       classItem: 'search',
-      activeIcon: <SearchIcon/>,
+      activeIcon: <SearchIcon />,
     },
   ],
   secondary: [
@@ -84,7 +84,7 @@ export const sidebarItems = {
       href: '/statistic',
       disabled: false,
       classItem: 'settings',
-      activeIcon: <SettingsIcon/>,
+      activeIcon: <SettingsIcon />,
     },
     {
       id: uuidv4(),
@@ -93,7 +93,7 @@ export const sidebarItems = {
       href: '/statistic',
       disabled: false,
       classItem: 'statistics',
-      activeIcon: <TrendingUpIcon/>,
+      activeIcon: <TrendingUpIcon />,
     },
     {
       id: uuidv4(),
@@ -102,16 +102,16 @@ export const sidebarItems = {
       href: '/favorites',
       disabled: false,
       classItem: 'favorites',
-      activeIcon: <BookMarkIcon/>,
+      activeIcon: <BookMarkIcon />,
     },
     {
       id: uuidv4(),
       name: 'Log Out',
-      icon: <LogOutOutlineIcon/>,
+      icon: <LogOutOutlineIcon />,
       href: '/logout',
       disabled: false,
       classItem: 'logout',
-      activeIcon: <LogOutIcon/>,
+      activeIcon: <LogOutIcon />,
     },
   ],
   specialAdmin: [
@@ -122,25 +122,25 @@ export const sidebarItems = {
       href: '/users',
       disabled: false,
       classItem: 'user_list',
-      activeIcon: <PersonIcon/>,
+      activeIcon: <PersonIcon />,
     },
     {
       id: uuidv4(),
       name: 'Statistics',
-      icon: <TrendingUpOutlineIcon/>,
+      icon: <TrendingUpOutlineIcon />,
       href: '/statistic',
       disabled: false,
       classItem: 'statistics',
-      activeIcon: <TrendingUpIcon/>,
+      activeIcon: <TrendingUpIcon />,
     },
     {
       id: uuidv4(),
       name: 'Payments List ',
-      icon: <CreditCardOutlineIcon/>,
+      icon: <CreditCardOutlineIcon />,
       href: '/payment',
       disabled: false,
       classItem: 'payment',
-      activeIcon: <CreditCartIcon/>,
+      activeIcon: <CreditCartIcon />,
     },
     {
       id: uuidv4(),
@@ -149,38 +149,37 @@ export const sidebarItems = {
       href: '/posts',
       disabled: false,
       classItem: 'posts',
-      activeIcon: <ImageIcon/>,
+      activeIcon: <ImageIcon />,
     },
-
   ],
 }
-type Sidebar ={
+type Sidebar = {
   isAdmin?: boolean
 }
 
-
-export const Sidebar = ({isAdmin}:Sidebar) => {
+export const Sidebar = ({ isAdmin }: Sidebar) => {
   return (
     <nav className={s.sidebar}>
-      {isAdmin ?( <ul className={clsx(s.sidebar_list, s.secondary)}>
-        {sidebarItems.specialAdmin.map(item => (
-            <NavItem key={item.id} {...item}/>
-        ))}
-      </ul>) : (<><ul className={clsx(s.sidebar_list, s.primary)}>
-        {sidebarItems.primary.map(item => (
-            <NavItem key={item.id} {...item}/>
-        ))}
-      </ul>
+      {isAdmin ? (
         <ul className={clsx(s.sidebar_list, s.secondary)}>
-      {sidebarItems.secondary.map(item => (
-          <NavItem key={item.id} {...item}/>
-      ))}
-    </ul></>)}
-
-
-
+          {sidebarItems.specialAdmin.map(item => (
+            <NavItem key={item.id} {...item} />
+          ))}
+        </ul>
+      ) : (
+        <>
+          <ul className={clsx(s.sidebar_list, s.primary)}>
+            {sidebarItems.primary.map(item => (
+              <NavItem key={item.id} {...item} />
+            ))}
+          </ul>
+          <ul className={clsx(s.sidebar_list, s.secondary)}>
+            {sidebarItems.secondary.map(item => (
+              <NavItem key={item.id} {...item} />
+            ))}
+          </ul>
+        </>
+      )}
     </nav>
   )
 }
-
-
