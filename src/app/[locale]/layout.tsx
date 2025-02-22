@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
 import { ReactNode } from 'react'
 import { locales } from '@/shared/types/locale'
+import { Header } from '@/widgets/header'
 
 export default async function LocaleLayout({
   children,
@@ -24,7 +25,10 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider messages={messages}>
+          <Header headerTitle={'Inctagram'} />
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   )

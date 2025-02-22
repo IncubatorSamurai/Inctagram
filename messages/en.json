@@ -1,3 +1,5 @@
 {
-  "test": "Lorem Ipsum is simply dummy text of the printing"
+  "testSection": {
+    "test": "Lorem Ipsum is simply dummy text of the printing"
+  }
 }
