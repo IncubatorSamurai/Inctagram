@@ -8,11 +8,12 @@ import { Header } from '@/widgets/header'
 
 export default async function LocaleLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: ReactNode
   params: { locale: string }
 }) {
+  const { locale } = await params
   // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale as locales)) {
     notFound()

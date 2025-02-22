@@ -5,6 +5,7 @@ import '@fontsource/inter/700.css'
 import '@/app/_styles/ui/index.scss'
 
 import type { Metadata } from 'next'
+import { ReactNode } from 'react'
 
 export const metadata: Metadata = {
   title: 'Inctagram',
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: ReactNode
 }>) {
   return <>{children}</>
 }
