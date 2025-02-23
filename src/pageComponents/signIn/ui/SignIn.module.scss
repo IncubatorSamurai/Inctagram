@@ -7,11 +7,14 @@
 .wrapper {
   padding: 1.5rem;
 }
-.title {
+.text {
   text-align: center;
-  margin-bottom: 0.75rem;
 }
 .box {
-  margin-bottom: 1.5rem;
+  margin: 0.75rem 0 1.5rem;
   text-align: center;
+}
+.button {
+  margin: 0 auto;
+  display: block;
 }
