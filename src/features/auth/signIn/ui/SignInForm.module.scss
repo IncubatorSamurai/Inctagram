@@ -2,14 +2,24 @@
   text-decoration: none;
   margin-bottom: 1.5rem;
   display: block;
+  padding: 0.375rem 0.25rem;
+  @media screen and (max-width: 360px) {
+    margin: 0 0 4rem;
+  }
 }
 .linkTitle {
   color: var(--color-light-900);
   text-align: right;
+  @media screen and (max-width: 360px) {
+    font-size: var(--font-size-s);
+  }
 }
 .input {
   margin-bottom: 1.5rem;
 }
 .box {
   margin: 2.25rem 0 1.25rem;
+  @media screen and (max-width: 360px) {
+    margin-top: 0;
+  }
 }

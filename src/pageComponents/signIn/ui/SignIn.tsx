@@ -13,14 +13,13 @@ export const SignInPage = () => {
         <Typography className={s.text} variant="h1">
           Sign In
         </Typography>
-        <div className={s.box}>
-          {' '}
-          <AuthWidget />
-        </div>
+        <AuthWidget className={s.box} />
         <SignInForm />
-        <Typography className={s.text}>Don’t have an account?</Typography>
+        <Typography className={s.text} variant="regular_text_16">
+          Don’t have an account?
+        </Typography>
         <Button asChild={true} variant="text" className={s.button}>
-          <Link href={'signup'}>Sign Up</Link>
+          <Link href={'/signup'}>Sign Up</Link>
         </Button>
       </Card>
     </div>
