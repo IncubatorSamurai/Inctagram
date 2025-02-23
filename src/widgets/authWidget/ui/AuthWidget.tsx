@@ -1,10 +1,14 @@
 import { GoogleAuth } from '@/features/googleAuth'
 import s from './AuthWidget.module.scss'
 import { GitHubAuth } from '@/features/gitHubAuth'
+import clsx from 'clsx'
 
-export const AuthWidget = () => {
+type Props = {
+  className?: string
+}
+export const AuthWidget = ({ className }: Props) => {
   return (
-    <div className={s.row}>
+    <div className={clsx(s.row, className)}>
       <GoogleAuth />
       <GitHubAuth />
     </div>
