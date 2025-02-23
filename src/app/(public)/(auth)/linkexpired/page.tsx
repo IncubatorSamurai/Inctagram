@@ -1,4 +1,4 @@
-import { LinkExpiredPage } from '@/pagesComponents/policy/ui/linkexpired/ui/LinkExpiredPage'
+import { LinkExpiredPage } from '@/pagesComponents/linkexpired/ui/LinkExpiredPage'
 
 export default function LinkExpired() {
   return <LinkExpiredPage />
