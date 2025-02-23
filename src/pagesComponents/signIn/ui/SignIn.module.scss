@@ -1,13 +1,6 @@
-.container {
+.wrapper {
   max-width: 378px;
   width: 100%;
-  margin: 0 auto;
-  padding: 2.25rem 0px;
-  @media screen and (max-width: 360px) {
-    padding: 1rem;
-  }
-}
-.wrapper {
   padding: 1.5rem;
   @media screen and (max-width: 360px) {
     padding: 0;

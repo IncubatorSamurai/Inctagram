@@ -1,0 +1,10 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 2.25rem 0px;
+  @media screen and (max-width: 360px) {
+    padding: 1rem;
+  }
+}
