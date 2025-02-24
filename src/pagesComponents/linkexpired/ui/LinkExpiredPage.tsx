@@ -1,5 +1,6 @@
 import { Typography } from '@/shared/ui/typography'
 import s from './LinkExpiredPage.module.scss'
+import { LinkExpiredForm } from '@/features/auth/linkExpiredForm'
 
 export const LinkExpiredPage = () => {
   return (
@@ -8,6 +9,7 @@ export const LinkExpiredPage = () => {
       <Typography variant="regular_text_16">
         Looks like the verification link has expired. Not to worry, we can send the link again
       </Typography>
+      <LinkExpiredForm />
     </div>
   )
 }
