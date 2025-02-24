@@ -1,5 +1,5 @@
 import { CreateNewPasswordForm } from '@/features/auth'
-import s from './CreateNewPassword.module.scss'
+import s from './CreateNewPasswordPage.module.scss'
 
 export const CreateNewPasswordPage = () => {
   return (
