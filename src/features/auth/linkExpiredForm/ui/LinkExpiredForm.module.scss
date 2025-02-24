@@ -2,7 +2,13 @@
   max-width: 229px;
   width: 100%;
   margin: 0 auto;
+  @media screen and (width <= 576px) {
+    max-width: 100%;
+  }
 }
 .button {
   margin-top: 1.5rem;
+  @media screen and (width <= 576px) {
+    padding: 12px 0;
+  }
 }

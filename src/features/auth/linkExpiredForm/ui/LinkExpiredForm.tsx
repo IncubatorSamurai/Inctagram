@@ -6,7 +6,9 @@ export const LinkExpiredForm = () => {
   return (
     <form className={s.form} action="">
       <Input label="Email" />
-      <Button className={s.button}>Resend verification link</Button>
+      <Button fullWidth={true} className={s.button}>
+        Resend verification link
+      </Button>
     </form>
   )
 }

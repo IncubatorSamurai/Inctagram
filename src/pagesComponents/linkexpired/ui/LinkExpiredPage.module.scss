@@ -1,20 +1,41 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   max-width: 473px;
-  margin: 0 auto;
+  @media screen and (width <= 576px) {
+    max-width: 100%;
+  }
+}
+.title {
+  @media screen and (width <= 576px) {
+    font-size: var(--font-size-l);
+  }
 }
 .image {
+  object-fit: contain;
   height: 352px;
   width: 100%;
+  @media screen and (width <= 576px) {
+    height: 246px;
+    margin-bottom: 1.875rem;
+  }
 }
 .text {
   margin: 1.25rem 0 1.75rem;
+  @media screen and (width <= 576px) {
+    margin-top: 0.8rem;
+  }
+}
+.content {
+  @media screen and (width <= 576px) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
 }
 .box {
   max-width: 294px;
   width: 100%;
   margin: 0 auto;
   text-align: center;
+  @media screen and (width <= 576px) {
+    max-width: 100%;
+  }
 }
