@@ -21,7 +21,6 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       s.input,
       error && s.error,
       s.disabled,
-      className,
       type === 'search' && s.inputSearch
     )
 
@@ -30,7 +29,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     }
 
     return (
-      <div className={s.inputWrapper}>
+      <div className={clsx(s.inputWrapper, className)}>
         {label && <Typography className={s.label}>{label}</Typography>}
         <div className={s.container}>
           <input
