@@ -18,9 +18,9 @@ export const LinkExpiredPage = () => {
         <LinkExpiredForm />
         <Image
           className={s.image}
-          src={'/link-expired.svg'}
-          height={100}
-          width={100}
+          src={'/link-expired.png'}
+          height={352}
+          width={473}
           alt="link expired"
         />
       </div>
