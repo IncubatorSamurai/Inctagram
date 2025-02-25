@@ -1,3 +1,5 @@
+import { SignInPage } from '@/pagesComponents/signIn'
+
 export default function SignIn() {
-  return <div>SignIn</div>
+  return <SignInPage />
 }
