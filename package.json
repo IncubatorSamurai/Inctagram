@@ -37,6 +37,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "3.2.4",
     "@eslint/eslintrc": "3",
+    "@hookform/resolvers": "^4.1.1",
     "@it-incubator/eslint-config": "1.0.3",
     "@it-incubator/prettier-config": "0.1.2",
     "@it-incubator/stylelint-config": "2.0.0",
@@ -66,7 +67,8 @@
     "storybook": "8.5.2",
     "stylelint": "16.14.1",
     "typescript": "5",
-    "uuid": "^11.0.5"
+    "uuid": "^11.0.5",
+    "zod": "^3.24.2"
   },
   "eslintConfig": {
     "extends": [
