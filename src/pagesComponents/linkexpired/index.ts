@@ -1,1 +1,1 @@
-export * from './ui/LinkExpiredPage.module.scss'
+export * from './ui/LinkExpiredPage'

@@ -1,6 +1,6 @@
 import { Typography } from '@/shared/ui/typography'
 import s from './LinkExpiredPage.module.scss'
-import { LinkExpiredForm } from '@/features/auth/linkExpiredForm'
+import { LinkExpiredForm } from '@/features/auth'
 import Image from 'next/image'
 
 export const LinkExpiredPage = () => {
