@@ -1,5 +1,5 @@
-import { CreateNewPasswordPage } from '@/pagesComponents'
+import { CreateNewPasswordForm } from '@/features/auth'
 
 export default function CreateNewPassword() {
-  return <CreateNewPasswordPage />
+  return <CreateNewPasswordForm />
 }

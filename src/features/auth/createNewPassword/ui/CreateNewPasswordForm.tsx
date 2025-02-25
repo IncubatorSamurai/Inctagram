@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/shared/ui/button'
-import { Card } from '@/shared/ui/card/Card'
+import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input'
 import { Typography } from '@/shared/ui/typography'
 import { SubmitHandler, useForm } from 'react-hook-form'
