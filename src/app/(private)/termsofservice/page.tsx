@@ -1,5 +1,4 @@
-import { Policy } from '@/pagesComponents/policy/ui'
-import { TermsOfServiceText } from '@/pagesComponents/policy/ui/TermsOfServiceText'
+import { Policy, TermsOfServiceText } from '@/pagesComponents'
 
 export default function PrivacyPolicies() {
   return (
