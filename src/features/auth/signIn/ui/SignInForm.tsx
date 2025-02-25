@@ -1,10 +1,9 @@
 'use client'
+import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
-import s from './SignInForm.module.scss'
 import { Typography } from '@/shared/ui/typography'
 import Link from 'next/link'
-import { Button } from '@/shared/ui/button'
-import { useState } from 'react'
+import s from './SignInForm.module.scss'
 
 export const SignInForm = () => {
   return (
