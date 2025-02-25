@@ -1,0 +1,55 @@
+.container {
+  width: 100%;
+  max-width: 29rem;
+  margin: 0 auto;
+  padding: 2.25rem 1rem;
+
+  text-align: center;
+
+  .title {
+    @media screen and (width <= 576px) {
+      font-size: 1.125rem;
+      line-height: 1.5rem;
+    }
+  }
+
+  .description {
+    padding: 1.125rem 0 3.375rem;
+
+    @media screen and (width <= 576px) {
+      padding: 0.75rem 0 4.125rem;
+    }
+  }
+
+  .buttonAndImageWrapper {
+    .button {
+      width: 11.375rem;
+      margin-bottom: 4.5rem;
+
+      @media screen and (width <= 576px) {
+        width: 100%;
+        margin-bottom: 0;
+        padding: 0.75rem 0;
+      }
+    }
+
+    .image {
+      @media screen and (width <= 576px) {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
+    }
+
+    @media screen and (width <= 576px) {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 3.625rem;
+    }
+  }
+
+  @media screen and (width <= 576px) {
+    max-width: 22.625rem;
+    padding: 1rem;
+  }
+}
