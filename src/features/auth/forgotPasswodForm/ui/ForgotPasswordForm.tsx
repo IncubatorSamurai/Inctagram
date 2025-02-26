@@ -27,7 +27,7 @@ export const ForgotPasswordForm = () => {
 
   const onSubmit: SubmitHandler<ForgotArgsData> = async data => {
     setSubmittedEmail(data.email)
-    setOpen(true)
+
     reset()
   }
 
