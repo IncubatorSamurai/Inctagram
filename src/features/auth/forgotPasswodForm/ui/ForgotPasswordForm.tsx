@@ -12,7 +12,6 @@ import { ForgotPasswordModal } from '@/features/auth/forgotPasswodForm/ui/forgot
 import { emailValidationScheme, ForgotArgsData } from '@/shared/schemas/emailValidationScheme'
 
 export const ForgotPasswordForm = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
   const [submittedEmail, setSubmittedEmail] = useState('')
 
   const {
@@ -28,12 +27,12 @@ export const ForgotPasswordForm = () => {
 
   const onSubmit: SubmitHandler<ForgotArgsData> = async data => {
     setSubmittedEmail(data.email)
-    setIsModalOpen(true)
+    setOpen(true)
     reset()
   }
 
   return (
-    <Card className={s.forgotPassword}>
+    <Card className={s.forgotpassword}>
       <Typography variant="h1" className={s.forgot_password_title}>
         Forgot Password
       </Typography>
@@ -61,15 +60,21 @@ export const ForgotPasswordForm = () => {
       </form>
       <div className={s.forgot_password_controls}>
         <div className={s.forgot_password_submit}>
-          <Button
-            variant="primary"
-            type="submit"
-            disabled={!isValid}
-            form={'forgot_password_form'}
-            fullWidth={true}
-          >
-            Send Link
-          </Button>
+          <ForgotPasswordModal
+            email={submittedEmail}
+            trigger={
+              <Button
+                variant="primary"
+                type="submit"
+                disabled={!isValid}
+                form="forgot_password_form"
+                fullWidth
+              >
+                Send Link
+              </Button>
+            }
+          />
+
           <Button variant="text" asChild fullWidth={true}>
             <Link href="/signin">Back to Sign In</Link>
           </Button>
@@ -83,12 +88,6 @@ export const ForgotPasswordForm = () => {
           </div>
         )}
       </div>
-
-      <ForgotPasswordModal
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        email={submittedEmail}
-      />
     </Card>
   )
 }
