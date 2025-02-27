@@ -3,8 +3,8 @@ import { Card } from '@/shared/ui/card'
 import s from './SignIn.module.scss'
 import { SignInForm } from '@/features/auth'
 import { Button } from '@/shared/ui/button'
-import Link from 'next/link'
 import { AuthWidget } from '@/widgets/authWidget'
+import { Link } from '@/i18n/routing'
 
 export const SignInPage = () => {
   return (

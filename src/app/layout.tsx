@@ -6,6 +6,7 @@ import '@/app/_styles/ui/index.scss'
 
 import type { Metadata } from 'next'
 import { ReactNode } from 'react'
+import { ProviderStore } from '@/shared/providers/ProviderStore'
 
 export const metadata: Metadata = {
   title: 'Inctagram',
@@ -19,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html>
-      <body>{children}</body>
+      <ProviderStore>
+        <body>{children}</body>
+      </ProviderStore>
     </html>
   )
 }
