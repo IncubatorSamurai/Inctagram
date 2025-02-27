@@ -8,10 +8,7 @@ import Link from 'next/link'
 import { Dropdown } from '@/shared/ui/dropdown'
 import { NavList } from '@/shared/ui/nav-item/NavList'
 import { MoreHorizontalIcon } from '@/shared/assets/icons/MoreHorizontalIcon'
-import { SelectBox } from '@/shared/ui/select'
-import {DEFAULT_OPTION, optionSelectLanguage, SelectOptionsList} from "@/shared/ui/select/SelectOptionsList";
-
-
+import { LangSelect } from '@/shared/ui/langSelect/LangSelect'
 
 type HeaderType = {
   headerTitle?: string
@@ -59,22 +56,19 @@ const Header = ({ isAdmin, isAuth, link, headerTitle, headerLogo, ...rest }: Hea
             )}
           </Link>
           <nav className={s.main_nav}>
-            <SelectBox  defaultValue={DEFAULT_OPTION} >
-              <SelectOptionsList options={optionSelectLanguage}/>
-            </SelectBox>
-            { isMobile ? (
+            <LangSelect />
+            {isMobile ? (
               <Dropdown
                 iconTrigger={<MoreHorizontalIcon />}
                 className={isAuth ? s.header_dropdown : s.header_dropdown_noAuth}
-
                 classContent={s.header_dropdown_content}
                 classItemsContainer={s.header_dropdown_items_contaner}
               >
                 {isAuth ? <NavList /> : <HeaderSpecialButtons />}
               </Dropdown>
-            ) :
-                isAuth ? undefined : <HeaderSpecialButtons />
-            }
+            ) : isAuth ? undefined : (
+              <HeaderSpecialButtons />
+            )}
           </nav>
         </div>
       </header>
