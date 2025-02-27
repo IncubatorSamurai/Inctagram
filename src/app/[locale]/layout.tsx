@@ -24,13 +24,9 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale}>
-      <body>
-        <NextIntlClientProvider messages={messages}>
-          <Header headerTitle={'Inctagram'} />
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <Header headerTitle={'Inctagram'} />
+      {children}
+    </NextIntlClientProvider>
   )
 }
