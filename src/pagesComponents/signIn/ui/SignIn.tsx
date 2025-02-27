@@ -5,6 +5,7 @@ import { SignInForm } from '@/features/auth'
 import { Button } from '@/shared/ui/button'
 import { AuthWidget } from '@/widgets/authWidget'
 import { Link } from '@/i18n/routing'
+import { PATH } from '@/shared/config/routes'
 
 export const SignInPage = () => {
   return (
@@ -18,7 +19,7 @@ export const SignInPage = () => {
         Don’t have an account?
       </Typography>
       <Button asChild={true} variant="text" className={s.button}>
-        <Link href={'/signup'}>Sign Up</Link>
+        <Link href={PATH.SIGNUP}>Sign Up</Link>
       </Button>
     </Card>
   )

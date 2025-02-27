@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { SignInSchema, SignInSchemaData } from '../model/schema'
 import s from './SignInForm.module.scss'
+import { PATH } from '@/shared/config/routes'
 
 export const SignInForm = () => {
   const [errorMessage, setEmailMessage] = useState('')
@@ -48,7 +49,7 @@ export const SignInForm = () => {
         type="password"
       />
       <div className={s.box}>
-        <Link href={'/forgotpassword'} className={s.link}>
+        <Link href={PATH.FORGOTPASSWORD} className={s.link}>
           <Typography className={s.linkTitle}>Forgot Password</Typography>
         </Link>
         <Button fullWidth={true} disabled={!isValid}>
