@@ -1,14 +1,14 @@
 'use client'
+import { Link } from '@/i18n/routing'
+import { useLoginMutation } from '@/shared/api/auth/authApi'
+import { ErrorType } from '@/shared/types/auth/auth'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
 import { Typography } from '@/shared/ui/typography'
-import { Link } from '@/i18n/routing'
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SignInSchema, SignInSchemaData } from '../model/schema'
-import { useLoginMutation } from '@/shared/api/auth/authApi'
 import { useEffect, useState } from 'react'
-import { ErrorType } from '@/shared/types/auth/auth'
+import { useForm } from 'react-hook-form'
+import { SignInSchema, SignInSchemaData } from '../model/schema'
 import s from './SignInForm.module.scss'
 
 export const SignInForm = () => {
@@ -28,7 +28,7 @@ export const SignInForm = () => {
   }, [error, validateError])
 
   const onSubmit = (data: SignInSchemaData) => {
-    login({ email: data.email, password: data.password }).unwrap()
+    login({ email: data.email, password: data.password })
   }
 
   return (
