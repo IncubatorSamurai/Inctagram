@@ -13,7 +13,16 @@ export const authApi = baseApi.injectEndpoints({
         },
       }),
     }),
+    confirmEmail: build.mutation<LoginAnswerType, string>({
+      query: confirmationCode => ({
+        url: 'v1/auth/registration-confirmation',
+        method: 'POST',
+        body: {
+          confirmationCode,
+        },
+      }),
+    }),
   }),
 })
 
-export const { useLoginMutation } = authApi
+export const { useLoginMutation, useConfirmEmailMutation } = authApi
