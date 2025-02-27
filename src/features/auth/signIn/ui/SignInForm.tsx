@@ -28,6 +28,21 @@ export const SignInForm = () => {
     setEmailMessage(errorMessage?.data?.messages || validateError?.email?.message || '')
   }, [error, validateError])
 
+  useEffect(() => {
+    fetch('https://inctagram.work/api/v1/auth/registration', {
+      method: 'POST', // Добавляем метод POST
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userName: 'dasdasdsdfs',
+        email: 'innominatamse@gmail.com',
+        password: 'Ex4sdmple!',
+        baseUrl: 'http://localhost:3000',
+      }),
+    })
+  }, [])
+
   const onSubmit = (data: SignInSchemaData) => {
     login({ email: data.email, password: data.password })
   }

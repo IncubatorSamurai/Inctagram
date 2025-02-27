@@ -3,7 +3,6 @@ import { Input } from '@/shared/ui/input'
 import { useForm } from 'react-hook-form'
 import s from './LinkExpiredForm.module.scss'
 import { Button } from '@/shared/ui/button'
-
 import { emailValidationScheme, ForgotArgsData } from '@/shared/schemas/emailValidationScheme'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useResendEmailMutation } from '@/shared/api/auth/authApi'
@@ -37,6 +36,7 @@ export const LinkExpiredForm = () => {
       setErrorMessage(data.messages[0].message)
     }
   }, [error, isSuccess])
+
   const onSubmit = (data: ForgotArgsData) => {
     resendEmail({ email: data?.email, baseUrl: 'http://localhost:3000/auth' })
   }
