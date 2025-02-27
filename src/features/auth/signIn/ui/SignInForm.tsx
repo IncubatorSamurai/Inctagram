@@ -1,62 +1,48 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
 import { Typography } from '@/shared/ui/typography'
-import s from './SignInForm.module.scss'
 import { Link } from '@/i18n/routing'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SignInSchema, SignInSchemaData } from '../model/types'
+import { SignInSchema, SignInSchemaData } from '../model/schema'
 import { useLoginMutation } from '@/shared/api/auth/authApi'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { ErrorType } from '@/shared/types/auth/auth'
+import s from './SignInForm.module.scss'
 
 export const SignInForm = () => {
+  const [errorMessage, setEmailMessage] = useState('')
   const [login, { error }] = useLoginMutation()
 
   const { register, handleSubmit, formState } = useForm<SignInSchemaData>({
     mode: 'onBlur',
     resolver: zodResolver(SignInSchema),
   })
-  const { errors, isValid } = formState
+
+  const { errors: validateError, isValid } = formState
+
+  useEffect(() => {
+    const errorMessage = error as ErrorType
+    setEmailMessage(errorMessage?.data?.messages || validateError?.email?.message || '')
+  }, [error, validateError])
 
   const onSubmit = (data: SignInSchemaData) => {
-    login({ email: data.email, password: data.password })
+    login({ email: data.email, password: data.password }).unwrap()
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  console.log((error as any)?.data?.messages)
-  useEffect(() => {
-    fetch('https://inctagram.work/api/v1/auth/registration', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userName: 'tester',
-        email: 'natalliasafarevich@gmail.com',
-        password: 'Exd4mple!',
-        baseUrl: 'http://localhost:3000/en/signin',
-      }),
-    }).then(a => console.log(a))
-    // {
-    //   "userName": "string",
-    //   "email": "string",
-    //   "password": "Ex4mple!",
-    //   "baseUrl": "http://localhost:3000"
-    // }
-  }, [])
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input
         {...register('email')}
-        error={errors?.email?.message || (error as any)?.data?.messages}
+        error={errorMessage}
         className={s.input}
         label="Email"
         placeholder="Epam@epam.com"
       />
       <Input
         {...register('password')}
-        error={errors?.password?.message}
+        error={validateError?.password?.message}
         label="Password"
         placeholder="**********"
         type="password"
