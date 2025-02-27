@@ -5,3 +5,5 @@ export type LoginType = {
 export type LoginAnswerType = {
   accessToken: string
 }
+
+export type ResendEmailType = { email: string; baseUrl: string }

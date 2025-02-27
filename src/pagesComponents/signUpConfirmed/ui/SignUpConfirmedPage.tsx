@@ -7,7 +7,7 @@ import { EmailVerify } from './EmailVerify/EmailVerify'
 import { InvalidEmail } from './InvalidEmail/InvalidEmail'
 
 export const SignUpConfirmedPage = () => {
-  const [confirmEmail, { data, isLoading, isUninitialized, isError }] = useConfirmEmailMutation()
+  const [confirmEmail, { isLoading, isUninitialized, isError }] = useConfirmEmailMutation()
 
   const searchParams = useSearchParams()
   const code = searchParams.get('code')
@@ -17,7 +17,6 @@ export const SignUpConfirmedPage = () => {
       confirmEmail(code)
     }
   }, [code])
-  console.log(data?.accessToken, 'message')
 
   if (isUninitialized || isLoading) return <h1>Looooading...</h1>
 
