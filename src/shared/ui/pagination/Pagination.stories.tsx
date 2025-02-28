@@ -4,8 +4,6 @@ import { Meta } from '@storybook/react'
 
 import { Pagination } from './Pagination'
 
-
-
 export default {
   title: 'Components/Pagination',
   component: Pagination,
@@ -17,13 +15,12 @@ export const Default = () => {
   const TOTAL_PAGES_COUNT = 100
 
   return (
-      <Pagination
+    <Pagination
       changeCurrentPage={setPage}
       totalCount={TOTAL_PAGES_COUNT}
-        currentPage={page}
-        pageSize={perPage}
-        changeItemsPerPage={setPerPage}
-      />
+      currentPage={page}
+      pageSize={perPage}
+      changeItemsPerPage={setPerPage}
+    />
   )
 }
-
