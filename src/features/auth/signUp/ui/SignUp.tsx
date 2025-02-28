@@ -14,6 +14,15 @@ import { passwordSchema } from '@/shared/schemas/passwordSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { emailValidationScheme } from '@/shared/schemas/emailValidationScheme'
 import { z } from 'zod'
+import { RegistrationRequest, useRegistrationMutation } from '@/shared/api/auth/authApi'
+
+
+type DataFormReq = {
+      name: string,
+      email: string,
+      newPassword: string,
+      agree: boolean,
+}
 
 export const SignUpSchem = z.object({
   name: z
@@ -36,6 +45,7 @@ const actualCombine = z.intersection(combinedSchema, SignUpSchem)
 export type FormSignUP = z.infer<typeof actualCombine>
 
 export const SignUpForm = () => {
+  const [registration, { isLoading, isError, error }] = useRegistrationMutation();
   const {
     control,
     register,
@@ -54,10 +64,25 @@ export const SignUpForm = () => {
     },
   })
 
-  const onSubmit: SubmitHandler<FormSignUP> = data => {
-    console.log(data)
-    reset();
-  }
+  const onSubmit: SubmitHandler<FormSignUP> = async (dataForm:DataFormReq ) => {
+    try {
+      const registrationData: RegistrationRequest = {
+        userName: dataForm.name, 
+        password: dataForm.newPassword,
+        baseUrl: `${process.env.NEXT_PUBLIC_BASE_URL}v1/auth/registration`, 
+        email: dataForm.email,
+      };
+    const res =  await registration(registrationData).unwrap();
+      console.log('Registration successful' , res);
+      
+    } catch (err) {
+      console.log('Registration failed:', err);
+    }
+    finally {
+      reset();
+    }
+  } 
+  
 
   const {
     field: { value, onChange },
@@ -77,7 +102,7 @@ export const SignUpForm = () => {
             label="Name"
             type="name"
             placeholder="User name"
-            {...register('name', { required: true })}
+            {...register('name')}
             error={errors.name?.message}
           />
 
@@ -85,7 +110,7 @@ export const SignUpForm = () => {
             label="Email"
             type="email"
             placeholder="email@gmail.com"
-            {...register('email', { required: true })}
+            {...register('email')}
             error={errors.email?.message}
           />
 
