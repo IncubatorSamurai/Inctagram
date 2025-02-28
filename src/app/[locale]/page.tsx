@@ -8,7 +8,7 @@ export default function TestPage() {
     <h1>
       {t('test')}
       <Button asChild>
-        <Link href={'/signin'}>Link</Link>
+        <Link href={'/auth/signin'}>Link</Link>
       </Button>
     </h1>
   )
