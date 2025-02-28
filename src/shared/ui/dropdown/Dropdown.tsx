@@ -5,15 +5,13 @@ import { Button } from '@/shared/ui/button'
 
 import * as React from 'react'
 
-
 import { Typography } from '@/shared/ui/typography'
 import clsx from 'clsx'
 import { Scrollbar } from '@/shared/ui/scrollbar'
 
-import {ArrowIcon} from "@/shared/assets/icons/ArrowIcon";
+import { ArrowIcon } from '@/shared/assets/icons/ArrowIcon'
 
 export type DropdownProps = {
-
   className?: string
 
   iconTrigger?: React.ReactNode
@@ -43,7 +41,7 @@ export const Dropdown = ({
         </DropdownMenu.Trigger>
 
         <DropdownMenu.Portal>
-          <DropdownMenu.Content className={clsx(s.Content, classContent)} sideOffset={5} >
+          <DropdownMenu.Content className={clsx(s.Content, classContent)} sideOffset={5}>
             {labelName && (
               <DropdownMenu.Label className={s.Label}>
                 <Typography variant={'h3'}>{labelName}</Typography>
