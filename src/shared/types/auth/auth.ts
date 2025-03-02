@@ -1,11 +1,11 @@
-export type ErrorType = {
+export type Error = {
   data: { statusCode: number; messages: string; error: string }
 }
 
-type ErrorMessagesType = {
+type ErrorMessages = {
   message: string
   field: string
 }
-export type ResendEmailErrorType = {
-  data: ErrorType['data'] & { messages: ErrorMessagesType[] }
+export type ResendEmailError = {
+  data: Error['data'] & { messages: ErrorMessages[] }
 }

@@ -1,17 +1,16 @@
 'use client'
-import { Link } from '@/i18n/routing'
+import { Link, useRouter } from '@/i18n/routing'
 import { useLoginMutation } from '@/shared/api/auth/authApi'
 import { PATH } from '@/shared/config/routes'
-import { ErrorType } from '@/shared/types/auth/auth'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
 import { Typography } from '@/shared/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { SignInSchema, SignInSchemaData } from '../model/schema'
 import s from './SignInForm.module.scss'
+import { Error } from '@/shared/types/auth'
 
 export const SignInForm = () => {
   const [errorMessage, setEmailMessage] = useState('')
@@ -36,7 +35,7 @@ export const SignInForm = () => {
       return
     }
 
-    const errorMessage = error as ErrorType
+    const errorMessage = error as Error
     setEmailMessage(errorMessage?.data?.messages || validateError?.email?.message || '')
   }, [error, validateError, data?.accessToken])
 
