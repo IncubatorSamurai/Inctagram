@@ -1,15 +1,15 @@
 'use client'
+import { useRouter } from '@/i18n/routing'
+import { useResendEmailMutation } from '@/shared/api/auth/authApi'
+import { PATH } from '@/shared/config/routes'
+import { emailValidationScheme, ForgotArgsData } from '@/shared/schemas/emailValidationScheme'
+import { ResendEmailErrorType } from '@/shared/types/auth/auth'
+import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import s from './LinkExpiredForm.module.scss'
-import { Button } from '@/shared/ui/button'
-import { emailValidationScheme, ForgotArgsData } from '@/shared/schemas/emailValidationScheme'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useResendEmailMutation } from '@/shared/api/auth/authApi'
-import { useEffect, useState } from 'react'
-import { ResendEmailErrorType } from '@/shared/types/auth/auth'
-import { useRouter } from 'next/navigation'
-import { PATH } from '@/shared/config/routes'
 
 export const LinkExpiredForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
