@@ -1,5 +1,4 @@
 'use client'
-
 import { useSearchParams } from 'next/navigation'
 import { useConfirmEmailMutation } from '@/shared/api/auth/authApi'
 import { useEffect } from 'react'

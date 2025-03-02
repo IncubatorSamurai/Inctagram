@@ -38,7 +38,7 @@ export const LinkExpiredForm = () => {
   }, [error, isSuccess])
 
   const onSubmit = (data: ForgotArgsData) => {
-    resendEmail({ email: data?.email, baseUrl: 'http://localhost:3000/auth' })
+    resendEmail({ email: data?.email, baseUrl: 'http://localhost:3000/auth/' })
   }
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>

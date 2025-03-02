@@ -13,7 +13,7 @@ export const authApi = baseApi.injectEndpoints({
         },
       }),
     }),
-    confirmEmail: build.mutation<LoginAnswerType, string>({
+    confirmEmail: build.mutation<void, string>({
       query: confirmationCode => ({
         url: 'v1/auth/registration-confirmation',
         method: 'POST',
@@ -22,7 +22,7 @@ export const authApi = baseApi.injectEndpoints({
         },
       }),
     }),
-    resendEmail: build.mutation<ResendEmailType, ResendEmailType>({
+    resendEmail: build.mutation<void, ResendEmailType>({
       query: ({ email, baseUrl }) => ({
         url: 'v1/auth/registration-email-resending',
         method: 'POST',

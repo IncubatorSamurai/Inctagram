@@ -1,47 +1,44 @@
 'use client'
 import { Link } from '@/i18n/routing'
 import { useLoginMutation } from '@/shared/api/auth/authApi'
+import { PATH } from '@/shared/config/routes'
 import { ErrorType } from '@/shared/types/auth/auth'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
 import { Typography } from '@/shared/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { SignInSchema, SignInSchemaData } from '../model/schema'
 import s from './SignInForm.module.scss'
-import { PATH } from '@/shared/config/routes'
 
 export const SignInForm = () => {
   const [errorMessage, setEmailMessage] = useState('')
-  const [login, { error }] = useLoginMutation()
+  const [login, { data, error }] = useLoginMutation()
+
+  const router = useRouter()
 
   const { register, handleSubmit, formState } = useForm<SignInSchemaData>({
-    mode: 'onBlur',
+    mode: 'onTouched',
     resolver: zodResolver(SignInSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   })
 
   const { errors: validateError, isValid } = formState
 
   useEffect(() => {
+    if (data?.accessToken) {
+      router.push('/home')
+      return
+    }
+
     const errorMessage = error as ErrorType
     setEmailMessage(errorMessage?.data?.messages || validateError?.email?.message || '')
-  }, [error, validateError])
-
-  useEffect(() => {
-    fetch('https://inctagram.work/api/v1/auth/registration', {
-      method: 'POST', // Добавляем метод POST
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userName: 'dasdasdsdfs',
-        email: 'innominatamse@gmail.com',
-        password: 'Ex4sdmple!',
-        baseUrl: 'http://localhost:3000',
-      }),
-    })
-  }, [])
+  }, [error, validateError, data?.accessToken])
 
   const onSubmit = (data: SignInSchemaData) => {
     login({ email: data.email, password: data.password })
