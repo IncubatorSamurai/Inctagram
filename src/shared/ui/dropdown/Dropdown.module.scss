@@ -8,7 +8,6 @@
   padding: 18px 12px;
 
   border: 1px solid var(--color-dark-300);
-
 }
 
 .dropdown_items_container {
@@ -24,7 +23,6 @@
 .CheckboxItem,
 .RadioItem,
 .SubTrigger {
-
   border-radius: 3px;
   display: flex;
   align-items: center;
@@ -38,13 +36,11 @@
     color: var(--color-dark-100);
     pointer-events: none;
   }
-
 }
 
 .Arrow {
   color: var(--color-dark-100);
   transform: rotate(-180deg) translateY(3px);
-
 
   path {
     fill: var(--color-dark-300);
@@ -78,5 +74,3 @@
     color: var(--color-accent-500);
   }
 }
-
-

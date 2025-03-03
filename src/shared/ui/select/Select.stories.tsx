@@ -24,11 +24,11 @@ const options = [
 
 // Функция для генерации элементов списка
 const renderOptions = () =>
-    options.map(option => (
-        <SelectItem key={option.id} value={option.id} className="select-item">
-          {option.label}
-        </SelectItem>
-    ))
+  options.map(option => (
+    <SelectItem key={option.id} value={option.id} className="select-item">
+      {option.label}
+    </SelectItem>
+  ))
 
 export const Default: Story = {
   args: {

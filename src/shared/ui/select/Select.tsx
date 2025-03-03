@@ -11,11 +11,9 @@ type Props = {
   label?: string
   placeholder?: string
   children?: React.ReactNode
-
-
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
-export const SelectBox = ({ children,label, placeholder, disabled = false, ...props }: Props) => {
+export const SelectBox = ({ children, label, placeholder, disabled = false, ...props }: Props) => {
   const classNames = {
     selectGroup: clsx(s.selectGroup),
     selectLabel: clsx(s.selectLabel, disabled && s.selectLabelDisabled),
@@ -25,7 +23,7 @@ export const SelectBox = ({ children,label, placeholder, disabled = false, ...pr
   return (
     <div className={s.selectWrapper}>
       {label && <Typography className={classNames.selectLabel}>{label}</Typography>}
-      <SelectRadix.Root disabled={disabled}  {...props}>
+      <SelectRadix.Root disabled={disabled} {...props}>
         <SelectRadix.Trigger className={classNames.selectTrigger}>
           <SelectRadix.Value placeholder={placeholder} />
           <ArrowIosUpIcon color={'var(--color-light-100)'} className={s.arrow}></ArrowIosUpIcon>
@@ -33,9 +31,7 @@ export const SelectBox = ({ children,label, placeholder, disabled = false, ...pr
         <SelectRadix.Portal>
           <SelectRadix.Content className={s.selectContent} position={'popper'}>
             <SelectRadix.Viewport>
-              <SelectRadix.Group className={classNames.selectGroup}>
-                {children}
-              </SelectRadix.Group>
+              <SelectRadix.Group className={classNames.selectGroup}>{children}</SelectRadix.Group>
             </SelectRadix.Viewport>
           </SelectRadix.Content>
         </SelectRadix.Portal>

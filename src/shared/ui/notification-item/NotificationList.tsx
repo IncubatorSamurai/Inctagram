@@ -1,5 +1,4 @@
-import {NotificationItem, notifications} from "@/shared/ui/notification-item/NotificationItem";
-
+import { NotificationItem, notifications } from '@/shared/ui/notification-item/NotificationItem'
 
 export const NotificationList = () => {
   return (
@@ -18,4 +17,3 @@ export const NotificationList = () => {
     </>
   )
 }
-

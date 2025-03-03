@@ -28,6 +28,6 @@ export const Horizontal: Story = {
   args: {
     ...Vertical.args,
     orientation: 'horizontal',
-    style: {maxWidth: '16.875rem',  height: '3.125rem', whiteSpace: 'nowrap' },
+    style: { maxWidth: '16.875rem', height: '3.125rem', whiteSpace: 'nowrap' },
   },
 }
