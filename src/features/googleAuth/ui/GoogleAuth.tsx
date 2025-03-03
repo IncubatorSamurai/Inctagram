@@ -13,10 +13,13 @@ export const GoogleAuth = () => {
 
   const googleLogin = useGoogleLogin({
     onSuccess: async ({ code }) => {
-      const response = await login({ redirectUrl: `${process.env.NEXT_PUBLIC_CLIENT_URL}`, code })
+      const response = await login({
+        redirectUrl: `${process.env.NEXT_PUBLIC_CLIENT_URL}`,
+        code,
+      }).unwrap()
 
-      if (response.data?.accessToken) {
-        localStorage.setItem('token', response.data.accessToken)
+      if (response.accessToken) {
+        localStorage.setItem('access_token', response.accessToken)
         route.push(PATH.HOME)
       }
     },

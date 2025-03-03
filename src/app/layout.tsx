@@ -7,7 +7,7 @@ import '@/app/_styles/ui/index.scss'
 import type { Metadata } from 'next'
 import { ReactNode } from 'react'
 import { StoreProvider } from '@/app/_store/StoreProvider'
-import { Providers } from './providers'
+import { GoogleProviders } from './googleProviders'
 
 export const metadata: Metadata = {
   title: 'Inctagram',
@@ -22,9 +22,9 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <Providers>
+        <GoogleProviders>
           <StoreProvider>{children}</StoreProvider>
-        </Providers>
+        </GoogleProviders>
       </body>
     </html>
   )
