@@ -10,7 +10,8 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { SignInSchema, SignInSchemaData } from '../model/schema'
 import s from './SignInForm.module.scss'
-import { Error } from '@/shared/types/auth'
+import { ErrorResponse } from '@/shared/types/auth'
+
 
 export const SignInForm = () => {
   const [errorMessage, setEmailMessage] = useState('')
@@ -35,7 +36,7 @@ export const SignInForm = () => {
       return
     }
 
-    const errorMessage = error as Error
+    const errorMessage = error as ErrorResponse<string>
     setEmailMessage(errorMessage?.data?.messages || validateError?.email?.message || '')
   }, [error, validateError, data?.accessToken])
 

@@ -10,7 +10,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import s from './LinkExpiredForm.module.scss'
-import { ResendEmailError } from '@/shared/types/auth'
+import { ErrorResponse } from '@/shared/types/auth'
+
 
 export const LinkExpiredForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
@@ -31,7 +32,7 @@ export const LinkExpiredForm = () => {
       return
     }
     if (error) {
-      const errorMessage = error as ResendEmailError
+      const errorMessage = error as ErrorResponse
       const { data } = errorMessage
 
       setErrorMessage(data.messages[0].message)

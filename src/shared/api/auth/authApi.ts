@@ -1,16 +1,13 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { LoginAnswerType, LoginType, ResendEmailType } from './authApi.type'
+import { GoogleAuthResponse, LoginAnswer, Login, ResendEmail } from './authApi.types'
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    login: build.mutation<LoginAnswerType, LoginType>({
-      query: ({ email, password }) => ({
+    login: build.mutation<LoginAnswer, Login>({
+      query: (payload) => ({
         url: 'v1/auth/login',
         method: 'POST',
-        body: {
-          email,
-          password,
-        },
+        body: payload,
       }),
     }),
     confirmEmail: build.mutation<void, string>({
@@ -22,17 +19,29 @@ export const authApi = baseApi.injectEndpoints({
         },
       }),
     }),
-    resendEmail: build.mutation<void, ResendEmailType>({
-      query: ({ email, baseUrl }) => ({
+    resendEmail: build.mutation<void, ResendEmail>({
+      query: (payload) => ({
         url: 'v1/auth/registration-email-resending',
         method: 'POST',
-        body: {
-          email,
-          baseUrl,
-        },
+        body: payload,
       }),
+    }),
+    googleLogin: build.mutation<GoogleAuthResponse, { redirectUrl: string; code: string }>({
+      query: payload => {
+        return {
+          url: 'v1/auth/google/login',
+          method: 'POST',
+          body: payload,
+        }
+      },
     }),
   }),
 })
 
-export const { useLoginMutation, useConfirmEmailMutation, useResendEmailMutation } = authApi
+export const {
+  useLoginMutation,
+  useConfirmEmailMutation,
+  useResendEmailMutation,
+  useGoogleLoginMutation,
+} = authApi
+
