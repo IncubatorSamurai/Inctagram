@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Typography } from '@/shared/ui/typography'
 import s from './ForgotPasswordForm.module.scss'
 import { Card } from '@/shared/ui/card/Card'
@@ -10,25 +10,58 @@ import { Recaptcha } from '@/shared/ui/recaptcha/Recaptcha'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ForgotPasswordModal } from '@/features/auth/forgotPasswodForm/ui/forgotPaswordModal/ForgotPasswordModal'
 import { emailValidationScheme, ForgotArgsData } from '@/shared/schemas/emailValidationScheme'
+import { usePasswordRecoveryMutation } from '@/shared/api/auth/authApi'
+import { PATH } from '@/shared/config/routes'
+
+import { handleError } from '@/shared/utils/handelError'
 
 export const ForgotPasswordForm = () => {
   const [submittedEmail, setSubmittedEmail] = useState('')
+  const [recaptchaToken, setRecaptchaToken] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const [passwordRecovery, { isLoading, isError, error, isSuccess }] = usePasswordRecoveryMutation()
+
+  const errorMessage = isError ? handleError({ error }) : ''
+
+  const handleVerify = (token: string | null) => {
+    setRecaptchaToken(token || '')
+  }
+  useEffect(() => {
+    if (isSuccess) {
+      setIsModalOpen(true)
+    }
+  }, [isSuccess, submittedEmail])
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid, isSubmitted },
+    formState: { errors, isValid },
   } = useForm<ForgotArgsData>({
     resolver: zodResolver(emailValidationScheme),
-    mode: 'onTouched',
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
     defaultValues: { email: '' },
   })
 
   const onSubmit: SubmitHandler<ForgotArgsData> = async data => {
-    setSubmittedEmail(data.email)
+    try {
+      const response = await passwordRecovery({
+        email: data.email,
+        recaptcha: recaptchaToken || '',
+        baseUrl: window.location.origin,
+      })
 
-    reset()
+      if (response) {
+        setSubmittedEmail(data.email)
+        reset()
+      } else {
+        console.error('Ошибка: статус ответа не успешен')
+      }
+    } catch (err) {
+      console.error('Ошибка при выполнении запроса:', err)
+    }
   }
 
   return (
@@ -50,44 +83,40 @@ export const ForgotPasswordForm = () => {
         />
 
         <Typography variant="regular_text_14" className={s.forgot_password_text}>
-          Enter your email address and we will send you further instructions
+          Enter your email address and we will send you further instructions.
         </Typography>
-        {isSubmitted && (
+
+        {isSuccess && (
           <Typography variant="regular_text_14" className={s.forgot_password_submit}>
             The link has been sent by email. If you don’t receive an email send link again
           </Typography>
         )}
+
+        {isError && <Typography variant="error">{errorMessage}</Typography>}
       </form>
+
       <div className={s.forgot_password_controls}>
         <div className={s.forgot_password_submit}>
-          <ForgotPasswordModal
-            email={submittedEmail}
-            trigger={
-              <Button
-                variant="primary"
-                type="submit"
-                disabled={!isValid}
-                form="forgot_password_form"
-                fullWidth
-              >
-                Send Link
-              </Button>
-            }
-          />
+          <Button
+            variant="primary"
+            type="submit"
+            disabled={!isValid || !recaptchaToken}
+            form="forgot_password_form"
+            fullWidth
+          >
+            {isLoading ? 'Sending...' : 'Send Link'}
+          </Button>
 
-          <Button variant="text" asChild fullWidth={true}>
-            <Link href="/signin">Back to Sign In</Link>
+          <Button variant="text" asChild fullWidth>
+            <Link href={PATH.SIGNIN}>Back to Sign In</Link>
           </Button>
         </div>
 
-        {isSubmitted ? (
-          ''
-        ) : (
-          <div className={s.forgot_password_recaptcha}>
-            <Recaptcha />
-          </div>
-        )}
+        <div className={s.forgot_password_recaptcha}>
+          <Recaptcha onChange={handleVerify} />
+        </div>
       </div>
+      <ForgotPasswordModal email={submittedEmail} open={isModalOpen} onChange={setIsModalOpen} />
     </Card>
   )
 }

@@ -3,12 +3,13 @@ import React, { ComponentPropsWithoutRef, useEffect, useState } from 'react'
 import Image from 'next/image'
 import s from './Header.module.scss'
 import { Typography } from '@/shared/ui/typography'
-import { HeaderSpecialButtons } from '@/widgets/header/HeaderSpecialButtons'
-import Link from 'next/link'
+import { HeaderSpecialButtons } from './HeaderSpecialButtons'
+import { Link } from '@/i18n/routing'
 import { Dropdown } from '@/shared/ui/dropdown'
 import { NavList } from '@/shared/ui/nav-item/NavList'
 import { MoreHorizontalIcon } from '@/shared/assets/icons/MoreHorizontalIcon'
 import { LangSelect } from '@/shared/ui/langSelect/LangSelect'
+import { PATH } from '@/shared/config/routes'
 
 type HeaderType = {
   headerTitle?: string
@@ -38,7 +39,7 @@ const Header = ({ isAdmin, isAuth, link, headerTitle, headerLogo, ...rest }: Hea
     <>
       <header className={s.header} {...rest}>
         <div className={s.container}>
-          <Link className={s.header_logo} href={link || '#'}>
+          <Link className={s.header_logo} href={link || PATH.HOME}>
             {headerLogo && (
               <Image
                 src={headerLogo}

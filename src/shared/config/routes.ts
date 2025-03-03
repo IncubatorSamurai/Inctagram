@@ -5,4 +5,16 @@ export const PATH = {
   NEWPASSWORD: '/auth/createnewpassword',
   FORGOTPASSWORD: '/auth/forgotpassword',
   REGISTRCONFIRMATION: '/auth/registration-confirmation',
+  LOGOUT: '/auth/logout',
+
+  POSTS: '/posts',
+  PAYMENTS: '/payments',
+  STATISTICS: '/statistics',
+  USERS: '/users',
+  FAVORITES: '/favorites',
+  SETTINGS: '/settings',
+  SEARCH: '/search',
+  MESSENGER: '/messenger',
+  PROFILE: '/profile',
+  CREATE: '/create',
 } as const

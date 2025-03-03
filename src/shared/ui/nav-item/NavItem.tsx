@@ -1,6 +1,6 @@
 'use client'
 import { ComponentPropsWithoutRef } from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import clsx from 'clsx'
 import { usePathname } from 'next/navigation'
 import s from './NavItem.module.scss'

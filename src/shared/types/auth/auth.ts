@@ -1,4 +1,4 @@
-type ErrorMessages = {
+export type ErrorMessages = {
   message: string
   field: string
 }
@@ -9,4 +9,9 @@ export type ErrorResponse<T = ErrorMessages[]> = {
     messages: T
     error: string
   }
+}
+export interface BaseResponse {
+  statusCode: number
+  messages: ErrorMessages[]
+  error?: string
 }
