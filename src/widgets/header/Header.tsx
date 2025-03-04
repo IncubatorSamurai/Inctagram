@@ -9,18 +9,20 @@ import { Dropdown } from '@/shared/ui/dropdown'
 import { NavList } from '@/shared/ui/nav-item/NavList'
 import { MoreHorizontalIcon } from '@/shared/assets/icons/MoreHorizontalIcon'
 import { LangSelect } from '@/shared/ui/langSelect/LangSelect'
+import { useAppSelector } from '@/shared/hooks'
+import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 
 type HeaderType = {
   headerTitle?: string
   headerLogo?: string
   link?: string
-  isAuth?: boolean
   isAdmin?: boolean
 } & ComponentPropsWithoutRef<'header'>
 
-const Header = ({ isAdmin, isAuth, link, headerTitle, headerLogo, ...rest }: HeaderType) => {
+const Header = ({ isAdmin, link, headerTitle, headerLogo, ...rest }: HeaderType) => {
   // Resize watching
   const [isMobile, setIsMobile] = useState(false)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 768) // Устанавливаем состояние в true, если ширина экрана <= 768px
@@ -60,13 +62,13 @@ const Header = ({ isAdmin, isAuth, link, headerTitle, headerLogo, ...rest }: Hea
             {isMobile ? (
               <Dropdown
                 iconTrigger={<MoreHorizontalIcon />}
-                className={isAuth ? s.header_dropdown : s.header_dropdown_noAuth}
+                className={isLoggedIn ? s.header_dropdown : s.header_dropdown_noAuth}
                 classContent={s.header_dropdown_content}
                 classItemsContainer={s.header_dropdown_items_contaner}
               >
-                {isAuth ? <NavList /> : <HeaderSpecialButtons />}
+                {isLoggedIn ? <NavList /> : <HeaderSpecialButtons />}
               </Dropdown>
-            ) : isAuth ? undefined : (
+            ) : isLoggedIn ? undefined : (
               <HeaderSpecialButtons />
             )}
           </nav>
