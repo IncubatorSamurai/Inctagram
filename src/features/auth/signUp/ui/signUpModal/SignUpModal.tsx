@@ -5,7 +5,6 @@ import s from './SignUpModal.module.scss'
 import { modal } from '../SignUp'
 
 
-
 type SignUpModalProps = {
   email: modal
   trigger?: React.ReactNode

@@ -22,9 +22,6 @@ import { useState } from 'react'
 import { SignUpModal } from './signUpModal/SignUpModal'
 import { ErrorResponse } from '@/shared/types/auth'
 
-
-
-
 type DataFormReq = {
   name: string
   email: string
@@ -97,8 +94,7 @@ export const SignUpForm = () => {
       } catch (error) {
       const err = error as ErrorResponse
     } 
-   
-   
+
   }
   const {
     field: { value, onChange },
