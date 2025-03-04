@@ -12,7 +12,6 @@ import { SignInSchema, SignInSchemaData } from '../model/schema'
 import s from './SignInForm.module.scss'
 import { ErrorResponse } from '@/shared/types/auth'
 
-
 export const SignInForm = () => {
   const [errorMessage, setEmailMessage] = useState('')
   const [login, { data, error }] = useLoginMutation()
@@ -32,7 +31,8 @@ export const SignInForm = () => {
 
   useEffect(() => {
     if (data?.accessToken) {
-      router.push('/home')
+      localStorage.setItem('access_token', data?.accessToken)
+      router.push(PATH.HOME)
       return
     }
 
