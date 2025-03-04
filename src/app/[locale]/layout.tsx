@@ -5,6 +5,8 @@ import { routing } from '@/i18n/routing'
 import { ReactNode } from 'react'
 import { locales } from '@/shared/types/locale'
 import { Header } from '@/widgets/header'
+import { PATH } from '@/shared/config/routes'
+import { AuthProvider } from '@/app/_providers'
 
 export default async function LocaleLayout({
   children,
@@ -21,12 +23,15 @@ export default async function LocaleLayout({
 
   // Providing all messages to the client
   // side is the easiest way to get started
+
   const messages = await getMessages()
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <Header headerTitle={'Inctagram'} />
-      {children}
+      <AuthProvider>
+        <Header headerTitle={'Inctagram'} link={PATH.HOME} />
+        {children}
+      </AuthProvider>
     </NextIntlClientProvider>
   )
 }
