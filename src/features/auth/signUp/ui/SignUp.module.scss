@@ -38,5 +38,18 @@
 }
 
 .linkStyles {
+  color: var(--color-accent-500);
   text-decoration: none;
+}
+
+@media (width <= 576px) {
+  .root {
+    padding: 0 1rem;
+    border: none;
+    background-color: inherit;
+
+    .formWrapper {
+      padding: 0;
+    }
+  }
 }

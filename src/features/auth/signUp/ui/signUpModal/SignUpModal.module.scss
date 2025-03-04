@@ -1,0 +1,27 @@
+.SignUpModalContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  width: 100%;
+}
+
+.SignUpModalBtn {
+  align-self: flex-end;
+  width: size(96px);
+}
+
+@media screen and (width <= 576px) {
+  .SignUpModalContainer {
+    display: flex;
+    flex-direction: column;
+    row-gap: size(20px);
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .SignUpModalBtn {
+    align-self: unset;
+    width: 100%;
+  }
+}

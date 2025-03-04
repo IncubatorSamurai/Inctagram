@@ -8,6 +8,8 @@ import {
   CheckRecoveryCodeResponse,
   MeResponse
 } from './authApi.types'
+import { ErrorResponse } from '@/shared/types/auth';
+import { RegistrationRequest } from '@/features/auth/signUp';
 
 
 export const authApi = baseApi.injectEndpoints({
@@ -68,8 +70,17 @@ export const authApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
-    
+    registration: build.mutation<ErrorResponse,RegistrationRequest>({
+      query: payload => {
+        return {
+          url: 'v1/auth/google/login',
+          method: 'POST',
+          body: payload,
+        }
+      },
+    })
   }),
+  
 })
 
 export const {
@@ -80,5 +91,6 @@ export const {
   useCreateNewPasswordMutation,
   useCheckRecoveryCodeMutation,
   useResendRecoveryCodeMutation, 
+  useRegistrationMutation,
   useMeQuery,
 } = authApi
