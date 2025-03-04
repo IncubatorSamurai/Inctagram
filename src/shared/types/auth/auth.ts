@@ -4,6 +4,7 @@ type ErrorMessages = {
 }
 
 export type ErrorResponse<T = ErrorMessages[]> = {
+
   data: {
     statusCode: number
     messages: T

@@ -14,14 +14,22 @@ import { passwordSchema } from '@/shared/schemas/passwordSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { emailValidationScheme } from '@/shared/schemas/emailValidationScheme'
 import { z } from 'zod'
-import { RegistrationRequest, useRegistrationMutation } from '@/shared/api/auth/authApi'
+import {
+  RegistrationRequest,
+  useRegistrationMutation,
+} from '@/shared/api/auth/authApi'
+import { useState } from 'react'
+import { SignUpModal } from './signUpModal/SignUpModal'
+import { ErrorResponse } from '@/shared/types/auth'
+
+
 
 
 type DataFormReq = {
-      name: string,
-      email: string,
-      newPassword: string,
-      agree: boolean,
+  name: string
+  email: string
+  newPassword: string
+  agree: boolean
 }
 
 export const SignUpSchem = z.object({
@@ -44,8 +52,15 @@ const actualCombine = z.intersection(combinedSchema, SignUpSchem)
 
 export type FormSignUP = z.infer<typeof actualCombine>
 
+export type modal = {
+  title: string
+  message: string
+}
+
 export const SignUpForm = () => {
-  const [registration, { isLoading, isError, error }] = useRegistrationMutation();
+  const [modalContent, setModalContent] = useState<modal>({ title: '', message: '' })
+  const [open, setOpen] = useState(false)
+  const [registration, { isLoading, isError, error }] = useRegistrationMutation()
   const {
     control,
     register,
@@ -64,26 +79,27 @@ export const SignUpForm = () => {
     },
   })
 
-  const onSubmit: SubmitHandler<FormSignUP> = async (dataForm:DataFormReq ) => {
+  const onSubmit: SubmitHandler<FormSignUP> = async (dataForm: DataFormReq) => {
     try {
-      const registrationData: RegistrationRequest = {
-        userName: dataForm.name, 
+      const registrationData: RegistrationRequest  = {
+        userName: dataForm.name,
         password: dataForm.newPassword,
-        baseUrl: `${process.env.NEXT_PUBLIC_BASE_URL}v1/auth/registration`, 
+        baseUrl: `${process.env.NEXT_PUBLIC_BASE_URL}v1/auth/registration`,
         email: dataForm.email,
-      };
-    const res =  await registration(registrationData).unwrap();
-      console.log('Registration successful' , res);
-      
-    } catch (err) {
-      console.log('Registration failed:', err);
-    }
-    finally {
-      reset();
-    }
-  } 
-  
-
+      }
+      const res = await registration(registrationData).unwrap()
+    
+      setModalContent({
+        title: 'Email sent',
+        message: `We have sent a link to confirm your email to ${dataForm.email}`,
+      })
+      setOpen(true)
+      } catch (error) {
+      const err = error as ErrorResponse
+    } 
+   
+   
+  }
   const {
     field: { value, onChange },
   } = useController({
@@ -92,68 +108,85 @@ export const SignUpForm = () => {
     defaultValue: false,
   })
 
+  let nameError = ''
+  let emailError = ''
+  if(error?.data.statusCode === 400 && error?.data.messages[0].field === 'userName') {
+    nameError =  error?.data.messages[0].message
+  }
+  if(error?.data.statusCode === 400 && error?.data.messages[0].field === 'email') {
+    emailError =  error?.data.messages[0].message
+  }
+ 
   return (
-    <Card className={s.root}>
-      <div className={s.wrapper}>
-        <Typography variant="h1" className={s.text}>Sign Up</Typography>
-        <AuthWidget />
-        <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
-          <Input
-            label="Name"
-            type="name"
-            placeholder="User name"
-            {...register('name')}
-            error={errors.name?.message}
-          />
+    <>
+      <Card className={s.root}>
+          <div className={s.wrapper}>
+            <Typography variant="h1" className={s.text}>
+              Sign Up
+            </Typography>
+            <AuthWidget />
+            <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
+              <Input
+                label="Name"
+                type="name"
+                placeholder="User name"
+                {...register('name')}
+                error={errors.name?.message || nameError }
+              />
 
-          <Input
-            label="Email"
-            type="email"
-            placeholder="email@gmail.com"
-            {...register('email')}
-            error={errors.email?.message}
-          />
+              <Input
+                label="Email"
+                type="email"
+                placeholder="email@gmail.com"
+                {...register('email')}
+                error={errors.email?.message || emailError}
+              />
 
-          <Input
-            label="Password"
-            type="password"
-            placeholder="******************"
-            {...register('newPassword')}
-            error={errors.newPassword?.message}
-          />
+              <Input
+                label="Password"
+                type="password"
+                placeholder="******************"
+                {...register('newPassword')}
+                error={errors.newPassword?.message}
+              />
 
-          <Input
-            label="Password confirmation"
-            type="password"
-            placeholder="******************"
-            {...register('confirmPassword')}
-            error={errors.confirmPassword?.message}
-          />
+              <Input
+                label="Password confirmation"
+                type="password"
+                placeholder="******************"
+                {...register('confirmPassword')}
+                error={errors.confirmPassword?.message}
+              />
 
-          <Checkbox
-            id="check"
-            {...register('agree')}
-            onChange={onChange}
-            checked={value}
-            labelForText="small_text"
-            label={
-              <p>
-                I agree to the <Link href={'/#'}>Terms of Service</Link> and{' '}
-                <Link href={'/#'}>Privacy Policy</Link>
-              </p>
-            }
-          />
-          <Button fullWidth disabled={!isValid}>
-            Sign Up
-          </Button>
-        </form>
-        <Typography variant="regular_text_14" className={s.padding}>
-          Do you have an account?
-        </Typography>
-        <Button fullWidth variant="text" className={s.margin}>
-        <Link className={s.linkStyles} href={'/signin'}>Sign In</Link>
-        </Button>
-      </div>
-    </Card>
+              <Checkbox
+                id="check"
+                {...register('agree')}
+                onChange={onChange}
+                checked={value}
+                labelForText="small_text"
+                label={
+                  <p>
+                    I agree to the <Link href={'/#'}>Terms of Service</Link> and{' '}
+                    <Link href={'/#'}>Privacy Policy</Link>
+                  </p>
+                }
+              />
+              <Button fullWidth disabled={!isValid || isLoading}>
+                {isLoading ? '...Loading' : 'Sign Up'}
+              </Button>
+            </form>
+              
+            <Typography variant="regular_text_14" className={s.padding}>
+              Do you have an account?
+            </Typography>
+            <Button fullWidth variant="text" className={s.margin}>
+              <Link className={s.linkStyles} href={'/signin'}>
+                Sign In
+              </Link>
+            </Button>
+          </div>
+          <SignUpModal error ={isError} email={modalContent} open={open} onReset={reset} onChange={()=>{setOpen(false)}}/>
+      </Card>
+    </>
   )
 }

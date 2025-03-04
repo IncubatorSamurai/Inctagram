@@ -1,5 +1,13 @@
 import { baseApi } from '@/shared/api/baseApi'
 import { GoogleAuthResponse, LoginAnswer, Login, ResendEmail } from './authApi.types'
+import { ErrorResponse } from '@/shared/types/auth';
+
+export type RegistrationRequest = {
+  userName: string
+  email: string
+  password: string
+  baseUrl: string
+}
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -35,6 +43,13 @@ export const authApi = baseApi.injectEndpoints({
         }
       },
     }),
+    registration: build.mutation<ErrorResponse, RegistrationRequest>({
+      query: body => ({
+        url: 'v1/auth/registration',
+        method: 'POST',
+        body,
+      }),
+    })
   }),
 })
 
@@ -43,5 +58,6 @@ export const {
   useConfirmEmailMutation,
   useResendEmailMutation,
   useGoogleLoginMutation,
+  useRegistrationMutation,
 } = authApi
 
