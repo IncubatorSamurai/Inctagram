@@ -1,29 +1,53 @@
-import { Typography } from '@/shared/ui/typography'
+'use client'
+
+import { LinkExpired } from '@/features/auth'
+import { useRouter } from '@/i18n/routing'
+import { useResendRecoveryCodeMutation } from '@/shared/api/auth/authApi'
+import { PATH } from '@/shared/config/routes'
+import { ErrorResponse } from '@/shared/types/auth'
+import { Button } from '@/shared/ui/button'
+import { useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 import s from './LinkExpiredPage.module.scss'
-import { LinkExpiredForm } from '@/features/auth'
-import Image from 'next/image'
 
 export const LinkExpiredPage = () => {
+  const [resendRecoveryCode, { isLoading, isError }] = useResendRecoveryCodeMutation()
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
+  const email = searchParams.get('email')
+
+  useEffect(() => {
+    if (!email) {
+      console.error('invalid email')
+      router.push(PATH.SIGNIN)
+    }
+  }, [email])
+
+  const resendLinkHandler = async () => {
+    try {
+      await resendRecoveryCode({
+        email: email as string,
+        baseUrl: `${process.env.NEXT_PUBLIC_CLIENT_URL}`,
+      }).unwrap()
+      // TODO openModal then router.push(PATH.SIGNIN)
+    } catch (error) {
+      const errorMessage = error as ErrorResponse
+      console.error(errorMessage.data.messages[0].message)
+    }
+
+    router.push(PATH.SIGNIN)
+  }
+
+  if (isError || isLoading) {
+    return <div>Loading...</div>
+  }
+
   return (
-    <div className={s.container}>
-      <div className={s.box}>
-        <Typography className={s.title} variant="h1">
-          Email verification link expired
-        </Typography>
-        <Typography className={s.text} variant="regular_text_16">
-          Looks like the verification link has expired. Not to worry, we can send the link again
-        </Typography>
-      </div>
-      <div className={s.content}>
-        <LinkExpiredForm />
-        <Image
-          className={s.image}
-          src={'/link-expired.png'}
-          height={352}
-          width={473}
-          alt="link expired"
-        />
-      </div>
-    </div>
+    <LinkExpired>
+      <Button className={s.resendButton} onClick={resendLinkHandler}>
+        Resend link
+      </Button>
+    </LinkExpired>
   )
 }

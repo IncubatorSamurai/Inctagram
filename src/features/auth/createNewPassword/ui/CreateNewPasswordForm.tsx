@@ -9,8 +9,27 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import s from './CreateNewPasswordForm.module.scss'
 import clsx from 'clsx'
 import { createNewPasswordFormSchema, passwordSchema } from '@/shared/schemas/passwordSchema'
+import { useCreateNewPasswordMutation } from '@/shared/api/auth/authApi'
+import { useRouter } from '@/i18n/routing'
+import { useSearchParams } from 'next/navigation'
+import { PATH } from '@/shared/config/routes'
+import { useEffect } from 'react'
 
 export const CreateNewPasswordForm = () => {
+  const [createNewPassword, { isLoading, isSuccess }] = useCreateNewPasswordMutation()
+
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
+  const recoveryCode = searchParams.get('code') as string
+
+  useEffect(() => {
+    if (!recoveryCode) {
+      console.error('invalid email')
+      router.push(PATH.SIGNIN)
+    }
+  }, [recoveryCode])
+
   const {
     register,
     handleSubmit,
@@ -25,7 +44,13 @@ export const CreateNewPasswordForm = () => {
   })
 
   const onSubmit: SubmitHandler<createNewPasswordFormSchema> = data => {
-    console.log(data)
+    createNewPassword({ newPassword: data.confirmPassword, recoveryCode }).then(() => {
+      router.push(PATH.SIGNIN)
+    })
+  }
+
+  if (isLoading || isSuccess) {
+    return <div>Loading...</div>
   }
 
   return (
