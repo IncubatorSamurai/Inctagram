@@ -1,35 +1,23 @@
 'use client'
-
-import { Typography } from '@/shared/ui/typography'
-import s from './SignUpConfirmedPage.module.scss'
-import { Button } from '@/shared/ui/button'
-import Image from 'next/image'
-import { PATH } from '@/shared/config/routes'
-import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+import { useConfirmEmailMutation } from '@/shared/api/auth/authApi'
+import { useEffect } from 'react'
+import { EmailVerify } from './EmailVerify/EmailVerify'
+import { InvalidEmail } from './InvalidEmail/InvalidEmail'
 
 export const SignUpConfirmedPage = () => {
-  const router = useRouter()
+  const [confirmEmail, { isLoading, isUninitialized, isError }] = useConfirmEmailMutation()
 
-  return (
-    <div className={s.container}>
-      <Typography variant="h1" className={s.title}>
-        Congratulations!
-      </Typography>
-      <Typography variant="regular_text_16" className={s.description}>
-        Your email has been confirmed
-      </Typography>
-      <div className={s.buttonAndImageWrapper}>
-        <Button className={s.button} onClick={() => router.push(PATH.SIGNIN)}>
-          Sign In
-        </Button>
-        <Image
-          src={'/signUpConfirmed_2x.png'}
-          alt=""
-          width={432}
-          height={300}
-          className={s.image}
-        />
-      </div>
-    </div>
-  )
+  const searchParams = useSearchParams()
+  const code = searchParams.get('code')
+
+  useEffect(() => {
+    if (code) {
+      confirmEmail(code)
+    }
+  }, [code])
+
+  if (isUninitialized || isLoading) return <h1>Looooading...</h1>
+
+  return <>{isError ? <InvalidEmail /> : <EmailVerify />}</>
 }
