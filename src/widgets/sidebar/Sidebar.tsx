@@ -1,3 +1,4 @@
+'use client'
 import { v4 as uuidv4 } from 'uuid'
 
 import s from './Sidebar.module.scss'
@@ -27,6 +28,8 @@ import { CreditCartIcon } from '@/shared/assets/icons/CreditCardIcon'
 import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
 import { BookMarkIcon } from '@/shared/assets/icons/BookMarkIcon'
 import { NavItem } from '@/shared/ui/nav-item'
+import { useAppSelector } from '@/shared/hooks'
+import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 
 export const sidebarItems = {
   primary: [
@@ -158,6 +161,8 @@ type Sidebar = {
 }
 
 export const Sidebar = ({ isAdmin }: Sidebar) => {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+
   return (
     <nav className={s.sidebar}>
       {isAdmin ? (
@@ -166,7 +171,7 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
             <NavItem key={item.id} {...item} />
           ))}
         </ul>
-      ) : (
+      ) : isLoggedIn ? (
         <>
           <ul className={clsx(s.sidebar_list, s.primary)}>
             {sidebarItems.primary.map(item => (
@@ -179,6 +184,8 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
             ))}
           </ul>
         </>
+      ) : (
+        ''
       )}
     </nav>
   )

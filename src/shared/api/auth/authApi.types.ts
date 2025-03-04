@@ -1,3 +1,10 @@
+export type MeResponse = {
+  email: string
+  isBlocked: boolean
+  userId: number
+  userName: string
+}
+
 export type Login = {
   email: string
   password: string

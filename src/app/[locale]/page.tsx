@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl'
 import { Button } from '@/shared/ui/button'
 import { Link } from '@/i18n/routing'
+import { PATH } from '@/shared/config/routes'
 
 export default function TestPage() {
   const t = useTranslations('testSection')
@@ -8,7 +9,7 @@ export default function TestPage() {
     <h1>
       {t('test')}
       <Button asChild>
-        <Link href={'/auth/signin'}>Link</Link>
+        <Link href={PATH.SIGNUP}>Link</Link>
       </Button>
     </h1>
   )
