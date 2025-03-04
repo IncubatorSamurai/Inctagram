@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { baseApi } from '@/shared/api/baseApi'
-import { appReducer, appSlice } from '@/app/_store/appSlice/appSlice'
+import { appReducer, appSlice } from '@/shared/store/appSlice/appSlice'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
 export const store = configureStore({
