@@ -1,44 +1,35 @@
-// import { baseApi } from '@/shared/api/baseApi'
-
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-// export const authApi = baseApi.injectEndpoints({
-//   endpoints: () => ({}),
-// })
-
+import { baseApi } from '../baseApi'
 
 export type RegistrationRequest = {
-  userName: string;
-  email: string;
-  password: string;
-  baseUrl: string;
+  userName: string
+  email: string
+  password: string
+  baseUrl: string
 }
 
-
 export type RegistrationErrorResponse = {
-  statusCode: number,
-  messages: [
-    {
-      message: string,
-      field: string
-    }
-  ],
+  statusCode: number
+  data: {
+    messages: [
+      {
+        message: string
+        field: string
+      },
+    ]
+  }
   error: string
 }
 
-export const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BASE_URL }), 
-  endpoints: (builder) => ({
+export const authApi = baseApi.injectEndpoints({
+  endpoints: builder => ({
     registration: builder.mutation<RegistrationErrorResponse, RegistrationRequest>({
-      query: (body) => ({
+      query: body => ({
         url: 'v1/auth/registration',
         method: 'POST',
         body,
       }),
     }),
   }),
-});
+})
 
-
-export const { useRegistrationMutation } = authApi;
+export const { useRegistrationMutation } = authApi
