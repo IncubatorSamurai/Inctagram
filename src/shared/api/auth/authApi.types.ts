@@ -12,3 +12,7 @@ export type GoogleAuthResponse = {
   accessToken: 'string'
   email: 'string'
 }
+
+export type CheckRecoveryCodeResponse = {
+  email: string
+}
