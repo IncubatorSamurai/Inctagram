@@ -5,7 +5,7 @@ import { Card } from '@/shared/ui/card/Card'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Input } from '@/shared/ui/input'
 import { Button } from '@/shared/ui/button/Button'
-import Link from 'next/link'
+
 import { Recaptcha } from '@/shared/ui/recaptcha/Recaptcha'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ForgotPasswordModal } from '@/features/auth/forgotPasswodForm/ui/forgotPaswordModal/ForgotPasswordModal'
@@ -14,6 +14,7 @@ import { usePasswordRecoveryMutation } from '@/shared/api/auth/authApi'
 import { PATH } from '@/shared/config/routes'
 
 import { handleError } from '@/shared/utils/handelError'
+import { Link } from '@/i18n/routing'
 
 export const ForgotPasswordForm = () => {
   const [submittedEmail, setSubmittedEmail] = useState('')
@@ -27,11 +28,6 @@ export const ForgotPasswordForm = () => {
   const handleVerify = (token: string | null) => {
     setRecaptchaToken(token || '')
   }
-  useEffect(() => {
-    if (isSuccess) {
-      setIsModalOpen(true)
-    }
-  }, [isSuccess, submittedEmail])
 
   const {
     register,
@@ -44,23 +40,27 @@ export const ForgotPasswordForm = () => {
     reValidateMode: 'onBlur',
     defaultValues: { email: '' },
   })
+  useEffect(() => {
+    if (isSuccess) {
+      setIsModalOpen(isSuccess)
+      reset()
+
+
+    }
+  }, [reset, isSuccess, submittedEmail])
 
   const onSubmit: SubmitHandler<ForgotArgsData> = async data => {
     try {
-      const response = await passwordRecovery({
+      await passwordRecovery({
         email: data.email,
-        recaptcha: recaptchaToken || '',
+        recaptcha: recaptchaToken,
         baseUrl: window.location.origin,
       })
+      setSubmittedEmail(data.email)
 
-      if (response) {
-        setSubmittedEmail(data.email)
-        reset()
-      } else {
-        console.error('Ошибка: статус ответа не успешен')
-      }
     } catch (err) {
       console.error('Ошибка при выполнении запроса:', err)
+
     }
   }
 
@@ -113,7 +113,7 @@ export const ForgotPasswordForm = () => {
         </div>
 
         <div className={s.forgot_password_recaptcha}>
-          <Recaptcha onChange={handleVerify} />
+          <Recaptcha  onChange={handleVerify} />
         </div>
       </div>
       <ForgotPasswordModal email={submittedEmail} open={isModalOpen} onChange={setIsModalOpen} />
