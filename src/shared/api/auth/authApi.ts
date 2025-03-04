@@ -1,44 +1,47 @@
-// import { baseApi } from '@/shared/api/baseApi'
+import { baseApi } from '@/shared/api/baseApi'
+import { GoogleAuthResponse, LoginAnswer, Login, ResendEmail } from './authApi.types'
 
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-// export const authApi = baseApi.injectEndpoints({
-//   endpoints: () => ({}),
-// })
-
-
-export type RegistrationRequest = {
-  userName: string;
-  email: string;
-  password: string;
-  baseUrl: string;
-}
-
-
-export type RegistrationErrorResponse = {
-  statusCode: number,
-  messages: [
-    {
-      message: string,
-      field: string
-    }
-  ],
-  error: string
-}
-
-export const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BASE_URL }), 
-  endpoints: (builder) => ({
-    registration: builder.mutation<RegistrationErrorResponse, RegistrationRequest>({
-      query: (body) => ({
-        url: 'v1/auth/registration',
+export const authApi = baseApi.injectEndpoints({
+  endpoints: build => ({
+    login: build.mutation<LoginAnswer, Login>({
+      query: (payload) => ({
+        url: 'v1/auth/login',
         method: 'POST',
-        body,
+        body: payload,
       }),
     }),
+    confirmEmail: build.mutation<void, string>({
+      query: confirmationCode => ({
+        url: 'v1/auth/registration-confirmation',
+        method: 'POST',
+        body: {
+          confirmationCode,
+        },
+      }),
+    }),
+    resendEmail: build.mutation<void, ResendEmail>({
+      query: (payload) => ({
+        url: 'v1/auth/registration-email-resending',
+        method: 'POST',
+        body: payload,
+      }),
+    }),
+    googleLogin: build.mutation<GoogleAuthResponse, { redirectUrl: string; code: string }>({
+      query: payload => {
+        return {
+          url: 'v1/auth/google/login',
+          method: 'POST',
+          body: payload,
+        }
+      },
+    }),
   }),
-});
+})
 
+export const {
+  useLoginMutation,
+  useConfirmEmailMutation,
+  useResendEmailMutation,
+  useGoogleLoginMutation,
+} = authApi
 
-export const { useRegistrationMutation } = authApi;
