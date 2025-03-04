@@ -114,14 +114,14 @@ export const SignUpForm = () => {
     defaultValue: false,
   })
 
-  let nameError = ''
-  let emailError = ''
-  if(error?.data.statusCode === 400 && error?.data.messages[0].field === 'userName') {
-    nameError =  error?.data.messages[0].message
-  }
-  if(error?.data.statusCode === 400 && error?.data.messages[0].field === 'email') {
-    emailError =  error?.data.messages[0].message
-  }
+  // let nameError = ''
+  // let emailError = ''
+  // if(error?.data.statusCode === 400 && error?.data.messages[0].field === 'userName') {
+  //   nameError =  error?.data.messages[0].message
+  // }
+  // if(error?.data.statusCode === 400 && error?.data.messages[0].field === 'email') {
+  //   emailError =  error?.data.messages[0].message
+  // }
  
   return (
     <>
