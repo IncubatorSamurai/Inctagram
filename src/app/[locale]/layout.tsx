@@ -7,6 +7,7 @@ import { locales } from '@/shared/types/locale'
 import { Header } from '@/widgets/header'
 import { PATH } from '@/shared/config/routes'
 import { AuthProvider } from '@/app/_providers'
+import { Sidebar } from '@/widgets/sidebar'
 
 export default async function LocaleLayout({
   children,
@@ -30,6 +31,7 @@ export default async function LocaleLayout({
     <NextIntlClientProvider locale={locale} messages={messages}>
       <AuthProvider>
         <Header headerTitle={'Inctagram'} link={PATH.HOME} />
+        <Sidebar/>
         {children}
       </AuthProvider>
     </NextIntlClientProvider>

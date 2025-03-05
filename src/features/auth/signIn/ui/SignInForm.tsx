@@ -11,10 +11,13 @@ import { useForm } from 'react-hook-form'
 import { SignInSchema, SignInSchemaData } from '../model/schema'
 import s from './SignInForm.module.scss'
 import { ErrorResponse } from '@/shared/types/auth'
+import {  setIsLoggedIn } from '@/shared/store/appSlice/appSlice'
+import { useAppDispatch } from '@/shared/hooks'
 
 export const SignInForm = () => {
   const [errorMessage, setEmailMessage] = useState('')
   const [login, { data, error }] = useLoginMutation()
+  const dispatch = useAppDispatch()
 
   const router = useRouter()
 
@@ -32,13 +35,14 @@ export const SignInForm = () => {
   useEffect(() => {
     if (data?.accessToken) {
       localStorage.setItem('access_token', data?.accessToken)
+      dispatch(setIsLoggedIn({ isLoggedIn: true }))
       router.push(PATH.HOME)
       return
     }
 
     const errorMessage = error as ErrorResponse<string>
     setEmailMessage(errorMessage?.data?.messages || validateError?.email?.message || '')
-  }, [error, validateError, data?.accessToken])
+  }, [router,dispatch, error, validateError, data?.accessToken])
 
   const onSubmit = (data: SignInSchemaData) => {
     login({ email: data.email, password: data.password })
