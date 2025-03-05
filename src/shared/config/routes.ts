@@ -6,4 +6,5 @@ export const PATH = {
   FORGOTPASSWORD: '/auth/forgotpassword',
   REGISTRCONFIRMATION: '/auth/registration-confirmation',
   LINK_EXPIRED: '/auth/linkexpired',
+  PUBLIC: '/public',
 } as const

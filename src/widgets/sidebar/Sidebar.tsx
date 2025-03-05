@@ -25,8 +25,6 @@ import { CreditCartIcon } from '@/shared/assets/icons/CreditCardIcon'
 import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
 import { BookMarkIcon } from '@/shared/assets/icons/BookMarkIcon'
 import { NavItem } from '@/shared/ui/nav-item'
-import { useAppSelector } from '@/shared/hooks'
-import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
 
 export const sidebarItems = {
@@ -150,9 +148,7 @@ type Sidebar = {
 }
 
 export const Sidebar = ({ isAdmin }: Sidebar) => {
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
-  if (!isLoggedIn) return null // Если не залогинен, ничего не рендерим
 
   return (
     <nav className={s.sidebar}>

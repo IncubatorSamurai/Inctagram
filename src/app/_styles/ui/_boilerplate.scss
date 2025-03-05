@@ -34,28 +34,10 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
-
   font-family: var(--font-family-primary), sans-serif;
   line-height: var(--line-height-m);
   color: var(--color-light-100);
 
   background-color: var(--color-dark-700);
 }
-.layout_container {
 
-display: grid;
-  height: 100%;
-  grid-template-rows: auto 1fr auto;
-  grid-template-columns: auto 1fr;
-  align-items: start;
-
-@media screen and (width <= 767px) {
-    grid-template-columns:1fr ;
-
-  }
-}
-
-.layout_container.layout_container_loggedOut{
-  grid-template-columns: 1fr;
-
-}

@@ -8,7 +8,7 @@ import {
   CheckRecoveryCodeResponse,
   MeResponse
 } from './authApi.types'
-import { ErrorResponse } from '@/shared/types/auth'
+
 
 
 export const authApi = baseApi.injectEndpoints({
@@ -25,7 +25,7 @@ export const authApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
-    logout: build.mutation<ErrorResponse, void>({
+    logout: build.mutation<void, void>({
       query: () => ({
         url: 'v1/auth/logout',
         method: 'POST',
