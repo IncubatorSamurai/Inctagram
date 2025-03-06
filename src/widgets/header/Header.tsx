@@ -16,15 +16,13 @@ import { useAppSelector } from '@/shared/hooks'
 import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
 
-
 type HeaderType = {
   headerTitle?: string
   headerLogo?: string
-  link?: string
   isAdmin?: boolean
 } & ComponentPropsWithoutRef<'header'>
 
-const Header = ({ isAdmin, link, headerTitle, headerLogo, ...rest }: HeaderType) => {
+const Header = ({ isAdmin, headerTitle, headerLogo, ...rest }: HeaderType) => {
   // Resize watching
   const [isMobile, setIsMobile] = useState(false)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
@@ -45,7 +43,7 @@ const Header = ({ isAdmin, link, headerTitle, headerLogo, ...rest }: HeaderType)
     <>
       <header className={s.header} {...rest}>
         <div className={s.container}>
-          <Link className={s.header_logo} href={link || PATH.HOME}>
+          <Link className={s.header_logo} href={isLoggedIn ? PATH.HOME : PATH.PUBLIC}>
             {headerLogo && (
               <Image
                 src={headerLogo}
@@ -71,12 +69,14 @@ const Header = ({ isAdmin, link, headerTitle, headerLogo, ...rest }: HeaderType)
                 classContent={s.header_dropdown_content}
                 classItemsContainer={s.header_dropdown_items_contaner}
               >
-                {isLoggedIn ?(
+                {isLoggedIn ? (
                   <>
                     <NavList />
-                    <LogOut/>
+                    <LogOut />
                   </>
-                ) : <HeaderSpecialButtons />}
+                ) : (
+                  <HeaderSpecialButtons />
+                )}
               </Dropdown>
             ) : isLoggedIn ? undefined : (
               <HeaderSpecialButtons />

@@ -6,16 +6,16 @@ import {
   ResendEmail,
   RecoveryPassword,
   CheckRecoveryCodeResponse,
-  MeResponse
+  MeResponse,
 } from './authApi.types'
-
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: build => ({
-     me: build.query<MeResponse, void>({
+    me: build.query<MeResponse, void>({
       query: () => ({
         url: 'v1/auth/me',
       }),
+      providesTags: ['Me'],
     }),
     login: build.mutation<LoginAnswer, Login>({
       query: payload => ({
@@ -74,15 +74,13 @@ export const authApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
-    passwordRecovery: build.mutation<void,  RecoveryPassword>(
-      {
-        query: (payload) => ({
-          url: '/v1/auth/password-recovery',
-          method: 'POST',
-          body: payload,
-        }),
-      }
-    ),
+    passwordRecovery: build.mutation<void, RecoveryPassword>({
+      query: payload => ({
+        url: '/v1/auth/password-recovery',
+        method: 'POST',
+        body: payload,
+      }),
+    }),
   }),
 })
 
@@ -93,7 +91,7 @@ export const {
   useGoogleLoginMutation,
   useCreateNewPasswordMutation,
   useCheckRecoveryCodeMutation,
-  useResendRecoveryCodeMutation, 
+  useResendRecoveryCodeMutation,
   useMeQuery,
   usePasswordRecoveryMutation,
   useLogoutMutation,

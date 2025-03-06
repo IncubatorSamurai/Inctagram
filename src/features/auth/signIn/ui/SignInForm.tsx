@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form'
 import { SignInSchema, SignInSchemaData } from '../model/schema'
 import s from './SignInForm.module.scss'
 import { ErrorResponse } from '@/shared/types/auth'
-import {  setIsLoggedIn } from '@/shared/store/appSlice/appSlice'
+import { setIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { useAppDispatch } from '@/shared/hooks'
 
 export const SignInForm = () => {
@@ -42,10 +42,14 @@ export const SignInForm = () => {
 
     const errorMessage = error as ErrorResponse<string>
     setEmailMessage(errorMessage?.data?.messages || validateError?.email?.message || '')
-  }, [dispatch,router, error, validateError, data?.accessToken])
+  }, [dispatch, router, error, validateError, data?.accessToken])
 
   const onSubmit = (data: SignInSchemaData) => {
     login({ email: data.email, password: data.password })
+      .unwrap()
+      .then(() => {
+        localStorage.setItem('email', data?.email)
+      })
   }
 
   return (

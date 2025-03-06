@@ -28,7 +28,7 @@ export const LinkExpiredPage = () => {
     try {
       await resendRecoveryCode({
         email: email as string,
-        baseUrl: `${process.env.NEXT_PUBLIC_CLIENT_URL}`,
+        baseUrl: window.location.origin,
       }).unwrap()
       // TODO openModal then router.push(PATH.SIGNIN)
     } catch (error) {
