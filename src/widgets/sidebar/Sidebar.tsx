@@ -25,7 +25,12 @@ import { CreditCartIcon } from '@/shared/assets/icons/CreditCardIcon'
 import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
 import { BookMarkIcon } from '@/shared/assets/icons/BookMarkIcon'
 import { NavItem } from '@/shared/ui/nav-item'
+import { PATH } from '@/shared/config/routes'
+import { useAppSelector } from '@/shared/hooks'
+import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
+
+
 
 export const sidebarItems = {
   primary: [
@@ -33,7 +38,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Home',
       icon: <HomeOutlineIcon />,
-      href: '/home',
+      href: PATH.HOME,
       disabled: false,
       classItem: 'home',
       activeIcon: <HomeIcon />,
@@ -42,7 +47,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Create',
       icon: <PlusSquareOutlineIcon />,
-      href: '/create',
+      href: PATH.CREATE,
       disabled: false,
       classItem: 'create',
       activeIcon: <PlusSquareIcon />,
@@ -51,7 +56,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'My Profile',
       icon: <PersonOutlineIcon />,
-      href: '/profile',
+      href: PATH.PROFILE,
       disabled: false,
       classItem: 'profile',
       activeIcon: <PersonIcon />,
@@ -60,7 +65,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Messenger',
       icon: <MessageCircleOutlineIcon />,
-      href: '/messenger',
+      href: PATH.MESSENGER,
       disabled: false,
       classItem: 'messenger',
       activeIcon: <MessageCircleIcon />,
@@ -69,7 +74,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Search',
       icon: <SearchOutlineIcon />,
-      href: '/search',
+      href: PATH.SEARCH,
       disabled: false,
       classItem: 'search',
       activeIcon: <SearchIcon />,
@@ -80,7 +85,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Profile Settings ',
       icon: <SettingsOutlineIcon />,
-      href: '/statistic',
+      href: PATH.STATISTICS,
       disabled: false,
       classItem: 'settings',
       activeIcon: <SettingsIcon />,
@@ -89,7 +94,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Statistics',
       icon: <TrendingUpOutlineIcon />,
-      href: '/statistic',
+      href: PATH.STATISTICS,
       disabled: false,
       classItem: 'statistics',
       activeIcon: <TrendingUpIcon />,
@@ -98,7 +103,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Favorites',
       icon: <BookMarkOutlineIcon />,
-      href: '/favorites',
+      href: PATH.FAVORITES,
       disabled: false,
       classItem: 'favorites',
       activeIcon: <BookMarkIcon />,
@@ -109,7 +114,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'User List',
       icon: <PersonOutlineIcon />,
-      href: '/users',
+      href: PATH.USERS,
       disabled: false,
       classItem: 'user_list',
       activeIcon: <PersonIcon />,
@@ -118,7 +123,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Statistics',
       icon: <TrendingUpOutlineIcon />,
-      href: '/statistic',
+      href: PATH.STATISTICS,
       disabled: false,
       classItem: 'statistics',
       activeIcon: <TrendingUpIcon />,
@@ -127,7 +132,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Payments List ',
       icon: <CreditCardOutlineIcon />,
-      href: '/payment',
+      href: PATH.STATISTICS,
       disabled: false,
       classItem: 'payment',
       activeIcon: <CreditCartIcon />,
@@ -136,7 +141,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Posts List ',
       icon: <ImageOutlineIcon />,
-      href: '/posts',
+      href: PATH.POSTS,
       disabled: false,
       classItem: 'posts',
       activeIcon: <ImageIcon />,

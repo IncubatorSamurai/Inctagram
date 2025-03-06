@@ -1,6 +1,5 @@
 'use client'
 import { ComponentPropsWithoutRef } from 'react'
-
 import clsx from 'clsx'
 import { usePathname } from 'next/navigation'
 import s from './NavItem.module.scss'

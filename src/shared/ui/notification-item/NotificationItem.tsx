@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import s from './NotificationItem.module.scss'
 import { Typography } from '@/shared/ui/typography'
 import { formatDistanceToNow } from 'date-fns'
