@@ -7,10 +7,12 @@ import { PATH } from '@/shared/config/routes'
 import { Button } from '@/shared/ui/button'
 import { useGoogleLogin } from '@react-oauth/google'
 
+import {  setIsLoggedIn } from '@/shared/store/appSlice/appSlice'
+import { useAppDispatch } from '@/shared/hooks'
 export const GoogleAuth = () => {
   const route = useRouter()
   const [login] = useGoogleLoginMutation()
-
+  const dispatch = useAppDispatch()
   const googleLogin = useGoogleLogin({
     onSuccess: async ({ code }) => {
       const response = await login({
@@ -20,6 +22,7 @@ export const GoogleAuth = () => {
 
       if (response.accessToken) {
         localStorage.setItem('access_token', response.accessToken)
+        dispatch(setIsLoggedIn({ isLoggedIn: true }))
         route.push(PATH.HOME)
       }
     },

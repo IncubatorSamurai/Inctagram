@@ -1,12 +1,10 @@
 export const PATH = {
-  HOME: '/',
+  HOME: '/home',
   SIGNIN: '/auth/signin',
   SIGNUP: '/auth/signup',
-  NEWPASSWORD: '/auth/createnewpassword',
+  NEW_PASSWORD: '/auth/create-new-password',
   FORGOTPASSWORD: '/auth/forgotpassword',
   REGISTRCONFIRMATION: '/auth/registration-confirmation',
-
-
   POSTS: '/posts',
   PAYMENTS: '/payments',
   STATISTICS: '/statistics',
@@ -17,4 +15,6 @@ export const PATH = {
   MESSENGER: '/messenger',
   PROFILE: '/profile',
   CREATE: '/create',
+  LINK_EXPIRED: '/auth/linkexpired',
+  PUBLIC: '/public',
 } as const
