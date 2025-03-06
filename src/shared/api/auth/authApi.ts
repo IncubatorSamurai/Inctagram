@@ -1,5 +1,5 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { GoogleAuthResponse, LoginAnswer, Login, ResendEmail, MeResponse } from './authApi.types'
+import { GoogleAuthResponse, LoginAnswer, Login, ResendEmail, MeResponse, RecoveryPassword } from './authApi.types'
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -40,12 +40,12 @@ export const authApi = baseApi.injectEndpoints({
         }
       },
     }),
-    passwordRecovery: build.mutation<void, { email: string; recaptcha: string; baseUrl: string }>(
+    passwordRecovery: build.mutation<void,  RecoveryPassword>(
       {
-        query: ({ email, recaptcha, baseUrl }) => ({
+        query: (payload) => ({
           url: '/v1/auth/password-recovery',
           method: 'POST',
-          body: { email, recaptcha, baseUrl },
+          body: payload,
         }),
       }
     ),

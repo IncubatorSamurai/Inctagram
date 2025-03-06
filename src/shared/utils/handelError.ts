@@ -5,10 +5,11 @@ import {
 } from '@reduxjs/toolkit/query/react'
 
 import { SerializedError } from '@reduxjs/toolkit'
-import {  BaseResponse } from '@/shared/types/auth'
+import { ErrorResponse } from '@/shared/types/auth'
+
 
 export const handleError = (
-  result: QueryReturnValue<BaseResponse, FetchBaseQueryError | SerializedError, FetchBaseQueryMeta>
+  result: QueryReturnValue<ErrorResponse, FetchBaseQueryError | SerializedError, FetchBaseQueryMeta>
 ): string => {
   if (result.error) {
     // Если ошибка является FetchBaseQueryError
@@ -17,7 +18,7 @@ export const handleError = (
         case 400:
         case 500:
           return (
-            (result.error.data as BaseResponse)?.messages?.[0]?.message || 'Server error occurred'
+            (result.error as ErrorResponse)?.data.messages?.[0]?.message || 'Server error occurred'
           )
 
         case 403:
@@ -40,8 +41,8 @@ export const handleError = (
   }
 
   // Проверяем данные, если ошибка не была найдена
-  if (result.data && result.data.statusCode !== undefined && result.data.statusCode !== 200) {
-    return result.data.messages?.[0]?.message || 'An unknown error occurred'
+  if (result.data && result.data.data.statusCode !== undefined && result.data.data.statusCode !== 200) {
+    return result.data.data.messages?.[0]?.message || 'An unknown error occurred'
   }
 
   // По умолчанию

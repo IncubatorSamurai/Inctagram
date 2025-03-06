@@ -1,79 +1,37 @@
-import { useState, useEffect } from 'react'
 import { Typography } from '@/shared/ui/typography'
 import s from './ForgotPasswordForm.module.scss'
 import { Card } from '@/shared/ui/card/Card'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { Input } from '@/shared/ui/input'
 import { Button } from '@/shared/ui/button/Button'
-
 import { Recaptcha } from '@/shared/ui/recaptcha/Recaptcha'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { ForgotPasswordModal } from '@/features/auth/forgotPasswodForm/ui/forgotPaswordModal/ForgotPasswordModal'
-import { emailValidationScheme, ForgotArgsData } from '@/shared/schemas/emailValidationScheme'
-import { usePasswordRecoveryMutation } from '@/shared/api/auth/authApi'
 import { PATH } from '@/shared/config/routes'
-
-import { handleError } from '@/shared/utils/handelError'
 import { Link } from '@/i18n/routing'
+import { useForgotPassword } from '@/shared/hooks/useForgotPassword'
 
 export const ForgotPasswordForm = () => {
-  const [submittedEmail, setSubmittedEmail] = useState('')
-  const [recaptchaToken, setRecaptchaToken] = useState('')
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const [passwordRecovery, { isLoading, isError, error, isSuccess }] = usePasswordRecoveryMutation()
-
-  const errorMessage = isError ? handleError({ error }) : ''
-
-  const handleVerify = (token: string | null) => {
-    setRecaptchaToken(token || '')
-  }
-
   const {
+    submittedEmail,
+    isModalOpen,
+    setIsModalOpen,
     register,
     handleSubmit,
-    reset,
-    formState: { errors, isValid },
-  } = useForm<ForgotArgsData>({
-    resolver: zodResolver(emailValidationScheme),
-    mode: 'onBlur',
-    reValidateMode: 'onBlur',
-    defaultValues: { email: '' },
-  })
-  useEffect(() => {
-    if (isSuccess) {
-      setIsModalOpen(isSuccess)
-      reset()
-
-
-    }
-  }, [reset, isSuccess, submittedEmail])
-
-  const onSubmit: SubmitHandler<ForgotArgsData> = async data => {
-    try {
-      await passwordRecovery({
-        email: data.email,
-        recaptcha: recaptchaToken,
-        baseUrl: window.location.origin,
-      })
-      setSubmittedEmail(data.email)
-
-    } catch (err) {
-      console.error('Ошибка при выполнении запроса:', err)
-
-    }
-  }
+    errors,
+    isValid,
+    isLoading,
+    isSuccess,
+    handleVerify,
+    recaptchaRef,
+    recaptchaToken,
+    onSubmit,
+  } = useForgotPassword()
 
   return (
     <Card className={s.forgotpassword}>
       <Typography variant="h1" className={s.forgot_password_title}>
         Forgot Password
       </Typography>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={s.forgot_password_form}
-        id="forgot_password_form"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className={s.forgot_password_form}>
         <Input
           label="Email"
           error={errors.email?.message}
@@ -92,30 +50,27 @@ export const ForgotPasswordForm = () => {
           </Typography>
         )}
 
-        {isError && <Typography variant="error">{errorMessage}</Typography>}
+        <div className={s.forgot_password_controls}>
+          <div className={s.forgot_password_submit}>
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={!isValid || !recaptchaToken}
+              fullWidth
+            >
+              {isLoading ? 'Sending...' : 'Send Link'}
+            </Button>
+
+            <Button variant="text" asChild fullWidth>
+              <Link href={PATH.SIGNIN}>Back to Sign In</Link>
+            </Button>
+          </div>
+
+          <div className={s.forgot_password_recaptcha}>
+            <Recaptcha ref={recaptchaRef} onChange={handleVerify} />
+          </div>
+        </div>
       </form>
-
-      <div className={s.forgot_password_controls}>
-        <div className={s.forgot_password_submit}>
-          <Button
-            variant="primary"
-            type="submit"
-            disabled={!isValid || !recaptchaToken}
-            form="forgot_password_form"
-            fullWidth
-          >
-            {isLoading ? 'Sending...' : 'Send Link'}
-          </Button>
-
-          <Button variant="text" asChild fullWidth>
-            <Link href={PATH.SIGNIN}>Back to Sign In</Link>
-          </Button>
-        </div>
-
-        <div className={s.forgot_password_recaptcha}>
-          <Recaptcha  onChange={handleVerify} />
-        </div>
-      </div>
       <ForgotPasswordModal email={submittedEmail} open={isModalOpen} onChange={setIsModalOpen} />
     </Card>
   )

@@ -19,3 +19,9 @@ export type GoogleAuthResponse = {
   accessToken: 'string'
   email: 'string'
 }
+
+export type RecoveryPassword = {
+  email: string
+  recaptcha: string
+  baseUrl: string
+}

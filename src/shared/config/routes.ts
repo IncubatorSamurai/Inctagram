@@ -5,7 +5,7 @@ export const PATH = {
   NEWPASSWORD: '/auth/createnewpassword',
   FORGOTPASSWORD: '/auth/forgotpassword',
   REGISTRCONFIRMATION: '/auth/registration-confirmation',
-  LOGOUT: '/auth/logout',
+
 
   POSTS: '/posts',
   PAYMENTS: '/payments',
