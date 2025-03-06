@@ -1,7 +1,9 @@
-import { Button } from '@/shared/ui/button'
 import s from './Header.module.scss'
-import Link from 'next/link'
+import { Button } from '@/shared/ui/button'
+import { Link } from '@/i18n/routing'
 import { PATH } from '@/shared/config/routes'
+
+
 export const HeaderSpecialButtons = () => {
   return (
     <div className={s.nav_special}>

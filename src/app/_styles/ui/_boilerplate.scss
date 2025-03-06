@@ -1,4 +1,6 @@
 html {
+  height: 100%;
+  min-height: 100vh;
   box-sizing: border-box;
   font-size: 100%;
   -webkit-font-smoothing: antialiased;
@@ -29,12 +31,13 @@ a:visited {
 }
 
 body {
+  height: 100vh;
   margin: 0;
   padding: 0;
-
   font-family: var(--font-family-primary), sans-serif;
   line-height: var(--line-height-m);
   color: var(--color-light-100);
 
   background-color: var(--color-dark-700);
 }
+

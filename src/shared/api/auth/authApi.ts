@@ -1,10 +1,10 @@
 import { baseApi } from '@/shared/api/baseApi'
-
 import {
   GoogleAuthResponse,
   LoginAnswer,
   Login,
   ResendEmail,
+  RecoveryPassword,
   CheckRecoveryCodeResponse,
   MeResponse
 } from './authApi.types'
@@ -24,6 +24,12 @@ export const authApi = baseApi.injectEndpoints({
         url: 'v1/auth/login',
         method: 'POST',
         body: payload,
+      }),
+    }),
+    logout: build.mutation<void, void>({
+      query: () => ({
+        url: 'v1/auth/logout',
+        method: 'POST',
       }),
     }),
     confirmEmail: build.mutation<void, string>({
@@ -79,6 +85,15 @@ export const authApi = baseApi.injectEndpoints({
         }
       },
     })
+    passwordRecovery: build.mutation<void,  RecoveryPassword>(
+      {
+        query: (payload) => ({
+          url: '/v1/auth/password-recovery',
+          method: 'POST',
+          body: payload,
+        }),
+      }
+    ),
   }),
   
 })
@@ -93,4 +108,6 @@ export const {
   useResendRecoveryCodeMutation, 
   useRegistrationMutation,
   useMeQuery,
+  usePasswordRecoveryMutation,
+  useLogoutMutation,
 } = authApi
