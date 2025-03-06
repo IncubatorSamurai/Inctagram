@@ -79,7 +79,7 @@ export const authApi = baseApi.injectEndpoints({
     registration: build.mutation<ErrorResponse,RegistrationRequest>({
       query: payload => {
         return {
-          url: 'v1/auth/google/login',
+          url: 'v1/auth/registration',
           method: 'POST',
           body: payload,
         }
