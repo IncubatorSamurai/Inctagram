@@ -7,7 +7,8 @@ import { Recaptcha } from '@/shared/ui/recaptcha/Recaptcha'
 import { ForgotPasswordModal } from '@/features/auth/forgotPasswodForm/ui/forgotPaswordModal/ForgotPasswordModal'
 import { PATH } from '@/shared/config/routes'
 import { Link } from '@/i18n/routing'
-import { useForgotPassword } from '@/shared/hooks/useForgotPassword'
+import { useForgotPassword } from '@/features/auth/forgotPasswodForm/hooks/useForgotPassword'
+
 
 export const ForgotPasswordForm = () => {
   const {
