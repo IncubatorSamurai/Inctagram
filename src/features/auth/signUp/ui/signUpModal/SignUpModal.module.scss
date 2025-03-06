@@ -1,27 +1,20 @@
-.SignUpModalContainer {
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-  width: 100%;
-}
-
 .SignUpModalBtn {
   align-self: flex-end;
   width: size(96px);
 }
 
 @media screen and (width <= 576px) {
-  .SignUpModalContainer {
+  .formWrapper {
     display: flex;
     flex-direction: column;
     row-gap: size(20px);
     align-items: center;
+    justify-content: center;
 
     text-align: center;
   }
 
-  .SignUpModalBtn {
-    align-self: unset;
-    width: 100%;
+  .size {
+    margin-bottom: 0.75rem;
   }
 }

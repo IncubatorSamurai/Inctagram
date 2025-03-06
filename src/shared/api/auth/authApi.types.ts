@@ -23,3 +23,10 @@ export type GoogleAuthResponse = {
 export type CheckRecoveryCodeResponse = {
   email: string
 }
+
+export type RegistrationRequest = {
+  userName: string
+  email: string
+  password: string
+  baseUrl: string
+}

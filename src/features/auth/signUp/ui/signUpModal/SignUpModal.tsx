@@ -2,10 +2,9 @@ import { Button } from '@/shared/ui/button'
 import { DialogClose, Modal } from '@/shared/ui/modal'
 import { Typography } from '@/shared/ui/typography'
 import s from './SignUpModal.module.scss'
-import { modal } from '../SignUp'
 
 type SignUpModalProps = {
-  email: modal
+  email: string
   trigger?: React.ReactNode
   open: boolean
   onReset: () => void
@@ -23,9 +22,9 @@ export const SignUpModal = ({ error, email, open, onChange, onReset }: SignUpMod
     }
   }
   return (
-    <Modal title={email.title} open={open} onOpenChange={handler}>
+    <Modal title="Email sent" open={open} onOpenChange={handler}>
       <div className={s.SignUpModalContainer}>
-        <Typography variant="regular_text_14">{email.message}</Typography>
+        <Typography variant="regular_text_14">{email}</Typography>
         <div className={s.SignUpModalBtn}>
           <DialogClose asChild>
             <Button variant="primary" fullWidth={true}>

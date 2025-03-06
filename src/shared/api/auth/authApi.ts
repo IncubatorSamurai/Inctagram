@@ -7,9 +7,8 @@ import {
   ResendEmail,
   CheckRecoveryCodeResponse,
   MeResponse,
+  RegistrationRequest,
 } from './authApi.types'
-import { ErrorResponse } from '@/shared/types/auth'
-import { RegistrationRequest } from '@/features/auth/signUp'
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -69,7 +68,7 @@ export const authApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
-    registration: build.mutation<ErrorResponse, RegistrationRequest>({
+    registration: build.mutation<void, RegistrationRequest>({
       query: payload => {
         return {
           url: 'v1/auth/registration',
