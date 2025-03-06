@@ -26,11 +26,7 @@ import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
 import { BookMarkIcon } from '@/shared/assets/icons/BookMarkIcon'
 import { NavItem } from '@/shared/ui/nav-item'
 import { PATH } from '@/shared/config/routes'
-import { useAppSelector } from '@/shared/hooks'
-import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
-
-
 
 export const sidebarItems = {
   primary: [
@@ -153,8 +149,6 @@ type Sidebar = {
 }
 
 export const Sidebar = ({ isAdmin }: Sidebar) => {
-
-
   return (
     <nav className={s.sidebar}>
       {isAdmin ? (
@@ -162,7 +156,7 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
           {sidebarItems.specialAdmin.map(item => (
             <NavItem key={item.id} {...item} />
           ))}
-          <LogOut/>
+          <LogOut />
         </ul>
       ) : (
         <>
@@ -175,9 +169,8 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
             {sidebarItems.secondary.map(item => (
               <NavItem key={item.id} {...item} />
             ))}
-            <LogOut/>
+            <LogOut />
           </ul>
-
         </>
       )}
     </nav>
