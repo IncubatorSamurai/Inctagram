@@ -28,7 +28,7 @@ export const LogOut = () => {
       localStorage.removeItem('access_token')
 
       dispatch(setIsLoggedIn({ isLoggedIn: false }))
-      router.push(PATH.HOME)
+      router.push(PATH.PUBLIC)
 
     } catch (err) {
       console.error('Ошибка при выходе:', err)
