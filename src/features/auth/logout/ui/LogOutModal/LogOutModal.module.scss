@@ -1,0 +1,25 @@
+.LogOutModalContainer{
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+.LogOutModalBtn {
+  display: flex;
+  flex-direction: row;
+column-gap: 20px;
+
+}
+
+.logoutBtn{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  color:inherit;
+  padding:0;
+column-gap:20px;
+  font-weight: 400;
+  @media screen and (width <= 767px){
+
+  }
+}

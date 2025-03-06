@@ -1,4 +1,7 @@
 .sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   display: grid;
   grid-row-gap: 60px;
   grid-template-rows: auto 1fr;
@@ -8,7 +11,7 @@
   min-height: 660px;
   padding: 76px 24px;
   border-right: 1px solid var(--color-dark-300);
-
+  align-self: stretch;
   color: var(--color-light-100);
 }
 
@@ -21,10 +24,15 @@
   align-items: flex-start;
 
   list-style: none;
+  button {
+    margin-top:auto;
+  }
 }
 
 @media screen and (width <= 767px) {
   .sidebar {
+    grid-column: 1/-1;
+    grid-row: 4/5;
     display: flex;
     flex-direction: row;
     row-gap: 0;

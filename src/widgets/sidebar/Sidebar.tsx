@@ -12,7 +12,6 @@ import { MessageCircleOutlineIcon } from '@/shared/assets/icons/MessageCircleOut
 import { SearchOutlineIcon } from '@/shared/assets/icons/SearchOutlineIcon'
 import { TrendingUpOutlineIcon } from '@/shared/assets/icons/TrendingUpOutlineIcon'
 import { BookMarkOutlineIcon } from '@/shared/assets/icons/BookMarkOutlineIcon'
-import { LogOutOutlineIcon } from '@/shared/assets/icons/LogOutOutlineIcon'
 import { PersonIcon } from '@/shared/assets/icons/PersonIcon'
 import { CreditCardOutlineIcon } from '@/shared/assets/icons/CreditCardOutlineIcon'
 import { ImageOutlineIcon } from '@/shared/assets/icons/ImageOutlineIcon'
@@ -22,14 +21,11 @@ import { MessageCircleIcon } from '@/shared/assets/icons/MessageCircleIcon'
 import { SearchIcon } from '@/shared/assets/icons/SearchIcon'
 import { SettingsOutlineIcon } from '@/shared/assets/icons/SettingsOutlineIcon'
 import { TrendingUpIcon } from '@/shared/assets/icons/TrendingUpIcon'
-
-import { LogOutIcon } from '@/shared/assets/icons/LogOutIcon'
 import { CreditCartIcon } from '@/shared/assets/icons/CreditCardIcon'
 import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
 import { BookMarkIcon } from '@/shared/assets/icons/BookMarkIcon'
 import { NavItem } from '@/shared/ui/nav-item'
-import { useAppSelector } from '@/shared/hooks'
-import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
+import { LogOut } from '@/features/auth/logout/ui/LogOut'
 
 export const sidebarItems = {
   primary: [
@@ -107,15 +103,6 @@ export const sidebarItems = {
       classItem: 'favorites',
       activeIcon: <BookMarkIcon />,
     },
-    {
-      id: uuidv4(),
-      name: 'Log Out',
-      icon: <LogOutOutlineIcon />,
-      href: '/logout',
-      disabled: false,
-      classItem: 'logout',
-      activeIcon: <LogOutIcon />,
-    },
   ],
   specialAdmin: [
     {
@@ -161,7 +148,7 @@ type Sidebar = {
 }
 
 export const Sidebar = ({ isAdmin }: Sidebar) => {
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+
 
   return (
     <nav className={s.sidebar}>
@@ -170,8 +157,9 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
           {sidebarItems.specialAdmin.map(item => (
             <NavItem key={item.id} {...item} />
           ))}
+          <LogOut/>
         </ul>
-      ) : isLoggedIn ? (
+      ) : (
         <>
           <ul className={clsx(s.sidebar_list, s.primary)}>
             {sidebarItems.primary.map(item => (
@@ -182,10 +170,10 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
             {sidebarItems.secondary.map(item => (
               <NavItem key={item.id} {...item} />
             ))}
+            <LogOut/>
           </ul>
+
         </>
-      ) : (
-        ''
       )}
     </nav>
   )

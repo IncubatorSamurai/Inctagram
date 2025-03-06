@@ -11,6 +11,7 @@ import { MoreHorizontalIcon } from '@/shared/assets/icons/MoreHorizontalIcon'
 import { LangSelect } from '@/shared/ui/langSelect/LangSelect'
 import { useAppSelector } from '@/shared/hooks'
 import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
+import { LogOut } from '@/features/auth/logout/ui/LogOut'
 
 type HeaderType = {
   headerTitle?: string
@@ -66,7 +67,12 @@ const Header = ({ isAdmin, link, headerTitle, headerLogo, ...rest }: HeaderType)
                 classContent={s.header_dropdown_content}
                 classItemsContainer={s.header_dropdown_items_contaner}
               >
-                {isLoggedIn ? <NavList /> : <HeaderSpecialButtons />}
+                {isLoggedIn ?(
+                  <>
+                    <NavList />
+                    <LogOut/>
+                  </>
+                ) : <HeaderSpecialButtons />}
               </Dropdown>
             ) : isLoggedIn ? undefined : (
               <HeaderSpecialButtons />

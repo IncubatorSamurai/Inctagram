@@ -10,6 +10,7 @@ import {
 } from './authApi.types'
 
 
+
 export const authApi = baseApi.injectEndpoints({
   endpoints: build => ({
      me: build.query<MeResponse, void>({
@@ -22,6 +23,12 @@ export const authApi = baseApi.injectEndpoints({
         url: 'v1/auth/login',
         method: 'POST',
         body: payload,
+      }),
+    }),
+    logout: build.mutation<void, void>({
+      query: () => ({
+        url: 'v1/auth/logout',
+        method: 'POST',
       }),
     }),
     confirmEmail: build.mutation<void, string>({
@@ -81,4 +88,5 @@ export const {
   useCheckRecoveryCodeMutation,
   useResendRecoveryCodeMutation, 
   useMeQuery,
+    useLogoutMutation,
 } = authApi

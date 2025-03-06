@@ -30,6 +30,7 @@ export default async function LocaleLayout({
     <NextIntlClientProvider locale={locale} messages={messages}>
       <AuthProvider>
         <Header headerTitle={'Inctagram'} link={PATH.HOME} />
+
         {children}
       </AuthProvider>
     </NextIntlClientProvider>
