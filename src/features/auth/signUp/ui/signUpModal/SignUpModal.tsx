@@ -4,21 +4,18 @@ import { Typography } from '@/shared/ui/typography'
 import s from './SignUpModal.module.scss'
 import { modal } from '../SignUp'
 
-
 type SignUpModalProps = {
   email: modal
   trigger?: React.ReactNode
   open: boolean
-  onReset: ()=>void,
-  onChange: ()=>void
- error: boolean
+  onReset: () => void
+  onChange: () => void
+  error: boolean
 }
 
-
-
-export const SignUpModal = ({ error, email, open,  onChange , onReset}: SignUpModalProps) => {
+export const SignUpModal = ({ error, email, open, onChange, onReset }: SignUpModalProps) => {
   const handler = () => {
-    if(error) {
+    if (error) {
       onChange()
     } else {
       onChange()
@@ -26,11 +23,9 @@ export const SignUpModal = ({ error, email, open,  onChange , onReset}: SignUpMo
     }
   }
   return (
-    <Modal title={email.title}  open={open} onOpenChange={handler}>
+    <Modal title={email.title} open={open} onOpenChange={handler}>
       <div className={s.SignUpModalContainer}>
-        <Typography variant="regular_text_14">
-          {email.message}
-        </Typography>
+        <Typography variant="regular_text_14">{email.message}</Typography>
         <div className={s.SignUpModalBtn}>
           <DialogClose asChild>
             <Button variant="primary" fullWidth={true}>

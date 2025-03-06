@@ -12,7 +12,6 @@ import { useForm } from 'react-hook-form'
 import s from './LinkExpiredForm.module.scss'
 import { ErrorResponse } from '@/shared/types/auth'
 
-
 export const LinkExpiredForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [resendEmail, { isSuccess, error }] = useResendEmailMutation()
