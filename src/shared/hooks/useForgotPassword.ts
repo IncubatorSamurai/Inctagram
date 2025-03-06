@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback} from 'react'
+import { useState, useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { usePasswordRecoveryMutation } from '@/shared/api/auth/authApi'
@@ -8,41 +8,40 @@ import ReCAPTCHA from 'react-google-recaptcha'
 
 export const useForgotPassword = () => {
   const [submittedEmail, setSubmittedEmail] = useState('')
-  const [recaptchaToken, setRecaptchaToken] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const recaptchaRef = useRef<ReCAPTCHA>(null)
   const [passwordRecovery, { isLoading, isSuccess }] = usePasswordRecoveryMutation()
-
-  const handleVerify = useCallback((token: string | null) => {
-    setRecaptchaToken(token || '')
-  }, [])
 
   const {
     register,
     handleSubmit,
     reset,
     setError,
+    setValue,
     formState: { errors, isValid },
   } = useForm<ForgotArgsData>({
     resolver: zodResolver(emailValidationScheme),
     mode: 'onBlur',
     reValidateMode: 'onBlur',
-    defaultValues: { email: '' },
+    defaultValues: { email: '', captcha: '' },
   })
 
-  const onSubmit: SubmitHandler<ForgotArgsData> = async data => {
+  const handleVerify = (token: string | null) => {
+    setValue('captcha', token || '', { shouldValidate: true })
+  }
 
+  const onSubmit: SubmitHandler<ForgotArgsData> = async data => {
     try {
       await passwordRecovery({
         email: data.email,
-        recaptcha: recaptchaToken,
+        recaptcha: data.captcha,
         baseUrl: window.location.origin,
       }).unwrap()
 
       setSubmittedEmail(data.email)
       setIsModalOpen(true)
-      reset()
+      reset({email:"",captcha:""})
 
     } catch (error) {
       const errorMessage = error as ErrorResponse
@@ -50,10 +49,9 @@ export const useForgotPassword = () => {
         type: 'manual',
         message: errorMessage?.data?.messages[0]?.message || errorMessage?.data?.error,
       })
-
     } finally {
       recaptchaRef.current?.reset()
-      setRecaptchaToken('')
+
     }
   }
 
@@ -70,6 +68,6 @@ export const useForgotPassword = () => {
     handleVerify,
     recaptchaRef,
     onSubmit,
-    recaptchaToken,
+
   }
 }

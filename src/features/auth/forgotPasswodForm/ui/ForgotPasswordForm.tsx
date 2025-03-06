@@ -22,7 +22,6 @@ export const ForgotPasswordForm = () => {
     isSuccess,
     handleVerify,
     recaptchaRef,
-    recaptchaToken,
     onSubmit,
   } = useForgotPassword()
 
@@ -55,7 +54,7 @@ export const ForgotPasswordForm = () => {
             <Button
               variant="primary"
               type="submit"
-              disabled={!isValid || !recaptchaToken}
+              disabled={!isValid }
               fullWidth
             >
               {isLoading ? 'Sending...' : 'Send Link'}
