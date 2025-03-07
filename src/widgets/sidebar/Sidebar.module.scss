@@ -1,14 +1,10 @@
 .sidebar {
-  position: sticky;
-  top: 0;
-  height: 100vh;
   display: grid;
   grid-row-gap: 60px;
   grid-template-rows: auto 1fr;
 
   width: 220px;
   max-width: 220px;
-  min-height: 660px;
   padding: 76px 24px;
   border-right: 1px solid var(--color-dark-300);
   align-self: stretch;
@@ -24,8 +20,9 @@
   align-items: flex-start;
 
   list-style: none;
+
   button {
-    margin-top:auto;
+    margin-top: auto;
   }
 }
 
@@ -37,7 +34,7 @@
     flex-direction: row;
     row-gap: 0;
     align-items: center;
-
+    order: 2;
     width: 100%;
     max-width: 100%;
     min-height: auto;
