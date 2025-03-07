@@ -2,9 +2,10 @@ import { useState, useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { usePasswordRecoveryMutation } from '@/shared/api/auth/authApi'
-import { emailValidationScheme, ForgotArgsData } from '@/shared/schemas/emailValidationScheme'
+import { emailValidationScheme } from '@/shared/schemas/emailValidationScheme'
 import { ErrorResponse } from '@/shared/types/auth'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { ForgotPasswordFormSchema } from '@/shared/schemas/ForgotPasswordFormSchema'
 
 export const useForgotPassword = () => {
   const [submittedEmail, setSubmittedEmail] = useState('')
@@ -20,7 +21,7 @@ export const useForgotPassword = () => {
     setError,
     setValue,
     formState: { errors, isValid },
-  } = useForm<ForgotArgsData>({
+  } = useForm<ForgotPasswordFormSchema>({
     resolver: zodResolver(emailValidationScheme),
     mode: 'onBlur',
     reValidateMode: 'onBlur',
@@ -31,7 +32,7 @@ export const useForgotPassword = () => {
     setValue('captcha', token || '', { shouldValidate: true })
   }
 
-  const onSubmit: SubmitHandler<ForgotArgsData> = async data => {
+  const onSubmit: SubmitHandler<ForgotPasswordFormSchema> = async data => {
     try {
       await passwordRecovery({
         email: data.email,
@@ -54,15 +55,16 @@ export const useForgotPassword = () => {
 
     }
   }
+const disabled = !isValid
 
   return {
+    disabled,
     submittedEmail,
     isModalOpen,
     setIsModalOpen,
     register,
     handleSubmit,
     errors,
-    isValid,
     isLoading,
     isSuccess,
     handleVerify,

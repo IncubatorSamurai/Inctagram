@@ -12,13 +12,13 @@ import { useForgotPassword } from '@/features/auth/forgotPasswodForm/hooks/useFo
 
 export const ForgotPasswordForm = () => {
   const {
+    disabled,
     submittedEmail,
     isModalOpen,
     setIsModalOpen,
     register,
     handleSubmit,
     errors,
-    isValid,
     isLoading,
     isSuccess,
     handleVerify,
@@ -55,7 +55,7 @@ export const ForgotPasswordForm = () => {
             <Button
               variant="primary"
               type="submit"
-              disabled={!isValid }
+              disabled={disabled}
               fullWidth
             >
               {isLoading ? 'Sending...' : 'Send Link'}
