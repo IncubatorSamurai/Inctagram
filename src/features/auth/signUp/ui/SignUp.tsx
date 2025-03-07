@@ -10,9 +10,9 @@ import { Checkbox } from '@/shared/ui/checkbox'
 
 import { AuthWidget } from '@/widgets/authWidget/ui/AuthWidget'
 import { Link } from '@/i18n/routing'
-import { passwordSchema } from '@/shared/schemas/passwordSchema'
+import { passwordSchema } from '@/shared/schemes/createNewPasswordFormSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { emailValidationScheme } from '@/shared/schemas/emailValidationScheme'
+import { emailValidationScheme } from '@/shared/schemes/emailValidationScheme'
 import { z } from 'zod'
 
 export const SignUpSchem = z.object({
@@ -56,7 +56,7 @@ export const SignUpForm = () => {
 
   const onSubmit: SubmitHandler<FormSignUP> = data => {
     console.log(data)
-    reset();
+    reset()
   }
 
   const {
@@ -70,7 +70,9 @@ export const SignUpForm = () => {
   return (
     <Card className={s.root}>
       <div className={s.wrapper}>
-        <Typography variant="h1" className={s.text}>Sign Up</Typography>
+        <Typography variant="h1" className={s.text}>
+          Sign Up
+        </Typography>
         <AuthWidget />
         <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
           <Input
@@ -126,7 +128,9 @@ export const SignUpForm = () => {
           Do you have an account?
         </Typography>
         <Button fullWidth variant="text" className={s.margin}>
-        <Link className={s.linkStyles} href={'/signin'}>Sign In</Link>
+          <Link className={s.linkStyles} href={'/signin'}>
+            Sign In
+          </Link>
         </Button>
       </div>
     </Card>

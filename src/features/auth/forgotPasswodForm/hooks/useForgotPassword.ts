@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { usePasswordRecoveryMutation } from '@/shared/api/auth/authApi'
-import { emailValidationScheme, ForgotArgsData } from '@/shared/schemas/emailValidationScheme'
+import { emailValidationScheme, ForgotArgsData } from '@/shared/schemes/emailValidationScheme'
 import { ErrorResponse } from '@/shared/types/auth'
 import ReCAPTCHA from 'react-google-recaptcha'
 
@@ -41,8 +41,7 @@ export const useForgotPassword = () => {
 
       setSubmittedEmail(data.email)
       setIsModalOpen(true)
-      reset({email:"",captcha:""})
-
+      reset({ email: '', captcha: '' })
     } catch (error) {
       const errorMessage = error as ErrorResponse
       setError('email', {
@@ -51,7 +50,6 @@ export const useForgotPassword = () => {
       })
     } finally {
       recaptchaRef.current?.reset()
-
     }
   }
 
@@ -68,6 +66,5 @@ export const useForgotPassword = () => {
     handleVerify,
     recaptchaRef,
     onSubmit,
-
   }
 }

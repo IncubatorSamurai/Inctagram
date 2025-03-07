@@ -1,53 +1,59 @@
 'use client'
-
-import { LinkExpired } from '@/features/auth'
+import { EmailSentModal, LinkExpired } from '@/features/auth'
 import { useRouter } from '@/i18n/routing'
 import { useResendRecoveryCodeMutation } from '@/shared/api/auth/authApi'
 import { PATH } from '@/shared/config/routes'
 import { ErrorResponse } from '@/shared/types/auth'
 import { Button } from '@/shared/ui/button'
 import { useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import s from './LinkExpiredPage.module.scss'
 
 export const LinkExpiredPage = () => {
-  const [resendRecoveryCode, { isLoading, isError }] = useResendRecoveryCodeMutation()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [resendRecoveryCode, { isLoading, isSuccess }] = useResendRecoveryCodeMutation()
   const searchParams = useSearchParams()
   const router = useRouter()
 
-  const email = searchParams.get('email')
-
-  useEffect(() => {
-    if (!email) {
-      console.error('invalid email')
-      router.push(PATH.SIGNIN)
-    }
-  }, [email])
+  const email = searchParams.get('email') as string
 
   const resendLinkHandler = async () => {
     try {
       await resendRecoveryCode({
-        email: email as string,
+        email: email,
         baseUrl: window.location.origin,
       }).unwrap()
-      // TODO openModal then router.push(PATH.SIGNIN)
+
+      setIsModalOpen(true)
     } catch (error) {
+      router.push(PATH.SIGNIN)
+
       const errorMessage = error as ErrorResponse
       console.error(errorMessage.data.messages[0].message)
     }
-
-    router.push(PATH.SIGNIN)
   }
 
-  if (isError || isLoading) {
-    return <div>Loading...</div>
-  }
+  useEffect(() => {
+    if (!email) {
+      console.error('email is incorrect')
+      router.push(PATH.SIGNIN)
+    }
+  }, [email])
+
+  useEffect(() => {
+    if (isSuccess && !isModalOpen) {
+      router.push(PATH.SIGNIN)
+    }
+  }, [isSuccess, isModalOpen])
 
   return (
-    <LinkExpired>
-      <Button className={s.resendButton} onClick={resendLinkHandler}>
-        Resend link
-      </Button>
-    </LinkExpired>
+    <>
+      <LinkExpired>
+        <Button className={s.resendButton} onClick={resendLinkHandler} disabled={isLoading}>
+          {isLoading ? 'Loading...' : 'Resend link'}
+        </Button>
+      </LinkExpired>
+      <EmailSentModal email={email} open={isModalOpen} onChange={setIsModalOpen} />
+    </>
   )
 }
