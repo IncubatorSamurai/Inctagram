@@ -8,11 +8,11 @@ import { Typography } from '@/shared/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { SignInSchema, SignInSchemaData } from '../model/schema'
 import s from './SignInForm.module.scss'
 import { ErrorResponse } from '@/shared/types/auth'
 import { setIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { useAppDispatch } from '@/shared/hooks'
+import { SignInSchema, SignInSchemaData } from '@/shared/schemas/signInSchema'
 
 export const SignInForm = () => {
   const [errorMessage, setEmailMessage] = useState('')
