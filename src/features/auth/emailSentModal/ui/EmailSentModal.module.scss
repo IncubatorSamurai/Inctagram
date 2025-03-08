@@ -1,20 +1,21 @@
+@use '../../../../app/_styles/ui/function' as *;
 .modal {
   width: 100%;
-  max-width: 380px;
+  max-width: size(380px);
 
   & > div:nth-child(2) {
-    padding: 30px 24px 34px;
+    padding: size(30px) size(24px) size(34px);
   }
 
   @media screen and (width <= 576px) {
-    max-width: 330px;
+    max-width: size(330px);
 
     & > div:nth-child(1) {
       padding: 0.75rem;
     }
 
     & > div:nth-child(2) {
-      padding: 30px 12px 34px;
+      padding: size(30px) size(12px) size(34px);
     }
   }
 }
@@ -22,7 +23,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: size(18px);
 
   @media screen and (width <= 576px) {
     text-align: center;
@@ -31,7 +32,7 @@
 
 .button {
   align-self: flex-end;
-  width: 96px;
+  width: size(96px);
 
   @media screen and (width <= 576px) {
     align-self: unset;

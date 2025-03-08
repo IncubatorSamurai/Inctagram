@@ -4,20 +4,20 @@ import { Card } from '@/shared/ui/card/Card'
 import { Input } from '@/shared/ui/input'
 import { Button } from '@/shared/ui/button/Button'
 import { Recaptcha } from '@/shared/ui/recaptcha/Recaptcha'
-import { ForgotPasswordModal } from '@/features/auth/forgotPasswodForm/ui/forgotPaswordModal/ForgotPasswordModal'
 import { PATH } from '@/shared/config/routes'
 import { Link } from '@/i18n/routing'
 import { useForgotPassword } from '@/features/auth/forgotPasswodForm/hooks/useForgotPassword'
+import { EmailSentModal } from '@/features/auth'
 
 export const ForgotPasswordForm = () => {
   const {
+    disabled,
     submittedEmail,
     isModalOpen,
     setIsModalOpen,
     register,
     handleSubmit,
     errors,
-    isValid,
     isLoading,
     isSuccess,
     handleVerify,
@@ -51,7 +51,7 @@ export const ForgotPasswordForm = () => {
 
         <div className={s.forgot_password_controls}>
           <div className={s.forgot_password_submit}>
-            <Button variant="primary" type="submit" disabled={!isValid} fullWidth>
+            <Button variant="primary" type="submit" disabled={disabled} fullWidth>
               {isLoading ? 'Sending...' : 'Send Link'}
             </Button>
 
@@ -65,7 +65,7 @@ export const ForgotPasswordForm = () => {
           </div>
         </div>
       </form>
-      <ForgotPasswordModal email={submittedEmail} open={isModalOpen} onChange={setIsModalOpen} />
+      <EmailSentModal email={submittedEmail} open={isModalOpen} onChange={setIsModalOpen} />
     </Card>
   )
 }
