@@ -35,7 +35,7 @@ export const LinkExpiredForm = () => {
 
       setErrorMessage(data.messages[0].message)
     }
-  }, [error, isSuccess])
+  }, [router, error, isSuccess])
 
   const onSubmit = (data: LinkExpiredData) => {
     resendEmail({ email: data?.email, baseUrl: 'http://localhost:3000/auth/' })
