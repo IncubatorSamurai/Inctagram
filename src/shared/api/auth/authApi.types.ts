@@ -5,23 +5,31 @@ export type MeResponse = {
   userName: string
 }
 
-export type Login = {
+export type LoginArgs = {
   email: string
   password: string
 }
 
-export type LoginAnswer = {
+export type LoginResponse = {
   accessToken: string
 }
 
-export type ResendEmail = { email: string; baseUrl: string }
+export type ResendEmailArgs = {
+  email: string
+  baseUrl: string
+}
 
-export type GoogleAuthResponse = {
+export type GoogleLoginArgs = {
+  redirectUrl: string
+  code: string
+}
+
+export type GoogleLoginResponse = {
   accessToken: 'string'
   email: 'string'
 }
 
-export type RecoveryPassword = {
+export type PasswordRecoveryArgs = {
   email: string
   recaptcha: string
   baseUrl: string
@@ -29,4 +37,14 @@ export type RecoveryPassword = {
 
 export type CheckRecoveryCodeResponse = {
   email: string
+}
+
+export type CreateNewPasswordArgs = {
+  newPassword: string
+  recoveryCode: string
+}
+
+export type ResendRecoveryCodeArgs = {
+  email: string
+  baseUrl: string
 }

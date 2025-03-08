@@ -2,7 +2,7 @@
 import { useRouter } from '@/i18n/routing'
 import { useResendEmailMutation } from '@/shared/api/auth/authApi'
 import { PATH } from '@/shared/config/routes'
-import { emailValidationScheme, ForgotArgsData } from '@/shared/schemas/emailValidationScheme'
+import { emailValidationScheme, ForgotArgsData } from '@/shared/schemes/emailValidationScheme'
 
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import s from './LinkExpiredForm.module.scss'
 import { ErrorResponse } from '@/shared/types/auth'
-
 
 export const LinkExpiredForm = () => {
   const [errorMessage, setErrorMessage] = useState('')

@@ -1,12 +1,15 @@
 import { baseApi } from '@/shared/api/baseApi'
 import {
-  GoogleAuthResponse,
-  LoginAnswer,
-  Login,
-  ResendEmail,
-  RecoveryPassword,
+  GoogleLoginResponse,
+  GoogleLoginArgs,
+  LoginResponse,
+  LoginArgs,
+  ResendEmailArgs,
+  PasswordRecoveryArgs,
   CheckRecoveryCodeResponse,
   MeResponse,
+  CreateNewPasswordArgs,
+  ResendRecoveryCodeArgs,
 } from './authApi.types'
 
 export const authApi = baseApi.injectEndpoints({
@@ -17,7 +20,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
       providesTags: ['Me'],
     }),
-    login: build.mutation<LoginAnswer, Login>({
+    login: build.mutation<LoginResponse, LoginArgs>({
       query: payload => ({
         url: 'v1/auth/login',
         method: 'POST',
@@ -39,21 +42,21 @@ export const authApi = baseApi.injectEndpoints({
         },
       }),
     }),
-    resendEmail: build.mutation<void, ResendEmail>({
+    resendEmail: build.mutation<void, ResendEmailArgs>({
       query: payload => ({
         url: 'v1/auth/registration-email-resending',
         method: 'POST',
         body: payload,
       }),
     }),
-    googleLogin: build.mutation<GoogleAuthResponse, { redirectUrl: string; code: string }>({
+    googleLogin: build.mutation<GoogleLoginResponse, GoogleLoginArgs>({
       query: payload => ({
         url: 'v1/auth/google/login',
         method: 'POST',
         body: payload,
       }),
     }),
-    createNewPassword: build.mutation<void, { newPassword: string; recoveryCode: string }>({
+    createNewPassword: build.mutation<void, CreateNewPasswordArgs>({
       query: payload => ({
         url: 'v1/auth/new-password',
         method: 'POST',
@@ -67,14 +70,14 @@ export const authApi = baseApi.injectEndpoints({
         body: { recoveryCode },
       }),
     }),
-    resendRecoveryCode: build.mutation<void, { email: string; baseUrl: string }>({
+    resendRecoveryCode: build.mutation<void, ResendRecoveryCodeArgs>({
       query: payload => ({
         url: 'v1/auth/password-recovery-resending',
         method: 'POST',
         body: payload,
       }),
     }),
-    passwordRecovery: build.mutation<void, RecoveryPassword>({
+    passwordRecovery: build.mutation<void, PasswordRecoveryArgs>({
       query: payload => ({
         url: '/v1/auth/password-recovery',
         method: 'POST',
