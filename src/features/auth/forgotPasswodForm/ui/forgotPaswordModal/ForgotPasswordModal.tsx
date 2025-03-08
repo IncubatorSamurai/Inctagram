@@ -5,19 +5,27 @@ import s from './ForgotPasswordModal.module.scss'
 
 type ForgotPasswordModalProps = {
   email: string
-  trigger: React.ReactNode
+
+  open: boolean
+  onChange: (open: boolean) => void
 }
 
-export const ForgotPasswordModal = ({ trigger, email }: ForgotPasswordModalProps) => {
+export const ForgotPasswordModal = ({ email, open, onChange }: ForgotPasswordModalProps) => {
   return (
-    <Modal title="Email sent" className={s.forgotPasswordModal} trigger={trigger}>
+    <Modal
+      title="Email sent"
+      className={s.forgotPasswordModal}
+      open={open}
+      onOpenChange={onChange}
+      aria-describedby="forgot-password-modal-description"
+    >
       <div className={s.forgotPasswordModalContainer}>
-        <Typography variant="regular_text_14">
+        <Typography variant="regular_text_14" id="forgot-password-modal-description">
           We have sent a link to confirm your email to {email}
         </Typography>
         <div className={s.forgotPasswordModalBtn}>
           <DialogClose asChild>
-            <Button variant="primary" fullWidth={true}>
+            <Button variant="primary" fullWidth>
               OK
             </Button>
           </DialogClose>

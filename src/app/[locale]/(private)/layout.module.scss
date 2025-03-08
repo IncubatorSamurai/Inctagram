@@ -1,0 +1,11 @@
+.layout_container {
+  overflow: auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  align-items: start;
+
+  @media screen and (width <= 767px) {
+    grid-template-columns: 1fr;
+  }
+}

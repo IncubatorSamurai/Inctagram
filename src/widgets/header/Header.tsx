@@ -3,23 +3,26 @@ import React, { ComponentPropsWithoutRef, useEffect, useState } from 'react'
 import Image from 'next/image'
 import s from './Header.module.scss'
 import { Typography } from '@/shared/ui/typography'
-import { HeaderSpecialButtons } from '@/widgets/header/HeaderSpecialButtons'
-import Link from 'next/link'
+import { HeaderSpecialButtons } from './HeaderSpecialButtons'
+import { Link } from '@/i18n/routing'
 import { Dropdown } from '@/shared/ui/dropdown'
 import { NavList } from '@/shared/ui/nav-item/NavList'
 import { MoreHorizontalIcon } from '@/shared/assets/icons/MoreHorizontalIcon'
 import { LangSelect } from '@/shared/ui/langSelect/LangSelect'
+
+import { PATH } from '@/shared/config/routes'
+
 import { useAppSelector } from '@/shared/hooks'
 import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
+import { LogOut } from '@/features/auth/logout/ui/LogOut'
 
 type HeaderType = {
   headerTitle?: string
   headerLogo?: string
-  link?: string
   isAdmin?: boolean
 } & ComponentPropsWithoutRef<'header'>
 
-const Header = ({ isAdmin, link, headerTitle, headerLogo, ...rest }: HeaderType) => {
+const Header = ({ isAdmin, headerTitle, headerLogo, ...rest }: HeaderType) => {
   // Resize watching
   const [isMobile, setIsMobile] = useState(false)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
@@ -40,7 +43,7 @@ const Header = ({ isAdmin, link, headerTitle, headerLogo, ...rest }: HeaderType)
     <>
       <header className={s.header} {...rest}>
         <div className={s.container}>
-          <Link className={s.header_logo} href={link || '#'}>
+          <Link className={s.header_logo} href={isLoggedIn ? PATH.HOME : PATH.PUBLIC}>
             {headerLogo && (
               <Image
                 src={headerLogo}
@@ -66,7 +69,14 @@ const Header = ({ isAdmin, link, headerTitle, headerLogo, ...rest }: HeaderType)
                 classContent={s.header_dropdown_content}
                 classItemsContainer={s.header_dropdown_items_contaner}
               >
-                {isLoggedIn ? <NavList /> : <HeaderSpecialButtons />}
+                {isLoggedIn ? (
+                  <>
+                    <NavList />
+                    <LogOut />
+                  </>
+                ) : (
+                  <HeaderSpecialButtons />
+                )}
               </Dropdown>
             ) : isLoggedIn ? undefined : (
               <HeaderSpecialButtons />

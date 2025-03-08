@@ -1,16 +1,5 @@
-import { useTranslations } from 'next-intl'
-import { Button } from '@/shared/ui/button'
-import { Link } from '@/i18n/routing'
-import { PATH } from '@/shared/config/routes'
+'use client'
 
-export default function TestPage() {
-  const t = useTranslations('testSection')
-  return (
-    <h1>
-      {t('test')}
-      <Button asChild>
-        <Link href={PATH.SIGNUP}>Link</Link>
-      </Button>
-    </h1>
-  )
+export default function Page() {
+  return <div></div>
 }

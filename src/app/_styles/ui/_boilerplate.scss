@@ -1,5 +1,8 @@
 html {
   box-sizing: border-box;
+  height: 100%;
+  min-height: 100vh;
+
   font-size: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
