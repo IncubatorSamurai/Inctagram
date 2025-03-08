@@ -8,7 +8,7 @@ import {
   PasswordRecoveryArgs,
   CheckRecoveryCodeResponse,
   MeResponse,
-  RegistrationRequest,
+  RegistrationArgs,
   CreateNewPasswordArgs,
   ResendRecoveryCodeArgs,
 } from './authApi.types'
@@ -78,7 +78,7 @@ export const authApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
-    registration: build.mutation<void, RegistrationRequest>({
+    registration: build.mutation<void, RegistrationArgs>({
       query: payload => {
         return {
           url: 'v1/auth/registration',
@@ -94,7 +94,7 @@ export const authApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
-})
+  }),
 })
 
 export const {

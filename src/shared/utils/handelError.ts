@@ -7,7 +7,6 @@ import {
 import { SerializedError } from '@reduxjs/toolkit'
 import { ErrorResponse } from '@/shared/types/auth'
 
-
 export const handleError = (
   result: QueryReturnValue<ErrorResponse, FetchBaseQueryError | SerializedError, FetchBaseQueryMeta>
 ): string => {
@@ -41,7 +40,11 @@ export const handleError = (
   }
 
   // Проверяем данные, если ошибка не была найдена
-  if (result.data && result.data.data.statusCode !== undefined && result.data.data.statusCode !== 200) {
+  if (
+    result.data &&
+    result.data.data.statusCode !== undefined &&
+    result.data.data.statusCode !== 200
+  ) {
     return result.data.data.messages?.[0]?.message || 'An unknown error occurred'
   }
 

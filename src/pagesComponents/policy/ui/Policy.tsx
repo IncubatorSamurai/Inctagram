@@ -6,7 +6,6 @@ import { Typography } from '@/shared/ui/typography'
 import { ComponentProps } from 'react'
 import { PATH } from '@/shared/config/routes'
 
-
 type Policy = {
   className?: string
   policyHeader: string
@@ -17,7 +16,7 @@ export const Policy = ({ policyHeader, policyText, ...props }: Policy) => {
     <section className={s.policy} {...props}>
       <div className={s.policy_header}>
         <Button variant={'text'} asChild={true}>
-          <Link href={PATH.SIGNIN}>
+          <Link href={PATH.SIGNUP}>
             <ArrowBackOutlineIcon /> <span> Back to Sign Up </span>
           </Link>
         </Button>

@@ -39,7 +39,7 @@ export type CheckRecoveryCodeResponse = {
   email: string
 }
 
-export type RegistrationRequest = {
+export type RegistrationArgs = {
   userName: string
   email: string
   password: string

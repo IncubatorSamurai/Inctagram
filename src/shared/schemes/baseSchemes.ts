@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { passwordValidation } from '../lib'
+import { nameValidation, passwordValidation } from '../lib'
 
 export const newPassword = z
   .string()
@@ -13,3 +13,24 @@ export const newPassword = z
   .default('')
 
 export const confirmPassword = z.string().default('')
+
+export const name = z
+  .string()
+  .min(nameValidation.MIN_LENGTH, {
+    message: `Minimum number of characters ${nameValidation.MIN_LENGTH}`,
+  })
+  .max(nameValidation.MAX_LENGTH, {
+    message: `Maximum number of characters ${nameValidation.MAX_LENGTH}`,
+  })
+  .regex(nameValidation.REGEX, { message: nameValidation.ERROR_MESSAGES.PATTERN })
+  .default('')
+
+export const agree = z.boolean().default(false)
+
+export const email = z
+  .string()
+  .min(1, 'Email is required')
+  .email('Please enter a valid email address')
+  .default('')
+
+export const captcha = z.string().min(1, 'Captha is required').default('')
