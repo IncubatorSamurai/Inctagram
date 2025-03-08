@@ -1,0 +1,61 @@
+.root {
+  max-width: 23.625rem;
+  margin-top: 1.5rem;
+
+  .text {
+    margin-top: 1.5rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .checkWrapper {
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .error {
+    color: var(--color-danger-500);
+  }
+
+  .linkStyles {
+    color: var(--color-accent-500);
+    text-decoration: none;
+  }
+
+  .marginBtn {
+    margin-bottom: 1.875rem;
+  }
+}
+
+@media (width <= 576px) {
+  .root {
+    padding: 0 1rem;
+    border: none;
+    background-color: inherit;
+
+    .marginAuth {
+      margin: 0.875rem 0 1.25rem;
+    }
+
+    .sizeBtn {
+      min-height: 3rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .padding {
+      margin-top: 1.25rem;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

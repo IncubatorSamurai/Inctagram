@@ -51,7 +51,7 @@ export const SignInForm = () => {
         localStorage.setItem('email', data?.email)
       })
   }
-
+  const disabled = !isValid
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -72,7 +72,7 @@ export const SignInForm = () => {
         <Link href={PATH.FORGOTPASSWORD} className={s.link}>
           <Typography className={s.linkTitle}>Forgot Password</Typography>
         </Link>
-        <Button fullWidth={true} disabled={!isValid}>
+        <Button fullWidth={true} disabled={disabled}>
           Sign In
         </Button>
       </div>

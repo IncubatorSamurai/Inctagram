@@ -9,7 +9,6 @@ import { PATH } from '@/shared/config/routes'
 import { Link } from '@/i18n/routing'
 import { useForgotPassword } from '@/features/auth/forgotPasswodForm/hooks/useForgotPassword'
 
-
 export const ForgotPasswordForm = () => {
   const {
     submittedEmail,
@@ -52,12 +51,7 @@ export const ForgotPasswordForm = () => {
 
         <div className={s.forgot_password_controls}>
           <div className={s.forgot_password_submit}>
-            <Button
-              variant="primary"
-              type="submit"
-              disabled={!isValid }
-              fullWidth
-            >
+            <Button variant="primary" type="submit" disabled={!isValid} fullWidth>
               {isLoading ? 'Sending...' : 'Send Link'}
             </Button>
 

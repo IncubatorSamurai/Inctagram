@@ -8,6 +8,7 @@ import {
   PasswordRecoveryArgs,
   CheckRecoveryCodeResponse,
   MeResponse,
+  RegistrationArgs,
   CreateNewPasswordArgs,
   ResendRecoveryCodeArgs,
 } from './authApi.types'
@@ -77,6 +78,15 @@ export const authApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
+    registration: build.mutation<void, RegistrationArgs>({
+      query: payload => {
+        return {
+          url: 'v1/auth/registration',
+          method: 'POST',
+          body: payload,
+        }
+      },
+    }),
     passwordRecovery: build.mutation<void, PasswordRecoveryArgs>({
       query: payload => ({
         url: '/v1/auth/password-recovery',
@@ -95,6 +105,7 @@ export const {
   useCreateNewPasswordMutation,
   useCheckRecoveryCodeMutation,
   useResendRecoveryCodeMutation,
+  useRegistrationMutation,
   useMeQuery,
   usePasswordRecoveryMutation,
   useLogoutMutation,

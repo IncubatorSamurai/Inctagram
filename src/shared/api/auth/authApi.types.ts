@@ -39,6 +39,12 @@ export type CheckRecoveryCodeResponse = {
   email: string
 }
 
+export type RegistrationArgs = {
+  userName: string
+  email: string
+  password: string
+}
+
 export type CreateNewPasswordArgs = {
   newPassword: string
   recoveryCode: string
