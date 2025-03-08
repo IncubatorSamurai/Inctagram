@@ -1,8 +1,5 @@
 .header {
-  grid-column: 1/-1;
-  position: sticky;
-  z-index: 1000;
-  top: 0;
+  position: relative;
   background: var(--color-dark-700);
   width: 100%;
   padding: 0 calc(15px + (20 - 15) * ((100vw - 360px) / (1320 - 360)));
