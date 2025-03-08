@@ -20,7 +20,8 @@ name: z
       .max(NameValidation.MAX_LENGTH, {
         message: `Maximum number of characters ${NameValidation.MAX_LENGTH}`,
       })
-      .regex(NameValidation.REGEX, { message: NameValidation.ERROR_MESSAGES.PATTERN },)
+      .regex(NameValidation.REGEX, { message: NameValidation.ERROR_MESSAGES.PATTERN })
+      .default('')
         
 })
 

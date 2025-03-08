@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { emailValidationScheme } from '@/shared/schemas/emailValidationScheme'
 import { z } from 'zod'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ErrorResponse } from '@/shared/types/auth'
 import { useRegistrationMutation } from '@/shared/api/auth/authApi'
 import { RegistrationRequest } from '@/shared/api/auth/authApi.types'
@@ -24,24 +24,6 @@ type DataFormReq = {
     agree: boolean
   }
 
-// export const SignUpSchem = z.object({
-//     name: z
-//       .string()
-//       .min(6, {
-//         message: `Minimum number of characters 6`,
-//       })
-//       .max(30, {
-//         message: `Minimum number of characters 30`,
-//       })
-//       .regex(/^[a-zA-Z0-9_-]+$/),
-//     agree: z.boolean().refine(val => val === true, {
-//       message: 'You must agree to the terms',
-//     }),
-//   })
-  
-//   const combinedSchema = z.intersection(passwordSchema, emailValidationScheme)
-//   const secondCombine = z.intersection(combinedSchema, SignUpSchem)
-//   const actualCombine = z.intersection(secondCombine, SignUpSchem)
 const NameAgree = SignUpNameSchema.merge(SignUpAgreeSchema)
 const NameAgreeEmail = NameAgree.merge(emailValidationScheme)
 const actualSchema = z.intersection(NameAgreeEmail,passwordSchema)
@@ -50,7 +32,7 @@ export type FormSignUP = z.infer<typeof actualSchema>
 
 export const useSignUpForm = () => {
     const [open, setOpen] = useState(false);
-    const [registration, { isLoading, isError }] = useRegistrationMutation();
+    const [registration, { isLoading, isError, isSuccess }] = useRegistrationMutation();
 
     const {
       control,
@@ -64,7 +46,6 @@ export const useSignUpForm = () => {
       resolver: zodResolver(actualSchema),
       mode: 'onTouched',
       defaultValues: {
-        name: '',
         email: '',
         newPassword: '',
         confirmPassword: '',
@@ -99,7 +80,12 @@ export const useSignUpForm = () => {
     });
   
     const email = watch('email');
-  
+    useEffect(()=>{
+      if(isSuccess && !open) {
+        reset()
+      }
+    },[isSuccess, open])
+    
     return {
       open,
       setOpen,

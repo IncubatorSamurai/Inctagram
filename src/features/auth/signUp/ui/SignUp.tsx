@@ -17,14 +17,12 @@ export const SignUpForm = () => {
     open,
     setOpen,
     isLoading,
-    isError,
     register,
     handleSubmit,
     errors,
     disabled,
     onSubmit,
     value,
-    reset,
     onChange,
     email,
   } = useSignUpForm();
@@ -98,10 +96,8 @@ export const SignUpForm = () => {
           </Button>
         </div>
          <SignUpModal
-          error={isError}
            email={email}
            open={open}
-           onReset={reset}
            onChange={() => {
              setOpen(false)
            }}
