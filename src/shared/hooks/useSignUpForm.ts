@@ -42,7 +42,6 @@ export const useSignUpForm = () => {
       const registrationData = {
         userName: dataForm.name,
         password: dataForm.newPassword,
-        // baseUrl: `${process.env.NEXT_PUBLIC_BASE_URL}v1/auth/registration`,
         baseUrl: window.location.origin,
         email: dataForm.email,
       }
