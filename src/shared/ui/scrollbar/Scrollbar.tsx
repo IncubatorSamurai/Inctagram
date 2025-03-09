@@ -12,7 +12,7 @@ type Props = {
 export const Scrollbar = ({className, orientation = 'vertical', children, ...rest }: Props) => {
   return (
     <ScrollArea.Root className={clsx(s.Root,className)} {...rest}>
-      <ScrollArea.Viewport className={clsx(s.card, className)} > {children}</ScrollArea.Viewport>
+      <ScrollArea.Viewport className={clsx(s.viewport)} > {children}</ScrollArea.Viewport>
       <ScrollArea.Scrollbar className={s.scrollbar} orientation={orientation}>
         <ScrollArea.Thumb className={s.thumb} />
       </ScrollArea.Scrollbar>
