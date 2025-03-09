@@ -9,14 +9,14 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import s from './LinkExpiredForm.module.scss'
 import { ErrorResponse } from '@/shared/types/auth'
-import { LinkExpiredData, linkExpiredFormScheme } from '@/shared/schemas/linkExpiredFormScheme'
+import { LinkExpiredData, linkExpiredFormSchema } from '@/shared/schemes/linkExpiredFormSchema'
 
 export const LinkExpiredForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [resendEmail, { isSuccess, error }] = useResendEmailMutation()
 
   const { register, handleSubmit, formState } = useForm<LinkExpiredData>({
-    resolver: zodResolver(linkExpiredFormScheme),
+    resolver: zodResolver(linkExpiredFormSchema),
     mode: 'onTouched',
     defaultValues: { email: '' },
   })
@@ -35,7 +35,7 @@ export const LinkExpiredForm = () => {
 
       setErrorMessage(data.messages[0].message)
     }
-  }, [error, isSuccess])
+  }, [router, error, isSuccess])
 
   const onSubmit = (data: LinkExpiredData) => {
     resendEmail({ email: data?.email, baseUrl: 'http://localhost:3000/auth/' })

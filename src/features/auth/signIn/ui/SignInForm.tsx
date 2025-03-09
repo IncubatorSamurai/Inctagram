@@ -12,7 +12,7 @@ import s from './SignInForm.module.scss'
 import { ErrorResponse } from '@/shared/types/auth'
 import { setIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { useAppDispatch } from '@/shared/hooks'
-import { SignInSchema, SignInSchemaData } from '@/shared/schemas/signInSchema'
+import { SignInSchema, SignInSchemaData } from '@/shared/schemes/signInSchema'
 
 export const SignInForm = () => {
   const [errorMessage, setEmailMessage] = useState('')
