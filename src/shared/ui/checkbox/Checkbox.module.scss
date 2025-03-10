@@ -1,0 +1,95 @@
+.container {
+  --color-checkicon-back: var(--color-light-500);
+  --color-checkicon: var(--color-dark-900);
+  --color-checkbox-disabled: var(--color-light-900);
+
+  display: flex;
+  gap: 0.625rem;
+  align-items: center;
+  width: 100%;
+
+  &:has(:disabled) {
+    pointer-events: none;
+
+    .typography {
+      color: var(--color-checkbox-disabled);
+    }
+  }
+}
+
+.root {
+  all: unset;
+
+  cursor: pointer;
+
+  position: relative;
+
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 0.125rem solid var(--color-light-500);
+  border-radius: 0.125rem;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+
+    display: none;
+
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+
+    background-color: var(--color-dark-300);
+  }
+
+  &:hover::after {
+    display: block;
+  }
+
+  &:active::after {
+    display: block;
+    background-color: var(--color-dark-100);
+  }
+
+  &:focus-visible::after {
+    display: block;
+    background-color: var(--color-dark-500);
+  }
+
+  &:disabled {
+    border-color: var(--color-checkbox-disabled);
+
+    &[data-state='checked'] {
+      --color-checkicon-back: var(--color-dark-100);
+      --color-checkicon: var(--color-light-700);
+
+      border: none;
+    }
+  }
+}
+
+.indicator {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.label {
+  cursor: pointer;
+}
+
+.container .typography a,
+.container .typography a:visited {
+  color: var(--color-accent-500);
+}
+
+.error {
+  border: 0.125rem solid var(--color-danger-500);
+}

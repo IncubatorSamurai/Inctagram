@@ -1,0 +1,12 @@
+@use 'sass:math';
+
+$fz-default: 16px;
+$vp-1440: 1440px;
+
+@function size($size-in-px) {
+  @return math.div($size-in-px, $fz-default) * 1rem;
+}
+
+@function size-desktop($size-in-px) {
+  @return math.div($size-in-px, $vp-1440) * 100vw;
+}

@@ -1,0 +1,18 @@
+.form {
+  width: 100%;
+  max-width: 14.375rem;
+  margin: 0 auto;
+  margin-bottom: 2.25rem;
+
+  @media screen and (width <= 576px) {
+    max-width: 100%;
+  }
+}
+
+.button {
+  margin-top: 1.5rem;
+
+  @media screen and (width <= 576px) {
+    padding: 0.75rem 0;
+  }
+}

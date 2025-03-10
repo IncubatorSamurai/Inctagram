@@ -1,0 +1,120 @@
+.selectWrapper {
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+
+  & .selectLabel {
+    color: var(--color-light-900);
+  }
+
+  & .selectLabelDisabled {
+    color: var(--color-dark-100);
+  }
+}
+
+.selectTrigger {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.375rem 0.625rem 0.375rem 0.75rem;
+  border: 1px solid var(--color-dark-300);
+  border-radius: 0.125rem;
+
+  color: var(--color-light-100);
+
+  background-color: inherit;
+
+  span {
+    display: flex;
+    column-gap: 0.5rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-dark-300);
+  }
+
+  &:focus {
+    outline: 0.125rem solid var(--color-accent-500);
+  }
+
+  &[data-disabled] {
+    pointer-events: none;
+    color: var(--color-dark-300);
+
+    &:hover {
+      background-color: inherit;
+    }
+  }
+
+  &[data-state='closed'] .arrow {
+    transform: rotate(180deg);
+    transition: all 0.3s ease-in-out;
+  }
+
+  &[data-state='open'] {
+    position: relative;
+    border-color: var(--color-light-100);
+    border-radius: 0.125rem 0.125rem 0 0;
+
+    & .arrow {
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
+
+.selectContent {
+  overflow: hidden;
+
+  box-sizing: border-box;
+  width: var(--radix-select-trigger-width);
+  border: 1px solid var(--color-light-100);
+  border-radius: 0 0 0.125rem 0.125rem;
+
+  background-color: var(--color-dark-900);
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.selectGroup {
+  color: var(--color-light-100);
+
+  & [data-highlighted] {
+    color: var(--color-accent-500);
+    background-color: var(--color-dark-300);
+    outline: none;
+  }
+
+  & [data-state='checked'] {
+    .typography {
+      color: var(--color-accent-500);
+    }
+  }
+}
+
+.selectItem {
+  padding: 0.375rem 0.75rem;
+
+  span {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
+  }
+}
+
+.typography {
+  margin-right: 28px;
+}
+
+@media screen and (width <= 767px) {
+  .typography {
+    display: none;
+  }
+}
