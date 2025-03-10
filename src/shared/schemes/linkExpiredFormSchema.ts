@@ -1,7 +1,8 @@
 import { z } from 'zod'
+import { email } from '@/shared/schemes/baseSchemes'
 
 export const linkExpiredFormSchema = z.object({
-  email: z.string().min(1, 'Email is required').email('Please enter a valid email address'),
+  email: email,
 })
 
 export type LinkExpiredData = z.infer<typeof linkExpiredFormSchema>
