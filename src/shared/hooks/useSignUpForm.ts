@@ -61,7 +61,7 @@ export const useSignUpForm = () => {
     defaultValue: false,
   })
 
-  const email = watch('email')
+  const email = watch('email') // check rerender
   useEffect(() => {
     if (isSuccess && !open) {
       reset()
