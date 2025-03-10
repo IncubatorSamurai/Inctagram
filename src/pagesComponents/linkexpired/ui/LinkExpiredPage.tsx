@@ -8,12 +8,15 @@ import { Button } from '@/shared/ui/button'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import s from './LinkExpiredPage.module.scss'
+import { useTranslations } from 'next-intl'
 
 export const LinkExpiredPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [resendRecoveryCode, { isLoading, isSuccess }] = useResendRecoveryCodeMutation()
   const searchParams = useSearchParams()
   const router = useRouter()
+  const tAuth = useTranslations('auth')
+  const tCommon = useTranslations('common')
 
   const email = searchParams.get('email') as string
 
@@ -50,7 +53,7 @@ export const LinkExpiredPage = () => {
     <>
       <LinkExpired>
         <Button className={s.resendButton} onClick={resendLinkHandler} disabled={isLoading}>
-          {isLoading ? 'Loading...' : 'Resend link'}
+          {isLoading ? tCommon('loading') : tAuth('resendLink')}
         </Button>
       </LinkExpired>
       <EmailSentModal email={email} open={isModalOpen} onChange={setIsModalOpen} />

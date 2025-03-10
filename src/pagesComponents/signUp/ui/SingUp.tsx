@@ -11,21 +11,21 @@ import { SignUpForm } from '@/features/auth/signUp'
 import { useTranslations } from 'next-intl'
 
 export const SignUpPage = () => {
-  const t = useTranslations('auth')
+  const tAuth = useTranslations('auth')
   return (
     <div>
       <Card className={s.root}>
         <div className={s.wrapper}>
           <Typography variant="h1" className={s.text}>
-            {t('signUpHeader')}
+            {tAuth('signUpHeader')}
           </Typography>
           <AuthWidget className={s.marginAuth} />
           <SignUpForm />
           <Typography variant="regular_text_14" className={s.padding}>
-            {t('haveAccount')}
+            {tAuth('haveAccount')}
           </Typography>
           <Button fullWidth variant="text" className={s.marginBtn} asChild>
-            <Link href={PATH.SIGNIN}>{t('signIn')}</Link>
+            <Link href={PATH.SIGNIN}>{tAuth('signIn')}</Link>
           </Button>
         </div>
       </Card>

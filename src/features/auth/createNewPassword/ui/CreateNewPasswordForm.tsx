@@ -13,11 +13,14 @@ import { useSearchParams } from 'next/navigation'
 import { PATH } from '@/shared/config/routes'
 import { useEffect } from 'react'
 import { CreateNewPasswordFormSchema, createNewPasswordFormSchema } from '@/shared/schemes'
+import { useTranslations } from 'next-intl'
 
 export const CreateNewPasswordForm = () => {
   const [createNewPassword, { isLoading }] = useCreateNewPasswordMutation()
   const searchParams = useSearchParams()
   const router = useRouter()
+  const tAuth = useTranslations('auth')
+  const tCommon = useTranslations('common')
 
   const recoveryCode = searchParams.get('code') as string
 
@@ -48,13 +51,13 @@ export const CreateNewPasswordForm = () => {
   return (
     <Card className={s.card}>
       <Typography variant="h1" className={s.title}>
-        Create New Password
+        {tAuth('createNewPassword')}
       </Typography>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           type="password"
-          label="New password"
+          label={tAuth('newPassword')}
           placeholder="******************"
           {...register('newPassword')}
           error={errors.newPassword?.message}
@@ -62,7 +65,7 @@ export const CreateNewPasswordForm = () => {
 
         <Input
           type="password"
-          label="Password confirmation"
+          label={tAuth('passwordConfirmation')}
           placeholder="******************"
           {...register('confirmPassword')}
           error={errors.confirmPassword?.message}
@@ -70,11 +73,11 @@ export const CreateNewPasswordForm = () => {
         />
 
         <Typography variant="regular_text_14" className={s.description}>
-          Your password must be between 6 and 20 characters
+          {tAuth('passwordLength')}
         </Typography>
 
         <Button fullWidth disabled={buttonDisabled} type="submit" className={s.button}>
-          {isLoading ? 'Loading...' : 'Create new password'}
+          {isLoading ? tCommon('loading') : tAuth('createNewPassword')}
         </Button>
       </form>
     </Card>

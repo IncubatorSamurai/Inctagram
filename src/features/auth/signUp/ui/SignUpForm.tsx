@@ -35,7 +35,7 @@ export const SignUpForm = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
         <Input
-          label="Name"
+          label={tAuth('userName')}
           type="name"
           placeholder="User name"
           {...register('name')}
@@ -43,7 +43,7 @@ export const SignUpForm = () => {
         />
 
         <Input
-          label="Email"
+          label={tAuth('email')}
           type="email"
           placeholder="email@gmail.com"
           {...register('email')}
@@ -51,7 +51,7 @@ export const SignUpForm = () => {
         />
 
         <Input
-          label="Password"
+          label={tAuth('password')}
           type="password"
           placeholder="******************"
           {...register('newPassword')}
@@ -59,7 +59,7 @@ export const SignUpForm = () => {
         />
 
         <Input
-          label="Password confirmation"
+          label={tAuth('passwordConfirmation')}
           type="password"
           placeholder="******************"
           {...register('confirmPassword')}

@@ -13,11 +13,13 @@ import { ErrorResponse } from '@/shared/types/auth'
 import { setIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { useAppDispatch } from '@/shared/hooks'
 import { SignInSchema, SignInSchemaData } from '@/shared/schemes/signInSchema'
+import { useTranslations } from 'next-intl'
 
 export const SignInForm = () => {
   const [errorMessage, setEmailMessage] = useState('')
   const [login, { data, error }] = useLoginMutation()
   const dispatch = useAppDispatch()
+  const tAuth = useTranslations('auth')
 
   const router = useRouter()
 
@@ -58,22 +60,22 @@ export const SignInForm = () => {
         {...register('email')}
         error={errorMessage}
         className={s.input}
-        label="Email"
+        label={tAuth('email')}
         placeholder="Epam@epam.com"
       />
       <Input
         {...register('password')}
         error={validateError?.password?.message}
-        label="Password"
+        label={tAuth('password')}
         placeholder="**********"
         type="password"
       />
       <div className={s.box}>
         <Link href={PATH.FORGOTPASSWORD} className={s.link}>
-          <Typography className={s.linkTitle}>Forgot Password</Typography>
+          <Typography className={s.linkTitle}>{tAuth('forgotPassword')}</Typography>
         </Link>
         <Button fullWidth={true} disabled={disabled}>
-          Sign In
+          {tAuth('signIn')}
         </Button>
       </div>
     </form>

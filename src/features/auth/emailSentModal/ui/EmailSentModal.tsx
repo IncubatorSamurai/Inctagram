@@ -2,6 +2,7 @@ import { DialogClose, Modal } from '@/shared/ui/modal'
 import { Typography } from '@/shared/ui/typography'
 import { Button } from '@/shared/ui/button/Button'
 import s from './EmailSentModal.module.scss'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   email: string
@@ -10,9 +11,11 @@ type Props = {
 }
 
 export const EmailSentModal = ({ email, open, onChange }: Props) => {
+  const tAuth = useTranslations('auth')
+
   return (
     <Modal
-      title="Email sent"
+      title={tAuth('emailSent')}
       className={s.modal}
       open={open}
       onOpenChange={onChange}
@@ -20,7 +23,7 @@ export const EmailSentModal = ({ email, open, onChange }: Props) => {
     >
       <div className={s.container}>
         <Typography variant="regular_text_16" id="modalDescription">
-          We have sent a link to confirm your email to {email}
+          {tAuth('sentConfirmLink')} {email}
         </Typography>
         <DialogClose asChild>
           <Button variant="primary" fullWidth className={s.button}>

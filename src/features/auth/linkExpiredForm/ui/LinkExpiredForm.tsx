@@ -10,10 +10,12 @@ import { useForm } from 'react-hook-form'
 import s from './LinkExpiredForm.module.scss'
 import { ErrorResponse } from '@/shared/types/auth'
 import { LinkExpiredData, linkExpiredFormSchema } from '@/shared/schemes/linkExpiredFormSchema'
+import { useTranslations } from 'next-intl'
 
 export const LinkExpiredForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [resendEmail, { isSuccess, error }] = useResendEmailMutation()
+  const tAuth = useTranslations('auth')
 
   const { register, handleSubmit, formState } = useForm<LinkExpiredData>({
     resolver: zodResolver(linkExpiredFormSchema),
@@ -42,9 +44,9 @@ export const LinkExpiredForm = () => {
   }
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-      <Input {...register('email')} label="Email" error={errorMessage} />
+      <Input {...register('email')} label={tAuth('email')} error={errorMessage} />
       <Button fullWidth={true} className={s.button} disabled={!isValid}>
-        Resend verification link
+        {tAuth('resendVerifLink')}
       </Button>
     </form>
   )
