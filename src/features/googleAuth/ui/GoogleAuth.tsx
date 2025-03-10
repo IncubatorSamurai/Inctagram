@@ -14,9 +14,10 @@ export const GoogleAuth = () => {
   const [login] = useGoogleLoginMutation()
   const dispatch = useAppDispatch()
   const googleLogin = useGoogleLogin({
+    redirect_uri: 'https://picture-verse.com',
     onSuccess: async ({ code }) => {
       const response = await login({
-        redirectUrl: 'https://picture-verse.com/',
+        redirectUrl: 'https://picture-verse.com',
         code,
       }).unwrap()
       // fronted url in redirectUrl
