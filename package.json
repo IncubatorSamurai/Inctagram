@@ -71,6 +71,7 @@
     "prettier": "3.4.2",
     "sass": "1.83.4",
     "storybook": "8.5.2",
+    "storybook-next-intl": "^1.2.5",
     "stylelint": "16.14.1",
     "typescript": "5",
     "uuid": "^11.0.5",

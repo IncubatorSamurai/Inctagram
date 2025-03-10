@@ -9,7 +9,9 @@ import { Input } from '@/shared/ui/input'
 
 import s from './SignUp.module.scss'
 import { PATH } from '@/shared/config/routes'
-import { EmailSentModal } from '../../emailSentModal'
+import { EmailSentModal } from '@/features/auth'
+import { useTranslations } from 'next-intl'
+import { Typography } from '@/shared/ui/typography'
 
 export const SignUpForm = () => {
   const {
@@ -25,6 +27,10 @@ export const SignUpForm = () => {
     open,
     setOpen,
   } = useSignUpForm()
+
+  const tAuth = useTranslations('auth')
+  const tCommon = useTranslations('common')
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
@@ -68,15 +74,16 @@ export const SignUpForm = () => {
           checked={value}
           labelForText="small_text"
           label={
-            <p>
-              I agree to the <Link href={PATH.TERMS_OF_SERVICE}>Terms of Service</Link> and {''}
-              <Link href={PATH.PRIVACY_POLICY}>Privacy Policy</Link>
-            </p>
+            <Typography variant={'small_text'}>
+              {tCommon('agreementMsg')}{' '}
+              <Link href={PATH.TERMS_OF_SERVICE}>{tAuth('termsOfService')}</Link> {tCommon('and')}
+              <Link href={PATH.PRIVACY_POLICY}> {tAuth('privacyPolicy')}</Link>
+            </Typography>
           }
           error={errors.agree?.message}
         />
         <Button fullWidth disabled={isDisabled} className={s.sizeBtn}>
-          {isLoading ? '...Loading' : 'Sign Up'}
+          {isLoading ? tCommon('loading') : tAuth('signUp')}
         </Button>
         <EmailSentModal email={email} open={open} onChange={setOpen} />
       </form>

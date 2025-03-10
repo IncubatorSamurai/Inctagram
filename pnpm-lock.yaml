@@ -171,6 +171,9 @@ importers:
       storybook:
         specifier: 8.5.2
         version: 8.5.2(prettier@3.4.2)
+      storybook-next-intl:
+        specifier: ^1.2.5
+        version: 1.2.5(next-intl@3.26.5(next@15.1.6(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.83.4))(react@19.0.0))
       stylelint:
         specifier: 16.14.1
         version: 16.14.1(typescript@5.7.3)
@@ -4638,6 +4641,14 @@ packages:
 
   stackframe@1.3.4:
     resolution: {integrity: sha512-oeVtt7eWQS+Na6F//S4kJ2K2VbRlS9D43mAlMyVpVWovy9o+jfgH8O9agzANzaiLjclA0oYzUXEM4PurhSUChw==}
+
+  storybook-i18n@3.1.1:
+    resolution: {integrity: sha512-k1/lS+Rx6l5mJEYAHQWEgXuwU5IyWk7kjcJtm2FDIn1UqZwbEraGlrp/fEZKK2e/7+SXEQdKeCaTz7+63WTQxw==}
+
+  storybook-next-intl@1.2.5:
+    resolution: {integrity: sha512-YiI6tBHFNF/dU/uVfaXX+tzpbe/MhLD9YMvbn4vdn/t0UQ7yOJl9AFNHhsqhP5FMmIIDrXSr/WCRbLeJCnKq0A==}
+    peerDependencies:
+      next-intl: ^3
 
   storybook@8.5.2:
     resolution: {integrity: sha512-pf84emQ7Pd5jBdT2gzlNs4kRaSI3pq0Lh8lSfV+YqIVXztXIHU+Lqyhek2Lhjb7btzA1tExrhJrgQUsIji7i7A==}
@@ -10191,6 +10202,13 @@ snapshots:
   stable-hash@0.0.4: {}
 
   stackframe@1.3.4: {}
+
+  storybook-i18n@3.1.1: {}
+
+  storybook-next-intl@1.2.5(next-intl@3.26.5(next@15.1.6(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.83.4))(react@19.0.0)):
+    dependencies:
+      next-intl: 3.26.5(next@15.1.6(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.83.4))(react@19.0.0)
+      storybook-i18n: 3.1.1
 
   storybook@8.5.2(prettier@3.4.2):
     dependencies:
