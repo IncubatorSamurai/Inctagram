@@ -15,6 +15,8 @@ export const GoogleAuth = () => {
   const dispatch = useAppDispatch()
   const googleLogin = useGoogleLogin({
     redirect_uri: 'https://picture-verse.com',
+    ux_mode: 'redirect',
+    scope: 'email profile',
     onSuccess: async ({ code }) => {
       const response = await login({
         redirectUrl: 'https://picture-verse.com',
