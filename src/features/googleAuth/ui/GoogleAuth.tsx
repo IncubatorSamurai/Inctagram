@@ -16,9 +16,10 @@ export const GoogleAuth = () => {
   const googleLogin = useGoogleLogin({
     onSuccess: async ({ code }) => {
       const response = await login({
-        redirectUrl: window.location.origin,
+        redirectUrl: 'https://picture-verse.com/',
         code,
       }).unwrap()
+      // fronted url in redirectUrl
 
       if (response.accessToken) {
         localStorage.setItem('access_token', response.accessToken)
