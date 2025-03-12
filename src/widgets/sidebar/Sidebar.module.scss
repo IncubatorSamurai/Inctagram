@@ -59,5 +59,21 @@
     span {
       display: none;
     }
+
+  }
+}
+.active{
+  color: var(--color-accent-500);
+  svg{
+    color: var(--color-accent-500);
+  }
+}
+.create_item{
+  span{
+    font-weight: 400;
+  }
+
+  &:hover{
+color: var(--color-accent-100);
   }
 }
