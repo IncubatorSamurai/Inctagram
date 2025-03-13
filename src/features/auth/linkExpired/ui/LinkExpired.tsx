@@ -2,16 +2,19 @@ import { Typography } from '@/shared/ui/typography'
 import s from './LinkExpired.module.scss'
 import Image from 'next/image'
 import { ReactNode } from 'react'
+import { useTranslations } from 'next-intl'
 
 export const LinkExpired = ({ children }: { children?: ReactNode }) => {
+  const tAuth = useTranslations('auth')
+
   return (
     <div className={s.container}>
       <div className={s.box}>
         <Typography className={s.title} variant="h1">
-          Email verification link expired
+          {tAuth('emailExpired')}
         </Typography>
         <Typography className={s.text} variant="regular_text_16">
-          Looks like the verification link has expired. Not to worry, we can send the link again
+          {tAuth('sendLinkAgain')}
         </Typography>
       </div>
       <div className={s.content}>

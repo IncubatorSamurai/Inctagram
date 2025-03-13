@@ -3,17 +3,17 @@ import s from './LogOutModal.module.scss'
 
 import { Typography } from '@/shared/ui/typography'
 import { Button } from '@/shared/ui/button'
-type LogOut={
+type LogOut = {
   trigger: React.ReactNode
-  email:string
-  logOut : () => void
+  email: string
+  logOut: () => void
 }
-export const LogOutModal = ({logOut, email,trigger}:LogOut) => {
+export const LogOutModal = ({ logOut, email, trigger }: LogOut) => {
   return (
     <Modal title="Log out" className={s.LogOutModal} trigger={trigger}>
       <div className={s.LogOutModalContainer}>
         <Typography variant="regular_text_14">
-          Are you really want to log out of your account  {email}?
+          Are you really want to log out of your account {email}?
         </Typography>
         <div className={s.LogOutModalBtn}>
           <DialogClose asChild>
@@ -22,7 +22,7 @@ export const LogOutModal = ({logOut, email,trigger}:LogOut) => {
             </Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button variant="primary" fullWidth >
+            <Button variant="primary" fullWidth>
               No
             </Button>
           </DialogClose>

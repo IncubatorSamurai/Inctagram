@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Button } from './Button'
 import Image from 'next/image'
+import { Link } from '@/i18n/routing'
 
 const meta = {
   title: 'Components/Button',
@@ -57,10 +58,10 @@ export const FullWidth: Story = {
   },
 }
 
-export const Link: Story = {
+export const LinkVariant: Story = {
   args: {
     asChild: true,
-    children: <a href={'https://www.google.com/'}>link</a>,
+    children: <Link href={'https://www.google.com/'}>link</Link>,
   },
 }
 
@@ -69,5 +70,13 @@ export const IconButton: Story = {
     children: <Image src="/globe.svg" alt="icon" width={24} height={24} />,
     variant: 'icon',
     disabled: false,
+  },
+}
+
+export const LinkText: Story = {
+  args: {
+    asChild: true,
+    variant: 'text',
+    children: <Link href={'https://www.google.com/'}>link</Link>,
   },
 }

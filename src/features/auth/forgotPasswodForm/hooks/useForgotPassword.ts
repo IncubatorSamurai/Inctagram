@@ -2,9 +2,10 @@ import { useState, useRef } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { usePasswordRecoveryMutation } from '@/shared/api/auth/authApi'
-import { emailValidationScheme, ForgotArgsData } from '@/shared/schemas/emailValidationScheme'
+
 import { ErrorResponse } from '@/shared/types/auth'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { ForgotPasswordFormSchema, forgotPasswordFormSchema } from '@/shared/schemes/forgotPasswordFormSchema'
 
 export const useForgotPassword = () => {
   const [submittedEmail, setSubmittedEmail] = useState('')
@@ -20,18 +21,17 @@ export const useForgotPassword = () => {
     setError,
     setValue,
     formState: { errors, isValid },
-  } = useForm<ForgotArgsData>({
-    resolver: zodResolver(emailValidationScheme),
+  } = useForm<ForgotPasswordFormSchema>({
+    resolver: zodResolver(forgotPasswordFormSchema),
     mode: 'onBlur',
     reValidateMode: 'onBlur',
-    defaultValues: { email: '', captcha: '' },
   })
 
   const handleVerify = (token: string | null) => {
     setValue('captcha', token || '', { shouldValidate: true })
   }
 
-  const onSubmit: SubmitHandler<ForgotArgsData> = async data => {
+  const onSubmit: SubmitHandler<ForgotPasswordFormSchema> = async data => {
     try {
       await passwordRecovery({
         email: data.email,
@@ -41,8 +41,7 @@ export const useForgotPassword = () => {
 
       setSubmittedEmail(data.email)
       setIsModalOpen(true)
-      reset({email:"",captcha:""})
-
+      reset({ email: '', captcha: '' })
     } catch (error) {
       const errorMessage = error as ErrorResponse
       setError('email', {
@@ -51,10 +50,9 @@ export const useForgotPassword = () => {
       })
     } finally {
       recaptchaRef.current?.reset()
-
     }
   }
-
+const disabled = !isValid
   return {
     submittedEmail,
     isModalOpen,
@@ -62,12 +60,11 @@ export const useForgotPassword = () => {
     register,
     handleSubmit,
     errors,
-    isValid,
     isLoading,
     isSuccess,
     handleVerify,
     recaptchaRef,
     onSubmit,
-
+    disabled,
   }
 }

@@ -28,8 +28,7 @@ export const LogOut = () => {
       localStorage.removeItem('access_token')
 
       dispatch(setIsLoggedIn({ isLoggedIn: false }))
-      router.push(PATH.PUBLIC)
-
+      router.push(PATH.SIGNIN)
     } catch (err) {
       console.error('Ошибка при выходе:', err)
     }
@@ -38,7 +37,11 @@ export const LogOut = () => {
   return (
     <LogOutModal
       logOut={onLogOut}
-      trigger={<Button variant={"text"} className={s.logoutBtn}><LogOutIcon/> <span>Log Out</span></Button>}
+      trigger={
+        <Button variant={'text'} className={s.logoutBtn}>
+          <LogOutIcon /> <span>Log Out</span>
+        </Button>
+      }
       email={email || ''}
     />
   )

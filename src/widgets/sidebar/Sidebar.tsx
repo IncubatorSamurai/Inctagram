@@ -27,6 +27,9 @@ import { BookMarkIcon } from '@/shared/assets/icons/BookMarkIcon'
 import { NavItem } from '@/shared/ui/nav-item'
 import { PATH } from '@/shared/config/routes'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
+import { useState } from 'react'
+import { AddPostModal } from '@/features/post/AddPostModal/AddPostModal'
+import { Button } from '@/shared/ui/button/Button'
 
 export const sidebarItems = {
   primary: [
@@ -43,7 +46,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Create',
       icon: <PlusSquareOutlineIcon />,
-      href: PATH.CREATE,
+      href: '#',
       disabled: false,
       classItem: 'create',
       activeIcon: <PlusSquareIcon />,
@@ -144,11 +147,17 @@ export const sidebarItems = {
     },
   ],
 }
+
 type Sidebar = {
   isAdmin?: boolean
 }
 
 export const Sidebar = ({ isAdmin }: Sidebar) => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const handleOpenModal = () => setIsModalOpen(true)
+  const handleCloseModal = () => setIsModalOpen(false)
+
   return (
     <nav className={s.sidebar}>
       {isAdmin ? (
@@ -161,9 +170,22 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
       ) : (
         <>
           <ul className={clsx(s.sidebar_list, s.primary)}>
-            {sidebarItems.primary.map(item => (
-              <NavItem key={item.id} {...item} />
-            ))}
+            {sidebarItems.primary.map(item =>
+              item.name === 'Create' ? (
+                <li
+                  className={clsx(s.create_item, item.classItem, { [s.active]: isModalOpen })}
+                  key={item.id}
+                  data-disabled={item.disabled}
+                >
+                  <Button variant={'icon'} className={s.nav_create_btn} onClick={handleOpenModal}>
+                    {isModalOpen ? item.activeIcon : item.icon}
+                    <span className={s.nav_name}>{item.name}</span>
+                  </Button>
+                </li>
+              ) : (
+                <NavItem key={item.id} {...item} />
+              )
+            )}
           </ul>
           <ul className={clsx(s.sidebar_list, s.secondary)}>
             {sidebarItems.secondary.map(item => (
@@ -173,6 +195,7 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
           </ul>
         </>
       )}
+      {isModalOpen && <AddPostModal open={isModalOpen} onChange={handleCloseModal} />}
     </nav>
   )
 }
