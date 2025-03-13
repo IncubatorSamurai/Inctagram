@@ -10,6 +10,8 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { ImageOutlineIcon } from '@/shared/assets/icons/ImageOutlineIcon'
 import Image from 'next/image'
+import { AppDispatch } from '@/shared/store/store'
+import { useAppDispatch } from '@/shared/hooks'
 
 type Props = {
   open: boolean
@@ -25,11 +27,13 @@ const sliderSettings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
+  adaptiveHeight: true,
+  arrows: false,
 }
 
 export const AddPostModal = ({ open, onChange }: Props) => {
   const tModal = useTranslations('addModal')
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const uploadedFiles = useSelector(selectUploadedFiles)
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +68,7 @@ export const AddPostModal = ({ open, onChange }: Props) => {
             <div className={s.sliderContainer}>
               <Slider {...sliderSettings}>
                 {uploadedFiles.map((fileUrl, index) => (
-                  <div key={index} className={s.slick_slide}>
+                  <div key={`slide-${index}`} className={s.slick_slide} >
                     <Image src={fileUrl} alt={'photo'} width={220} height={228} />
                   </div>
                 ))}

@@ -8,5 +8,5 @@ type ImageModel = {
 };
 
 export type UploadPhotoRespond = {
-  images: Array<ImageModel>,
+  images: ImageModel[],
 };
