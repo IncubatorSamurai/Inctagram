@@ -6,6 +6,8 @@ import { Button } from '@/shared/ui/button'
 import { useMeQuery } from '@/shared/api/auth/authApi'
 import { useParams } from 'next/navigation'
 import { useGetPublicProfileQuery } from '@/shared/api/publicUser/publicUserApi'
+import { BlankCover } from '@/shared/ui/profile/blankCover/BlankCover'
+import { useGetPostsByUserNameQuery } from '@/shared/api/post/postApi'
 
 export const ProfilePage = () => {
   const params = useParams()
@@ -13,6 +15,11 @@ export const ProfilePage = () => {
   const { data: meData } = useMeQuery()
   const isMyProfile = meData?.userId === Number(userId)
   const { data: publicInfoProfile } = useGetPublicProfileQuery({ profileId: userId as string })
+  const { data: profilePosts } = useGetPostsByUserNameQuery({
+    userName: publicInfoProfile?.userName as string,
+  })
+
+  const avatarSrc = publicInfoProfile?.avatars[0]?.url
 
   const followArray = [
     publicInfoProfile?.userMetadata.following ? publicInfoProfile?.userMetadata.following : 0,
@@ -23,7 +30,17 @@ export const ProfilePage = () => {
   return (
     <div className={s.profilePage}>
       <section className={s.profile}>
-        <Image src={'next.svg'} className={s.avatar} width={200} height={200} alt={'avatar'} />
+        {avatarSrc ? (
+          <Image
+            src={avatarSrc ?? null}
+            className={s.avatar}
+            width={200}
+            height={200}
+            alt={'avatar'}
+          />
+        ) : (
+          <BlankCover />
+        )}
         <div className={s.profileInfo}>
           <div className={s.name}>
             <Typography variant={'h1'}>{publicInfoProfile?.userName}</Typography>
@@ -48,24 +65,21 @@ export const ProfilePage = () => {
               </li>
             ))}
           </div>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid aut expedita fugit
-            in ipsum libero magnam voluptates. Ab asperiores distinctio dolore doloremque, et
-            expedita harum, in nemo nisi omnis provident, quam tenetur! Blanditiis cum deserunt
-            officia sed voluptates. Consequatur eligendi expedita fuga reiciendis sunt? Doloremque
-            eveniet explicabo repellendus sunt.
-          </Typography>
+          <Typography>{publicInfoProfile?.aboutMe}</Typography>
         </div>
       </section>
       <section className={s.posts}>
-        <Image src={'next.svg'} className={s.post} width={234} height={228} alt={'post'} />
-        <Image src={'next.svg'} className={s.post} width={234} height={228} alt={'post'} />
-        <Image src={'next.svg'} className={s.post} width={234} height={228} alt={'post'} />
-        <Image src={'next.svg'} className={s.post} width={234} height={228} alt={'post'} />
-        <Image src={'next.svg'} className={s.post} width={234} height={228} alt={'post'} />
-        <Image src={'next.svg'} className={s.post} width={234} height={228} alt={'post'} />
-        <Image src={'next.svg'} className={s.post} width={234} height={228} alt={'post'} />
-        <Image src={'next.svg'} className={s.post} width={234} height={228} alt={'post'} />
+        {publicInfoProfile?.userName &&
+          profilePosts?.items.map(post => (
+            <Image
+              key={post.id}
+              src={post.images[0]?.url ?? null}
+              className={s.post}
+              width={234}
+              height={228}
+              alt={'post'}
+            />
+          ))}
       </section>
     </div>
   )
