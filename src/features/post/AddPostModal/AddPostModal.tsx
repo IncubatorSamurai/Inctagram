@@ -34,7 +34,8 @@ export const AddPostModal = ({ open, onChange }: Props) => {
   const tModal = useTranslations('addModal')
   const dispatch = useAppDispatch()
   const uploadedFiles = useSelector(selectUploadedFiles)
-
+  // const state = useSelector(state => state)
+  // console.log(uploadedFiles)
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     if (files) {
@@ -67,7 +68,7 @@ export const AddPostModal = ({ open, onChange }: Props) => {
             <div className={s.sliderContainer}>
               <Slider {...sliderSettings}>
                 {uploadedFiles.map((fileUrl, index) => (
-                  <div key={`slide-${index}`} className={s.slick_slide} >
+                  <div key={`slide-${index}`} className={s.slick_slide}>
                     <Image src={fileUrl} alt={'photo'} width={220} height={228} />
                   </div>
                 ))}
