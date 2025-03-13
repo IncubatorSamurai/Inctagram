@@ -27,6 +27,7 @@ import { BookMarkIcon } from '@/shared/assets/icons/BookMarkIcon'
 import { NavItem } from '@/shared/ui/nav-item'
 import { PATH } from '@/shared/config/routes'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
+import { useMeQuery } from '@/shared/api/auth/authApi'
 
 export const sidebarItems = {
   primary: [
@@ -52,7 +53,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'My Profile',
       icon: <PersonOutlineIcon />,
-      href: PATH.PROFILE,
+      href: PATH.MYPROFILE,
       disabled: false,
       classItem: 'profile',
       activeIcon: <PersonIcon />,
@@ -149,6 +150,8 @@ type Sidebar = {
 }
 
 export const Sidebar = ({ isAdmin }: Sidebar) => {
+  const { data: meInfo } = useMeQuery()
+
   return (
     <nav className={s.sidebar}>
       {isAdmin ? (
@@ -161,9 +164,12 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
       ) : (
         <>
           <ul className={clsx(s.sidebar_list, s.primary)}>
-            {sidebarItems.primary.map(item => (
-              <NavItem key={item.id} {...item} />
-            ))}
+            {sidebarItems.primary.map(item => {
+              if (item.name === 'My Profile') {
+                item = { ...item, href: `${item.href}/${meInfo?.userId}` }
+              }
+              return <NavItem key={item.id} {...item} />
+            })}
           </ul>
           <ul className={clsx(s.sidebar_list, s.secondary)}>
             {sidebarItems.secondary.map(item => (

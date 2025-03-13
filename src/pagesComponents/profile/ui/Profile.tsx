@@ -1,28 +1,52 @@
+'use client'
 import s from './Profile.module.scss'
 import Image from 'next/image'
 import { Typography } from '@/shared/ui/typography'
 import { Button } from '@/shared/ui/button'
+import { useMeQuery } from '@/shared/api/auth/authApi'
+import { useParams } from 'next/navigation'
+import { useGetPublicProfileQuery } from '@/shared/api/publicUser/publicUserApi'
 
 export const ProfilePage = () => {
+  const params = useParams()
+  const { userId } = params
+  const { data: meData } = useMeQuery()
+  const isMyProfile = meData?.userId === Number(userId)
+  const { data: publicInfoProfile } = useGetPublicProfileQuery({ profileId: userId as string })
+
+  const followArray = [
+    publicInfoProfile?.userMetadata.following ? publicInfoProfile?.userMetadata.following : 0,
+    publicInfoProfile?.userMetadata.followers ? publicInfoProfile?.userMetadata.followers : 0,
+    publicInfoProfile?.userMetadata.publications ? publicInfoProfile?.userMetadata.publications : 0,
+  ]
+
   return (
     <div className={s.profilePage}>
       <section className={s.profile}>
         <Image src={'next.svg'} className={s.avatar} width={200} height={200} alt={'avatar'} />
         <div className={s.profileInfo}>
           <div className={s.name}>
-            <Typography variant={'h1'}>URLProfile</Typography>
-            <Button variant={'secondary'}>Profile Settings</Button>
+            <Typography variant={'h1'}>{publicInfoProfile?.userName}</Typography>
+            {isMyProfile ? (
+              <Button variant={'secondary'}>Profile Settings</Button>
+            ) : (
+              <div className={s.followButtons}>
+                <Button variant={'primary'}>Follow</Button>
+                <Button variant={'secondary'}>Send Message</Button>
+              </div>
+            )}
           </div>
           <div className={s.statistics}>
-            <Typography className={s.statisticItem}>
-              2 218 <span>Following</span>
-            </Typography>
-            <Typography className={s.statisticItem}>
-              2 358 <span>Followers</span>
-            </Typography>
-            <Typography className={s.statisticItem}>
-              2 764 <span>Publications</span>
-            </Typography>
+            {followArray.map((item, i) => (
+              <li key={i} className={s.followInfoItem}>
+                <Typography variant={'bold_text_14'}>{item}</Typography>
+                <Typography variant={'regular_text_14'}>
+                  {i === 0 && 'Following'}
+                  {i === 1 && 'Followers'}
+                  {i === 2 && 'Publications'}
+                </Typography>
+              </li>
+            ))}
           </div>
           <Typography>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid aut expedita fugit
