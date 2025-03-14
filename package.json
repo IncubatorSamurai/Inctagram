@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "dev-test": "next dev",
     "build": "next build",
     "start": "next start",
     "format": "prettier --write src",
