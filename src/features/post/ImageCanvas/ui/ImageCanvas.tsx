@@ -54,7 +54,9 @@ export const ImageCanvas = ({ setImage, getFabricCanvas }: Props) => {
       // обработчик события для img, когда изображение загружается, срабатывает onload
       img.onload = () => {
         if (fabricCanvas) {
-          const fabricImage = new fabric.Image(img, config)
+          const scaleX = fabricCanvas.width! / img.width
+          const scaleY = fabricCanvas.height! / img.height
+          const fabricImage = new fabric.Image(img, { ...config, scaleX, scaleY })
 
           // метод добавляет изображение на холст
           fabricCanvas.add(fabricImage)

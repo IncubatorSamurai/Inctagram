@@ -1,22 +1,11 @@
 @use '../../../app/_styles/ui/function' as *;
+
 .modal {
   width: max-content;
   max-width: size(972px);
   min-width: size(492px);
 
   & > div:nth-child(2) {
-    // padding: size(30px) size(24px) size(34px);
-  }
-
-  @media screen and (width <= 576px) {
-    max-width: size(330px);
-
-    & > div:nth-child(1) {
-      // padding: 0.75rem;
-    }
-
-    & > div:nth-child(2) {
-      // padding: size(30px) size(12px) size(34px);
-    }
+    padding: 0;
   }
 }

@@ -1,10 +1,15 @@
+import { selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
+import { FilterCard } from '@/shared/ui/filterCard/FilterCard'
 import { fabric } from 'fabric'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 type Props = {
   image: fabric.Image | null
   fabricCanvas: fabric.Canvas | null
 }
 export const Filters = ({ image, fabricCanvas }: Props) => {
+  const uploadedFiles = useSelector(selectUploadedFiles)
   const applyFilter = (filterType: string) => {
     if (image && fabricCanvas) {
       // Очищаем все предыдущие фильтры, чтобы не накладывать их
@@ -38,7 +43,17 @@ export const Filters = ({ image, fabricCanvas }: Props) => {
       }
     }
   }
-
+  const [src, setSrc] = useState('')
+  useEffect(() => {
+    if (fabricCanvas) {
+      const dataURL = fabricCanvas.toDataURL({
+        format: 'png',
+        quality: 1,
+      })
+      setSrc(dataURL)
+      console.log('Сохраненное изображение (base64):', dataURL)
+    }
+  }, [fabricCanvas])
   const saveImage = () => {
     if (fabricCanvas) {
       const dataURL = fabricCanvas.toDataURL({
@@ -48,9 +63,10 @@ export const Filters = ({ image, fabricCanvas }: Props) => {
       console.log('Сохраненное изображение (base64):', dataURL)
     }
   }
-
+  console.log(src)
   return (
     <div>
+      <FilterCard src={uploadedFiles[0]} />
       <button onClick={() => applyFilter('vintage')}>Винтаж</button>
       <button onClick={() => applyFilter('lomo')}>Ломо</button>
       <button onClick={() => applyFilter('soft-focus')}>Мягкий фокус</button>
