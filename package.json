@@ -28,11 +28,11 @@
     "@storybook/addon-actions": "^8.5.3",
     "@types/fabric": "^5.3.10",
     "async-mutex": "^0.5.0",
-    "canvas": "^2.9.0",
+    "canvas": "^3.1.0",
     "clsx": "^2.1.1",
     "cookies-next": "^5.1.0",
     "date-fns": "^4.1.0",
-    "fabric": "^4.5.1",
+    "fabric": "^6.6.1",
     "next": "15.1.6",
     "next-intl": "^3.26.5",
     "react": "19.0.0",
@@ -41,6 +41,7 @@
     "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "7.54.2",
     "react-redux": "9.2.0",
+    "skia-canvas": "^2.0.2",
     "zod": "^3.24.2"
   },
   "devDependencies": {

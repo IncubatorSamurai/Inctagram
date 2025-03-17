@@ -31,8 +31,8 @@ export const AddPostModal = ({ open, onChange }: Props) => {
     >
       {isChoosen ? (
         <>
-          <ImageCanvas setImage={e => setImage(e)} getFabricCanvas={e => setFabricCanvas(e)} />
-          <Filters image={image} fabricCanvas={fabricCanvas} />
+          {/* <ImageCanvas setImage={e => setImage(e)} getFabricCanvas={e => setFabricCanvas(e)} /> */}
+          {/* <Filters image={image} fabricCanvas={fabricCanvas} /> */}
         </>
       ) : (
         <>

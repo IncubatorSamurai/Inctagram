@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useRef, useState } from 'react'
 import s from './ImageCanvas.module.scss'
 import { fabric } from 'fabric'
@@ -17,7 +18,9 @@ export const ImageCanvas = ({ setImage, getFabricCanvas }: Props) => {
   const [fabricCanvas, setFabricCanvas] = useState<fabric.Canvas | null>(null)
 
   useEffect(() => {
-    getFabricCanvas(fabricCanvas)
+    if (fabricCanvas) {
+      getFabricCanvas(fabricCanvas)
+    }
   }, [fabricCanvas])
 
   useEffect(() => {
