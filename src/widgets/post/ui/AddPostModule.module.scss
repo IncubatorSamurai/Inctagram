@@ -1,0 +1,11 @@
+@use '../../../app/_styles/ui/function' as *;
+
+.modal {
+  width: max-content;
+  max-width: size(972px);
+  min-width: size(492px);
+
+  & > div:nth-child(2) {
+    padding: 0;
+  }
+}

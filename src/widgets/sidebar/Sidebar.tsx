@@ -28,8 +28,8 @@ import { NavItem } from '@/shared/ui/nav-item'
 import { PATH } from '@/shared/config/routes'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
 import { useState } from 'react'
-import { AddPostModal } from '@/features/post/AddPostModal/AddPostModal'
 import { Button } from '@/shared/ui/button/Button'
+import { AddPostModal } from '../post'
 
 export const sidebarItems = {
   primary: [
