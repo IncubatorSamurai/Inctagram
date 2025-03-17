@@ -28,7 +28,7 @@
     "@storybook/addon-actions": "^8.5.3",
     "@types/fabric": "^5.3.10",
     "async-mutex": "^0.5.0",
-    "canvas": "^3.1.0",
+    "canvas": "^2.9.0",
     "clsx": "^2.1.1",
     "cookies-next": "^5.1.0",
     "date-fns": "^4.1.0",
