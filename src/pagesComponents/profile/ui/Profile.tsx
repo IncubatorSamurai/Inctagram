@@ -71,14 +71,9 @@ export const ProfilePage = () => {
       <section className={s.posts}>
         {publicInfoProfile?.userName &&
           profilePosts?.items.map(post => (
-            <Image
-              key={post.id}
-              src={post.images[0]?.url ?? null}
-              className={s.post}
-              width={234}
-              height={228}
-              alt={'post'}
-            />
+            <div key={post.id} className={s.postWrapper}>
+              <Image src={post.images[0]?.url ?? null} className={s.post} fill alt={'post'} />
+            </div>
           ))}
       </section>
     </div>
