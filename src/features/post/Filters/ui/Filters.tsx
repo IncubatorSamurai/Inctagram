@@ -1,9 +1,6 @@
 import { selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
 import { FilterCard } from '@/shared/ui/filterCard/FilterCard'
 import * as fabric from 'fabric'
-import Cropper from 'react-easy-crop'
-
-import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 type Props = {
@@ -13,9 +10,6 @@ type Props = {
 
 export const Filters = ({ image, fabricCanvas }: Props) => {
   const uploadedFiles = useSelector(selectUploadedFiles)
-  const [croppedImage, setCroppedImage] = useState<string>('')
-  const [crop, setCrop] = useState({ x: 0, y: 0 })
-  const [zoom, setZoom] = useState(1)
 
   const applyFilter = (filterType: string) => {
     if (image && fabricCanvas) {

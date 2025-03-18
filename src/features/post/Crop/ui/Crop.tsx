@@ -1,32 +1,46 @@
 import { allUploadedFiles, selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
 import { useRef, useState, useEffect } from 'react'
-import Cropper from 'react-easy-crop'
+import Cropper, { Area, AreaSize } from 'react-easy-crop'
 import { useSelector } from 'react-redux'
 import s from './Crop.module.scss'
 import Slider from 'react-slick'
 import { useAppDispatch } from '@/shared/hooks'
+import { slickSettings } from '../lib/slickSettings'
+import { createBlobArray } from '../lib/createBlobArray'
 
 export const Crop = () => {
   const uploadedFiles = useSelector(selectUploadedFiles)
+
+  // Сохраняем состояние обрезки для каждого изображения
   const [cropStates, setCropStates] = useState<{
     [key: number]: { crop: { x: number; y: number }; zoom: number }
   }>({})
-  const [croppedImages, setCroppedImages] = useState<string[]>([]) // Храним обрезанные изображения для каждого слайда
+
+  const [croppedImages, setCroppedImages] = useState<string[]>([])
   const [slideIndex, setSlideIndex] = useState(0)
   const sliderRef = useRef<Slider | null>(null)
   const dispatch = useAppDispatch()
 
-  // Инициализация состояния crop для первого слайда
-  useEffect(() => {
-    if (uploadedFiles.length > 0 && !cropStates[0]) {
-      setCropStates(prevState => ({
-        ...prevState,
-        [0]: { crop: { x: 0, y: 0 }, zoom: 1 },
-      }))
-    }
-  }, [uploadedFiles, cropStates])
+  const settings = {
+    ...slickSettings,
+    beforeChange: (current: number, next: number) => setSlideIndex(next),
+  }
 
-  const onCropComplete = (croppedArea, croppedAreaPixels) => {
+  // Инициализация состояния crop для всех слайдов
+  useEffect(() => {
+    if (uploadedFiles.length > 0) {
+      const newCropsState = uploadedFiles.reduce(
+        (acc, _, index) => {
+          acc[index] = { crop: { x: 0, y: 0 }, zoom: 1 }
+          return acc
+        },
+        {} as { [key: number]: { crop: { x: number; y: number }; zoom: number } }
+      )
+      setCropStates(newCropsState)
+    }
+  }, [uploadedFiles])
+
+  const onCropComplete = (croppedArea: Area, croppedAreaPixels: AreaSize) => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
 
@@ -52,15 +66,6 @@ export const Crop = () => {
     }
   }
 
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    beforeChange: (current: number, next: number) => setSlideIndex(next),
-  }
-
   const handleCropChange = (newCrop: { x: number; y: number }) => {
     setCropStates(prevStates => ({
       ...prevStates,
@@ -76,34 +81,17 @@ export const Crop = () => {
   }
 
   const save = () => {
-    const blobArray: string[] = []
-
-    croppedImages.forEach(imageUrl => {
-      if (imageUrl) {
-        // Преобразуем Data URL в Blob
-        const byteString = atob(imageUrl.split(',')[1]) // Получаем строку данных из Data URL
-        const arrayBuffer = new ArrayBuffer(byteString.length)
-        const uintArray = new Uint8Array(arrayBuffer)
-
-        // Заполняем массив байтов
-        for (let i = 0; i < byteString.length; i++) {
-          uintArray[i] = byteString.charCodeAt(i)
-        }
-
-        // Создаем Blob из данных
-        const blob = new Blob([arrayBuffer], { type: 'image/png' })
-
-        // Создаем объект URL для Blob
-        const objectUrl = URL.createObjectURL(blob)
-        blobArray.push(objectUrl)
-      }
+    // Если изображение было обрезано, используем его обрезанный вариант
+    const updatedImages = uploadedFiles.map((fileUrl, index) => {
+      return croppedImages[index] || fileUrl // Используем обрезанное изображение, если оно есть
     })
-    dispatch(allUploadedFiles(blobArray)) // Отправляем массив Blob в Redux
+    console.log(updatedImages)
+    const blobArray = createBlobArray(updatedImages)
 
-    console.log(blobArray, 'blobArray') // Массив из Blob объектов
+    // Диспатчим все изображения (включая те, которые не были обрезаны)
+    dispatch(allUploadedFiles(blobArray))
   }
 
-  console.log(uploadedFiles, 'uploadedFiles')
   return (
     <div className={s.container}>
       <Slider ref={sliderRef} {...settings}>
@@ -123,19 +111,15 @@ export const Crop = () => {
                 style={{
                   containerStyle: {
                     position: 'relative',
-                    background: '#000',
+                    background: 'transparent',
                     objectFit: 'cover',
                     width: '100%',
-                    height: '200px',
+                    maxWidth: '490px',
+                    height: '503px',
+                    boxShadow: 'none',
                   },
                 }}
               />
-              {/* Если обрезанное изображение есть, отображаем его, иначе показываем исходное */}
-              {/* {croppedImage ? (
-                <img src={croppedImage} alt={`Cropped image ${index}`} />
-              ) : (
-                <img src={fileUrl} alt={`Original image ${index}`} />
-              )} */}
             </div>
           )
         })}
