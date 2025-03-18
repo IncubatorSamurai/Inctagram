@@ -1,11 +1,12 @@
 import { selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
 import { FilterCard } from '@/shared/ui/filterCard/FilterCard'
-import { fabric } from 'fabric'
+import * as fabric from 'fabric'
+
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 type Props = {
-  image: fabric.Image | null
+  image: fabric.FabricImage | null
   fabricCanvas: fabric.Canvas | null
 }
 export const Filters = ({ image, fabricCanvas }: Props) => {
@@ -15,22 +16,22 @@ export const Filters = ({ image, fabricCanvas }: Props) => {
       // Очищаем все предыдущие фильтры, чтобы не накладывать их
       image.filters = []
 
-      let filter: fabric.IBaseFilter | null = null
+      let filter: fabric.filters.BaseFilter<string> | null = null
       switch (filterType) {
         case 'vintage':
-          filter = new fabric.Image.filters.Sepia()
+          filter = new fabric.filters.Sepia()
           break
         case 'lomo':
-          filter = new fabric.Image.filters.Contrast({ contrast: 0.2 })
+          filter = new fabric.filters.Contrast({ contrast: 0.2 })
           break
         case 'soft-focus':
-          filter = new fabric.Image.filters.Blur({ blur: 0.1 })
+          filter = new fabric.filters.Blur({ blur: 0.1 })
           break
         case 'glow':
-          filter = new fabric.Image.filters.Brightness({ brightness: 0.2 })
+          filter = new fabric.filters.Brightness({ brightness: 0.2 })
           break
         case 'color-pop':
-          filter = new fabric.Image.filters.Saturation({ saturation: 0.3 })
+          filter = new fabric.filters.Saturation({ saturation: 0.3 })
           break
         default:
           return
@@ -49,6 +50,7 @@ export const Filters = ({ image, fabricCanvas }: Props) => {
       const dataURL = fabricCanvas.toDataURL({
         format: 'png',
         quality: 1,
+        multiplier: 1,
       })
       setSrc(dataURL)
       console.log('Сохраненное изображение (base64):', dataURL)
@@ -59,6 +61,7 @@ export const Filters = ({ image, fabricCanvas }: Props) => {
       const dataURL = fabricCanvas.toDataURL({
         format: 'png',
         quality: 1,
+        multiplier: 1,
       })
       console.log('Сохраненное изображение (base64):', dataURL)
     }

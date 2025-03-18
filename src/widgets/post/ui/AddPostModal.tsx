@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { AddImages } from '@/features/post/UploadImages'
 import { Filters } from '@/features/post/Filters'
 import { ImageCanvas } from '@/features/post/ImageCanvas'
+import * as fabric from 'fabric'
 
 type Props = {
   open: boolean
@@ -14,7 +15,7 @@ type Props = {
 }
 
 export const AddPostModal = ({ open, onChange }: Props) => {
-  const [image, setImage] = useState<fabric.Image | null>(null)
+  const [image, setImage] = useState<fabric.FabricImage | null>(null)
   const [fabricCanvas, setFabricCanvas] = useState<fabric.Canvas | null>(null)
 
   const [isChoosen, setIsChoosen] = useState(false)
@@ -31,8 +32,8 @@ export const AddPostModal = ({ open, onChange }: Props) => {
     >
       {isChoosen ? (
         <>
-          {/* <ImageCanvas setImage={e => setImage(e)} getFabricCanvas={e => setFabricCanvas(e)} /> */}
-          {/* <Filters image={image} fabricCanvas={fabricCanvas} /> */}
+          <ImageCanvas setImage={e => setImage(e)} getFabricCanvas={e => setFabricCanvas(e)} />
+          <Filters image={image} fabricCanvas={fabricCanvas} />
         </>
       ) : (
         <>

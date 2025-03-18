@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import s from './ImageCanvas.module.scss'
-import { fabric } from 'fabric'
+import * as fabric from 'fabric'
+
 import { useSelector } from 'react-redux'
 import { selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
 import { config } from '../lib/fabricImageConfig'
