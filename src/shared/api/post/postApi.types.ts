@@ -1,5 +1,3 @@
-import { string } from 'zod'
-
 type ImageModel = {
   url: string
   width: number
