@@ -23,13 +23,13 @@ export const AddPostModal = ({ open, onChange }: Props) => {
   const [fabricCanvas, setFabricCanvas] = useState<fabric.Canvas | null>(null)
   const dispatch = useAppDispatch()
 
-  const [isChoosen, setIsChoosen] = useState(false)
   const step = useSelector(selectStep)
-  console.log(step)
+
   const tModal = useTranslations('addModal')
 
   return (
     <Modal
+      headerChildren={<>asdf</>}
       title={tModal('addPhoto')}
       className={s.modal}
       open={open}

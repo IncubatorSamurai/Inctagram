@@ -10,11 +10,12 @@ type Props = {
   className?: string
   title?: string
   trigger?: ReactNode
+  headerChildren?: ReactNode
 } & ComponentPropsWithoutRef<typeof DialogRadix.Root>
 
 const DialogClose = DialogRadix.Close
 
-const Modal = ({ children, className, title, trigger, ...props }: Props) => {
+const Modal = ({ children, className, title, trigger, headerChildren, ...props }: Props) => {
   return (
     <DialogRadix.Root {...props}>
       {trigger && <DialogRadix.Trigger asChild>{trigger}</DialogRadix.Trigger>}
@@ -23,7 +24,9 @@ const Modal = ({ children, className, title, trigger, ...props }: Props) => {
         <DialogRadix.Content
           className={clsx(title && s.DialogContent, !title && s.postContent, className)}
         >
-          {title ? (
+          {headerChildren ? (
+            <div className={s.header}>{headerChildren}</div>
+          ) : title ? (
             <div className={s.header}>
               <DialogRadix.Title className={s.DialogTitle}>
                 <Typography variant={'h1'}>{title}</Typography>
