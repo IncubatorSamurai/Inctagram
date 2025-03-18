@@ -1,5 +1,9 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { GetPostsByNameRespond, UploadPhotoRespond } from '@/shared/api/post/postApi.types'
+import {
+  GetPostsByNameArgs,
+  GetPostsByNameRespond,
+  UploadPhotoRespond,
+} from '@/shared/api/post/postApi.types'
 
 export const postApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -10,12 +14,17 @@ export const postApi = baseApi.injectEndpoints({
         body: formData,
       }),
     }),
-    getPostsByUserName: build.query<GetPostsByNameRespond, { userName: string }>({
-      query: data => ({
-        url: `v1/posts/${data.userName}`,
+    getPostsByUserName: build.query<GetPostsByNameRespond, GetPostsByNameArgs>({
+      query: ({ userName, ...params }) => ({
+        params,
+        url: `v1/posts/${userName}`,
       }),
     }),
   }),
 })
 
-export const { useUploadPhotoMutation, useGetPostsByUserNameQuery } = postApi
+export const {
+  useUploadPhotoMutation,
+  useGetPostsByUserNameQuery,
+  useLazyGetPostsByUserNameQuery,
+} = postApi

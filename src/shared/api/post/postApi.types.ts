@@ -1,3 +1,5 @@
+import { string } from 'zod'
+
 type ImageModel = {
   url: string
   width: number
@@ -7,7 +9,7 @@ type ImageModel = {
   uploadId: string
 }
 
-type PostModel = {
+export type PostModel = {
   id: number
   userName: string
   description: string
@@ -44,4 +46,12 @@ export type GetPostsByNameRespond = {
   totalCount: number
   notReadCount: number
   items: PostModel[]
+}
+
+export type GetPostsByNameArgs = {
+  pageNumber?: number
+  pageSize?: number
+  sortBy?: string
+  sortDirection?: string
+  userName: string
 }
