@@ -1,6 +1,6 @@
 import { allUploadedFiles, selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
 import { useRef, useState, useEffect } from 'react'
-import Cropper, { Area, AreaSize } from 'react-easy-crop'
+import Cropper, { Area } from 'react-easy-crop'
 import { useSelector } from 'react-redux'
 import s from './Crop.module.scss'
 import Slider from 'react-slick'
@@ -40,7 +40,7 @@ export const Crop = () => {
     }
   }, [uploadedFiles])
 
-  const onCropComplete = (croppedArea: Area, croppedAreaPixels: AreaSize) => {
+  const onCropComplete = (_: Area, croppedAreaPixels: Area) => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
 
