@@ -53,7 +53,7 @@ export const ProfilePage = () => {
   const isSetNextPage = isInView && pageNumber < totalPages
 
   useEffect(() => {
-    if (isSetNextPage && !isFetching) {
+    if (isSetNextPage && !isFetching && pageNumber <= totalPages) {
       setPageNumber(prev => prev + 1)
       getNextPosts({ pageNumber: pageNumber + 1, pageSize: 8, userName })
     }
