@@ -27,7 +27,6 @@ export const postSlice = createSlice({
       state.uploadedFiles = []
     }),
     nextStep: create.reducer(state => {
-      if (state.step === state.uploadedFiles.length - 1) return
       state.step = state.step + 1
     }),
     prevStep: create.reducer(state => {

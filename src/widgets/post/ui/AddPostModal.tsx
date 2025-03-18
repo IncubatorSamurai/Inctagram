@@ -9,6 +9,9 @@ import { Filters } from '@/features/post/Filters'
 import { ImageCanvas } from '@/features/post/ImageCanvas'
 import * as fabric from 'fabric'
 import { Crop } from '@/features/post/Crop'
+import { useAppDispatch } from '@/shared/hooks'
+import { nextStep, prevStep, selectStep } from '@/shared/store/postSlice/postSlice'
+import { useSelector } from 'react-redux'
 
 type Props = {
   open: boolean
@@ -18,9 +21,11 @@ type Props = {
 export const AddPostModal = ({ open, onChange }: Props) => {
   const [image, setImage] = useState<fabric.FabricImage | null>(null)
   const [fabricCanvas, setFabricCanvas] = useState<fabric.Canvas | null>(null)
+  const dispatch = useAppDispatch()
 
   const [isChoosen, setIsChoosen] = useState(false)
-
+  const step = useSelector(selectStep)
+  console.log(step)
   const tModal = useTranslations('addModal')
 
   return (
@@ -31,16 +36,18 @@ export const AddPostModal = ({ open, onChange }: Props) => {
       onOpenChange={onChange}
       aria-describedby="modalDescription"
     >
-      {isChoosen ? (
-        <>
-          <Crop />
-          {/* <ImageCanvas setImage={e => setImage(e)} getFabricCanvas={e => setFabricCanvas(e)} />
-          <Filters image={image} fabricCanvas={fabricCanvas} /> */}
-        </>
-      ) : (
+      {step === 0 && (
         <>
           <AddImages />
-          <Button onClick={() => setIsChoosen(true)}>next</Button>
+          <Button onClick={() => dispatch(nextStep())}>next</Button>{' '}
+          <Button onClick={() => dispatch(prevStep())}>prev</Button>
+        </>
+      )}
+      {step === 1 && <Crop />}
+      {step === 2 && (
+        <>
+          <ImageCanvas setImage={e => setImage(e)} getFabricCanvas={e => setFabricCanvas(e)} />
+          <Filters image={image} fabricCanvas={fabricCanvas} />
         </>
       )}
     </Modal>
