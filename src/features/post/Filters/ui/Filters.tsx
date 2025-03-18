@@ -1,6 +1,7 @@
 import { selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
 import { FilterCard } from '@/shared/ui/filterCard/FilterCard'
 import * as fabric from 'fabric'
+import Cropper from 'react-easy-crop'
 
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -9,8 +10,13 @@ type Props = {
   image: fabric.FabricImage | null
   fabricCanvas: fabric.Canvas | null
 }
+
 export const Filters = ({ image, fabricCanvas }: Props) => {
   const uploadedFiles = useSelector(selectUploadedFiles)
+  const [croppedImage, setCroppedImage] = useState<string>('')
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [zoom, setZoom] = useState(1)
+
   const applyFilter = (filterType: string) => {
     if (image && fabricCanvas) {
       // Очищаем все предыдущие фильтры, чтобы не накладывать их
@@ -44,18 +50,7 @@ export const Filters = ({ image, fabricCanvas }: Props) => {
       }
     }
   }
-  const [src, setSrc] = useState('')
-  useEffect(() => {
-    if (fabricCanvas) {
-      const dataURL = fabricCanvas.toDataURL({
-        format: 'png',
-        quality: 1,
-        multiplier: 1,
-      })
-      setSrc(dataURL)
-      console.log('Сохраненное изображение (base64):', dataURL)
-    }
-  }, [fabricCanvas])
+
   const saveImage = () => {
     if (fabricCanvas) {
       const dataURL = fabricCanvas.toDataURL({
@@ -66,16 +61,25 @@ export const Filters = ({ image, fabricCanvas }: Props) => {
       console.log('Сохраненное изображение (base64):', dataURL)
     }
   }
-  console.log(src)
+
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <FilterCard src={uploadedFiles[0]} />
-      <button onClick={() => applyFilter('vintage')}>Винтаж</button>
-      <button onClick={() => applyFilter('lomo')}>Ломо</button>
-      <button onClick={() => applyFilter('soft-focus')}>Мягкий фокус</button>
-      <button onClick={() => applyFilter('glow')}>Сияние</button>
-      <button onClick={() => applyFilter('color-pop')}>Цветной эффект</button>
-      <button onClick={saveImage}>Сохранить изображение</button>
+      <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+        <button onClick={() => applyFilter('vintage')}>Винтаж</button>
+        <button onClick={() => applyFilter('lomo')}>Ломо</button>
+        <button onClick={() => applyFilter('soft-focus')}>Мягкий фокус</button>
+        <button onClick={() => applyFilter('glow')}>Сияние</button>
+        <button onClick={() => applyFilter('color-pop')}>Цветной эффект</button>
+        <button onClick={saveImage}>Сохранить изображение</button>
+      </div>
     </div>
   )
 }

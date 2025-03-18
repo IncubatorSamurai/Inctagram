@@ -8,6 +8,7 @@ import { AddImages } from '@/features/post/UploadImages'
 import { Filters } from '@/features/post/Filters'
 import { ImageCanvas } from '@/features/post/ImageCanvas'
 import * as fabric from 'fabric'
+import { Crop } from '@/features/post/Crop'
 
 type Props = {
   open: boolean
@@ -32,8 +33,9 @@ export const AddPostModal = ({ open, onChange }: Props) => {
     >
       {isChoosen ? (
         <>
-          <ImageCanvas setImage={e => setImage(e)} getFabricCanvas={e => setFabricCanvas(e)} />
-          <Filters image={image} fabricCanvas={fabricCanvas} />
+          <Crop />
+          {/* <ImageCanvas setImage={e => setImage(e)} getFabricCanvas={e => setFabricCanvas(e)} />
+          <Filters image={image} fabricCanvas={fabricCanvas} /> */}
         </>
       ) : (
         <>

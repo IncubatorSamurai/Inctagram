@@ -47,6 +47,7 @@ export const ImageCanvas = ({ setImage, getFabricCanvas }: Props) => {
   }, [])
 
   const uploadedFiles = useSelector(selectUploadedFiles)
+
   useEffect(() => {
     if (uploadedFiles.length > 0) {
       const imageUrl = uploadedFiles[0]
