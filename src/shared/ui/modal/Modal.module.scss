@@ -33,6 +33,10 @@
 .DialogTitle {
   margin: 0;
 }
+.title {
+  width: 100%;
+  text-align: center;
+}
 
 .IconButton {
   all: unset;
@@ -51,6 +55,9 @@
   &:focus-visible {
     outline: 2px solid var(--color-accent-300);
   }
+}
+.button {
+  padding: 0;
 }
 
 .header {

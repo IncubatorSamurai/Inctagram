@@ -1,6 +1,5 @@
 'use client'
 import { Modal } from '@/shared/ui/modal'
-import { Button } from '@/shared/ui/button/Button'
 import s from './AddPostModule.module.scss'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
@@ -9,9 +8,10 @@ import { Filters } from '@/features/post/Filters'
 import { ImageCanvas } from '@/features/post/ImageCanvas'
 import * as fabric from 'fabric'
 import { Crop } from '@/features/post/Crop'
-import { useAppDispatch } from '@/shared/hooks'
-import { nextStep, prevStep, selectStep } from '@/shared/store/postSlice/postSlice'
+import { nextStep, selectStep, selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
 import { useSelector } from 'react-redux'
+import { SwitchStep } from '@/features/post/SwitchStep'
+import { useAppDispatch } from '@/shared/hooks'
 
 type Props = {
   open: boolean
@@ -21,17 +21,22 @@ type Props = {
 export const AddPostModal = ({ open, onChange }: Props) => {
   const [image, setImage] = useState<fabric.FabricImage | null>(null)
   const [fabricCanvas, setFabricCanvas] = useState<fabric.Canvas | null>(null)
-  const dispatch = useAppDispatch()
 
   const step = useSelector(selectStep)
 
+  const uploadedFiles = useSelector(selectUploadedFiles)
   const tModal = useTranslations('addModal')
 
+  const isNecessaryClose = uploadedFiles.length > 0
+  const isNecessaryChildren = step !== 0
+
+  const dispatch = useAppDispatch()
   return (
     <Modal
-      headerChildren={<>asdf</>}
+      headerChildren={isNecessaryChildren && <SwitchStep />}
       title={tModal('addPhoto')}
       className={s.modal}
+      arrow={isNecessaryClose ? () => dispatch(nextStep()) : null}
       open={open}
       onOpenChange={onChange}
       aria-describedby="modalDescription"
@@ -39,8 +44,6 @@ export const AddPostModal = ({ open, onChange }: Props) => {
       {step === 0 && (
         <>
           <AddImages />
-          <Button onClick={() => dispatch(nextStep())}>next</Button>{' '}
-          <Button onClick={() => dispatch(prevStep())}>prev</Button>
         </>
       )}
       {step === 1 && <Crop />}
