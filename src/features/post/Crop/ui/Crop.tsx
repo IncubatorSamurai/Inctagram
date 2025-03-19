@@ -8,9 +8,10 @@ import { useAppDispatch } from '@/shared/hooks'
 import { slickSettings } from '../lib/slickSettings'
 import { createBlobArray } from '../lib/createBlobArray'
 import { Button } from '@/shared/ui/button'
-import { Expand } from './Expand/Expand'
+import { Expand } from '../../Expand/Expand'
 
 export const Crop = () => {
+  const [saveTitle, setSaveTitle] = useState('Save Cropped Images')
   const uploadedFiles = useSelector(selectUploadedFiles)
   const [aspect, setAspect] = useState({ a: 1, b: 1 })
 
@@ -77,6 +78,7 @@ export const Crop = () => {
   }
 
   const handleZoomChange = (newZoom: number) => {
+    setSaveTitle('Save')
     setCropStates(prevStates => ({
       ...prevStates,
       [slideIndex]: { ...prevStates[slideIndex], zoom: newZoom },
@@ -84,6 +86,7 @@ export const Crop = () => {
   }
 
   const save = () => {
+    setSaveTitle('Saved')
     // Если изображение было обрезано, используем его обрезанный вариант
     const updatedImages = uploadedFiles.map((fileUrl, index) => {
       return croppedImages[index] || fileUrl // Используем обрезанное изображение, если оно есть
@@ -123,18 +126,18 @@ export const Crop = () => {
                   },
                 }}
               />
-              <div className={s.row}>
-                <Expand
-                  getAspect={e => {
-                    setAspect(e)
-                  }}
-                />{' '}
-                <Button onClick={save}>Save Cropped Images</Button>
-              </div>
             </div>
           )
         })}
       </Slider>
+      <div className={s.row}>
+        <Expand
+          getAspect={e => {
+            setAspect(e)
+          }}
+        />{' '}
+        <Button onClick={save}>{saveTitle}</Button>
+      </div>
     </div>
   )
 }
