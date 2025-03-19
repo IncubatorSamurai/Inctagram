@@ -1,83 +1,79 @@
-'use client'
-import { useEffect, useRef, useState } from 'react'
-import s from './ImageCanvas.module.scss'
+import { useEffect, useState } from 'react'
 import * as fabric from 'fabric'
-
 import { useSelector } from 'react-redux'
-import { selectCroppedFiles, selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
+import { selectCroppedFiles } from '@/shared/store/postSlice/postSlice'
+import { FilterCard } from '@/shared/ui/filterCard/FilterCard'
 import { config } from '../lib/fabricImageConfig'
+import { Filters } from './Filters/Filters'
+import { SliderCanvas } from './SliderCanvas/SliderCanvas'
 
-type Props = {
-  setImage: (value: fabric.Image | null) => void
-  getFabricCanvas: (value: fabric.Canvas | null) => void
-}
-
-export const ImageCanvas = ({ setImage, getFabricCanvas }: Props) => {
-  const containerRef = useRef<HTMLDivElement | null>(null)
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
-
-  const [fabricCanvas, setFabricCanvas] = useState<fabric.Canvas | null>(null)
-
-  useEffect(() => {
-    if (fabricCanvas) {
-      getFabricCanvas(fabricCanvas)
-    }
-  }, [fabricCanvas])
-
-  useEffect(() => {
-    if (canvasRef.current) {
-      const canvas = new fabric.Canvas(canvasRef.current, {
-        selection: false,
-      })
-
-      const container = containerRef.current
-      if (container) {
-        //подстраиваем размеры, под родителя
-        canvas.setWidth(container.clientWidth)
-        canvas.setHeight(container.clientHeight)
-        canvas.renderAll()
-      }
-
-      setFabricCanvas(canvas)
-
-      return () => {
-        canvas.dispose()
-      }
-    }
-  }, [])
+export const ImageCanvas = () => {
+  const [fabricCanvases, setFabricCanvases] = useState<(fabric.Canvas | null)[]>([]) // Массив для хранения Fabric Canvas
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
+  const [filters, setFilters] = useState<Record<number, fabric.filters.BaseFilter<string>[]>>({}) // Храним фильтры по индексу
 
   const uploadedFiles = useSelector(selectCroppedFiles)
+  const [index, setIndexState] = useState(0)
 
   useEffect(() => {
-    if (uploadedFiles.length > 0) {
-      const imageUrl = uploadedFiles[0]
+    if (!uploadedFiles.length || !fabricCanvases[index]) return
 
-      // создаем объект image, т.к. fabricCanvas работает только с объектом image
-      const img = new Image()
-      img.src = imageUrl
+    const imageUrl = uploadedFiles[index]
+    const canvas = fabricCanvases[index]
 
-      // обработчик события для img, когда изображение загружается, срабатывает onload
-      img.onload = () => {
-        if (fabricCanvas) {
-          const scaleX = fabricCanvas.width! / img.width
-          const scaleY = fabricCanvas.height! / img.height
-          const fabricImage = new fabric.Image(img, { ...config, scaleX, scaleY })
+    if (!canvas) return
 
-          // метод добавляет изображение на холст
-          fabricCanvas.add(fabricImage)
-          //   обновляет весь холст. Это нужно для того, чтобы все изменения, которые были сделаны на холсте
-          // (например, добавление изображения), стали видны на экране.
-          fabricCanvas.renderAll()
+    const img = new Image()
+    img.src = imageUrl
 
-          setImage(fabricImage)
-        }
+    img.onload = () => {
+      if (!canvas || canvas.getObjects().length > 0) return
+
+      const scaleX = canvas.width! / img.width
+      const scaleY = canvas.height! / img.height
+      const fabricImage = new fabric.Image(img, { ...config, scaleX, scaleY })
+
+      if (canvas && canvas.getContext()) {
+        canvas.clear() // Очищаем canvas перед добавлением нового изображения
+        canvas.add(fabricImage)
+        canvas.renderAll() // Перерисовываем canvas
+
+        setIsImageLoaded(true)
       }
     }
-  }, [uploadedFiles, fabricCanvas])
+
+    img.onerror = () => {
+      console.error(`Ошибка загрузки изображения: ${imageUrl}`)
+    }
+  }, [index, uploadedFiles.length, fabricCanvases])
+
+  // Применение фильтров при изменении индекса
+  useEffect(() => {
+    if (fabricCanvases[index]) {
+      const canvas = fabricCanvases[index]
+      const image = canvas.getObjects()[0] as fabric.Image
+
+      if (filters[index]) {
+        image.filters = filters[index]
+        image.applyFilters()
+        canvas.renderAll()
+      }
+    }
+  }, [index, filters])
 
   return (
-    <div ref={containerRef} className={s.container}>
-      <canvas ref={canvasRef} />
+    <div>
+      <SliderCanvas
+        setIndexState={e => setIndexState(e)}
+        index={index}
+        setFabricCanvases={e => setFabricCanvases(e)}
+      />
+      {isImageLoaded && uploadedFiles.length > 0 && <FilterCard src={uploadedFiles[index]} />}
+      <Filters
+        index={index}
+        setCanvasFilters={e => setFilters(e)}
+        fabricCanvases={fabricCanvases}
+      />
     </div>
   )
 }

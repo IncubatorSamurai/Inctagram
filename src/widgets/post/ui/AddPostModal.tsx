@@ -21,6 +21,7 @@ type Props = {
 export const AddPostModal = ({ open, onChange }: Props) => {
   const [image, setImage] = useState<fabric.FabricImage | null>(null)
   const [fabricCanvas, setFabricCanvas] = useState<fabric.Canvas | null>(null)
+  const [index, setIndex] = useState(0)
 
   const step = useSelector(selectStep)
 
@@ -49,8 +50,8 @@ export const AddPostModal = ({ open, onChange }: Props) => {
       {step === 1 && <Crop />}
       {step === 2 && (
         <>
-          <ImageCanvas setImage={e => setImage(e)} getFabricCanvas={e => setFabricCanvas(e)} />
-          <Filters image={image} fabricCanvas={fabricCanvas} />
+          <ImageCanvas />
+          {/* <Filters index={index} image={image} fabricCanvas={fabricCanvas} /> */}
         </>
       )}
     </Modal>
