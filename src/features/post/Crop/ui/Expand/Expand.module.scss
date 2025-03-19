@@ -1,0 +1,28 @@
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  &:not(:last-of-type) {
+    margin-bottom: 12px;
+  }
+}
+.container {
+  position: absolute;
+  bottom: 50px;
+  // left: 0;
+  z-index: 99;
+  background: var(--color-dark-500);
+  opacity: 0.8;
+  padding: 10px 15px;
+  min-width: 156px;
+}
+
+.expand {
+  background: var(--color-dark-500);
+  padding: 6px;
+}
+.wrapper {
+  position: relative;
+}

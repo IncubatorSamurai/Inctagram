@@ -8,10 +8,11 @@ import { useAppDispatch } from '@/shared/hooks'
 import { slickSettings } from '../lib/slickSettings'
 import { createBlobArray } from '../lib/createBlobArray'
 import { Button } from '@/shared/ui/button'
-import { Expand } from '../../Expand/ui/Expand'
+import { Expand } from './Expand/Expand'
 
 export const Crop = () => {
   const uploadedFiles = useSelector(selectUploadedFiles)
+  const [aspect, setAspect] = useState({ a: 1, b: 1 })
 
   // Сохраняем состояние обрезки для каждого изображения
   const [cropStates, setCropStates] = useState<{
@@ -106,7 +107,7 @@ export const Crop = () => {
                 image={fileUrl}
                 crop={cropState.crop}
                 zoom={cropState.zoom}
-                aspect={16 / 9}
+                aspect={aspect.a / aspect.b}
                 onCropChange={handleCropChange}
                 onCropComplete={onCropComplete}
                 onZoomChange={handleZoomChange}
@@ -122,8 +123,14 @@ export const Crop = () => {
                   },
                 }}
               />
-              <Button onClick={save}>Save Cropped Images</Button>
-              <Expand />
+              <div className={s.row}>
+                <Expand
+                  getAspect={e => {
+                    setAspect(e)
+                  }}
+                />{' '}
+                <Button onClick={save}>Save Cropped Images</Button>
+              </div>
             </div>
           )
         })}
