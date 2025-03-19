@@ -10,11 +10,13 @@ type Props = {
   className?: string
   title?: string
   trigger?: ReactNode
+  isCloseIcon?: boolean
 } & ComponentPropsWithoutRef<typeof DialogRadix.Root>
 
 const DialogClose = DialogRadix.Close
+const DialogTitle = DialogRadix.Title
 
-const Modal = ({ children, className, title, trigger, ...props }: Props) => {
+const Modal = ({ children, className, title, trigger, isCloseIcon, ...props }: Props) => {
   return (
     <DialogRadix.Root {...props}>
       {trigger && <DialogRadix.Trigger asChild>{trigger}</DialogRadix.Trigger>}
@@ -23,7 +25,7 @@ const Modal = ({ children, className, title, trigger, ...props }: Props) => {
         <DialogRadix.Content
           className={clsx(title && s.DialogContent, !title && s.postContent, className)}
         >
-          {title ? (
+          {title && (
             <div className={s.header}>
               <DialogRadix.Title className={s.DialogTitle}>
                 <Typography variant={'h1'}>{title}</Typography>
@@ -34,7 +36,8 @@ const Modal = ({ children, className, title, trigger, ...props }: Props) => {
                 </button>
               </DialogRadix.Close>
             </div>
-          ) : (
+          )} 
+          {isCloseIcon && (
             <DialogRadix.Close aria-label={'Close'} className={s.closeButton}>
               <CloseIcon />
             </DialogRadix.Close>
@@ -47,6 +50,7 @@ const Modal = ({ children, className, title, trigger, ...props }: Props) => {
 }
 
 DialogClose.displayName = DialogRadix.Close.displayName
+DialogTitle.displayName = DialogRadix.Title.displayName
 Modal.displayName = 'Modal'
 
-export { Modal, DialogClose }
+export { Modal, DialogClose, DialogTitle }

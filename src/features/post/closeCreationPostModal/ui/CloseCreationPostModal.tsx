@@ -10,7 +10,7 @@ type Props = {
 }
 
 export const CloseCreationPostModal = ({ open, onChange }: Props) => {
-  const t = useTranslations('posts')
+  const t = useTranslations('post')
 
   return (
     <Modal

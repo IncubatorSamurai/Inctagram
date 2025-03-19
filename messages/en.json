@@ -42,7 +42,7 @@
     "SelectFromComputer": "Select from Computer",
     "OpenDraft": "Open Draft"
   },
-  "posts": {
+  "post": {
     "close": "Close",
     "discard": "Discard",
     "saveDraft": "Save draft",

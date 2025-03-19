@@ -42,7 +42,7 @@
     "SelectFromComputer": "Выбрать",
     "OpenDraft": "Предпросмотр"
   },
-  "posts": {
+  "post": {
     "close": "Закрыть",
     "discard": "Отказаться",
     "saveDraft": "Сохранить черновик",
