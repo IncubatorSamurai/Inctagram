@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface PostState {
   uploadedFiles: string[]
+  croppedFiles: string[]
   step: number
 }
 
 const initialState: PostState = {
   uploadedFiles: [],
+  croppedFiles: [],
   step: 0,
 }
 
@@ -16,6 +18,9 @@ export const postSlice = createSlice({
   reducers: create => ({
     allUploadedFiles: create.reducer((state, action: PayloadAction<string[]>) => {
       state.uploadedFiles = action.payload
+    }),
+    allCroppedFiles: create.reducer((state, action: PayloadAction<string[]>) => {
+      state.croppedFiles = action.payload
     }),
     addFile: create.reducer((state, action: PayloadAction<{ fileUrl: string }>) => {
       state.uploadedFiles.push(action.payload.fileUrl)
@@ -37,10 +42,18 @@ export const postSlice = createSlice({
   selectors: {
     selectUploadedFiles: state => state.uploadedFiles,
     selectStep: state => state.step,
+    selectCroppedFiles: state => state.croppedFiles,
   },
 })
 
-export const { allUploadedFiles, addFile, removeFile, clearFiles, prevStep, nextStep } =
-  postSlice.actions
-export const { selectUploadedFiles, selectStep } = postSlice.selectors
+export const {
+  allUploadedFiles,
+  allCroppedFiles,
+  addFile,
+  removeFile,
+  clearFiles,
+  prevStep,
+  nextStep,
+} = postSlice.actions
+export const { selectUploadedFiles, selectStep, selectCroppedFiles } = postSlice.selectors
 export const postReducer = postSlice.reducer

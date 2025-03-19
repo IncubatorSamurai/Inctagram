@@ -4,7 +4,7 @@ import s from './ImageCanvas.module.scss'
 import * as fabric from 'fabric'
 
 import { useSelector } from 'react-redux'
-import { selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
+import { selectCroppedFiles, selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
 import { config } from '../lib/fabricImageConfig'
 
 type Props = {
@@ -46,7 +46,7 @@ export const ImageCanvas = ({ setImage, getFabricCanvas }: Props) => {
     }
   }, [])
 
-  const uploadedFiles = useSelector(selectUploadedFiles)
+  const uploadedFiles = useSelector(selectCroppedFiles)
 
   useEffect(() => {
     if (uploadedFiles.length > 0) {

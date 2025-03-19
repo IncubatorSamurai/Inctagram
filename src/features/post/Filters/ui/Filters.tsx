@@ -1,4 +1,4 @@
-import { selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
+import { selectCroppedFiles, selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
 import { FilterCard } from '@/shared/ui/filterCard/FilterCard'
 import * as fabric from 'fabric'
 import { useSelector } from 'react-redux'
@@ -9,7 +9,7 @@ type Props = {
 }
 
 export const Filters = ({ image, fabricCanvas }: Props) => {
-  const uploadedFiles = useSelector(selectUploadedFiles)
+  const uploadedFiles = useSelector(selectCroppedFiles)
 
   const applyFilter = (filterType: string) => {
     if (image && fabricCanvas) {

@@ -1,4 +1,8 @@
-import { allUploadedFiles, selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
+import {
+  allCroppedFiles,
+  allUploadedFiles,
+  selectUploadedFiles,
+} from '@/shared/store/postSlice/postSlice'
 import { useRef, useState, useEffect } from 'react'
 import Cropper, { Area } from 'react-easy-crop'
 import { useSelector } from 'react-redux'
@@ -89,7 +93,7 @@ export const Crop = () => {
     const blobArray = createBlobArray(updatedImages)
 
     // Диспатчим все изображения (включая те, которые не были обрезаны)
-    dispatch(allUploadedFiles(blobArray))
+    dispatch(allCroppedFiles(blobArray))
   }
 
   return (
@@ -104,7 +108,7 @@ export const Crop = () => {
                 image={fileUrl}
                 crop={cropState.crop}
                 zoom={cropState.zoom}
-                aspect={3 / 3}
+                aspect={16 / 9}
                 onCropChange={handleCropChange}
                 onCropComplete={onCropComplete}
                 onZoomChange={handleZoomChange}
@@ -120,6 +124,7 @@ export const Crop = () => {
                   },
                 }}
               />
+              df
             </div>
           )
         })}
