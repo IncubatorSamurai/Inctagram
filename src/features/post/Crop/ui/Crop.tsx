@@ -1,8 +1,4 @@
-import {
-  allCroppedFiles,
-  allUploadedFiles,
-  selectUploadedFiles,
-} from '@/shared/store/postSlice/postSlice'
+import { allCroppedFiles, selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
 import { useRef, useState, useEffect } from 'react'
 import Cropper, { Area } from 'react-easy-crop'
 import { useSelector } from 'react-redux'
@@ -11,6 +7,8 @@ import Slider from 'react-slick'
 import { useAppDispatch } from '@/shared/hooks'
 import { slickSettings } from '../lib/slickSettings'
 import { createBlobArray } from '../lib/createBlobArray'
+import { Button } from '@/shared/ui/button'
+import { Expand } from '../../Expand/ui/Expand'
 
 export const Crop = () => {
   const uploadedFiles = useSelector(selectUploadedFiles)
@@ -124,13 +122,12 @@ export const Crop = () => {
                   },
                 }}
               />
-              df
+              <Button onClick={save}>Save Cropped Images</Button>
+              <Expand />
             </div>
           )
         })}
       </Slider>
-
-      <button onClick={save}>Save Cropped Images</button>
     </div>
   )
 }

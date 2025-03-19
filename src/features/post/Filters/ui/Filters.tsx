@@ -1,4 +1,4 @@
-import { selectCroppedFiles, selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
+import { selectCroppedFiles } from '@/shared/store/postSlice/postSlice'
 import { FilterCard } from '@/shared/ui/filterCard/FilterCard'
 import * as fabric from 'fabric'
 import { useSelector } from 'react-redux'
