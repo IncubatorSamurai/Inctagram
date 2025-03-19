@@ -91,9 +91,9 @@ export const Crop = () => {
     const updatedImages = uploadedFiles.map((fileUrl, index) => {
       return croppedImages[index] || fileUrl // Используем обрезанное изображение, если оно есть
     })
-    console.log(updatedImages)
     const blobArray = createBlobArray(updatedImages)
 
+    console.log(blobArray)
     // Диспатчим все изображения (включая те, которые не были обрезаны)
     dispatch(allCroppedFiles(blobArray))
   }

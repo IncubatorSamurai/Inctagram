@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react'
 import * as fabric from 'fabric'
 import { useSelector } from 'react-redux'
 import { selectCroppedFiles } from '@/shared/store/postSlice/postSlice'
-import { FilterCard } from '@/shared/ui/filterCard/FilterCard'
 import { config } from '../lib/fabricImageConfig'
 import { Filters } from './Filters/Filters'
 import { SliderCanvas } from './SliderCanvas/SliderCanvas'
+import s from './ImageCanvas.module.scss'
 
 export const ImageCanvas = () => {
   const [fabricCanvases, setFabricCanvases] = useState<(fabric.Canvas | null)[]>([]) // Массив для хранения Fabric Canvas
-  const [isImageLoaded, setIsImageLoaded] = useState(false)
   const [filters, setFilters] = useState<Record<number, fabric.filters.BaseFilter<string>[]>>({}) // Храним фильтры по индексу
 
   const uploadedFiles = useSelector(selectCroppedFiles)
@@ -37,8 +36,6 @@ export const ImageCanvas = () => {
         canvas.clear() // Очищаем canvas перед добавлением нового изображения
         canvas.add(fabricImage)
         canvas.renderAll() // Перерисовываем canvas
-
-        setIsImageLoaded(true)
       }
     }
 
@@ -62,18 +59,23 @@ export const ImageCanvas = () => {
   }, [index, filters])
 
   return (
-    <div>
-      <SliderCanvas
-        setIndexState={e => setIndexState(e)}
-        index={index}
-        setFabricCanvases={e => setFabricCanvases(e)}
-      />
-      {isImageLoaded && uploadedFiles.length > 0 && <FilterCard src={uploadedFiles[index]} />}
-      <Filters
-        index={index}
-        setCanvasFilters={e => setFilters(e)}
-        fabricCanvases={fabricCanvases}
-      />
+    <div className={s.row}>
+      <div className={s.slider}>
+        <SliderCanvas
+          setIndexState={e => setIndexState(e)}
+          index={index}
+          setFabricCanvases={e => setFabricCanvases(e)}
+        />
+      </div>
+      {/* {isImageLoaded && uploadedFiles.length > 0 && <FilterCard src={uploadedFiles[index]} />} */}
+      <div>
+        {' '}
+        <Filters
+          index={index}
+          setCanvasFilters={e => setFilters(e)}
+          fabricCanvases={fabricCanvases}
+        />
+      </div>
     </div>
   )
 }

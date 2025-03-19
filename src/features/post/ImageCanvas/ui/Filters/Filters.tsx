@@ -1,13 +1,18 @@
 import * as fabric from 'fabric'
-
 import { useEffect, useState } from 'react'
 import { getFilterType } from '../../lib/filterType'
+import { FilterCard } from '@/shared/ui/filterCard/FilterCard'
+import { useSelector } from 'react-redux'
+import { selectCroppedFiles } from '@/shared/store/postSlice/postSlice'
+import { Button } from '@/shared/ui/button'
+import s from './Filters.module.scss'
 
 type Props = {
   index: number
   setCanvasFilters: (filters: Record<number, fabric.filters.BaseFilter<string>[]>) => void
   fabricCanvases: (fabric.Canvas | null)[]
 }
+
 export const Filters = ({ index, fabricCanvases, setCanvasFilters }: Props) => {
   const [filters, setFilters] = useState<Record<number, fabric.filters.BaseFilter<string>[]>>({}) // Храним фильтры по индексу
 
@@ -15,44 +20,58 @@ export const Filters = ({ index, fabricCanvases, setCanvasFilters }: Props) => {
     setCanvasFilters(filters)
   }, [filters])
 
-  //   const saveImage = () => {
-  //     if (fabricCanvases[index]) {
-  //       const dataURL = fabricCanvases[index]?.toDataURL({
-  //         format: 'png',
-  //         quality: 1,
-  //         multiplier: 1,
-  //       })
-  //       console.log('Сохранённое изображение (base64):', dataURL)
-  //     }
-  //   }
+  const uploadedFiles = useSelector(selectCroppedFiles)
 
   const applyFilter = (filterType: string) => {
     if (fabricCanvases[index]) {
       const canvas = fabricCanvases[index]
       const image = canvas.getObjects()[0] as fabric.Image
 
-      const filter = getFilterType(filterType)
+      const newFilters = getFilterType(filterType)
 
-      if (filter) {
-        image.filters = [filter]
+      if (newFilters) {
+        image.filters = newFilters // Применяем массив фильтров
         image.applyFilters()
         canvas.renderAll()
 
         setFilters(prevFilters => ({
           ...prevFilters,
-          [index]: [filter],
+          [index]: newFilters, // Обновляем состояние с новыми фильтрами
         }))
       }
     }
   }
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
-      <button onClick={() => applyFilter('vintage')}>Винтаж</button>
-      <button onClick={() => applyFilter('lomo')}>Ломо</button>
-      <button onClick={() => applyFilter('soft-focus')}>Мягкий фокус</button>
-      <button onClick={() => applyFilter('glow')}>Сияние</button>
-      <button onClick={() => applyFilter('color-pop')}>Цветной эффект</button>
-      {/* <button onClick={saveImage}>Сохранить изображение</button> */}
+    <div className={s.container}>
+      {' '}
+      <Button variant="text" className={s.button} onClick={() => applyFilter('original')}>
+        <FilterCard src={uploadedFiles[index]} />
+      </Button>
+      <Button variant="text" className={s.button} onClick={() => applyFilter('vintage')}>
+        <FilterCard src={uploadedFiles[index]} />
+      </Button>
+      <Button variant="text" className={s.button} onClick={() => applyFilter('lomo')}>
+        <FilterCard src={uploadedFiles[index]} />
+      </Button>
+      <Button variant="text" className={s.button} onClick={() => applyFilter('soft-focus')}>
+        <FilterCard src={uploadedFiles[index]} />
+      </Button>
+      <Button variant="text" className={s.button} onClick={() => applyFilter('glow')}>
+        <FilterCard src={uploadedFiles[index]} />
+      </Button>
+      <Button variant="text" className={s.button} onClick={() => applyFilter('invert')}>
+        <FilterCard src={uploadedFiles[index]} />
+      </Button>
+      <Button variant="text" className={s.button} onClick={() => applyFilter('retro')}>
+        <FilterCard src={uploadedFiles[index]} />
+      </Button>
+      <Button variant="text" className={s.button} onClick={() => applyFilter('moody')}>
+        <FilterCard src={uploadedFiles[index]} />
+      </Button>
+      <Button variant="text" className={s.button} onClick={() => applyFilter('golden-hour')}>
+        <FilterCard src={uploadedFiles[index]} />
+      </Button>
     </div>
   )
 }

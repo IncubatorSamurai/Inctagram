@@ -6,11 +6,8 @@
 }
 .slider {
   width: 100%;
-  min-width: 480px;
+  max-width: 480px;
 }
 .slick-dots {
   position: absolute;
-}
-.canvas {
-  width: 100%;
 }

@@ -4,47 +4,52 @@ import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { selectCroppedFiles } from '@/shared/store/postSlice/postSlice'
 import * as fabric from 'fabric'
-
 type Props = {
   setIndexState: (value: number) => void
   setFabricCanvases: (v: (fabric.Canvas | null)[]) => void
   index: number
 }
+
 export const SliderCanvas = ({ setIndexState, setFabricCanvases }: Props) => {
   const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([]) // Массив ref для canvas
-  const containerRefs = useRef<(HTMLDivElement | null)[]>([]) // Массив ref для контейнеров
+  const containerRef = useRef<HTMLDivElement | null>(null) // Ref для контейнера
   const uploadedFiles = useSelector(selectCroppedFiles)
 
   useEffect(() => {
-    if (uploadedFiles.length === 0) return
+    if (uploadedFiles.length === 0 || !containerRef.current) return
 
-    const newCanvases = canvasRefs.current.map((canvasEl, i) => {
+    const containerWidth = containerRef.current.clientWidth
+    const containerHeight = containerRef.current.clientHeight
+
+    const newCanvases = canvasRefs.current.map(canvasEl => {
       if (!canvasEl) return null
 
-      const fabricCanvas = new fabric.Canvas(canvasEl, { selection: false })
-      const container = containerRefs.current[i]
-      console.log(fabricCanvas)
-      if (container) {
-        fabricCanvas.setWidth(container.clientWidth)
-        fabricCanvas.setHeight(container.clientHeight)
-        fabricCanvas.renderAll()
-      }
+      // Устанавливаем размеры canvas через атрибуты
+      canvasEl.width = containerWidth
+      canvasEl.height = containerHeight
+
+      const fabricCanvas = new fabric.Canvas(canvasEl, {
+        selection: false,
+        width: containerWidth,
+        height: containerHeight,
+      })
+
+      // Загружаем изображение
 
       return fabricCanvas
     })
 
     setFabricCanvases(newCanvases)
-    // getFabricCanvas(newCanvases[index] || null) // Передаем текущий canvas в родительский компонент
 
     return () => {
       newCanvases.forEach(canvas => canvas?.dispose())
     }
-  }, [uploadedFiles]) // Зависимость только от длины uploadedFiles
+  }, [uploadedFiles])
 
   const settings = {
     dots: true,
     infinite: false,
-    arrows: true,
+    arrows: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -53,19 +58,20 @@ export const SliderCanvas = ({ setIndexState, setFabricCanvases }: Props) => {
   }
 
   return (
-    <Slider className={s.slider} {...settings}>
-      {uploadedFiles.map((fileUrl, i) => (
-        <div key={i}>
-          <div style={{ width: '100%', height: '400px' }}>
+    <div ref={containerRef} className={s.container}>
+      <Slider className={s.slider} {...settings}>
+        {uploadedFiles.map((fileUrl, i) => (
+          <div key={i}>
             <canvas
+              className={s.canvas}
               ref={el => {
                 canvasRefs.current[i] = el
               }}
               style={{ width: '100%', height: '100%' }}
             />
           </div>
-        </div>
-      ))}
-    </Slider>
+        ))}
+      </Slider>
+    </div>
   )
 }
