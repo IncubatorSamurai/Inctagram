@@ -1,4 +1,4 @@
-import { ProfilePage } from '@/pagesComponents/profile/ui/Profile'
+import { ProfilePage } from '@/entities/profile/ui/Profile'
 
 export default async function Profile() {
   return <ProfilePage />

@@ -36,5 +36,13 @@
     "emailExpired": "Email verification link expired",
     "sendLinkAgain" : "Looks like the verification link has expired. Not to worry, we can send the link again",
     "congratulations": "Congratulations"
+  },
+  "profile": {
+    "profileSettings": "Profile Settings",
+    "follow": "Follow",
+    "sendMessage": "Send Message",
+    "following": "Following",
+    "followers": "Followers",
+    "publications": "Publications"
   }
 }
