@@ -16,12 +16,19 @@ type Props = {
 
 export const Filters = ({ index, fabricCanvases, setCanvasFilters }: Props) => {
   const [filters, setFilters] = useState<Record<number, fabric.filters.BaseFilter<string>[]>>({}) // Храним фильтры по индексу
+  const [savedImages, setSavedImages] = useState<string[]>([]) // Массив сохранённых изображений (Blob)
+
   const tFilter = useTranslations('addModal.filters')
+  const croppedImages = useSelector(selectCroppedFiles)
+  const uploadedFiles = useSelector(selectCroppedFiles)
+
   useEffect(() => {
     setCanvasFilters(filters)
   }, [filters])
 
-  const uploadedFiles = useSelector(selectCroppedFiles)
+  useEffect(() => {
+    setSavedImages(croppedImages)
+  }, [croppedImages])
 
   const applyFilter = (filterType: string) => {
     if (fabricCanvases[index]) {
@@ -42,10 +49,33 @@ export const Filters = ({ index, fabricCanvases, setCanvasFilters }: Props) => {
       }
     }
   }
+  const saveImage = () => {
+    if (fabricCanvases[index]) {
+      const canvas = fabricCanvases[index]
+
+      canvas
+        .toBlob({
+          format: 'png',
+          multiplier: 1,
+        })
+        .then((blob: Blob | null) => {
+          if (blob) {
+            const url = URL.createObjectURL(blob)
+
+            setSavedImages(prevImages => {
+              const updatedImages = [...prevImages]
+              updatedImages[index] = url
+              return updatedImages
+            })
+
+            console.log('Сохранённое изображение (URL):', url)
+          }
+        })
+    }
+  }
 
   return (
     <div className={s.container}>
-      {' '}
       <Button variant="text" className={s.button} onClick={() => applyFilter('original')}>
         <FilterCard src={uploadedFiles[index]} title={tFilter('original')} />
       </Button>
@@ -73,6 +103,10 @@ export const Filters = ({ index, fabricCanvases, setCanvasFilters }: Props) => {
       <Button variant="text" className={s.button} onClick={() => applyFilter('golden-hour')}>
         <FilterCard src={uploadedFiles[index]} title={tFilter('golden-hour')} />
       </Button>
+
+      {/* <Button variant="text" className={s.button} onClick={saveImage}>
+        Сохранить все изображения
+      </Button> */}
     </div>
   )
 }
