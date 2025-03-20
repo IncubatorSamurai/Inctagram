@@ -1,0 +1,16 @@
+.posts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+
+  .postWrapper {
+    position: relative;
+    aspect-ratio: 1/1; /* Квадратные фото */
+    width: 100%;
+  }
+
+  .post {
+    object-fit: cover;
+  }
+}

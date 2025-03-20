@@ -6,12 +6,12 @@ import { Button } from '@/shared/ui/button'
 import { BlankCover } from '@/shared/ui/profile/blankCover/BlankCover'
 import { useTranslations } from 'next-intl'
 import { useProfileData } from '@/entities/profile/model/useProfileData'
+import { UserPosts } from '@/entities/profile/ui/posts/UserPosts'
 
 export const ProfilePage = () => {
   const tProfile = useTranslations('profile')
 
-  const { avatarSrc, isMyProfile, userName, followArray, posts, targetRef, aboutMe } =
-    useProfileData()
+  const { avatarSrc, isMyProfile, userName, followArray, aboutMe, userId } = useProfileData()
 
   return (
     <div className={s.profilePage}>
@@ -48,18 +48,7 @@ export const ProfilePage = () => {
           <Typography>{aboutMe}</Typography>
         </div>
       </section>
-      <section className={s.posts}>
-        {userName &&
-          posts.map((post, id) => (
-            <div
-              key={post.id}
-              className={s.postWrapper}
-              ref={id === posts.length - 1 ? targetRef : null}
-            >
-              <Image src={post.images[0]?.url ?? null} className={s.post} fill alt={'post'} />
-            </div>
-          ))}
-      </section>
+      <UserPosts userName={userName} userId={userId} />
     </div>
   )
 }

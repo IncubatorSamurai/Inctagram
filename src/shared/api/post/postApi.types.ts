@@ -1,4 +1,4 @@
-type ImageModel = {
+export type ImageModel = {
   url: string
   width: number
   height: number
@@ -12,16 +12,7 @@ export type PostModel = {
   userName: string
   description: string
   location: string
-  images: [
-    {
-      url: string
-      width: number
-      height: number
-      fileSize: number
-      createdAt: string
-      uploadId: string
-    },
-  ]
+  images: ImageModel[]
   createdAt: string
   updatedAt: string
   ownerId: number
