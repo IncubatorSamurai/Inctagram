@@ -39,8 +39,23 @@
   },
   "addModal": {
     "addPhoto": "Добавить фото",
+    "cropButtonSave": "Сохранить обрезанное изображение",
+    "cropButtonSaved": "Сохранено",
+    "crop": "Обрезка",
+    "filter": "Фильтры",
     "SelectFromComputer": "Выбрать",
-    "OpenDraft": "Предпросмотр"
+    "OpenDraft": "Предпросмотр",
+    "filters": {
+      "original": "Оригинал",
+      "vintage": "Винтаж",
+      "lomo": "Ломо",
+      "soft-focus": "Мягкий фокус",
+      "glow": "Свечение",
+      "invert": "Инверсия",
+      "retro": "Ретро",
+      "moody": "Атмосферный",
+      "golden-hour": "Золотой час"
+    }
   },
   "posts": {
     "close": "Закрыть",
