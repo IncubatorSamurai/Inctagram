@@ -9,9 +9,12 @@ import { slickSettings } from '../lib/slickSettings'
 import { createBlobArray } from '../lib/createBlobArray'
 import { Button } from '@/shared/ui/button'
 import { Expand } from '../../Expand/Expand'
+import { useTranslations } from 'next-intl'
 
 export const Crop = () => {
-  const [saveTitle, setSaveTitle] = useState('Save Cropped Images')
+  const tModal = useTranslations('addModal')
+
+  const [saveTitle, setSaveTitle] = useState(tModal('cropButtonSave'))
   const uploadedFiles = useSelector(selectUploadedFiles)
   const [aspect, setAspect] = useState({ a: 1, b: 1 })
 
@@ -45,6 +48,7 @@ export const Crop = () => {
       dispatch(allCroppedFiles(blobArray))
     }
   }, [uploadedFiles, dispatch])
+
   // Инициализация состояния crop для всех слайдов
   useEffect(() => {
     if (uploadedFiles.length > 0) {
@@ -93,7 +97,7 @@ export const Crop = () => {
   }
 
   const handleZoomChange = (newZoom: number) => {
-    setSaveTitle('Save')
+    setSaveTitle(tModal('cropButtonSave'))
     setCropStates(prevStates => ({
       ...prevStates,
       [slideIndex]: { ...prevStates[slideIndex], zoom: newZoom },
@@ -101,7 +105,7 @@ export const Crop = () => {
   }
 
   const save = () => {
-    setSaveTitle('Saved')
+    setSaveTitle(tModal('cropButtonSaved'))
     // Если изображение было обрезано, используем его обрезанный вариант
     const updatedImages = uploadedFiles.map((fileUrl, index) => {
       return croppedImages[index] || fileUrl // Используем обрезанное изображение, если оно есть

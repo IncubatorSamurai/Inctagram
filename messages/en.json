@@ -40,6 +40,8 @@
 
   "addModal": {
     "addPhoto": "Add Photo",
+    "cropButtonSave": "Save cropped image",
+    "cropButtonSaved": "Saved",
     "crop": "Cropping",
     "filter": "Filters",
     "SelectFromComputer": "Select from Computer",

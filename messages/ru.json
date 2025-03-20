@@ -39,6 +39,8 @@
   },
   "addModal": {
     "addPhoto": "Добавить фото",
+    "cropButtonSave": "Сохранить обрезанное изображение",
+    "cropButtonSaved": "Сохранено",
     "crop": "Обрезка",
     "filter": "Фильтры",
     "SelectFromComputer": "Выбрать",
