@@ -28,18 +28,32 @@
     "forgotPasswordSubmit": "The link has been sent by email. If you don’t receive an email send link again.",
     "sendLink": "Send Link",
     "resendLink": "Resend Link",
-    "resendVerifLink" : "Resend verification link",
+    "resendVerifLink": "Resend verification link",
     "backToSignUp": "Back to Sign Up",
     "emailSent": "Email sent",
     "emailConfirmed": "Your email has been confirmed",
     "sentConfirmLink": "We have sent a link to confirm your email to",
     "emailExpired": "Email verification link expired",
-    "sendLinkAgain" : "Looks like the verification link has expired. Not to worry, we can send the link again",
+    "sendLinkAgain": "Looks like the verification link has expired. Not to worry, we can send the link again",
     "congratulations": "Congratulations"
   },
+
   "addModal": {
     "addPhoto": "Add Photo",
+    "crop": "Cropping",
+    "filter": "Filters",
     "SelectFromComputer": "Select from Computer",
-    "OpenDraft": "Open Draft"
-}
+    "OpenDraft": "Open Draft",
+    "filters": {
+      "original": "Original",
+      "vintage": "Vintage",
+      "lomo": "Lomo",
+      "soft-focus": "Soft Focus",
+      "glow": "Glow",
+      "invert": "Invert",
+      "retro": "Retro",
+      "moody": "Moody",
+      "golden-hour": "Golden Hour"
+    }
+  }
 }

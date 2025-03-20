@@ -5,9 +5,9 @@ import { selectCroppedFiles } from '@/shared/store/postSlice/postSlice'
 import { config } from '../lib/fabricImageConfig'
 import { Filters } from './Filters/Filters'
 import { SliderCanvas } from './SliderCanvas/SliderCanvas'
-import s from './ImageCanvas.module.scss'
+import s from './AddFilters.module.scss'
 
-export const ImageCanvas = () => {
+export const AddFilters = () => {
   const [fabricCanvases, setFabricCanvases] = useState<(fabric.Canvas | null)[]>([]) // Массив для хранения Fabric Canvas
   const [filters, setFilters] = useState<Record<number, fabric.filters.BaseFilter<string>[]>>({}) // Храним фильтры по индексу
 
