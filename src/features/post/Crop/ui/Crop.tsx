@@ -29,7 +29,22 @@ export const Crop = () => {
     ...slickSettings,
     beforeChange: (current: number, next: number) => setSlideIndex(next),
   }
+  useEffect(() => {
+    if (uploadedFiles.length > 0) {
+      const newCropsState = uploadedFiles.reduce(
+        (acc, _, index) => {
+          acc[index] = { crop: { x: 0, y: 0 }, zoom: 1 }
+          return acc
+        },
+        {} as { [key: number]: { crop: { x: number; y: number }; zoom: number } }
+      )
+      setCropStates(newCropsState)
 
+      // Сразу сохраняем все изображения в Redux при первой инициализации
+      const blobArray = createBlobArray(uploadedFiles)
+      dispatch(allCroppedFiles(blobArray))
+    }
+  }, [uploadedFiles, dispatch])
   // Инициализация состояния crop для всех слайдов
   useEffect(() => {
     if (uploadedFiles.length > 0) {
