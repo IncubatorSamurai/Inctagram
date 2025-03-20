@@ -56,5 +56,12 @@
       "moody": "Атмосферный",
       "golden-hour": "Золотой час"
     }
+  },
+  "posts": {
+    "close": "Закрыть",
+    "discard": "Отказаться",
+    "saveDraft": "Сохранить черновик",
+    "closeCreationPostModalDescription1": "Вы действительно хотите закрыть создание публикации?",
+    "closeCreationPostModalDescription2": "При закрытии все будет удалено"
   }
 }

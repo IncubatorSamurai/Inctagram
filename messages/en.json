@@ -45,6 +45,7 @@
     "crop": "Cropping",
     "filter": "Filters",
     "SelectFromComputer": "Select from Computer",
+
     "OpenDraft": "Open Draft",
     "filters": {
       "original": "Original",
@@ -57,5 +58,13 @@
       "moody": "Moody",
       "golden-hour": "Golden Hour"
     }
+  },
+  "posts": {
+    "close": "Close",
+    "discard": "Discard",
+    "saveDraft": "Save draft",
+    "closeCreationPostModalDescription1": "Do you really want to close the creation of a publication?",
+    "closeCreationPostModalDescription2": "If you close everything will be deleted"
+
   }
 }
