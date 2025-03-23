@@ -14,12 +14,37 @@ async function getMeData() {
   return res.json()
 }
 
+type PostsProps = {
+  userId: string
+  endCursorPostId?: string
+}
+
+async function getPublicPosts({ userId, endCursorPostId }: PostsProps) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}v1/public-posts/user/${userId}/${endCursorPostId ?? ''}`,
+    {
+      cache: 'no-store',
+    }
+  )
+  return res.json()
+}
+
 type Props = {
   params: Promise<{ userId: string }>
 }
 
 export default async function UserProfile({ params }: Props) {
   const userId = (await params).userId
-  const [resPublicData, resMeData] = await Promise.all([getPublicData(userId), getMeData()])
-  return <ProfilePage resMeData={resMeData} resPublicData={resPublicData} />
+  const [resPublicData, resMeData, resPublicPosts] = await Promise.all([
+    getPublicData(userId),
+    getMeData(),
+    getPublicPosts({ userId }),
+  ])
+  return (
+    <ProfilePage
+      resMeData={resMeData}
+      resPublicData={resPublicData}
+      resPublicPosts={resPublicPosts}
+    />
+  )
 }

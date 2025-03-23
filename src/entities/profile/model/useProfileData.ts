@@ -7,8 +7,8 @@ import { useAppSelector } from '@/shared/hooks'
 import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 
 type Props = {
-  resMeData: MeResponse
-  resPublicData: ProfileUserResponse
+  resMeData?: MeResponse
+  resPublicData?: ProfileUserResponse
 }
 
 export const useProfileData = ({ resMeData, resPublicData }: Props) => {

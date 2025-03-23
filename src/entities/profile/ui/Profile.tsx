@@ -9,13 +9,15 @@ import { useProfileData } from '@/entities/profile/model/useProfileData'
 import { UserPosts } from '@/entities/profile/ui/posts/UserPosts'
 import { MeResponse } from '@/shared/api/auth/authApi.types'
 import { ProfileUserResponse } from '@/shared/api/publicUser/publicUserApi.types'
+import { GetPostsByUserIdRespond } from '@/shared/api/post/postApi.types'
 
 type Props = {
-  resMeData: MeResponse
-  resPublicData: ProfileUserResponse
+  resMeData?: MeResponse
+  resPublicData?: ProfileUserResponse
+  resPublicPosts?: GetPostsByUserIdRespond
 }
 
-export const ProfilePage = ({ resMeData, resPublicData }: Props) => {
+export const ProfilePage = ({ resMeData, resPublicData, resPublicPosts }: Props) => {
   const tProfile = useTranslations('profile')
 
   const { avatarSrc, isMyProfile, isLoggedIn, userName, followArray, aboutMe, userId } =
@@ -59,7 +61,7 @@ export const ProfilePage = ({ resMeData, resPublicData }: Props) => {
           <Typography>{aboutMe}</Typography>
         </div>
       </section>
-      <UserPosts userName={userName} userId={userId} />
+      <UserPosts userName={userName} userId={userId} resPublicPosts={resPublicPosts} />
     </div>
   )
 }

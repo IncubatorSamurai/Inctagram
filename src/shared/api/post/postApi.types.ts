@@ -44,3 +44,12 @@ export type GetPostsByNameArgs = {
   sortDirection?: string
   userName: string
 }
+
+export type GetPostsByUserIdArgs = Omit<GetPostsByNameArgs, 'userName' | 'pageNumber'> & {
+  userId: string
+  endCursorPostId?: string
+}
+
+export type GetPostsByUserIdRespond = Omit<GetPostsByNameRespond, 'notReadCount'> & {
+  totalUsers: number
+}

@@ -3,14 +3,16 @@ import s from './UserPosts.module.scss'
 import { useGetPosts } from '@/entities/profile/model/useGetPosts'
 import { PostImage } from '@/entities/profile/ui/posts/postImage/PostImage'
 import { Link } from '@/i18n/routing'
+import { GetPostsByUserIdRespond } from '@/shared/api/post/postApi.types'
 
 type Props = {
   userName: string
   userId: string
+  resPublicPosts?: GetPostsByUserIdRespond
 }
 
-export const UserPosts = ({ userName, userId }: Props) => {
-  const { posts, targetRef } = useGetPosts({ userName })
+export const UserPosts = ({ userName, userId, resPublicPosts }: Props) => {
+  const { posts, targetRef } = useGetPosts({ userName, resPublicPosts })
 
   return (
     <section className={s.posts}>
