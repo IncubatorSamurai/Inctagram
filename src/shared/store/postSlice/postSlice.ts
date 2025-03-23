@@ -23,11 +23,11 @@ export const postSlice = createSlice({
     }),
     clearFiles: create.reducer(state => {
       state.uploadedFiles = []
-    })
+    }),
   }),
   selectors: {
-    selectUploadedFiles: state => state.uploadedFiles
-  }
+    selectUploadedFiles: state => state.uploadedFiles,
+  },
 })
 
 export const { allUploadedFiles, addFile, removeFile, clearFiles } = postSlice.actions

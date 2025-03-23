@@ -67,7 +67,7 @@ export const AddPostModal = ({ open, onChange }: Props) => {
             <div className={s.sliderContainer}>
               <Slider {...sliderSettings}>
                 {uploadedFiles.map((fileUrl, index) => (
-                  <div key={`slide-${index}`} className={s.slick_slide} >
+                  <div key={`slide-${index}`} className={s.slick_slide}>
                     <Image src={fileUrl} alt={'photo'} width={220} height={228} />
                   </div>
                 ))}

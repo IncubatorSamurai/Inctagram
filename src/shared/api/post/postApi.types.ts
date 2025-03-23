@@ -1,12 +1,17 @@
 type ImageModel = {
-  url: string;
-  width: number;
-  height: number;
-  fileSize: number;
-  createdAt: string;
-  uploadId: string;
-};
+  url: string
+  width: number
+  height: number
+  fileSize: number
+  createdAt: string
+  uploadId: string
+}
 
 export type UploadPhotoRespond = {
-  images: ImageModel[],
-};
+  images: ImageModel[]
+}
+
+export type PostDescriptionChange = {
+  id: number
+  description?: string
+}
