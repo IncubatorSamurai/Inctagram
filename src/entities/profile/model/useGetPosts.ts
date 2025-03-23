@@ -86,5 +86,5 @@ export const useGetPosts = ({ userName, resPublicPosts }: Props) => {
     }
   }, [isPublicFetching, isSetNextPage, isFetching, getNextPosts, pageNumber, userName, userId])
 
-  return { posts, targetRef }
+  return { posts, targetRef, isLoggedIn }
 }

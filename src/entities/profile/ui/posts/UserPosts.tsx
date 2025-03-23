@@ -12,22 +12,26 @@ type Props = {
 }
 
 export const UserPosts = ({ userName, userId, resPublicPosts }: Props) => {
-  const { posts, targetRef } = useGetPosts({ userName, resPublicPosts })
+  const { posts, targetRef, isLoggedIn } = useGetPosts({ userName, resPublicPosts })
 
   return (
     <section className={s.posts}>
       {userName &&
-        posts.map((post, id) => (
-          <div
-            key={post.id}
-            className={s.postWrapper}
-            ref={id === posts.length - 1 ? targetRef : null}
-          >
-            <Link href={`/profile/${userId}/${post.id}`} shallow={true} scroll={false}>
-              <PostImage images={post.images} fill />
-            </Link>
-          </div>
-        ))}
+        posts.map((post, id) => {
+          const hrefLinkPost = `/${isLoggedIn ? 'profile' : 'users'}/${userId}/${post.id}`
+
+          return (
+            <div
+              key={post.id}
+              className={s.postWrapper}
+              ref={id === posts.length - 1 ? targetRef : null}
+            >
+              <Link href={hrefLinkPost} shallow={true} scroll={false}>
+                <PostImage images={post.images} fill />
+              </Link>
+            </div>
+          )
+        })}
     </section>
   )
 }
