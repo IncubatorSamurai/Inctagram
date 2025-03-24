@@ -1,23 +1,21 @@
 import { useParams } from 'next/navigation'
 import { useMeQuery } from '@/shared/api/auth/authApi'
 import { useGetPublicProfileQuery } from '@/shared/api/publicUser/publicUserApi'
-import { MeResponse } from '@/shared/api/auth/authApi.types'
 import { ProfileUserResponse } from '@/shared/api/publicUser/publicUserApi.types'
 import { useAppSelector } from '@/shared/hooks'
 import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 
 type Props = {
-  resMeData?: MeResponse
   resPublicData?: ProfileUserResponse
 }
 
-export const useProfileData = ({ resMeData, resPublicData }: Props) => {
+export const useProfileData = ({ resPublicData }: Props) => {
   const params = useParams()
   const { userId: id } = params
   const userId = id as string
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
-  const { data: meData = resMeData } = useMeQuery(undefined, { skip: !!resMeData })
+  const { data: meData } = useMeQuery()
   const isMyProfile = meData?.userId === Number(userId)
 
   const { data: publicInfoProfile = resPublicData } = useGetPublicProfileQuery(

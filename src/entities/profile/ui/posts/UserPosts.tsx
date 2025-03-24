@@ -17,7 +17,7 @@ export const UserPosts = ({ userName, userId, resPublicPosts }: Props) => {
   return (
     <section className={s.posts}>
       {userName &&
-        posts.map((post, id) => {
+        posts?.map((post, id) => {
           const hrefLinkPost = `/${isLoggedIn ? 'profile' : 'users'}/${userId}/${post.id}`
 
           return (

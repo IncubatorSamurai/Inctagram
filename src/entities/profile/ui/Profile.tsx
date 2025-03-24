@@ -7,22 +7,19 @@ import { BlankCover } from '@/shared/ui/profile/blankCover/BlankCover'
 import { useTranslations } from 'next-intl'
 import { useProfileData } from '@/entities/profile/model/useProfileData'
 import { UserPosts } from '@/entities/profile/ui/posts/UserPosts'
-import { MeResponse } from '@/shared/api/auth/authApi.types'
 import { ProfileUserResponse } from '@/shared/api/publicUser/publicUserApi.types'
 import { GetPostsByUserIdRespond } from '@/shared/api/post/postApi.types'
 
 type Props = {
-  resMeData?: MeResponse
   resPublicData?: ProfileUserResponse
   resPublicPosts?: GetPostsByUserIdRespond
 }
 
-export const ProfilePage = ({ resMeData, resPublicData, resPublicPosts }: Props) => {
+export const ProfilePage = ({ resPublicData, resPublicPosts }: Props) => {
   const tProfile = useTranslations('profile')
 
   const { avatarSrc, isMyProfile, isLoggedIn, userName, followArray, aboutMe, userId } =
     useProfileData({
-      resMeData,
       resPublicData,
     })
 

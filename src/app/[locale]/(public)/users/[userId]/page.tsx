@@ -7,25 +7,14 @@ async function getPublicData(userId: string) {
   return res.json()
 }
 
-async function getMeData() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/auth/me`, {
-    cache: 'no-store',
-  })
-  return res.json()
-}
-
 type PostsProps = {
   userId: string
-  endCursorPostId?: string
 }
 
-async function getPublicPosts({ userId, endCursorPostId }: PostsProps) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}v1/public-posts/user/${userId}/${endCursorPostId ?? ''}`,
-    {
-      cache: 'no-store',
-    }
-  )
+async function getPublicPosts({ userId }: PostsProps) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/public-posts/user/${userId}/`, {
+    cache: 'no-store',
+  })
   return res.json()
 }
 
@@ -35,16 +24,9 @@ type Props = {
 
 export default async function UserProfile({ params }: Props) {
   const userId = (await params).userId
-  const [resPublicData, resMeData, resPublicPosts] = await Promise.all([
+  const [resPublicData, resPublicPosts] = await Promise.all([
     getPublicData(userId),
-    getMeData(),
     getPublicPosts({ userId }),
   ])
-  return (
-    <ProfilePage
-      resMeData={resMeData}
-      resPublicData={resPublicData}
-      resPublicPosts={resPublicPosts}
-    />
-  )
+  return <ProfilePage resPublicData={resPublicData} resPublicPosts={resPublicPosts} />
 }
