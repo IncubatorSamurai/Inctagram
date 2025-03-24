@@ -16,11 +16,8 @@ export const RightSideHeader = ({
   isOpenEdit,
   showDeleteModalHandler,
 }: RightSideHeaderProps) => {
-  //нужен стейт для отображения Tools
 
-  //показываем тулзы
   const [openTools, setOpenTools] = useState(false)
-  //нужен хендлер чтоб закрывать отображение тулзов\
   const openCloseToolsHadler = () => {
     setOpenTools(!openTools)
   }

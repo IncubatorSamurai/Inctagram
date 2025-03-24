@@ -3,7 +3,6 @@ import { TrashOutlineIcon } from '@/shared/assets/icons/TrashOutlineIcon'
 import { Typography } from '@/shared/ui/typography'
 import s from './Tools.module.scss'
 
-//нажимаем едит и меняем стейт из опен
 type ToolsProps = {
   changeEdit: () => void
   openClose: () => void
@@ -13,15 +12,12 @@ type ToolsProps = {
 export const Tools = ({ changeEdit, openClose, showDeleteModalHandler }: ToolsProps) => {
   const handler = () => {
     changeEdit()
-    openClose() //закрыть тулзы
+    openClose() 
   }
 
   const deletePostHandler = () => {
-    console.log('delete')
-
-    // надо поменять стейт на отображение модального окна на удаление
-    openClose() //закрыть тулзы
-    showDeleteModalHandler() // show deleteModal
+    openClose()
+    showDeleteModalHandler()
   }
 
   return (

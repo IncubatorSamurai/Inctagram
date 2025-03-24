@@ -12,14 +12,7 @@ import { useState } from 'react'
 
 export const PostModal = () => {
   const imgSlider = 'https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg'
-  //тут нужно состояние за управление включен ли эдитМод
-  //1 нажимаю на эдит пост в тулзах и состояние isOpenEdit меняется
-  // появляется полоса с Edit Post и Х
-  // пропадает иконка для вызова тулзов
-  // появляется компонента с редактированием поста
-  //  TODO , докрутит управление
 
-  // state for textareaValue
   const [post, setPost] = useState(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
   )
@@ -28,23 +21,18 @@ export const PostModal = () => {
     setPost(value)
   }
 
-  //стейт для включение эдит мода
+
   const [openEdit, setOpenEdit] = useState(false)
-  //handler close EdiMode
   const changeEdit = () => {
     setOpenEdit(!openEdit)
-    console.log('closeOpenEditMOd')
   }
 
-  // нужен стейт который показывает модалку для закрытия и если в нем нажмут да, закрывает едит мод
-  //это открывает нашу модалку НУЖНО
   const [openModal, setOpenModal] = useState(false)
   const changeOpen = () => {
     setOpenModal(!openModal)
-    console.log('yes close')
   }
 
-  // state for deleteModal
+
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const showDeleteModalHandler = () => {
     setShowDeleteModal(!showDeleteModal)
@@ -67,7 +55,6 @@ export const PostModal = () => {
             isOpenEdit={openEdit}
             showDeleteModalHandler={showDeleteModalHandler}
           />
-          {/* если включен эдит мод показываем текстареа иначе посты */}
           {openEdit ? (
             <EditDescriptionPost
               post={post}
