@@ -6,32 +6,31 @@ import { Link } from '@/i18n/routing'
 import { GetPostsByUserIdRespond } from '@/shared/api/post/postApi.types'
 
 type Props = {
-  userName: string
   userId: string
   resPublicPosts?: GetPostsByUserIdRespond
 }
 
-export const UserPosts = ({ userName, userId, resPublicPosts }: Props) => {
-  const { posts, targetRef, isLoggedIn } = useGetPosts({ userName, resPublicPosts })
+export const UserPosts = ({ userId, resPublicPosts }: Props) => {
+  const { posts, targetRef, isLoggedIn } = useGetPosts({ resPublicPosts })
+  const renderPosts = posts ?? resPublicPosts?.items
 
   return (
     <section className={s.posts}>
-      {userName &&
-        posts?.map((post, id) => {
-          const hrefLinkPost = `/${isLoggedIn ? 'profile' : 'users'}/${userId}/${post.id}`
+      {renderPosts?.map((post, id) => {
+        const hrefLinkPost = `/${isLoggedIn ? 'profile' : 'users'}/${userId}?postId=${post.id}`
 
-          return (
-            <div
-              key={post.id}
-              className={s.postWrapper}
-              ref={id === posts.length - 1 ? targetRef : null}
-            >
-              <Link href={hrefLinkPost} shallow={true} scroll={false}>
-                <PostImage images={post.images} fill />
-              </Link>
-            </div>
-          )
-        })}
+        return (
+          <div
+            key={post.id}
+            className={s.postWrapper}
+            ref={id === renderPosts.length - 1 ? targetRef : null}
+          >
+            <Link href={hrefLinkPost} shallow={true} scroll={false}>
+              <PostImage images={post.images} fill />
+            </Link>
+          </div>
+        )
+      })}
     </section>
   )
 }

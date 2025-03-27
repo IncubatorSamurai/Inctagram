@@ -19,18 +19,14 @@ export const postApi = baseApi.injectEndpoints({
         params,
         url: `v1/posts/${userName}`,
       }),
-      serializeQueryArgs: ({ endpointName }) => endpointName, // Кешируем по ключу запроса
-      merge: (currentCache, newPosts) => {
-        currentCache.items.push(...newPosts.items) // Добавляем новые посты в кеш
-      },
-      forceRefetch: ({ currentArg, previousArg }) =>
-        currentArg?.pageNumber !== previousArg?.pageNumber, // Запрещаем повторные запросы
+      // serializeQueryArgs: ({ endpointName }) => endpointName, // Кешируем по ключу запроса
+      // merge: (currentCache, newPosts) => {
+      //   currentCache.items.push(...newPosts.items) // Добавляем новые посты в кеш
+      // },
+      // forceRefetch: ({ currentArg, previousArg }) =>
+      //   currentArg?.pageNumber !== previousArg?.pageNumber, // Запрещаем повторные запросы
     }),
   }),
 })
 
-export const {
-  useUploadPhotoMutation,
-  useGetPostsByUserNameQuery,
-  useLazyGetPostsByUserNameQuery,
-} = postApi
+export const { useUploadPhotoMutation, useGetPostsByUserNameQuery } = postApi

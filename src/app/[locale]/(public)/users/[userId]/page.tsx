@@ -12,9 +12,12 @@ type PostsProps = {
 }
 
 async function getPublicPosts({ userId }: PostsProps) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/public-posts/user/${userId}/`, {
-    cache: 'no-store',
-  })
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}v1/public-posts/user/${userId}/,?pageSize=8`,
+    {
+      cache: 'no-store',
+    }
+  )
   return res.json()
 }
 

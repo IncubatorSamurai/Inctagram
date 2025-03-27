@@ -58,7 +58,7 @@ export const ProfilePage = ({ resPublicData, resPublicPosts }: Props) => {
           <Typography>{aboutMe}</Typography>
         </div>
       </section>
-      <UserPosts userName={userName} userId={userId} resPublicPosts={resPublicPosts} />
+      <UserPosts userId={userId} resPublicPosts={resPublicPosts} />
     </div>
   )
 }
