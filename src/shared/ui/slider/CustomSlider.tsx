@@ -3,58 +3,81 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import s from './CustomSlider.module.scss'
 import clsx from 'clsx'
+import { ReactElement, useState } from 'react'
 import { ArrowIosForwardIcon } from '@/shared/assets/icons/ArrowIosForwardIcon'
 import { ArrowIosBackIcon } from '@/shared/assets/icons/ArrowIosBackIcon'
 
-
 type ArrowProps = {
+  classNameArrow?: string
   onClick?: () => void
-  className?: string
 }
 
-// 🔹 Компонент для левой стрелки
-const PrevArrow = ({ onClick, className }: ArrowProps) => (
-  <button className={clsx(s.prev_arrow, className)} onClick={onClick}>
+type SliderSettingsProps =  {
+  totalSlides: number
+  sliderClass?: string
+  arrowsClass?: string
+  dotsClass?: string
+}
+
+
+const PrevArrow = ({ classNameArrow, onClick }:ArrowProps) => (
+  <button className={classNameArrow} onClick={onClick}>
     <ArrowIosBackIcon />
   </button>
 )
 
-// 🔹 Компонент для правой стрелки
-const NextArrow = ({ onClick, className }: ArrowProps) => (
-  <button className={clsx(s.next_arrow, className)} onClick={onClick}>
+
+const NextArrow = ({ classNameArrow, onClick }:ArrowProps) => (
+  <button className={classNameArrow} onClick={onClick}>
     <ArrowIosForwardIcon />
   </button>
 )
 
-// 🔹 Функция, возвращающая настройки слайдера с разными классами
+
 export const useSliderSettings = ({
-  sliderClass,
-  arrowsClassPrev,
-                                    arrowsClassNext,
-  dotsClass,
-}: {
-  sliderClass?: string
-  arrowsClassPrev?:string
-  arrowsClassNext?:string
-  dotsClass?: string
-}) => ({
+totalSlides,
+sliderClass,
+arrowsClass,
+dotsClass}: SliderSettingsProps) => {
+  const [activeIndex, setActiveIndex] = useState<number>(0)
 
+  // Функция для обработки кликов по точкам
+  const handleDotClick = (index: number) => {
+    setActiveIndex(index)  // Обновляем активный индекс
+  }
 
-  settings: {
-    dots: true,
-    arrows: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    prevArrow: <PrevArrow className={clsx(s.custom_arrow, arrowsClassPrev)}  />,
-    nextArrow: <NextArrow className= {clsx(s.custom_arrow, arrowsClassNext)}  />,
-    className: clsx(s.custom_slider, sliderClass),
-    appendDots: (dots: React.ReactNode) => (
-      <div className={clsx(s.dots_list, dotsClass)}>
-        <ul className={s.dots}>{dots}</ul>
-      </div>
-    ),
-    customPaging: () => <div className={clsx(s.dots_item, dotsClass)}></div>,
-  },
-})
+  return {
+    settings: {
+      dots: true,
+      arrows: true,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      beforeChange: (_: number, next: number) => setActiveIndex(next),
+      prevArrow: <PrevArrow classNameArrow={clsx(s.prev_arrow, arrowsClass)} />,
+      nextArrow: <NextArrow classNameArrow={clsx(s.next_arrow, arrowsClass)} />,
+      className: clsx(s.custom_slider, sliderClass),
+      appendDots: (): ReactElement => {
+        const totalDots = Math.min(5, totalSlides)
+        const startIndex = Math.max(0, Math.min(activeIndex - 2, totalSlides - 5))
+        const visibleDots = Array.from({ length: totalDots }, (_, i) => startIndex + i)
+
+        return (
+          <div className={clsx(s.dots_list, dotsClass)}>
+            <ul className={s.dots}>
+              {visibleDots.map((index) => (
+                <li
+                  key={index}
+                  className={clsx(s.dots_item, dotsClass, { [s.active]: index === activeIndex })}
+                  onClick={() => handleDotClick(index)}
+                ></li>
+              ))}
+            </ul>
+          </div>
+        )
+      },
+      customPaging: (): ReactElement => <div className={clsx(s.dots_item, dotsClass)}></div>,
+    },
+  }
+}

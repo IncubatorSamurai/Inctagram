@@ -6,8 +6,8 @@ import { PublicPostsList } from '@/features/publicPosts/ui/PublicPostsList/Publi
 const PublicPosts = async () => {
 
   const { items, totalUsers } = await getPublicPosts({
-    pageSize: 10,
-    sortBy: "id",
+    pageSize:10,
+    sortBy: "createdAt",
     sortDirection: 'desc',
 
   })

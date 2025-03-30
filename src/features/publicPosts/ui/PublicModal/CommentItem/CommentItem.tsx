@@ -5,7 +5,9 @@ import { Typography } from '@/shared/ui/typography';
 import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar';
 import { formatDistanceToNow } from 'date-fns';
 import s from "./CommentItem.module.scss"
-import { HEIGHT_AVATAR, WIDTH_AVATAR } from '@/features/publicPosts/ui/PublicPostsList'
+
+const WIDTH_AVATAR = 36
+const HEIGHT_AVATAR = 36
 
 type CommentItemProps = {
   comment: Comment;

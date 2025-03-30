@@ -2,19 +2,23 @@ import { PublicPostsResponse } from '@/shared/api/post/postApi.types'
 import { notFound } from 'next/navigation'
 
 type GetPublicPosts = {
-  pageSize?: number
-  sortBy?: string
-  sortDirection?: 'desc' | 'asc'
+  pageSize: number
+  sortBy: string
+  sortDirection: 'desc' | 'asc'
   endCursorPostId?: number | undefined
 }
-const getPublicPosts = async ({pageSize, sortBy, sortDirection, endCursorPostId = undefined}:GetPublicPosts): Promise<PublicPostsResponse> => {
+const getPublicPosts = async ({
+  pageSize,
+  sortBy,
+  sortDirection,
+  endCursorPostId = undefined,
+}: GetPublicPosts): Promise<PublicPostsResponse> => {
+  const params = new URLSearchParams({
+    pageSize: pageSize.toString(),
+    sortBy: sortBy,
+    sortDirection: sortDirection,
+  })
 
-
-  const params = new URLSearchParams()
-
-  if (pageSize) params.append('pageSize', pageSize.toString())
-  if (sortBy) params.append('sortBy', sortBy)
-  if (sortDirection) params.append('sortDirection', sortDirection)
   if (endCursorPostId !== undefined) {
     params.append('endCursorPostId', endCursorPostId.toString())
   }

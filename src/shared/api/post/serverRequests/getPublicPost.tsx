@@ -11,8 +11,7 @@ const getPublicPost = async ({id}:GetPublicPost): Promise<Post> => {
   );
 
   if (!response.ok) {
-    console.error('Failed to fetch posts:', response.status); // Лог ошибки
-    throw new Error('Failed to fetch posts');
+    console.error('Failed to fetch posts:', response.status);
   }
 
   const data = await response.json()

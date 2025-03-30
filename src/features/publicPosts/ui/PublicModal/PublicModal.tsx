@@ -1,6 +1,6 @@
 'use client'
 import s from './PublicModal.module.scss'
-import { Comment, ImageModel } from '@/shared/api/post/postApi.types'
+import { CommentsResponse, Post } from '@/shared/api/post/postApi.types'
 import { Modal } from '@/shared/ui/modal'
 import Image from 'next/image'
 import { Typography } from '@/shared/ui/typography'
@@ -12,57 +12,58 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { CommentItem } from '@/features/publicPosts/ui/PublicModal/CommentItem/CommentItem'
 import { useRouter } from 'next/navigation'
-
 import { useSliderSettings } from '@/shared/ui/slider/CustomSlider'
 import { renderLikeAvatars } from '@/features/publicPosts/ui/PublicModal/PublicModalRenderAvatars'
+
 const WIDTH_MODAL_IMAGE = 490
 const HEIGHT_MODAL_IMAGE = 564
+
 type PublicModal = {
-  images: ImageModel[]
-  userName: string
-  comments: Comment[]
+  post: Post
+  commentsData: CommentsResponse | null
   postId: number
-  avatarOwner: string
-  likesCount: number
-  createdAt: string
-  avatarWhoLikes: boolean
 }
 
-export const PublicModal = ({
-  createdAt,
-  avatarWhoLikes,
-  likesCount,
-  userName,
-  avatarOwner,
-  images,
-  postId,
-  comments,
-  ...props
-}: PublicModal) => {
-  const { settings } = useSliderSettings({})
+export const PublicModal = ({ post, commentsData, postId, ...props }: PublicModal) => {
+  const comments = commentsData?.items || []
+  const { images, avatarOwner, userName, likesCount, createdAt, avatarWhoLikes } = post
+  const { settings } = useSliderSettings({
+    sliderClass: s.slider_modal,
+    dotsClass: s.slider_modal_dots,
+    totalSlides:images.length,
+  })
   const router = useRouter()
+  const currentUrl = new URL(window.location.href)
+  currentUrl.searchParams.delete('postId')
+  const hrefLinkPost = currentUrl.pathname + currentUrl.search
+
   const onClose = () => {
     if (window.history.length > 2) {
       router.back()
     } else {
-      router.replace('/public')
+      router.replace(hrefLinkPost, { scroll: false })
     }
   }
   return (
     <Modal
       className={s.public_modal}
       open={!!postId}
-      onOpenChange={onClose}
-      defaultOpen={true}
+      onOpenChange={isOpen => !isOpen && onClose()}
+      defaultOpen
       {...props}
     >
       <div className={s.public_modal_container}>
         <div className={s.public_modal_img}>
           {/* СЛАЙДЕР*/}
-          <Slider {...settings}>
+          <Slider {...settings} >
             {images.map((image, index) => (
               <div key={index}>
-                <Image src={image.url} alt="" width={WIDTH_MODAL_IMAGE} height={HEIGHT_MODAL_IMAGE} />
+                <Image
+                  src={image.url}
+                  alt=""
+                  width={WIDTH_MODAL_IMAGE}
+                  height={HEIGHT_MODAL_IMAGE}
+                />
               </div>
             ))}
           </Slider>
