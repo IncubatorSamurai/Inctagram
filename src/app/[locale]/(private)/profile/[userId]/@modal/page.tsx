@@ -3,16 +3,16 @@ import { Modal } from '@/shared/ui/modal'
 import { useRouter } from '@/i18n/routing'
 import { useSearchParams } from 'next/navigation'
 import { use } from 'react'
-import { useAppSelector } from '@/shared/hooks'
-import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 
 export default function PostModal({ params }: { params: Promise<{ userId: string }> }) {
   const { userId } = use(params)
   const router = useRouter()
   const searchParams = useSearchParams()
   const postId = searchParams.get('postId')
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
-  const hrefLinkPost = `/${isLoggedIn ? 'profile' : 'users'}/${userId}`
+
+  const currentUrl = new URL(window.location.href)
+  currentUrl.searchParams.delete('postId')
+  const hrefLinkPost = currentUrl.pathname + currentUrl.search
 
   const closeModal = () => {
     if (window.history.length > 2) {

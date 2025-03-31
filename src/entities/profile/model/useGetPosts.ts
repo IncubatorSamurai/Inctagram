@@ -19,6 +19,7 @@ export const useGetPosts = ({ resPublicPosts }: Props) => {
   const endCursorPostIdRef = useRef<null | string>(null)
   const needInit = useRef(!!resPublicPosts)
   const { isInView, targetRef } = useIntersectionObserver({ threshold: 0.5 })
+
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const [fetchPosts, { data: publicPostsByUserId, isFetching }] =
@@ -56,7 +57,7 @@ export const useGetPosts = ({ resPublicPosts }: Props) => {
           resPublicPosts?.items[resPublicPosts?.items.length - 1]?.id.toString()
         fetchPosts({
           userId,
-          pageSize: 8,
+          pageSize: 9,
           endCursorPostId: endCursorPostIdRef.current ?? undefined,
         })
       } else {
@@ -77,9 +78,9 @@ export const useGetPosts = ({ resPublicPosts }: Props) => {
 
   useEffect(() => {
     if (posts && isInView && !isFetching && posts.length < totalCount) {
-      fetchPosts({ userId, pageSize: 8, endCursorPostId: endCursorPostIdRef.current ?? undefined })
+      fetchPosts({ userId, pageSize: 9, endCursorPostId: endCursorPostIdRef.current ?? undefined })
     }
-  }, [isInView, totalCount, userId])
+  }, [isInView])
 
   return { posts, targetRef, isLoggedIn }
 }
