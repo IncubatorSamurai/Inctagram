@@ -3,8 +3,14 @@ import { HeartOutlineIcon } from '@/shared/assets/icons/HeartOutlineIcon'
 import { PaperPlaneIcon } from '@/shared/assets/icons/PaperPlaneIcon'
 import s from './PostLikesAndSent.module.scss'
 
-export const PostLikesAndSent = () => {
-  const count = 200
+type LikesAndCountProps = {
+  likes: number | undefined
+  whosLikes: string[] | undefined
+  createdAt: string | undefined
+}
+
+export const PostLikesAndSent = ({likes,whosLikes,createdAt}:LikesAndCountProps) => {
+ 
   return (
     <div className={s.postsSideLikes}>
       <div className={s.likeAndSent}>
@@ -17,11 +23,13 @@ export const PostLikesAndSent = () => {
         </div>
       </div>
       <div className={s.info}>
-        <div>img user who like this</div>
-        <div>
-          {count} <span>like</span>
+        <div className={s.imgWhoLikes}> 
+          {whosLikes?.map((el)=><img key={el} src={el} alt='user post'/>)}
         </div>
-        <div>info</div>
+        <div>
+          {likes} <span>like</span>
+        </div>
+        <div>{createdAt}</div>
       </div>
     </div>
   )
