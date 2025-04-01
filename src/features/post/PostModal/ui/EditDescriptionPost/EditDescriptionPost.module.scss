@@ -1,0 +1,31 @@
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+
+  .lableColor {
+    color: var(--color-light-900);
+  }
+
+  .area {
+    resize: none;
+    background-color: var(--color-dark-500);
+    outline: none;
+  }
+
+  .btn {
+    position: absolute;
+    bottom: -140%;
+    left: 62%;
+  }
+
+  .counter {
+    position: absolute;
+    right: 26px;
+    bottom: 5px;
+
+    font-size: 12px;
+    color: var(--color-light-900);
+  }
+}

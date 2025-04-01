@@ -1,0 +1,34 @@
+.root {
+  .comment {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 24px 0;
+
+    .imgUser {
+      align-self: flex-start;
+      margin-top: 24px;
+
+      img {
+        max-width: 36px;
+        max-height: 36px;
+        border-radius: 50%;
+      }
+    }
+
+    .userNameAndText {
+      flex: 1;
+      padding: 16px 24px 36px 12px;
+    }
+
+    .like {
+      align-content: center;
+    }
+  }
+
+  .sideInfo {
+    padding: 8px 8px 8px 72px;
+  }
+}

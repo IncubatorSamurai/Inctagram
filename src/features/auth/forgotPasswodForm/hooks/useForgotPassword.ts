@@ -5,7 +5,10 @@ import { usePasswordRecoveryMutation } from '@/shared/api/auth/authApi'
 
 import { ErrorResponse } from '@/shared/types/auth'
 import ReCAPTCHA from 'react-google-recaptcha'
-import { ForgotPasswordFormSchema, forgotPasswordFormSchema } from '@/shared/schemes/forgotPasswordFormSchema'
+import {
+  ForgotPasswordFormSchema,
+  forgotPasswordFormSchema,
+} from '@/shared/schemes/forgotPasswordFormSchema'
 
 export const useForgotPassword = () => {
   const [submittedEmail, setSubmittedEmail] = useState('')
@@ -52,7 +55,7 @@ export const useForgotPassword = () => {
       recaptchaRef.current?.reset()
     }
   }
-const disabled = !isValid
+  const disabled = !isValid
   return {
     submittedEmail,
     isModalOpen,
