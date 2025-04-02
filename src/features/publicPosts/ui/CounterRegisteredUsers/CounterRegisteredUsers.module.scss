@@ -1,0 +1,26 @@
+.public_users_counter {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background: var(--color-dark-500);
+  padding: 12px 24px;
+  align-items: center;
+  border-radius: 2px;
+  border: 1px solid var(--color-dark-300);
+}
+.public_counter {
+  display: flex;
+  flex-direction: row;
+  border-radius: 2px;
+  border: 1px solid var(--color-dark-300);
+  align-items: center;
+  background: var(--color-dark-900);
+  padding: 12px 0;
+}
+.counter_item{
+  border-right : 1px solid var(--color-dark-300);
+  padding:0 12px 0 12px;
+  &:last-child{
+    border-right:none;
+  }
+}

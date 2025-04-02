@@ -4,8 +4,9 @@ import s from './layout.module.scss'
 import { Sidebar } from '@/widgets/sidebar'
 
 export default function Layout({
-  children,
-}: Readonly<{
+children,
+ }: Readonly<{
+
   children: React.ReactNode
 }>) {
   return (
