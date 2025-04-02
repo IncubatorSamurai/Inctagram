@@ -1,3 +1,4 @@
+
 export type ImageModel = {
   url: string;
   width: number;
@@ -8,10 +9,33 @@ export type ImageModel = {
 };
 
 export type UploadPhotoRespond = {
+  images: ImageModel[]
+}
+
+export type PostDescriptionChange = {
+  id: number
+  description?: string
+}
+
+type Owner = {
+  firstName: string | null,
+  lastName: string | null
+}
+
+export type ResponseGetById = {
+  id: number,
+  userName: string,
+  description: string,
+  location: null,
   images: ImageModel[],
+  createdAt: string,
+  updatedAt: string,
+  ownerId: number,
+  owner: Owner,
+  likesCount: number,
+  isLiked: boolean,
+  avatarWhoLikes: string[]
 };
-
-
 
 export type User = {
   firstName: string;
@@ -47,6 +71,7 @@ export type PublicPostsRequest = {
   sortBy?: string;
   sortDirection?: 'asc' | 'desc';
 };
+
 type Avatar = {
   url?: string;
 };
@@ -56,7 +81,6 @@ type CommentAuthor = {
   username: string;
   avatars: Avatar[];
 };
-
 
 export type Comment = {
   id: number;
@@ -76,4 +100,13 @@ export type CommentsResponse = {
   items: Comment[];
 };
 
+export type Name = {
+  name: string
+};
 
+export type ResponseGetByName = {
+    pageSize: number,
+    totalCount: number,
+    notReadCount: number,
+    items: ResponseGetById[]
+};

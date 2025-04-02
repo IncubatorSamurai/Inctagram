@@ -1,0 +1,36 @@
+.postsSideHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px;
+  border-top: 1px solid var(--color-dark-100);
+
+  .imgAndURLProfile {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 10px;
+
+    .userAvatar {
+      max-width: 72px;
+      max-height: 48px;
+      border-radius: 50%;
+    }
+  }
+}
+
+.tools {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+
+  .tools .toolsComponent {
+    margin-top: 10px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
