@@ -25,18 +25,24 @@ export const postSlice = createSlice({
     allCroppedFiles: create.reducer<string[]>((state, action) => {
       state.croppedFiles = action.payload
     }),
-    addFilteredFiles: create.reducer<{ croppedFileUrl: string; index: number }>((state, action) => {
-      // const index = state.files.findIndex((file, i) => i === action.payload.index)
-      // console.log(index)
-      const { index, croppedFileUrl } = action.payload
+    addFilteredFiles: create.reducer<{ fileUrl: string; id: string }>((state, action) => {
+      const index = state.files.findIndex(file => file.id === action.payload.id)
 
-      if (state.files[index]) {
-        state.files[index] = {
-          ...state.files[index],
-          filteredFileUrl: croppedFileUrl,
+      if (index !== -1) {
+        const filteredFileUrl = state.files[index].filteredFileUrl
+        if (filteredFileUrl) {
+          URL.revokeObjectURL(filteredFileUrl)
+        }
+
+        const { fileUrl } = action.payload
+
+        if (state.files[index]) {
+          state.files[index] = {
+            ...state.files[index],
+            filteredFileUrl: fileUrl,
+          }
         }
       }
-      // })
     }),
     addFile: create.reducer<{ fileUrl: string }>((state, action) => {
       state.uploadedFiles.push(action.payload.fileUrl)

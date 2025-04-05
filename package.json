@@ -32,7 +32,6 @@
     "clsx": "^2.1.1",
     "cookies-next": "^5.1.0",
     "date-fns": "^4.1.0",
-    "fabric": "^6.6.1",
     "next": "15.1.6",
     "next-intl": "^3.26.5",
     "react": "19.0.0",
