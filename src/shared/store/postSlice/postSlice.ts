@@ -4,7 +4,7 @@ export type Photo = {
   id?: string
   fileUrl: string
   editedFileUrl?: string | null
-
+  filteredFileUrl?: string | null
   zoomInit?: number | null
   cropInit?: { x: number; y: number } | null
   aspectInit?: number | null
@@ -24,6 +24,25 @@ export const postSlice = createSlice({
     }),
     allCroppedFiles: create.reducer<string[]>((state, action) => {
       state.croppedFiles = action.payload
+    }),
+    addFilteredFiles: create.reducer<{ fileUrl: string; id: string }>((state, action) => {
+      const index = state.files.findIndex(file => file.id === action.payload.id)
+
+      if (index !== -1) {
+        const filteredFileUrl = state.files[index].filteredFileUrl
+        if (filteredFileUrl) {
+          URL.revokeObjectURL(filteredFileUrl)
+        }
+
+        const { fileUrl } = action.payload
+
+        if (state.files[index]) {
+          state.files[index] = {
+            ...state.files[index],
+            filteredFileUrl: fileUrl,
+          }
+        }
+      }
     }),
     addFile: create.reducer<{ fileUrl: string }>((state, action) => {
       state.uploadedFiles.push(action.payload.fileUrl)
@@ -99,6 +118,7 @@ export const {
   clearFiles,
   prevStep,
   nextStep,
+  addFilteredFiles,
   resetCropping,
   saveCropFile,
 } = postSlice.actions

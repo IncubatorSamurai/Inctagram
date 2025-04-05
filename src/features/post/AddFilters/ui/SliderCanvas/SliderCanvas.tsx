@@ -2,49 +2,55 @@ import Slider from 'react-slick'
 import s from './SliderCanvas.module.scss'
 import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { selectCroppedFiles } from '@/shared/store/postSlice/postSlice'
-import * as fabric from 'fabric'
+import { selectFiles } from '@/shared/store/postSlice/postSlice'
+
 type Props = {
   setIndexState: (value: number) => void
-  setFabricCanvases: (v: (fabric.Canvas | null)[]) => void
+  setFabricCanvases: (v: (CanvasRenderingContext2D | null)[]) => void
   index: number
 }
 
 export const SliderCanvas = ({ setIndexState, setFabricCanvases }: Props) => {
-  const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([]) // Массив ref для canvas
-  const containerRef = useRef<HTMLDivElement | null>(null) // Ref для контейнера
-  const uploadedFiles = useSelector(selectCroppedFiles)
+  const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([])
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const files = useSelector(selectFiles)
 
   useEffect(() => {
-    if (uploadedFiles.length === 0 || !containerRef.current) return
+    if (files.length === 0 || !containerRef.current) return
 
     const containerWidth = containerRef.current.clientWidth
     const containerHeight = containerRef.current.clientHeight
 
-    const newCanvases = canvasRefs.current.map(canvasEl => {
-      if (!canvasEl) return null
+    const contexts: (CanvasRenderingContext2D | null)[] = []
 
-      // Устанавливаем размеры canvas через атрибуты
-      canvasEl.width = containerWidth
-      canvasEl.height = containerHeight
+    files.forEach((_, index) => {
+      const canvasEl = canvasRefs.current[index]
+      if (!canvasEl) {
+        contexts.push(null)
+        return
+      }
 
-      const fabricCanvas = new fabric.Canvas(canvasEl, {
-        selection: false,
-        width: containerWidth,
-        height: containerHeight,
-      })
+      // Установка размеров
+      if (canvasEl.width !== containerWidth) canvasEl.width = containerWidth
+      if (canvasEl.height !== containerHeight) canvasEl.height = containerHeight
 
-      // Загружаем изображение
+      const ctx = canvasEl.getContext('2d')
+      if (!ctx) {
+        contexts.push(null)
+        return
+      }
 
-      return fabricCanvas
+      const img = new Image()
+      img.onload = () => {
+        // Отрисовка изображения с подгонкой под размер
+        ctx.clearRect(0, 0, canvasEl.width, canvasEl.height)
+        ctx.drawImage(img, 0, 0, canvasEl.width, canvasEl.height)
+      }
+      contexts.push(ctx)
     })
 
-    setFabricCanvases(newCanvases)
-
-    return () => {
-      newCanvases.forEach(canvas => canvas?.dispose())
-    }
-  }, [uploadedFiles])
+    setFabricCanvases(contexts)
+  }, [files])
 
   const settings = {
     dots: true,
@@ -54,13 +60,13 @@ export const SliderCanvas = ({ setIndexState, setFabricCanvases }: Props) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     touchMove: true,
-    beforeChange: (current: number, next: number) => setIndexState(next),
+    beforeChange: (_: number, next: number) => setIndexState(next),
   }
 
   return (
     <div ref={containerRef} className={s.container}>
       <Slider className={s.slider} {...settings}>
-        {uploadedFiles.map((fileUrl, i) => (
+        {files.map((_, i) => (
           <div key={i}>
             <canvas
               className={s.canvas}
