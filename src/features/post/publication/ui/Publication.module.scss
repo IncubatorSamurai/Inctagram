@@ -1,0 +1,80 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--color-dark-100);
+
+  .DialogTitle {
+    margin: 0;
+  }
+
+  & > button:last-child {
+    padding: 6px 12px;
+  }
+}
+
+.contentContainer {
+  display: flex;
+
+  width: 100%;
+  max-width: 972px;
+  height: 100%;
+  max-height: 500px;
+
+  .imageSide {
+    position: relative;
+    width: 50%;
+    background-color: var(--color-dark-500);
+
+    .image {
+      width: 100%;
+      object-fit: contain;
+    }
+
+    :global(.slick-dots) {
+      bottom: 15px;
+    }
+  }
+
+  .editSide {
+    width: 50%;
+  }
+}
+
+.descriptionWrapper {
+  padding: 24px 24px 35px;
+
+  & > div:first-child {
+    padding-bottom: 24px;
+  }
+}
+
+.avatarWithNameWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+
+  .avatar {
+    border-radius: 50%;
+  }
+}
+
+.textareaWithCharCountWrapper {
+  position: relative;
+
+  & > div > textarea {
+    height: 120px;
+  }
+
+  & > p {
+    position: absolute;
+    top: 145px;
+    right: 0;
+
+    color: var(--color-light-900);
+    text-align: end;
+  }
+}

@@ -9,3 +9,20 @@
     padding: 0;
   }
 }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--color-dark-100);
+
+  .DialogTitle {
+    margin: 0;
+  }
+
+  & > button:last-child {
+    padding: 6px 12px;
+  }
+}

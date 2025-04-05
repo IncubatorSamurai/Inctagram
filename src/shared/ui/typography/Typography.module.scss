@@ -27,6 +27,10 @@
   @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-regular));
 }
 
+.medium_text_16 {
+  @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-medium));
+}
+
 .bold_text_16 {
   @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-bold));
 }

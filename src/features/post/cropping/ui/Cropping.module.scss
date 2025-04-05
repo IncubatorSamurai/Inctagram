@@ -1,0 +1,61 @@
+.container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: 500px;
+  height: 500px;
+
+  .image {
+    width: auto;
+    object-fit: contain;
+  }
+
+  :global(.slick-dots) {
+    bottom: 15px;
+  }
+
+  .cropButton {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+
+    width: 36px;
+    height: 36px;
+
+    opacity: 0.8;
+    background-color: var(--color-dark-500);
+
+    &:hover {
+      color: var(--color-accent-500);
+    }
+  }
+}
+
+.actionButtons {
+  // position: absolute;
+  // z-index: 9;
+  // bottom: 0;
+
+  // display: flex;
+  // align-items: center;
+  // justify-content: space-between;
+
+  // box-sizing: border-box;
+  // width: 100%;
+  // padding: 15px;
+  // position: relative;
+  // z-index: 99999;
+
+  position: relative;
+
+  display: flex;
+  gap: 20px;
+  align-items: center;
+
+  padding: 10px 0;
+}

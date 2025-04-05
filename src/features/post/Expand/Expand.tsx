@@ -9,36 +9,46 @@ import { ExpandIcon } from '@/shared/assets/icons/ExpandIcon'
 import s from './Expand.module.scss'
 import clsx from 'clsx'
 
-type AspectProps = { a: number; b: number }
-
 type Props = {
-  getAspect: (aspect: AspectProps) => void
+  getAspect: (aspect: number) => void
 }
 export const Expand = ({ getAspect }: Props) => {
-  const [isVisible, setIsVisible] = useState(false)
-
-  const chooseExpand = (aspect: AspectProps) => {
+  const chooseExpand = (aspect: number) => {
+    console.log(aspect)
     getAspect(aspect)
   }
 
   return (
-    <div className={clsx(s.wrapper, isVisible && s.isVisible)}>
-      <Button variant="icon" className={s.expand} onClick={() => setIsVisible(!isVisible)}>
-        <ExpandIcon color={isVisible ? 'var(--color-accent-500)' : ''} />
+    <>
+      {/* <div className={s.container}> */}
+      <Button variant="text" className={s.row} onClick={() => chooseExpand(1 / 1)}>
+        <Typography variant="h3">1:1</Typography> <CropIcon1x1 />
       </Button>
-      {isVisible && (
-        <div className={s.container}>
-          <Button variant="text" className={s.row} onClick={() => chooseExpand({ a: 1, b: 1 })}>
-            <Typography variant="h3">1:1</Typography> <CropIcon1x1 />
-          </Button>
-          <Button variant="text" className={s.row} onClick={() => chooseExpand({ a: 4, b: 5 })}>
-            <Typography variant="h3">4:5</Typography> <CropIcon4x5 />
-          </Button>
-          <Button variant="text" className={s.row} onClick={() => chooseExpand({ a: 16, b: 9 })}>
-            <Typography variant="h3">16:9</Typography> <CropIcon16x9 />
-          </Button>
-        </div>
-      )}
-    </div>
+      <Button variant="text" className={s.row} onClick={() => chooseExpand(4 / 5)}>
+        <Typography variant="h3">4:5</Typography> <CropIcon4x5 />
+      </Button>
+      <Button variant="text" className={s.row} onClick={() => chooseExpand(16 / 9)}>
+        <Typography variant="h3">16:9</Typography> <CropIcon16x9 />
+      </Button>
+      {/* </div> */}
+    </>
+    // <div className={clsx(s.wrapper, isVisible && s.isVisible)}>
+    //   <Button variant="icon" className={s.expand} onClick={() => setIsVisible(!isVisible)}>
+    //     <ExpandIcon color={isVisible ? 'var(--color-accent-500)' : ''} />
+    //   </Button>
+    //   {isVisible && (
+    //     <div className={s.container}>
+    //       <Button variant="text" className={s.row} onClick={() => chooseExpand({ a: 1, b: 1 })}>
+    //         <Typography variant="h3">1:1</Typography> <CropIcon1x1 />
+    //       </Button>
+    //       <Button variant="text" className={s.row} onClick={() => chooseExpand({ a: 4, b: 5 })}>
+    //         <Typography variant="h3">4:5</Typography> <CropIcon4x5 />
+    //       </Button>
+    //       <Button variant="text" className={s.row} onClick={() => chooseExpand({ a: 16, b: 9 })}>
+    //         <Typography variant="h3">16:9</Typography> <CropIcon16x9 />
+    //       </Button>
+    //     </div>
+    //   )}
+    // </div>
   )
 }

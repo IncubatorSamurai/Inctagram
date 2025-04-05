@@ -1,17 +1,20 @@
 .container {
   position: relative;
-  max-width: 490px;
   width: 100%;
+  max-width: 490px;
   height: 503px;
 }
+
 .row {
   position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 15px;
   z-index: 9;
-  box-sizing: border-box;
+  bottom: 0;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 15px;
 }

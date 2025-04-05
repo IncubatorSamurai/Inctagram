@@ -20,7 +20,7 @@ export const CropIcon16x9 = (props: Props) => {
         rx="2"
         transform="rotate(90 25 1)"
         stroke="#8D9094"
-        stroke-width="2"
+        strokeWidth="2"
       />
     </svg>
   )

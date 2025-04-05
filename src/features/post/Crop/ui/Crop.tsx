@@ -1,10 +1,9 @@
 import { allCroppedFiles, selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
 import { useRef, useState, useEffect } from 'react'
 import Cropper, { Area } from 'react-easy-crop'
-import { useSelector } from 'react-redux'
 import s from './Crop.module.scss'
 import Slider from 'react-slick'
-import { useAppDispatch } from '@/shared/hooks'
+import { useAppDispatch, useAppSelector } from '@/shared/hooks'
 import { slickSettings } from '../lib/slickSettings'
 import { createBlobArray } from '../lib/createBlobArray'
 import { Button } from '@/shared/ui/button'
@@ -12,10 +11,10 @@ import { Expand } from '../../Expand/Expand'
 import { useTranslations } from 'next-intl'
 
 export const Crop = () => {
-  const tModal = useTranslations('addModal')
+  const t = useTranslations('post')
 
-  const [saveTitle, setSaveTitle] = useState(tModal('cropButtonSave'))
-  const uploadedFiles = useSelector(selectUploadedFiles)
+  const [saveTitle, setSaveTitle] = useState(t('cropButtonSave'))
+  const uploadedFiles = useAppSelector(selectUploadedFiles)
   const [aspect, setAspect] = useState({ a: 1, b: 1 })
 
   // Сохраняем состояние обрезки для каждого изображения
@@ -45,23 +44,25 @@ export const Crop = () => {
 
       // Сразу сохраняем все изображения в Redux при первой инициализации
       const blobArray = createBlobArray(uploadedFiles)
+      console.log('blobArray:',blobArray);
+      
       dispatch(allCroppedFiles(blobArray))
     }
   }, [uploadedFiles, dispatch])
 
   // Инициализация состояния crop для всех слайдов
-  useEffect(() => {
-    if (uploadedFiles.length > 0) {
-      const newCropsState = uploadedFiles.reduce(
-        (acc, _, index) => {
-          acc[index] = { crop: { x: 0, y: 0 }, zoom: 1 }
-          return acc
-        },
-        {} as { [key: number]: { crop: { x: number; y: number }; zoom: number } }
-      )
-      setCropStates(newCropsState)
-    }
-  }, [uploadedFiles])
+  // useEffect(() => {
+  //   if (uploadedFiles.length > 0) {
+  //     const newCropsState = uploadedFiles.reduce(
+  //       (acc, _, index) => {
+  //         acc[index] = { crop: { x: 0, y: 0 }, zoom: 1 }
+  //         return acc
+  //       },
+  //       {} as { [key: number]: { crop: { x: number; y: number }; zoom: number } }
+  //     )
+  //     setCropStates(newCropsState)
+  //   }
+  // }, [uploadedFiles])
 
   const onCropComplete = (_: Area, croppedAreaPixels: Area) => {
     const canvas = document.createElement('canvas')
@@ -97,7 +98,7 @@ export const Crop = () => {
   }
 
   const handleZoomChange = (newZoom: number) => {
-    setSaveTitle(tModal('cropButtonSave'))
+    setSaveTitle(t('cropButtonSave'))
     setCropStates(prevStates => ({
       ...prevStates,
       [slideIndex]: { ...prevStates[slideIndex], zoom: newZoom },
@@ -105,7 +106,7 @@ export const Crop = () => {
   }
 
   const save = () => {
-    setSaveTitle(tModal('cropButtonSaved'))
+    setSaveTitle(t('cropButtonSaved'))
     // Если изображение было обрезано, используем его обрезанный вариант
     const updatedImages = uploadedFiles.map((fileUrl, index) => {
       return croppedImages[index] || fileUrl // Используем обрезанное изображение, если оно есть

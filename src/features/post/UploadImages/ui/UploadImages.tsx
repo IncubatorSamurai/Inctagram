@@ -10,21 +10,27 @@ import 'slick-carousel/slick/slick-theme.css'
 import { ImageOutlineIcon } from '@/shared/assets/icons/ImageOutlineIcon'
 import Image from 'next/image'
 import { useAppDispatch } from '@/shared/hooks'
-import { MAX_FILE, MAX_SIZE, sliderSettings } from '../consts/consts'
+import { sliderSettings } from '@/shared/config/sliderSettings'
 
-export const AddImages = () => {
-  const tModal = useTranslations('addModal')
+const MAX_FILES = 10
+const MAX_FILE_SIZE = 20 * 1024 * 1024
+
+export const UploadImages = () => {
+  const t = useTranslations('post')
   const dispatch = useAppDispatch()
   const uploadedFiles = useSelector(selectUploadedFiles)
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e)
+
     const files = e.target.files
+
     if (files) {
       const fileArray = Array.from(files)
 
       // Фильтрация по размеру (до 20 MB) и количеству (не более 10 файлов)
-      const validFiles = fileArray.filter(file => file.size <= MAX_SIZE)
-      if (validFiles.length > 0 && validFiles.length <= MAX_FILE) {
+      const validFiles = fileArray.filter(file => file.size <= MAX_FILE_SIZE)
+      if (validFiles.length > 0 && validFiles.length <= MAX_FILES) {
         validFiles.forEach(file => {
           dispatch(addFile({ fileUrl: URL.createObjectURL(file) }))
         })
@@ -36,7 +42,6 @@ export const AddImages = () => {
 
   return (
     <div className={s.container}>
-      {/* Если загружены файлы, показываем слайдер */}
       <div className={s.post_preview}>
         {uploadedFiles.length > 0 ? (
           <div className={s.sliderContainer}>
@@ -55,7 +60,7 @@ export const AddImages = () => {
 
       <div className={s.controls}>
         <Button variant="primary" fullWidth className={s.button} asChild>
-          <label htmlFor="file-upload">{tModal('SelectFromComputer')}</label>
+          <label htmlFor="file-upload">{t('selectFromComputer')}</label>
         </Button>
         <input
           id="file-upload"
@@ -66,7 +71,7 @@ export const AddImages = () => {
           onChange={handleFileSelect}
         />
         <Button variant="outline" fullWidth className={s.button}>
-          {tModal('OpenDraft')}
+          {t('openDraft')}
         </Button>
       </div>
     </div>

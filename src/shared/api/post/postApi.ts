@@ -1,19 +1,26 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { UploadPhotoRespond } from '@/shared/api/post/postApi.types'
+import { CreatePostArgs, CreatePostResponse, UploadImageForPostResponse } from './postApi.types'
 
-export const postApi = baseApi.injectEndpoints({
+
+export const postsApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    uploadPhoto: build.mutation<UploadPhotoRespond, FormData>({
-      query: (formData) => ({
+    createPost: build.mutation<CreatePostResponse, CreatePostArgs>({
+      query: payload => ({
+        url: 'v1/posts',
+        method: 'POST',
+        body: payload,
+      }),
+      invalidatesTags: ['Post'],
+    }),
+    uploadImageForPost: build.mutation<UploadImageForPostResponse, FormData>({
+      query: formData => ({
         url: 'v1/posts/image',
         method: 'POST',
         body: formData,
+        // formData: true,
       }),
-
-    }),
-    }),
+    })
+  }),
 })
 
-export const {
-useUploadPhotoMutation
-} = postApi
+export const { useCreatePostMutation, useUploadImageForPostMutation } = postsApi

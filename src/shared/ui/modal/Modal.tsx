@@ -4,20 +4,19 @@ import { clsx } from 'clsx'
 import * as DialogRadix from '@radix-ui/react-dialog'
 import s from './Modal.module.scss'
 import { Typography } from '@/shared/ui/typography'
-import { Button } from '../button'
 
 type Props = {
   children?: ReactNode
   className?: string
   title?: string
   trigger?: ReactNode
-  headerChildren?: ReactNode
-  arrow?: (() => void) | null | undefined
+  isCloseIcon?: boolean
 } & ComponentPropsWithoutRef<typeof DialogRadix.Root>
 
 const DialogClose = DialogRadix.Close
+const DialogTitle = DialogRadix.Title
 
-const Modal = ({ children, className, title, trigger, headerChildren, arrow, ...props }: Props) => {
+const Modal = ({ children, className, title, trigger, isCloseIcon, ...props }: Props) => {
   return (
     <DialogRadix.Root {...props}>
       {trigger && <DialogRadix.Trigger asChild>{trigger}</DialogRadix.Trigger>}
@@ -25,30 +24,21 @@ const Modal = ({ children, className, title, trigger, headerChildren, arrow, ...
         <DialogRadix.Overlay className={s.DialogOverlay} />
         <DialogRadix.Content
           className={clsx(title && s.DialogContent, !title && s.postContent, className)}
+          aria-describedby={undefined}
         >
-          {title ? (
+          {title && (
             <div className={s.header}>
-              {headerChildren}
               <DialogRadix.Title className={s.DialogTitle}>
-                <Typography variant={'h1'} className={s.title}>
-                  {title}
-                </Typography>
+                <Typography variant={'h1'}>{title}</Typography>
               </DialogRadix.Title>
-              {arrow ? (
-                <div onClick={arrow}>
-                  <Button aria-label={'Next'} variant="text" className={s.button}>
-                    Next
-                  </Button>
-                </div>
-              ) : (
-                <DialogRadix.Close asChild>
-                  <button aria-label={'Close'} className={s.IconButton}>
-                    <CloseIcon />
-                  </button>
-                </DialogRadix.Close>
-              )}
+              <DialogRadix.Close asChild>
+                <button aria-label={'Close'} className={s.IconButton}>
+                  <CloseIcon />
+                </button>
+              </DialogRadix.Close>
             </div>
-          ) : (
+          )}
+          {isCloseIcon && (
             <DialogRadix.Close aria-label={'Close'} className={s.closeButton}>
               <CloseIcon />
             </DialogRadix.Close>
@@ -61,6 +51,7 @@ const Modal = ({ children, className, title, trigger, headerChildren, arrow, ...
 }
 
 DialogClose.displayName = DialogRadix.Close.displayName
+DialogTitle.displayName = DialogRadix.Title.displayName
 Modal.displayName = 'Modal'
 
-export { Modal, DialogClose }
+export { Modal, DialogClose, DialogTitle }

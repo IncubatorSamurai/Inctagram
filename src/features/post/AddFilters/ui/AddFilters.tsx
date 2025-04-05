@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import * as fabric from 'fabric'
 import { useSelector } from 'react-redux'
-import { selectCroppedFiles } from '@/shared/store/postSlice/postSlice'
+import { selectCroppedFiles, selectFiles } from '@/shared/store/postSlice/postSlice'
 import { config } from '../lib/fabricImageConfig'
 import { Filters } from './Filters/Filters'
 import { SliderCanvas } from './SliderCanvas/SliderCanvas'
@@ -11,13 +11,15 @@ export const AddFilters = () => {
   const [fabricCanvases, setFabricCanvases] = useState<(fabric.Canvas | null)[]>([]) // Массив для хранения Fabric Canvas
   const [filters, setFilters] = useState<Record<number, fabric.filters.BaseFilter<string>[]>>({}) // Храним фильтры по индексу
 
-  const uploadedFiles = useSelector(selectCroppedFiles)
+  // const uploadedFiles = useSelector(selectCroppedFiles)
+  const files = useSelector(selectFiles)
   const [index, setIndexState] = useState(0)
 
-  useEffect(() => {
-    if (!uploadedFiles.length || !fabricCanvases[index]) return
 
-    const imageUrl = uploadedFiles[index]
+  useEffect(() => {
+    if (!files.length || !fabricCanvases[index]) return
+
+    const imageUrl = files[index].fileUrl
     const canvas = fabricCanvases[index]
 
     if (!canvas) return

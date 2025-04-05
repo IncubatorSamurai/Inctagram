@@ -18,7 +18,7 @@ export const Filters = ({ index, fabricCanvases, setCanvasFilters }: Props) => {
   const [filters, setFilters] = useState<Record<number, fabric.filters.BaseFilter<string>[]>>({}) // Храним фильтры по индексу
   const [savedImages, setSavedImages] = useState<string[]>([]) // Массив сохранённых изображений (Blob)
 
-  const tFilter = useTranslations('addModal.filters')
+  const t = useTranslations('post.filter')
   const croppedImages = useSelector(selectCroppedFiles)
   const uploadedFiles = useSelector(selectCroppedFiles)
 
@@ -77,31 +77,31 @@ export const Filters = ({ index, fabricCanvases, setCanvasFilters }: Props) => {
   return (
     <div className={s.container}>
       <Button variant="text" className={s.button} onClick={() => applyFilter('original')}>
-        <FilterCard src={uploadedFiles[index]} title={tFilter('original')} />
+        <FilterCard src={uploadedFiles[index]} title={t('original')} />
       </Button>
       <Button variant="text" className={s.button} onClick={() => applyFilter('vintage')}>
-        <FilterCard src={uploadedFiles[index]} title={tFilter('vintage')} />
+        <FilterCard src={uploadedFiles[index]} title={t('vintage')} />
       </Button>
       <Button variant="text" className={s.button} onClick={() => applyFilter('lomo')}>
-        <FilterCard src={uploadedFiles[index]} title={tFilter('lomo')} />
+        <FilterCard src={uploadedFiles[index]} title={t('lomo')} />
       </Button>
       <Button variant="text" className={s.button} onClick={() => applyFilter('soft-focus')}>
-        <FilterCard src={uploadedFiles[index]} title={tFilter('soft-focus')} />
+        <FilterCard src={uploadedFiles[index]} title={t('soft-focus')} />
       </Button>
       <Button variant="text" className={s.button} onClick={() => applyFilter('glow')}>
-        <FilterCard src={uploadedFiles[index]} title={tFilter('glow')} />
+        <FilterCard src={uploadedFiles[index]} title={t('glow')} />
       </Button>
       <Button variant="text" className={s.button} onClick={() => applyFilter('invert')}>
-        <FilterCard src={uploadedFiles[index]} title={tFilter('invert')} />
+        <FilterCard src={uploadedFiles[index]} title={t('invert')} />
       </Button>
       <Button variant="text" className={s.button} onClick={() => applyFilter('retro')}>
-        <FilterCard src={uploadedFiles[index]} title={tFilter('retro')} />
+        <FilterCard src={uploadedFiles[index]} title={t('retro')} />
       </Button>
       <Button variant="text" className={s.button} onClick={() => applyFilter('moody')}>
-        <FilterCard src={uploadedFiles[index]} title={tFilter('moody')} />
+        <FilterCard src={uploadedFiles[index]} title={t('moody')} />
       </Button>
       <Button variant="text" className={s.button} onClick={() => applyFilter('golden-hour')}>
-        <FilterCard src={uploadedFiles[index]} title={tFilter('golden-hour')} />
+        <FilterCard src={uploadedFiles[index]} title={t('golden-hour')} />
       </Button>
 
       {/* <Button variant="text" className={s.button} onClick={saveImage}>
