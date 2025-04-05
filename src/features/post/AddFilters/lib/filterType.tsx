@@ -1,115 +1,48 @@
-import * as fabric from 'fabric'
-
-export const getFilterType = (type: string) => {
-  const filters: fabric.filters.BaseFilter<string>[] = []
-
+export function getCanvasFilterString(type: string): string {
   switch (type) {
     case 'original':
-      filters.push(new fabric.filters.Gamma({ gamma: [1, 1, 1] }))
-      break
+      return 'none'
 
     case 'vintage':
-      filters.push(
-        new fabric.filters.Gamma({ gamma: [1.1, 1.3, 1.6] }),
-        new fabric.filters.Contrast({ contrast: 0.2 })
-      )
-      break
+      return 'contrast(1.2) brightness(1.1)'
 
     case 'lomo':
-      filters.push(
-        new fabric.filters.Gamma({ gamma: [1.2, 1.5, 1.8] }),
-        new fabric.filters.Saturation({ saturation: 0.6 })
-      )
-      break
+      return 'saturate(1.6) contrast(1.2)'
 
     case 'soft-focus':
-      filters.push(
-        new fabric.filters.Gamma({ gamma: [1.4, 1.2, 1.5] }),
-        new fabric.filters.Blur({ blur: 0.4 }),
-        new fabric.filters.Brightness({ brightness: 0.2 })
-      )
-      break
+      return 'blur(3px) brightness(1.2)'
 
     case 'glow':
-      filters.push(
-        new fabric.filters.Gamma({ gamma: [1.3, 1.6, 1.2] }),
-        new fabric.filters.Brightness({ brightness: 0.4 }),
-        new fabric.filters.Blur({ blur: 0.2 }),
-        new fabric.filters.Saturation({ saturation: 0.3 })
-      )
-      break
+      return 'brightness(1.4) blur(2px) saturate(1.3)'
 
     case 'color-pop':
-      filters.push(
-        new fabric.filters.Gamma({ gamma: [1.7, 1.3, 1.4] }),
-        new fabric.filters.Saturation({ saturation: 0.8 }),
-        new fabric.filters.Contrast({ contrast: 0.4 }),
-        new fabric.filters.Brightness({ brightness: 0.1 })
-      )
-      break
+      return 'contrast(1.4) brightness(1.1) saturate(1.5)'
 
-    case 'invert':
-      filters.push(
-        new fabric.filters.Gamma({ gamma: [1.5, 1.8, 1.2] }),
-        new fabric.filters.Contrast({ contrast: 0.3 })
-      )
-      break
+    case 'сontrast':
+      return 'contrast(1.3)'
 
     case 'vignette':
-      filters.push(
-        new fabric.filters.BaseFilter({
-          blur: 0.6,
-          opacity: 0.8,
-          color: 'black',
-        })
-      )
-      break
+      return 'brightness(0.9)'
 
     case 'hue-rotate':
-      filters.push(
-        new fabric.filters.HueRotation({ rotation: 90 }),
-        new fabric.filters.Saturation({ saturation: 0.5 })
-      )
-      break
+      return 'hue-rotate(90deg) saturate(1.3)'
 
     case 'blur-strong':
-      filters.push(
-        new fabric.filters.Blur({ blur: 0.8 }),
-        new fabric.filters.Brightness({ brightness: 0.1 })
-      )
-      break
+      return 'blur(5px) brightness(1.1)'
 
     case 'dreamy':
-      filters.push(
-        new fabric.filters.Blur({ blur: 0.5 }),
-        new fabric.filters.Brightness({ brightness: 0.3 }),
-        new fabric.filters.Saturation({ saturation: 0.4 })
-      )
-      break
+      return 'blur(3px) saturate(1.2)'
 
     case 'retro':
-      filters.push(new fabric.filters.Sepia(), new fabric.filters.Noise({ noise: 0.3 }))
-      break
+      return 'sepia(1) contrast(1.1)'
 
     case 'moody':
-      filters.push(
-        new fabric.filters.Brightness({ brightness: -0.2 }),
-        new fabric.filters.Contrast({ contrast: -0.1 }),
-        new fabric.filters.Saturation({ saturation: 0.3 })
-      )
-      break
+      return 'brightness(0.8) contrast(0.9) saturate(1.2)'
 
     case 'golden-hour':
-      filters.push(
-        new fabric.filters.Gamma({ gamma: [1.6, 1.4, 1.3] }),
-        new fabric.filters.Brightness({ brightness: 0.2 }),
-        new fabric.filters.Saturation({ saturation: 0.4 })
-      )
-      break
+      return 'brightness(1.2) saturate(1.3) sepia(0.4)'
 
     default:
-      return null
+      return 'none'
   }
-
-  return filters
 }
