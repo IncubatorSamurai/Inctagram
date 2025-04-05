@@ -7,9 +7,10 @@ import { useTranslations } from 'next-intl'
 type Props = {
   open: boolean
   onChange: (open: boolean) => void
+  onClose: () => void
 }
 
-export const CloseCreationPostModal = ({ open, onChange }: Props) => {
+export const CloseCreationPostModal = ({ open, onChange, onClose }: Props) => {
   const t = useTranslations('post')
 
   return (
@@ -24,16 +25,16 @@ export const CloseCreationPostModal = ({ open, onChange }: Props) => {
         <Typography variant="regular_text_16">{t('closeCreationPostModalDescription1')}</Typography>
         <Typography variant="regular_text_16">{t('closeCreationPostModalDescription2')}</Typography>
 
-        <DialogClose asChild>
-          <div className={s.buttonsContainer}>
+        <div className={s.buttonsContainer}>
+          <DialogClose asChild>
             <Button variant="outline" className={s.button}>
               {t('discard')}
             </Button>
-            <Button variant="primary" className={s.button}>
-              {t('saveDraft')}
-            </Button>
-          </div>
-        </DialogClose>
+          </DialogClose>
+          <Button variant="primary" className={s.button} onClick={onClose}>
+            {t('saveDraft')}
+          </Button>
+        </div>
       </div>
     </Modal>
   )

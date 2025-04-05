@@ -37,16 +37,32 @@
     "sendLinkAgain": "Похоже, срок действия проверочной ссылки истек. Не волнуйтесь, мы можем отправить ссылку снова",
     "congratulations": "Поздравляю"
   },
-  "addModal": {
-    "addPhoto": "Добавить фото",
-    "SelectFromComputer": "Выбрать",
-    "OpenDraft": "Предпросмотр"
-  },
   "post": {
     "close": "Закрыть",
     "discard": "Отказаться",
     "saveDraft": "Сохранить черновик",
     "closeCreationPostModalDescription1": "Вы действительно хотите закрыть создание публикации?",
-    "closeCreationPostModalDescription2": "При закрытии все будет удалено"
+    "closeCreationPostModalDescription2": "При закрытии все будет удалено",
+    "selectFromComputer": "Выбрать",
+    "openDraft": "Предпросмотр",
+    "addPhoto": "Добавить фото",
+    "cropping": "Обрезка",
+    "filters": "Фильтры",    
+    "publication": "Публикация",
+    "cropButtonSave": "Сохранить обрезанное изображение",
+    "cropButtonSaved": "Сохранено",
+    "next": "Далее",
+    "publicationHeader": "Опубликовать",
+    "filter": {
+      "original": "Оригинал",
+      "vintage": "Винтаж",
+      "lomo": "Ломо",
+      "soft-focus": "Мягкий фокус",
+      "glow": "Свечение",
+      "invert": "Инверсия",
+      "retro": "Ретро",
+      "moody": "Атмосферный",
+      "golden-hour": "Золотой час"
+    }
   }
 }

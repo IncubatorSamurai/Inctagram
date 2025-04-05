@@ -37,16 +37,32 @@
     "sendLinkAgain": "Looks like the verification link has expired. Not to worry, we can send the link again",
     "congratulations": "Congratulations"
   },
-  "addModal": {
-    "addPhoto": "Add Photo",
-    "SelectFromComputer": "Select from Computer",
-    "OpenDraft": "Open Draft"
-  },
   "post": {
     "close": "Close",
     "discard": "Discard",
     "saveDraft": "Save draft",
     "closeCreationPostModalDescription1": "Do you really want to close the creation of a publication?",
-    "closeCreationPostModalDescription2": "If you close everything will be deleted"
+    "closeCreationPostModalDescription2": "If you close everything will be deleted",
+    "selectFromComputer": "Select from Computer",
+    "openDraft": "Open Draft",
+    "addPhoto": "Add Photo",
+    "cropping": "Cropping",
+    "filters": "Filters",
+    "publication": "Publication",
+    "cropButtonSave": "Save cropped image",
+    "cropButtonSaved": "Saved",
+    "next": "Next",
+    "publicationHeader": "Publication",
+    "filter": {
+      "original": "Original",
+      "vintage": "Vintage",
+      "lomo": "Lomo",
+      "soft-focus": "Soft Focus",
+      "glow": "Glow",
+      "invert": "Invert",
+      "retro": "Retro",
+      "moody": "Moody",
+      "golden-hour": "Golden Hour"
+    }
   }
 }

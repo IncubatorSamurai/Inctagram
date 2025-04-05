@@ -1,0 +1,16 @@
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.slider {
+  ul {
+    position: absolute;
+    bottom: 10px;
+
+    button::before {
+      color: var(--color-light-100);
+      opacity: 1;
+    }
+  }
+}

@@ -24,6 +24,7 @@ const Modal = ({ children, className, title, trigger, isCloseIcon, ...props }: P
         <DialogRadix.Overlay className={s.DialogOverlay} />
         <DialogRadix.Content
           className={clsx(title && s.DialogContent, !title && s.postContent, className)}
+          aria-describedby={undefined}
         >
           {title && (
             <div className={s.header}>
@@ -36,7 +37,7 @@ const Modal = ({ children, className, title, trigger, isCloseIcon, ...props }: P
                 </button>
               </DialogRadix.Close>
             </div>
-          )} 
+          )}
           {isCloseIcon && (
             <DialogRadix.Close aria-label={'Close'} className={s.closeButton}>
               <CloseIcon />
