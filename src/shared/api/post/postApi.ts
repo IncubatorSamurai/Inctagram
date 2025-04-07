@@ -1,7 +1,5 @@
 import { baseApi } from '@/shared/api/baseApi'
-
-import { UploadPhotoRespond, PublicPostsResponse, PublicPostsRequest, Name, PostDescriptionChange, ResponseGetById, ResponseGetByName, UploadPhotoRespond } from '@/shared/api/post/postApi.types'
-
+import { GetPostsByNameArgs, GetPostsByNameRespond, UploadPhotoRespond, PublicPostsResponse, PublicPostsRequest, Name, PostDescriptionChange, ResponseGetById, ResponseGetByName, UploadPhotoRespond } from '@/shared/api/post/postApi.types'
 
 export const postApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -12,7 +10,12 @@ export const postApi = baseApi.injectEndpoints({
         body: formData,
       }),
     }),
-
+    getPostsByUserName: build.query<GetPostsByNameRespond, GetPostsByNameArgs>({
+      query: ({ userName, ...params }) => ({
+        params,
+        url: `v1/posts/${userName}`,
+      }),
+    }),
     deletePost: build.mutation<void, PostDescriptionChange>({
       query: ({ id }) => ({
         url: `v1/posts/${id}`,
@@ -41,6 +44,5 @@ export const postApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useUploadPhotoMutation, useDeletePostMutation, useEditPostDescriptionMutation, useGetPostByIdMutation, useGetPostByNameMutation } =
-  postApi
+export const { useUploadPhotoMutation, useGetPostsByUserNameQuery, useDeletePostMutation, useEditPostDescriptionMutation, useGetPostByIdMutation, useGetPostByNameMutation } = postApi
 

@@ -1,0 +1,23 @@
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 192px;
+  height: 192px;
+  border-radius: 50%;
+
+  background-color: var(--color-dark-500);
+}
+
+.square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 222px;
+  height: 228px;
+  border-radius: 2px;
+
+  background-color: var(--color-dark-500);
+}

@@ -1,3 +1,21 @@
+export type PostModel = {
+  id: number
+  userName: string
+  description: string
+  location: string
+  images: ImageModel[]
+  createdAt: string
+  updatedAt: string
+  ownerId: number
+  avatarOwner: string
+  owner: {
+    firstName: string
+    lastName: string
+  }
+  likesCount: number
+  isLiked: boolean
+  avatarWhoLikes: boolean
+}
 
 export type ImageModel = {
   url: string;
@@ -10,6 +28,31 @@ export type ImageModel = {
 
 export type UploadPhotoRespond = {
   images: ImageModel[]
+}
+
+
+export type GetPostsByNameRespond = {
+  pageSize: number
+  totalCount: number
+  notReadCount: number
+  items: PostModel[]
+}
+
+export type GetPostsByNameArgs = {
+  pageNumber?: number
+  pageSize?: number
+  sortBy?: string
+  sortDirection?: string
+  userName: string
+}
+
+export type GetPostsByUserIdArgs = Omit<GetPostsByNameArgs, 'userName' | 'pageNumber'> & {
+  userId: string
+  endCursorPostId?: string | null
+}
+
+export type GetPostsByUserIdRespond = Omit<GetPostsByNameRespond, 'notReadCount'> & {
+  totalUsers: number
 }
 
 export type PostDescriptionChange = {
