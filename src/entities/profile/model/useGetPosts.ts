@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef } from 'react'
-import { useIntersectionObserver } from '@/shared/hooks/useIntersectionObserver'
 import { GetPostsByUserIdRespond } from '@/shared/api/post/postApi.types'
 import { useParams } from 'next/navigation'
 import { publicPostApi, useLazyGetPublicPostsByUserIdQuery } from '@/shared/api/post/publicPosts'
