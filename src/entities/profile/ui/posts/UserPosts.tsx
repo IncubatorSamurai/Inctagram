@@ -4,6 +4,7 @@ import { useGetPosts } from '@/entities/profile/model/useGetPosts'
 import { PostImage } from '@/entities/profile/ui/posts/postImage/PostImage'
 import { Link } from '@/i18n/routing'
 import { GetPostsByUserIdRespond } from '@/shared/api/post/postApi.types'
+import { Typography } from '@/shared/ui/typography'
 
 type Props = {
   userId: string
@@ -11,7 +12,7 @@ type Props = {
 }
 
 export const UserPosts = ({ userId, resPublicPosts }: Props) => {
-  const { posts, targetRef, isLoggedIn } = useGetPosts({ resPublicPosts })
+  const { posts, lastPostElementRef, isLoggedIn, isFetching } = useGetPosts({ resPublicPosts })
   const renderPosts = posts ?? resPublicPosts?.items
 
   return (
@@ -23,14 +24,17 @@ export const UserPosts = ({ userId, resPublicPosts }: Props) => {
           <div
             key={post.id}
             className={s.postWrapper}
-            ref={id === renderPosts.length - 1 ? targetRef : null}
+            ref={id === renderPosts.length - 1 ? lastPostElementRef : null}
           >
-            <Link href={hrefLinkPost} shallow={true} scroll={false}>
+            <Link href={hrefLinkPost} shallow scroll={false}>
               <PostImage images={post.images} fill />
             </Link>
           </div>
         )
       })}
+      <div className={s.loading}>
+        {isFetching && <Typography variant={'h1'}>Loading...</Typography>}
+      </div>
     </section>
   )
 }

@@ -20,14 +20,16 @@ export const PostImage = forwardRef<HTMLDivElement, Props>(({ className, fill, i
 
   return (
     <div className={classNames.container} ref={ref}>
-      <Image
-        alt={'postImage'}
-        className={classNames.image}
-        fill={fill}
-        src={images[0]?.url}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        priority
-      />
+      {images[0]?.url && (
+        <Image
+          alt={'postImage'}
+          className={classNames.image}
+          fill={fill}
+          src={images[0]?.url}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
+        />
+      )}
     </div>
   )
 })

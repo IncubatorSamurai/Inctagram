@@ -6,6 +6,7 @@ import { ReactNode } from 'react'
 import { locales } from '@/shared/types/locale'
 import { Header } from '@/widgets/header'
 import { AuthProvider } from '@/app/_providers'
+import s from './layout.module.scss'
 
 export default async function LocaleLayout({
   children,
@@ -29,7 +30,7 @@ export default async function LocaleLayout({
     <NextIntlClientProvider locale={locale} messages={messages}>
       <AuthProvider>
         <Header headerTitle={'Inctagram'} />
-        {children}
+        <div className={s.container}>{children}</div>
       </AuthProvider>
     </NextIntlClientProvider>
   )

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useIntersectionObserver } from '@/shared/hooks/useIntersectionObserver'
 import { GetPostsByUserIdRespond } from '@/shared/api/post/postApi.types'
 import { useParams } from 'next/navigation'
@@ -16,14 +16,17 @@ export const useGetPosts = ({ resPublicPosts }: Props) => {
   const userId = id as string
 
   const dispatch = useAppDispatch()
-  const endCursorPostIdRef = useRef<null | string>(null)
   const needInit = useRef(!!resPublicPosts)
-  const { isInView, targetRef } = useIntersectionObserver({ threshold: 0.5 })
+  const endCursorPostId = useRef<string | null>(null)
+  const observer = useRef<IntersectionObserver | null>(null)
 
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const [fetchPosts, { data: publicPostsByUserId, isFetching }] =
     useLazyGetPublicPostsByUserIdQuery()
+
+  const posts = publicPostsByUserId?.items
+  const totalCount = publicPostsByUserId?.totalCount ?? 0
 
   useEffect(() => {
     if (needInit.current && resPublicPosts) {
@@ -47,40 +50,40 @@ export const useGetPosts = ({ resPublicPosts }: Props) => {
     }
   }, [])
 
-  const posts = publicPostsByUserId?.items
-  const totalCount = publicPostsByUserId?.totalCount ?? 0
-
   useEffect(() => {
     if (!posts) {
       if (resPublicPosts) {
-        endCursorPostIdRef.current =
-          resPublicPosts?.items[resPublicPosts?.items.length - 1]?.id.toString()
         fetchPosts({
           userId,
           pageSize: 9,
-          endCursorPostId: endCursorPostIdRef.current ?? undefined,
+          endCursorPostId: endCursorPostId.current ?? undefined,
         })
       } else {
         fetchPosts({
           userId,
           pageSize: 8,
-          endCursorPostId: endCursorPostIdRef.current ?? undefined,
+          endCursorPostId: null,
         })
       }
     }
   }, [])
 
-  useEffect(() => {
-    if (posts) {
-      endCursorPostIdRef.current = posts[posts.length - 1]?.id.toString()
-    }
-  }, [posts])
+  const lastPostElementRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isFetching) return
+      if (observer.current) observer.current.disconnect()
 
-  useEffect(() => {
-    if (posts && isInView && !isFetching && posts.length < totalCount) {
-      fetchPosts({ userId, pageSize: 9, endCursorPostId: endCursorPostIdRef.current ?? undefined })
-    }
-  }, [isInView])
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && posts && posts.length < totalCount) {
+          endCursorPostId.current = posts[posts.length - 1]?.id.toString()
+          fetchPosts({ userId, pageSize: 9, endCursorPostId: endCursorPostId.current ?? undefined })
+        }
+      })
 
-  return { posts, targetRef, isLoggedIn }
+      if (node) observer.current.observe(node)
+    },
+    [isFetching]
+  )
+
+  return { posts, lastPostElementRef, isLoggedIn, isFetching }
 }
