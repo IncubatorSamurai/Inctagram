@@ -45,4 +45,9 @@
     "followers": "Followers",
     "publications": "Publications"
   }
+  "addModal": {
+    "addPhoto": "Add Photo",
+    "SelectFromComputer": "Select from Computer",
+    "OpenDraft": "Open Draft"
+}
 }

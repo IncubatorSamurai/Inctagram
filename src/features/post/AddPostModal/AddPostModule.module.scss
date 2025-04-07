@@ -1,0 +1,45 @@
+@use '@/app/_styles/ui/function' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  row-gap: size(60px);
+  padding: size(54px) size(112px) size(30px) size(112px);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  row-gap: size(24px);
+}
+
+.post_preview {
+  background: var(--color-dark-500);
+
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 228px;
+  width: 220px;
+  cursor: pointer;
+
+  svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  &:hover {
+    svg {
+      color: var(--color-accent-500);
+    }
+  }
+}
+
+.sliderContainer {
+  width: 100%;
+
+  .slick-slider {
+    display: flex;
+  }
+}

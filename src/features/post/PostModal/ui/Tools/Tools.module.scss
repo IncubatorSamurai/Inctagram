@@ -1,0 +1,27 @@
+.nav_tools {
+  position: absolute;
+  z-index: 10;
+  top: 30px;
+  right: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+
+  padding: 12px;
+  border: 1px solid var(--color-dark-100);
+
+  background-color: var(--color-dark-500);
+}
+
+.nav_tools div {
+  display: flex;
+  gap: 5px;
+  align-items: flex-start;
+  white-space: nowrap;
+}
+
+.nav_tools_label {
+  cursor: pointer;
+}

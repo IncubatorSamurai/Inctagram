@@ -1,0 +1,22 @@
+.slider_container {
+  .slider_public {
+    width: 235px;
+
+    li .slider_public_dots {
+      width: 6px;
+      height: 6px;
+    }
+
+    .slider_public_arrows {
+      width: 24px;
+      height: 24px;
+      padding: 0;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+
+    }
+  }
+}

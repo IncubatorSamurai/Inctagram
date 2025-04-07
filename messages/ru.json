@@ -45,4 +45,9 @@
     "followers": "Подписчики",
     "publications": "Публикаций"
   }
+  "addModal": {
+    "addPhoto": "Добавить фото",
+    "SelectFromComputer": "Выбрать",
+    "OpenDraft": "Предпросмотр"
+  }
 }
