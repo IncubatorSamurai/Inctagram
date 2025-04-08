@@ -17,8 +17,8 @@ export const postsApi = baseApi.injectEndpoints({
         url: 'v1/posts/image',
         method: 'POST',
         body: formData,
-        // formData: true,
       }),
+    
     })
   }),
 })

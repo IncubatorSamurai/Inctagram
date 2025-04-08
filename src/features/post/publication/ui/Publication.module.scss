@@ -11,7 +11,7 @@
   }
 
   & > button:last-child {
-    padding: 6px 12px;
+    padding: 0.375rem 0.75rem;
   }
 }
 
@@ -19,13 +19,14 @@
   display: flex;
 
   width: 100%;
-  max-width: 972px;
+  max-width: 60.75rem;
   height: 100%;
-  max-height: 500px;
+  max-height: 31.375rem;
 
   .imageSide {
     position: relative;
-    width: 50%;
+    width: 100%;
+    max-width: 30.625rem;
     background-color: var(--color-dark-500);
 
     .image {
@@ -34,47 +35,47 @@
     }
 
     :global(.slick-dots) {
-      bottom: 15px;
+      bottom: 1rem;
     }
   }
 
   .editSide {
-    width: 50%;
-  }
-}
+    width: 30rem;
 
-.descriptionWrapper {
-  padding: 24px 24px 35px;
+    .descriptionWrapper {
+      padding: 1.5rem 1.5rem 2.25rem;
 
-  & > div:first-child {
-    padding-bottom: 24px;
-  }
-}
+      & > div:first-child {
+        padding-bottom: 1.5rem;
+      }
 
-.avatarWithNameWrapper {
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-  align-items: center;
+      .avatarWithNameWrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 0.75rem;
+        align-items: center;
 
-  .avatar {
-    border-radius: 50%;
-  }
-}
+        .avatar {
+          border-radius: 50%;
+        }
+      }
 
-.textareaWithCharCountWrapper {
-  position: relative;
+      .textareaWithCharCountWrapper {
+        position: relative;
 
-  & > div > textarea {
-    height: 120px;
-  }
+        & > div > textarea {
+          height: 7.5rem;
+        }
 
-  & > p {
-    position: absolute;
-    top: 145px;
-    right: 0;
+        & > p {
+          position: absolute;
+          top: 9.125rem;
+          right: 0;
 
-    color: var(--color-light-900);
-    text-align: end;
+          color: var(--color-light-900);
+          text-align: end;
+        }
+      }
+    }
   }
 }

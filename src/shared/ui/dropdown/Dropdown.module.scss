@@ -3,44 +3,49 @@
   display: flex;
   flex-direction: column;
   row-gap: 12px;
-  background-color: var(--color-dark-500);
-  border-radius: 2px;
-  padding: 18px 12px;
 
+  padding: 18px 12px;
   border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+
+  background-color: var(--color-dark-500);
 }
 
 .dropdown_items_container {
-  list-style: none;
+  overflow-y: scroll;
+
   max-width: 417px;
+  max-height: 330px;
   margin: 0;
   padding: 0;
-  max-height: 330px;
-  overflow-y: scroll;
+
+  list-style: none;
 }
 
 .Item,
 .CheckboxItem,
 .RadioItem,
 .SubTrigger {
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
+  user-select: none;
 
   position: relative;
 
-  user-select: none;
+  display: flex;
+  align-items: center;
+
+  border-radius: 3px;
+
   outline: none;
 
   &[data-disabled] {
-    color: var(--color-dark-100);
     pointer-events: none;
+    color: var(--color-dark-100);
   }
 }
 
 .Arrow {
-  color: var(--color-dark-100);
   transform: rotate(-180deg) translateY(3px);
+  color: var(--color-dark-100);
 
   path {
     fill: var(--color-dark-300);
@@ -54,12 +59,14 @@
 .IconButton {
   all: unset;
 
-  height: 35px;
-  width: 35px;
+  user-select: none;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  user-select: none;
+
+  width: 35px;
+  height: 35px;
 
   &:hover {
     color: var(--color-accent-500);

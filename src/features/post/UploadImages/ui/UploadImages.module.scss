@@ -6,13 +6,18 @@
   row-gap: size(60px);
   align-items: center;
 
-  padding: size(54px) size(112px) size(30px);
+  height: size(502px);
+  padding: size(60px) size(16px) size(16px);
 }
 
 .controls {
   display: flex;
   flex-direction: column;
   row-gap: size(24px);
+
+  & > button > label {
+    cursor: pointer;
+  }
 }
 
 .post_preview {
@@ -22,21 +27,50 @@
   align-items: center;
   justify-content: center;
 
-  width: 220px;
-  height: 228px;
+  width: size(220px);
+  height: size(228px);
 
   text-align: center;
 
   background: var(--color-dark-500);
 
   svg {
-    width: 48px;
-    height: 48px;
+    width: size(48px);
+    height: size(48px);
   }
+}
+
+.imagesCounter {
+  padding-bottom: size(5px);
+  text-align: end;
 }
 
 .sliderContainer {
   width: 100%;
+
+  .imageWrapper {
+    position: relative;
+
+    .image {
+      object-fit: cover;
+    }
+
+    .closeButton {
+      position: absolute;
+      top: size(10px);
+      right: size(10px);
+
+      width: size(20px);
+      height: size(20px);
+
+      opacity: 0.8;
+      background-color: var(--color-dark-500);
+
+      &:hover {
+        color: var(--color-accent-500);
+      }
+    }
+  }
 
   .slick-slider {
     display: flex;

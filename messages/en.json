@@ -53,6 +53,9 @@
     "cropButtonSaved": "Saved",
     "next": "Next",
     "publicationHeader": "Publication",
+    "addPublicationDescriptions": "Add publication descriptions",
+    "charCountError": "Maximum number of characters 500",
+    "photos": "photos",
     "filter": {
       "original": "Original",
       "vintage": "Vintage",

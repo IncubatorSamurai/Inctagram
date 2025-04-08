@@ -2,8 +2,8 @@
 
 .modal {
   width: max-content;
-  max-width: size(972px);
   min-width: size(492px);
+  max-width: size(972px);
 
   & > div:nth-child(2) {
     padding: 0;
@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: space-between;
 
-  padding: 0.75rem 1.5rem;
+  padding: size(12px) size(24px);
   border-bottom: 1px solid var(--color-dark-100);
 
   .DialogTitle {
@@ -23,6 +23,6 @@
   }
 
   & > button:last-child {
-    padding: 6px 12px;
+    padding: size(6px) size(12px);
   }
 }

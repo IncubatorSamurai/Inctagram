@@ -3,12 +3,14 @@
 
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.625rem;
   justify-content: space-between;
 
   width: 100%;
-  max-width: 500px;
-  height: 500px;
+  max-width: 30.625rem;
+  height: 31.375rem;
+
+  background-color: var(--color-dark-500);
 
   .image {
     width: auto;
@@ -16,16 +18,16 @@
   }
 
   :global(.slick-dots) {
-    bottom: 15px;
+    bottom: 1rem;
   }
 
   .cropButton {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
+    bottom: 1.25rem;
+    left: 1.25rem;
 
-    width: 36px;
-    height: 36px;
+    width: 2.25rem;
+    height: 2.25rem;
 
     opacity: 0.8;
     background-color: var(--color-dark-500);
@@ -34,28 +36,4 @@
       color: var(--color-accent-500);
     }
   }
-}
-
-.actionButtons {
-  // position: absolute;
-  // z-index: 9;
-  // bottom: 0;
-
-  // display: flex;
-  // align-items: center;
-  // justify-content: space-between;
-
-  // box-sizing: border-box;
-  // width: 100%;
-  // padding: 15px;
-  // position: relative;
-  // z-index: 99999;
-
-  position: relative;
-
-  display: flex;
-  gap: 20px;
-  align-items: center;
-
-  padding: 10px 0;
 }

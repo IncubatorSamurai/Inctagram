@@ -1,25 +1,24 @@
-import { Photo } from '@/shared/store'
+import { Photo } from '@/shared/types'
 import { getCanvasFilterString } from './filterType'
 
 type Props = {
   canvasContexts: (CanvasRenderingContext2D | null)[]
   index: number
-  files: Photo[]
+  file: Photo
   filterType: string
 }
 
-export const applyFilterToCanvas = ({ canvasContexts, index, files, filterType }: Props) => {
+export const applyFilterToCanvas = ({ canvasContexts, index, file, filterType }: Props) => {
   return new Promise(resolve => {
     const ctx = canvasContexts[index]
     if (!ctx) return
 
-    const file = files[index]
     const img = new Image()
-    img.src = file.editedFileUrl || file.fileUrl
+    img.src = file.croppedFileUrl || file.fileUrl
 
     img.onload = () => {
       const canvas = ctx.canvas
-      //   const canvas = ctx.canvas
+
       if (!canvas) return resolve(null)
 
       // Очистка и установка фильтра
@@ -34,11 +33,12 @@ export const applyFilterToCanvas = ({ canvasContexts, index, files, filterType }
         } else {
           resolve(null)
         }
-      }, 'image/jpeg')
+      }, file.type)
     }
 
     img.onerror = () => {
       console.error(`Ошибка загрузки изображения: ${file.fileUrl}`)
+      resolve(null)
     }
   })
 }
