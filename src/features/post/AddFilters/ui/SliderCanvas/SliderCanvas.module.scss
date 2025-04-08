@@ -1,16 +1,19 @@
 .container {
-  max-width: 490px;
-  width: 100%;
-  height: 503px;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 490px;
+  height: 502px;
 }
+
 .slider {
   width: 100%;
-  min-width: 480px;
+  min-width: 490px;
 }
+
 .slick-dots {
   position: absolute;
 }
+
 .canvas {
   width: 100%;
 }

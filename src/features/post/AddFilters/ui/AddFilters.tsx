@@ -16,13 +16,12 @@ export const AddFilters = () => {
 
     const file = files[index]
     const img = new Image()
-    img.src = file.filteredFileUrl || file.editedFileUrl || file.fileUrl
+    img.src = file.filteredFileUrl || file.croppedFileUrl || file.fileUrl
 
     img.onload = () => {
       const canvas = ctx.canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      // отрисовка изображения
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
     }
 

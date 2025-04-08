@@ -3,6 +3,7 @@ import s from './SliderCanvas.module.scss'
 import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { selectFiles } from '@/shared/store/postSlice/postSlice'
+import { sliderSettings } from '@/shared/config/sliderSettings'
 
 type Props = {
   setIndexState: (value: number) => void
@@ -53,13 +54,7 @@ export const SliderCanvas = ({ setIndexState, setFabricCanvases }: Props) => {
   }, [files])
 
   const settings = {
-    dots: true,
-    infinite: false,
-    arrows: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    touchMove: true,
+    ...sliderSettings,
     beforeChange: (_: number, next: number) => setIndexState(next),
   }
 

@@ -12,7 +12,7 @@ export const CropIcon4x5 = (props: Props) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect x="1" y="1" width="16" height="24" rx="2" stroke="#8D9094" strokeWidth="2" />
+      <rect x="1" y="1" width="16" height="24" rx="2" stroke="currentColor" strokeWidth="2" />
     </svg>
   )
 }

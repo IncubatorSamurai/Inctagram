@@ -2,20 +2,21 @@
 import { DialogTitle, Modal } from '@/shared/ui/modal'
 import s from './AddPostModule.module.scss'
 import { useTranslations } from 'next-intl'
-import { UploadImages } from '@/features/post/UploadImages'
-import { AddFilters } from '@/features/post/AddFilters'
-import { Crop } from '@/features/post/Crop'
-import { nextStep, selectStep, selectUploadedFiles } from '@/shared/store/postSlice/postSlice'
+import { nextStep, removeFiles, selectFiles, selectStep } from '@/shared/store/postSlice/postSlice'
 import { useSelector } from 'react-redux'
-import { SwitchStep } from '@/features/post/SwitchStep'
 import { useAppDispatch } from '@/shared/hooks'
 import { useEffect, useState } from 'react'
-import { Publication } from '@/features/post/publication'
-import { CloseCreationPostModal } from '@/features/post/closeCreationPostModal'
-import { PATH } from '@/shared/config/routes'
 import { Typography } from '@/shared/ui/typography'
 import { Button } from '@/shared/ui/button'
-import { Cropping } from '@/features/post/cropping/ui/Cropping'
+import { Steps } from '@/shared/enums/postEnums'
+import {
+  AddFilters,
+  CloseCreationPostModal,
+  Cropping,
+  Publication,
+  SwitchStep,
+  UploadImages,
+} from '@/features/post'
 
 type Props = {
   open: boolean
@@ -25,33 +26,23 @@ type Props = {
 export const AddPostModal = ({ open, onChange }: Props) => {
   const t = useTranslations('post')
   const step = useSelector(selectStep)
-  const [title, setTitle] = useState('')
+  const files = useSelector(selectFiles)
   const [isCloseCreationPostModal, setIsCloseCreationPostModal] = useState(false)
-
-  useEffect(() => {
-    if (step === 0) {
-      setTitle(t('addPhoto'))
-    } else if (step === 1) {
-      setTitle(t('cropping'))
-    } else if (step === 2) {
-      setTitle(t('filters'))
-    } else if (step === 3) {
-      setTitle(t('publication'))
-    }
-  }, [step])
-
-  const uploadedFiles = useSelector(selectUploadedFiles)
+  const [title, setTitle] = useState('')
 
   const dispatch = useAppDispatch()
 
-  const closeAllModalsHandler = () => {
+  const handleCloseAllModals = () => {
     setIsCloseCreationPostModal(false)
     onChange(false)
+    dispatch(removeFiles())
   }
 
-  const onOpenChangeHandler = (open: boolean) => {
+  const handleCloseCreatePostModal = (open: boolean) => {
+    console.log(open)
+
     if (!open) {
-      if (uploadedFiles.length > 0) {
+      if (files.length) {
         setIsCloseCreationPostModal(true)
       } else {
         onChange(false)
@@ -59,45 +50,48 @@ export const AddPostModal = ({ open, onChange }: Props) => {
     }
   }
 
-  const onClickHeaderHandler = () => {
-    if (step < 3) {
-      dispatch(nextStep())
+  useEffect(() => {
+    if (step === Steps.Step1) {
+      setTitle(t('cropping'))
+    } else if (step === Steps.Step2) {
+      setTitle(t('filters'))
+    } else {
+      setTitle(t('addPhoto'))
     }
-    // else {
-    //   onChange(false)
-    // }
-  }
+  }, [step])
+
+  const isShowHeader = !!files.length && step !== Steps.Step3
+  const isShowPrevButton = step !== Steps.Step0
 
   return (
     <>
       <Modal
         className={s.modal}
         open={open}
-        onOpenChange={onOpenChangeHandler}
-        title={!uploadedFiles.length ? title : undefined}
+        onOpenChange={handleCloseCreatePostModal}
+        title={!files.length ? title : undefined}
       >
-        {!!uploadedFiles.length && (
+        {isShowHeader && (
           <div className={s.header}>
-            {step > 0 && <SwitchStep />}
+            {isShowPrevButton && <SwitchStep />}
             <DialogTitle className={s.DialogTitle}>
               <Typography variant="h1">{title}</Typography>
             </DialogTitle>
-            <Button variant="text" onClick={onClickHeaderHandler}>
-              {step === 3 ? t('publicationHeader') : t('next')}
+            <Button variant="text" onClick={() => dispatch(nextStep())}>
+              {t('next')}
             </Button>
           </div>
         )}
-        {step === 0 && <UploadImages />}
-        {/* {step === 1 && <Crop />} */}
-        {step === 1 && <Cropping />}
-        {step === 2 && <AddFilters />}
-        {step === 3 && <Publication />}
+        {step === Steps.Step0 && <UploadImages />}
+        {step === Steps.Step1 && <Cropping />}
+        {step === Steps.Step2 && <AddFilters />}
+        {step === Steps.Step3 && <Publication closeAllModals={handleCloseAllModals} />}
       </Modal>
 
       <CloseCreationPostModal
         open={isCloseCreationPostModal}
         onChange={setIsCloseCreationPostModal}
-        onClose={closeAllModalsHandler}
+        onClose={handleCloseAllModals}
       />
     </>
   )

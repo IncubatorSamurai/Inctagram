@@ -18,16 +18,18 @@ export const Filters = ({ index, canvasContexts }: Props) => {
   const files = useSelector(selectFiles)
   const dispatch = useAppDispatch()
 
+  const file = files[index]
+
   const applyFilter = async (filterType: string) => {
     const url = await applyFilterToCanvas({
       canvasContexts,
       index,
-      files,
+      file,
       filterType,
     })
 
-    if (typeof url === 'string' && files[index].id) {
-      dispatch(addFilteredFiles({ fileUrl: url, id: files[index].id }))
+    if (typeof url === 'string' && file.id) {
+      dispatch(addFilteredFiles({ fileUrl: url, id: file.id }))
     }
   }
 
@@ -46,7 +48,7 @@ export const Filters = ({ index, canvasContexts }: Props) => {
     <div className={s.container}>
       {filters.map((filter, i) => (
         <Button key={i} variant="text" className={s.button} onClick={() => applyFilter(filter)}>
-          <FilterCard src={files[index].fileUrl} title={t(filter)} />
+          <FilterCard src={file.croppedFileUrl ?? file.fileUrl} title={t(filter)} />
         </Button>
       ))}
     </div>
