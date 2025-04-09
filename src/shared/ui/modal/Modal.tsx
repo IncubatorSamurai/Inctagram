@@ -4,6 +4,7 @@ import { clsx } from 'clsx'
 import * as DialogRadix from '@radix-ui/react-dialog'
 import s from './Modal.module.scss'
 import { Typography } from '@/shared/ui/typography'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
 type Props = {
   children?: ReactNode
@@ -17,7 +18,15 @@ type Props = {
 const DialogClose = DialogRadix.Close
 const DialogTitle = DialogRadix.Title
 
-const Modal = ({ children, className, title, trigger, isCloseIcon, isTitleHidden, ...props }: Props) => {
+const Modal = ({
+  children,
+  className,
+  title,
+  trigger,
+  isCloseIcon,
+  isTitleHidden,
+  ...props
+}: Props) => {
   return (
     <DialogRadix.Root {...props}>
       {trigger && <DialogRadix.Trigger asChild>{trigger}</DialogRadix.Trigger>}
@@ -39,11 +48,11 @@ const Modal = ({ children, className, title, trigger, isCloseIcon, isTitleHidden
               </DialogRadix.Close>
             </div>
           )}
-            {!title && isTitleHidden && (
-                <VisuallyHidden>
-                    <DialogRadix.Title className={s.DialogTitle}>NO TITLE</DialogRadix.Title>
-                </VisuallyHidden>
-            )}
+          {!title && isTitleHidden && (
+            <VisuallyHidden>
+              <DialogRadix.Title className={s.DialogTitle}>NO TITLE</DialogRadix.Title>
+            </VisuallyHidden>
+          )}
           {isCloseIcon && (
             <DialogRadix.Close aria-label={'Close'} className={s.closeButton}>
               <CloseIcon />

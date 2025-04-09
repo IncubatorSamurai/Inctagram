@@ -18,7 +18,7 @@ type AspectOption = {
 
 export const Expand = ({ getAspect }: Props) => {
   const aspectOptions: AspectOption[] = [
-    { ratio: '1:1', value: 1 / 1, icon: <CropIcon1x1 /> },
+    { ratio: '1:1', value: 1, icon: <CropIcon1x1 /> },
     { ratio: '4:5', value: 4 / 5, icon: <CropIcon4x5 /> },
     { ratio: '16:9', value: 16 / 9, icon: <CropIcon16x9 /> },
   ]

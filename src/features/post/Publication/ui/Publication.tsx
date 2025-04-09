@@ -11,7 +11,7 @@ import { useCreatePostMutation, useUploadImageForPostMutation } from '@/shared/a
 import { useRouter } from '@/i18n/routing'
 import { PATH } from '@/shared/config/routes'
 import { sliderSettings } from '@/shared/config/sliderSettings'
-import { SwitchStep } from '../../SwitchStep'
+import { SwitchStep } from '@/features/post'
 import { useTranslations } from 'next-intl'
 import { convertBlobUrlsToFiles } from '../lib/convertBlobUrlsToFiles'
 import 'slick-carousel/slick/slick.css'
@@ -94,7 +94,7 @@ export const Publication = ({ closeAllModals }: Props) => {
           <div className={s.descriptionWrapper}>
             <div className={s.avatarWithNameWrapper}>
               {/* <Image className={s.avatar} src={''} width={36} height={36} alt="user avatar" /> */}
-              <ImageOutlineIcon className={s.avatar}/>
+              <ImageOutlineIcon className={s.avatar} />
               <Typography variant="medium_text_16">URLProfiele</Typography>
             </div>
 

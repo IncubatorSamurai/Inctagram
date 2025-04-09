@@ -61,6 +61,8 @@ export const PublicModal = ({ post, commentsData, postId, ...props }: PublicModa
       open={!!postId}
       onOpenChange={isOpen => !isOpen && onClose()}
       defaultOpen
+      isTitleHidden
+      isCloseIcon
       {...props}
     >
       <div className={s.public_modal_container}>
