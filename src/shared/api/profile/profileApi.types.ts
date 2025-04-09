@@ -1,0 +1,20 @@
+type IAvatar = {
+  url: string
+  width: number
+  height: number
+  fileSize: number
+  createdAt: string
+}
+export type ProfileResponse = {
+  id: string
+  userName: string
+  firstName: string
+  lastName: string
+  city: string
+  country: string
+  region: string
+  dateOfBirth: string
+  aboutMe: string
+  avatars: IAvatar[]
+  createdAt: string
+}
