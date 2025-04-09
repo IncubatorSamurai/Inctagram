@@ -1,11 +1,13 @@
 import { TabContent, Tabs } from '@/shared/ui/tabs'
 import { userProfileTabs } from '../model/tabs'
+import { GeneralInfoTab } from './generalInfo/GeneralInfoTab'
+import s from './UserProfileTabs.module.scss'
 
 export const UserProfileTabs = () => {
   const tabsContent = [
     {
       value: 'generalInformation',
-      content: <p>generalInformation</p>,
+      content: <GeneralInfoTab />,
     },
     {
       value: 'devices',
@@ -24,11 +26,13 @@ export const UserProfileTabs = () => {
 
   return (
     <Tabs defaultValue="generalInformation" tabs={userProfileTabs}>
-      {tabsContent.map((tab, i) => (
-        <TabContent key={i} value={tab.value}>
-          {tab.content}
-        </TabContent>
-      ))}
+      <div className={s.tabContainer}>
+        {tabsContent.map((tab, i) => (
+          <TabContent key={i} value={tab.value}>
+            {tab.content}
+          </TabContent>
+        ))}
+      </div>
     </Tabs>
   )
 }
