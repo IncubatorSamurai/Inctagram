@@ -26,7 +26,7 @@ export const PublicPostImages = ({ userName, images, postId, isExpanded }: Slide
     sliderClass: s.slider_public,
     dotsClass: s.slider_public_dots,
     arrowsClass: s.slider_public_arrows,
-    totalSlides:images.length
+    totalSlides: images.length,
   })
 
   return (
@@ -35,19 +35,19 @@ export const PublicPostImages = ({ userName, images, postId, isExpanded }: Slide
         {images.map((image, index) => (
           <Link
             key={`${postId}-${index}`}
-            href={`/public?postId=${postId}`}
-            as={`/public/?postId=${postId}`}
+            href={`/?postId=${postId}`}
+            as={`/?postId=${postId}`}
             className={s.post_link}
             scroll={false}
           >
             <div key={`${postId}-${index}`} className={s.slickSlide}>
-                <Image
-                  src={image.url}
-                  alt={`Image for post ${userName}`}
-                  width={WIDTH_PUBLIC_IMAGE}
-                  height={isExpanded ? EXPANDED_PUBLIC_IMAGE : HEIGHT_PUBLIC_IMAGE}
-                  className={isExpanded ? s.expanded_image : s.post_img}
-                />
+              <Image
+                src={image.url}
+                alt={`Image for post ${userName}`}
+                width={WIDTH_PUBLIC_IMAGE}
+                height={isExpanded ? EXPANDED_PUBLIC_IMAGE : HEIGHT_PUBLIC_IMAGE}
+                className={isExpanded ? s.expanded_image : s.post_img}
+              />
             </div>
           </Link>
         ))}

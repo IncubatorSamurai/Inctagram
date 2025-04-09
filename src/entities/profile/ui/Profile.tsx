@@ -15,7 +15,7 @@ type Props = {
   resPublicPosts?: GetPostsByUserIdRespond
 }
 
-export const ProfilePage = ({ resPublicData, resPublicPosts }: Props) => {
+export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   const tProfile = useTranslations('profile')
 
   const { avatarSrc, isMyProfile, isLoggedIn, userName, followArray, aboutMe, userId } =

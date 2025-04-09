@@ -1,14 +1,16 @@
+import { ReactNode } from 'react'
+
 export default function Layout({
   children,
-  modal,
+  postModal,
 }: Readonly<{
-  children: React.ReactNode
-  modal: React.ReactNode
+  children: ReactNode
+  postModal: ReactNode
 }>) {
   return (
     <>
       {children}
-      {modal}
+      {postModal}
     </>
   )
 }

@@ -12,13 +12,13 @@ type Props = {
 }
 
 export const UserPosts = ({ userId, resPublicPosts }: Props) => {
-  const { posts, lastPostElementRef, isLoggedIn, isFetching } = useGetPosts({ resPublicPosts })
+  const { posts, lastPostElementRef, isFetching } = useGetPosts({ resPublicPosts })
   const renderPosts = posts ?? resPublicPosts?.items
 
   return (
     <section className={s.posts}>
       {renderPosts?.map((post, id) => {
-        const hrefLinkPost = `/${isLoggedIn ? 'profile' : 'users'}/${userId}?postId=${post.id}`
+        const hrefLinkPost = `/profile/${userId}?postId=${post.id}`
 
         return (
           <div

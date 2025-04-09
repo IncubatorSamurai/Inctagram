@@ -1,7 +1,10 @@
 .public_page {
-  width: 100%;
-  max-width: 972px;
   display: flex;
   flex-direction: column;
   row-gap: 36px;
+
+  width: 100%;
+  max-width: 972px;
+  margin: 0 auto;
+  padding: 84px 0;
 }

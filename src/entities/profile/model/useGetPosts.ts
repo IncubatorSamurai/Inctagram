@@ -2,8 +2,7 @@ import { useCallback, useEffect, useRef } from 'react'
 import { GetPostsByUserIdRespond } from '@/shared/api/post/postApi.types'
 import { useParams } from 'next/navigation'
 import { publicPostApi, useLazyGetPublicPostsByUserIdQuery } from '@/shared/api/post/publicPosts'
-import { useAppDispatch, useAppSelector } from '@/shared/hooks'
-import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
+import { useAppDispatch } from '@/shared/hooks'
 
 type Props = {
   resPublicPosts?: GetPostsByUserIdRespond
@@ -18,8 +17,6 @@ export const useGetPosts = ({ resPublicPosts }: Props) => {
   const needInit = useRef(!!resPublicPosts)
   const endCursorPostId = useRef<string | null>(null)
   const observer = useRef<IntersectionObserver | null>(null)
-
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const [fetchPosts, { data: publicPostsByUserId, isFetching }] =
     useLazyGetPublicPostsByUserIdQuery()
@@ -84,5 +81,5 @@ export const useGetPosts = ({ resPublicPosts }: Props) => {
     [isFetching]
   )
 
-  return { posts, lastPostElementRef, isLoggedIn, isFetching }
+  return { posts, lastPostElementRef, isFetching }
 }

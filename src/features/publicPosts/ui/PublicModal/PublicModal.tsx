@@ -14,6 +14,7 @@ import { CommentItem } from '@/features/publicPosts/ui/PublicModal/CommentItem/C
 import { useRouter } from 'next/navigation'
 import { useSliderSettings } from '@/shared/ui/slider/CustomSlider'
 import { renderLikeAvatars } from '@/features/publicPosts/ui/PublicModal/PublicModalRenderAvatars'
+import { useEffect, useState } from 'react'
 
 const WIDTH_MODAL_IMAGE = 490
 const HEIGHT_MODAL_IMAGE = 564
@@ -25,22 +26,32 @@ type PublicModal = {
 }
 
 export const PublicModal = ({ post, commentsData, postId, ...props }: PublicModal) => {
+  const [hrefLinkPost, setHrefLinkPost] = useState<string | null>(null)
   const comments = commentsData?.items || []
   const { images, avatarOwner, userName, likesCount, createdAt, avatarWhoLikes } = post
   const { settings } = useSliderSettings({
     sliderClass: s.slider_modal,
     dotsClass: s.slider_modal_dots,
-    totalSlides:images.length,
+    totalSlides: images.length,
   })
   const router = useRouter()
-  const currentUrl = new URL(window.location.href)
-  currentUrl.searchParams.delete('postId')
-  const hrefLinkPost = currentUrl.pathname + currentUrl.search
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const currentUrl = new URL(window.location.href)
+      currentUrl.searchParams.delete('postId')
+      setHrefLinkPost(currentUrl.pathname + currentUrl.search)
+    }
+  }, [])
+
+  // const currentUrl = new URL(window.location.href)
+  // currentUrl.searchParams.delete('postId')
+  // const hrefLinkPost = currentUrl.pathname + currentUrl.search
 
   const onClose = () => {
     if (window.history.length > 2) {
       router.back()
-    } else {
+    } else if (hrefLinkPost) {
       router.replace(hrefLinkPost, { scroll: false })
     }
   }
@@ -55,7 +66,7 @@ export const PublicModal = ({ post, commentsData, postId, ...props }: PublicModa
       <div className={s.public_modal_container}>
         <div className={s.public_modal_img}>
           {/* СЛАЙДЕР*/}
-          <Slider {...settings} >
+          <Slider {...settings}>
             {images.map((image, index) => (
               <div key={index}>
                 <Image

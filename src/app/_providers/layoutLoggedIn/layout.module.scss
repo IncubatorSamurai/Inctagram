@@ -1,14 +1,15 @@
 .layout_container {
-  display: flex;
   overflow: hidden;
+  display: flex;
   height: calc(100vh - 63px);
+
   @media screen and (width <= 767px) {
     flex-direction: column;
   }
 }
 
 .layout_scroll {
+  overflow-y: auto;
   flex: 1;
   height: 100%;
-  overflow-y: auto;
 }

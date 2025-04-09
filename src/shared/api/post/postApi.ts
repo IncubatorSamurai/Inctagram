@@ -1,5 +1,13 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { GetPostsByNameArgs, GetPostsByNameRespond, UploadPhotoRespond, PublicPostsResponse, PublicPostsRequest, Name, PostDescriptionChange, ResponseGetById, ResponseGetByName, UploadPhotoRespond } from '@/shared/api/post/postApi.types'
+import {
+  GetPostsByNameArgs,
+  GetPostsByNameRespond,
+  Name,
+  PostDescriptionChange,
+  ResponseGetById,
+  ResponseGetByName,
+  UploadPhotoRespond,
+} from '@/shared/api/post/postApi.types'
 
 export const postApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -30,19 +38,25 @@ export const postApi = baseApi.injectEndpoints({
       }),
     }),
     getPostById: build.mutation<ResponseGetById, PostDescriptionChange>({
-      query: ({id}) => ({
+      query: ({ id }) => ({
         url: `v1/posts/id/${id}`,
-        method: 'GET'
-      })
+        method: 'GET',
+      }),
     }),
-    getPostByName: build.mutation<ResponseGetByName,Name>({
-      query: ({name}) => ({
+    getPostByName: build.mutation<ResponseGetByName, Name>({
+      query: ({ name }) => ({
         url: `v1/posts/${name}`,
-        method: 'GET'
-      })
-    })
+        method: 'GET',
+      }),
+    }),
   }),
 })
 
-export const { useUploadPhotoMutation, useGetPostsByUserNameQuery, useDeletePostMutation, useEditPostDescriptionMutation, useGetPostByIdMutation, useGetPostByNameMutation } = postApi
-
+export const {
+  useUploadPhotoMutation,
+  useGetPostsByUserNameQuery,
+  useDeletePostMutation,
+  useEditPostDescriptionMutation,
+  useGetPostByIdMutation,
+  useGetPostByNameMutation,
+} = postApi

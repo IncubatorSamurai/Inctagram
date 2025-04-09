@@ -13,20 +13,18 @@ import { useGetPostByIdMutation } from '@/shared/api/post/postApi'
 import { ResponseGetById } from '@/shared/api/post/postApi.types'
 import { ErrorResponse } from '@/shared/types/auth'
 
-
 type PostModalProps = {
   postId: number
 }
 
-export const PostModal = ({postId}:PostModalProps) => {
-    const [getPostById] = useGetPostByIdMutation()
+export const PostModal = ({ postId }: PostModalProps) => {
+  const [getPostById] = useGetPostByIdMutation()
 
   const [post, setPost] = useState('')
 
   const saveTextAreaValue = (value: string) => {
     setPost(value)
   }
-
 
   const [openEdit, setOpenEdit] = useState(false)
   const changeEdit = () => {
@@ -38,30 +36,28 @@ export const PostModal = ({postId}:PostModalProps) => {
     setOpenModal(!openModal)
   }
 
-
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const showDeleteModalHandler = () => {
     setShowDeleteModal(!showDeleteModal)
   }
 
-
   const [res, setRes] = useState<ResponseGetById | null>()
-  // const postId = 1081 //5723 //1081 //берем айдишник из урла 
-const getPostHandler = useCallback(async () => {
-  try {
-    const result = await getPostById({ id: postId }).unwrap();
-    setRes(result);
-    setPost(result.description)
-  } catch (error) {
-    const err = error as ErrorResponse
-    console.error(err.data.messages)
-  }
-}, [getPostById]);
+  // const postId = 1081 //5723 //1081 //берем айдишник из урла
+  const getPostHandler = useCallback(async () => {
+    try {
+      const result = await getPostById({ id: postId }).unwrap()
+      setRes(result)
+      setPost(result.description)
+    } catch (error) {
+      const err = error as ErrorResponse
+      console.error(err.data.messages)
+    }
+  }, [getPostById])
 
-// const showSlider = res?.images.length > 1 ? true : false
-// console.log(res?.images.length);
-// нужно достать айдишник поста и пробросить для функций удаление/редактирование
-// паралельный роутинг
+  // const showSlider = res?.images.length > 1 ? true : false
+  // console.log(res?.images.length);
+  // нужно достать айдишник поста и пробросить для функций удаление/редактирование
+  // паралельный роутинг
   return (
     <PostModalNew
       isOpenEdit={openEdit}
@@ -87,7 +83,13 @@ const getPostHandler = useCallback(async () => {
               changeEdit={changeEdit}
             />
           ) : (
-            <PostContent post={post} likes={res?.likesCount} whosLikes={res?.avatarWhoLikes} updatedAt={res?.updatedAt}  createdAt={res?.createdAt}/>
+            <PostContent
+              post={post}
+              likes={res?.likesCount}
+              whosLikes={res?.avatarWhoLikes}
+              updatedAt={res?.updatedAt}
+              createdAt={res?.createdAt}
+            />
           )}
         </div>
       </div>
