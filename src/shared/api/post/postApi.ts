@@ -7,9 +7,7 @@ import {
   PostDescriptionChange,
   ResponseGetById,
   ResponseGetByName,
-  UploadPhotoRespond,
 } from '@/shared/api/post/postApi.types'
-
 
 export const postsApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -62,12 +60,12 @@ export const postsApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useCreatePostMutation, useUploadImageForPostMutation } = postsApi
 export const {
-  useUploadPhotoMutation,
+  useCreatePostMutation,
+  useUploadImageForPostMutation,
   useGetPostsByUserNameQuery,
   useDeletePostMutation,
   useEditPostDescriptionMutation,
   useGetPostByIdMutation,
   useGetPostByNameMutation,
-} = postApi
+} = postsApi
