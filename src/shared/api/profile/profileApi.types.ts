@@ -18,3 +18,4 @@ export type ProfileResponse = {
   avatars: IAvatar[]
   createdAt: string
 }
+export type ProfileUpdateRequest = Omit<ProfileResponse, 'id' | 'avatars' | 'createdAt'>

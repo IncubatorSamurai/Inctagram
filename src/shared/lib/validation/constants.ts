@@ -22,3 +22,12 @@ export const nameValidation = {
 export const agreeValidation = {
   MISMATCH: 'The agree must checked',
 } as const
+
+export const nameSettingValidation = {
+  MIN_LENGTH: 1,
+  MAX_LENGTH: 50,
+  REGEX: /^[A-Za-zА-Яа-яЁё\s-]+$/,
+  ERROR_MESSAGES: {
+    PATTERN: 'Name must contain A-Z a-z or А-Я; а-я',
+  },
+} as const

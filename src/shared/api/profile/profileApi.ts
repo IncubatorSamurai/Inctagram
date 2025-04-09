@@ -1,5 +1,5 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { ProfileResponse } from './profileApi.types'
+import { ProfileResponse, ProfileUpdateRequest } from './profileApi.types'
 
 export const profileApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -9,7 +9,14 @@ export const profileApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
+    updateProfile: build.mutation<void, ProfileUpdateRequest>({
+      query: data => ({
+        url: 'v1/users/profile',
+        method: 'PUT',
+        body: data,
+      }),
+    }),
   }),
 })
 
-export const { useGetProfileQuery } = profileApi
+export const { useGetProfileQuery, useUpdateProfileMutation } = profileApi

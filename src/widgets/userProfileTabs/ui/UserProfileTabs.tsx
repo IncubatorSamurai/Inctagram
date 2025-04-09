@@ -25,7 +25,7 @@ export const UserProfileTabs = () => {
   ]
 
   return (
-    <Tabs defaultValue="generalInformation" tabs={userProfileTabs}>
+    <Tabs fullWidth defaultValue="generalInformation" tabs={userProfileTabs}>
       <div className={s.tabContainer}>
         {tabsContent.map((tab, i) => (
           <TabContent key={i} value={tab.value}>

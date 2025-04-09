@@ -1,13 +1,15 @@
-'use client'
-import { UploadUserAvatar } from '@/features/settings'
-import { useGetProfileQuery } from '@/shared/api/profile/profileApi'
+import { EditUserProfileForm, UploadUserAvatar } from '@/features/settings'
+import s from './GeneralInfo.module.scss'
 
 export const GeneralInfoTab = () => {
-  const { data } = useGetProfileQuery()
-  console.log(data?.lastName)
   return (
-    <div>
-      <UploadUserAvatar />
+    <div className={s.row}>
+      <div className={s.item}>
+        <UploadUserAvatar />
+      </div>
+      <div className={s.item}>
+        <EditUserProfileForm />
+      </div>
     </div>
   )
 }
