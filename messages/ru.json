@@ -45,9 +45,35 @@
     "followers": "Подписчики",
     "publications": "Публикаций"
   },
-  "addModal": {
+  "post": {
+    "close": "Закрыть",
+    "discard": "Отказаться",
+    "saveDraft": "Сохранить черновик",
+    "closeCreationPostModalDescription1": "Вы действительно хотите закрыть создание публикации?",
+    "closeCreationPostModalDescription2": "При закрытии все будет удалено",
+    "selectFromComputer": "Выбрать",
+    "openDraft": "Предпросмотр",
     "addPhoto": "Добавить фото",
-    "SelectFromComputer": "Выбрать",
-    "OpenDraft": "Предпросмотр"
+    "cropping": "Обрезка",
+    "filters": "Фильтры",
+    "publication": "Публикация",
+    "cropButtonSave": "Сохранить обрезанное изображение",
+    "cropButtonSaved": "Сохранено",
+    "next": "Далее",
+    "publicationHeader": "Опубликовать",
+    "addPublicationDescriptions": "Добавьте описание публикации",
+    "charCountError": "Максимальное количество символов 500",
+    "photos": "фото",
+    "filter": {
+      "original": "Оригинал",
+      "vintage": "Винтаж",
+      "lomo": "Ломо",
+      "soft-focus": "Мягкий фокус",
+      "glow": "Свечение",
+      "dreamy": "Мечта",
+      "retro": "Ретро",
+      "moody": "Атмосферный",
+      "golden-hour": "Золотой час"
+    }
   }
 }

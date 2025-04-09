@@ -1,4 +1,5 @@
 import { baseApi } from '@/shared/api/baseApi'
+import { CreatePostArgs, CreatePostResponse, UploadImageForPostResponse } from './postApi.types'
 import {
   GetPostsByNameArgs,
   GetPostsByNameRespond,
@@ -6,12 +7,19 @@ import {
   PostDescriptionChange,
   ResponseGetById,
   ResponseGetByName,
-  UploadPhotoRespond,
 } from '@/shared/api/post/postApi.types'
 
-export const postApi = baseApi.injectEndpoints({
+export const postsApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    uploadPhoto: build.mutation<UploadPhotoRespond, FormData>({
+    createPost: build.mutation<CreatePostResponse, CreatePostArgs>({
+      query: payload => ({
+        url: 'v1/posts',
+        method: 'POST',
+        body: payload,
+      }),
+      invalidatesTags: ['Post'],
+    }),
+    uploadImageForPost: build.mutation<UploadImageForPostResponse, FormData>({
       query: formData => ({
         url: 'v1/posts/image',
         method: 'POST',
@@ -53,10 +61,11 @@ export const postApi = baseApi.injectEndpoints({
 })
 
 export const {
-  useUploadPhotoMutation,
+  useCreatePostMutation,
+  useUploadImageForPostMutation,
   useGetPostsByUserNameQuery,
   useDeletePostMutation,
   useEditPostDescriptionMutation,
   useGetPostByIdMutation,
   useGetPostByNameMutation,
-} = postApi
+} = postsApi

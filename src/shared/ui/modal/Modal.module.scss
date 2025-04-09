@@ -1,6 +1,6 @@
 .DialogOverlay {
   position: fixed;
-  z-index: 9999;
+  // z-index: 9999;
   inset: 0;
 
   opacity: 0.5;
@@ -9,7 +9,7 @@
 
 .DialogContent {
   position: fixed;
-  z-index: 9999;
+  // z-index: 9999;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -37,6 +37,8 @@
 .IconButton {
   all: unset;
 
+  cursor: pointer;
+
   width: 24px;
   height: 24px;
   border-radius: 100%;
@@ -51,6 +53,10 @@
   &:focus-visible {
     outline: 2px solid var(--color-accent-300);
   }
+}
+
+.button {
+  padding: 0;
 }
 
 .header {
@@ -90,7 +96,7 @@
 
 .postContent {
   position: fixed;
-  z-index: 9999;
+  // z-index: 9999;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

@@ -45,9 +45,35 @@
     "followers": "Followers",
     "publications": "Publications"
   },
-  "addModal": {
+  "post": {
+    "close": "Close",
+    "discard": "Discard",
+    "saveDraft": "Save draft",
+    "closeCreationPostModalDescription1": "Do you really want to close the creation of a publication?",
+    "closeCreationPostModalDescription2": "If you close everything will be deleted",
+    "selectFromComputer": "Select from Computer",
+    "openDraft": "Open Draft",
     "addPhoto": "Add Photo",
-    "SelectFromComputer": "Select from Computer",
-    "OpenDraft": "Open Draft"
-}
+    "cropping": "Cropping",
+    "filters": "Filters",
+    "publication": "Publication",
+    "cropButtonSave": "Save cropped image",
+    "cropButtonSaved": "Saved",
+    "next": "Next",
+    "publicationHeader": "Publication",
+    "addPublicationDescriptions": "Add publication descriptions",
+    "charCountError": "Maximum number of characters 500",
+    "photos": "photos",
+    "filter": {
+      "original": "Original",
+      "vintage": "Vintage",
+      "lomo": "Lomo",
+      "soft-focus": "Soft Focus",
+      "glow": "Glow",
+      "dreamy": "Dreamy",
+      "retro": "Retro",
+      "moody": "Moody",
+      "golden-hour": "Golden Hour"
+    }
+  }
 }

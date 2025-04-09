@@ -1,0 +1,39 @@
+.container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: 30.625rem;
+  height: 31.375rem;
+
+  background-color: var(--color-dark-500);
+
+  .image {
+    width: auto;
+    object-fit: contain;
+  }
+
+  :global(.slick-dots) {
+    bottom: 1rem;
+  }
+
+  .cropButton {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.25rem;
+
+    width: 2.25rem;
+    height: 2.25rem;
+
+    opacity: 0.8;
+    background-color: var(--color-dark-500);
+
+    &:hover {
+      color: var(--color-accent-500);
+    }
+  }
+}

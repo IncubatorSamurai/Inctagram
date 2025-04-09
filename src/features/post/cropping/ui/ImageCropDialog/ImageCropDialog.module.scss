@@ -1,0 +1,30 @@
+.container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: 30.625rem;
+  height: 31.375rem;
+
+  .actionButtons {
+    position: relative;
+
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1.25rem 1.5rem;
+
+    .expandDropdown {
+      cursor: pointer;
+    }
+
+    .buttonsWrapper > button:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}

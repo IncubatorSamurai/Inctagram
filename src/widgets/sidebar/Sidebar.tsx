@@ -29,8 +29,8 @@ import { PATH } from '@/shared/config/routes'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
 import { useMeQuery } from '@/shared/api/auth/authApi'
 import { useState } from 'react'
-import { AddPostModal } from '@/features/post/AddPostModal/AddPostModal'
 import { Button } from '@/shared/ui/button/Button'
+import { AddPostModal } from '../post'
 
 export const sidebarItems = {
   primary: [
@@ -157,9 +157,6 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
   const { data: meInfo } = useMeQuery()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleOpenModal = () => setIsModalOpen(true)
-  const handleCloseModal = () => setIsModalOpen(false)
-
   return (
     <nav className={s.sidebar}>
       {isAdmin ? (
@@ -179,7 +176,7 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
                   key={item.id}
                   data-disabled={item.disabled}
                 >
-                  <Button variant={'icon'} className={s.nav_create_btn} onClick={handleOpenModal}>
+                  <Button variant={'icon'} className={s.nav_create_btn} onClick={() => setIsModalOpen(true)}>
                     {isModalOpen ? item.activeIcon : item.icon}
                     <span className={s.nav_name}>{item.name}</span>
                   </Button>
@@ -200,7 +197,7 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
           </ul>
         </>
       )}
-      {isModalOpen && <AddPostModal open={isModalOpen} onChange={handleCloseModal} />}
+      {isModalOpen && <AddPostModal open={isModalOpen} onChange={setIsModalOpen} />}
     </nav>
   )
 }
