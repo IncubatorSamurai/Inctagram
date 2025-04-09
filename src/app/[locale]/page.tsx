@@ -1,14 +1,7 @@
-'use client'
-import { useRouter } from '@/i18n/routing'
-import { PATH } from '@/shared/config/routes'
-import { useEffect } from 'react'
+import PublicPosts from '@/features/publicPosts/ui/PublicPosts/PublicPosts'
+
+//TODO: if we are loggedIn => redirect to home, else load PublicPage
 
 export default function Page() {
-  const router = useRouter()
-
-  useEffect(() => {
-    router.push(PATH.SIGNUP)
-  }, [router])
-
-  return <div>Locale</div>
+  return <PublicPosts />
 }

@@ -1,0 +1,18 @@
+.postsSideAddComment {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+
+  //   margin-top: auto;
+  padding: 18px 24px 12px;
+
+  & textarea {
+    resize: none;
+
+    width: 100%;
+    border: none;
+
+    background-color: inherit;
+    outline: none;
+  }
+}

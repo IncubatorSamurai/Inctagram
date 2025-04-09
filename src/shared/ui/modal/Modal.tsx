@@ -11,12 +11,13 @@ type Props = {
   title?: string
   trigger?: ReactNode
   isCloseIcon?: boolean
+  isTitleHidden?: boolean
 } & ComponentPropsWithoutRef<typeof DialogRadix.Root>
 
 const DialogClose = DialogRadix.Close
 const DialogTitle = DialogRadix.Title
 
-const Modal = ({ children, className, title, trigger, isCloseIcon, ...props }: Props) => {
+const Modal = ({ children, className, title, trigger, isCloseIcon, isTitleHidden, ...props }: Props) => {
   return (
     <DialogRadix.Root {...props}>
       {trigger && <DialogRadix.Trigger asChild>{trigger}</DialogRadix.Trigger>}
@@ -26,7 +27,7 @@ const Modal = ({ children, className, title, trigger, isCloseIcon, ...props }: P
           className={clsx(title && s.DialogContent, !title && s.postContent, className)}
           aria-describedby={undefined}
         >
-          {title && (
+          {title && !isTitleHidden && (
             <div className={s.header}>
               <DialogRadix.Title className={s.DialogTitle}>
                 <Typography variant={'h1'}>{title}</Typography>
@@ -38,6 +39,11 @@ const Modal = ({ children, className, title, trigger, isCloseIcon, ...props }: P
               </DialogRadix.Close>
             </div>
           )}
+            {!title && isTitleHidden && (
+                <VisuallyHidden>
+                    <DialogRadix.Title className={s.DialogTitle}>NO TITLE</DialogRadix.Title>
+                </VisuallyHidden>
+            )}
           {isCloseIcon && (
             <DialogRadix.Close aria-label={'Close'} className={s.closeButton}>
               <CloseIcon />

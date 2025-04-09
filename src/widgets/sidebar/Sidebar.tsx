@@ -27,6 +27,7 @@ import { BookMarkIcon } from '@/shared/assets/icons/BookMarkIcon'
 import { NavItem } from '@/shared/ui/nav-item'
 import { PATH } from '@/shared/config/routes'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
+import { useMeQuery } from '@/shared/api/auth/authApi'
 import { useState } from 'react'
 import { Button } from '@/shared/ui/button/Button'
 import { AddPostModal } from '../post'
@@ -55,7 +56,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'My Profile',
       icon: <PersonOutlineIcon />,
-      href: PATH.PROFILE,
+      href: PATH.MYPROFILE,
       disabled: false,
       classItem: 'profile',
       activeIcon: <PersonIcon />,
@@ -153,6 +154,7 @@ type Sidebar = {
 }
 
 export const Sidebar = ({ isAdmin }: Sidebar) => {
+  const { data: meInfo } = useMeQuery()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
@@ -167,9 +169,9 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
       ) : (
         <>
           <ul className={clsx(s.sidebar_list, s.primary)}>
-            {sidebarItems.primary.map(item =>
-              item.name === 'Create' ? (
-                <li
+            {sidebarItems.primary.map(item => { 
+              if (item.name === 'Create') {
+                return <li
                   className={clsx(s.create_item, item.classItem, { [s.active]: isModalOpen })}
                   key={item.id}
                   data-disabled={item.disabled}
@@ -179,9 +181,12 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
                     <span className={s.nav_name}>{item.name}</span>
                   </Button>
                 </li>
-              ) : (
-                <NavItem key={item.id} {...item} />
-              )
+              }
+             else if (item.name === 'My Profile') {
+                item = { ...item, href: `${item.href}/${meInfo?.userId}` }
+              }
+              return <NavItem key={item.id} {...item} />
+              }
             )}
           </ul>
           <ul className={clsx(s.sidebar_list, s.secondary)}>

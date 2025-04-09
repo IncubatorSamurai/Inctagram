@@ -28,14 +28,22 @@
     "forgotPasswordSubmit": "The link has been sent by email. If you don’t receive an email send link again.",
     "sendLink": "Send Link",
     "resendLink": "Resend Link",
-    "resendVerifLink": "Resend verification link",
+    "resendVerifLink" : "Resend verification link",
     "backToSignUp": "Back to Sign Up",
     "emailSent": "Email sent",
     "emailConfirmed": "Your email has been confirmed",
     "sentConfirmLink": "We have sent a link to confirm your email to",
     "emailExpired": "Email verification link expired",
-    "sendLinkAgain": "Looks like the verification link has expired. Not to worry, we can send the link again",
+    "sendLinkAgain" : "Looks like the verification link has expired. Not to worry, we can send the link again",
     "congratulations": "Congratulations"
+  },
+  "profile": {
+    "profileSettings": "Profile Settings",
+    "follow": "Follow",
+    "sendMessage": "Send Message",
+    "following": "Following",
+    "followers": "Followers",
+    "publications": "Publications"
   },
   "post": {
     "close": "Close",

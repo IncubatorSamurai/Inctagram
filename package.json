@@ -50,6 +50,7 @@
     "@it-incubator/stylelint-config": "2.0.0",
     "@next/eslint-plugin-next": "^15.1.7",
     "@radix-ui/react-dropdown-menu": "^2.1.6",
+    "@radix-ui/react-visually-hidden": "^1.1.2",
     "@storybook/addon-essentials": "8.5.2",
     "@storybook/addon-interactions": "8.5.2",
     "@storybook/addon-onboarding": "8.5.2",
