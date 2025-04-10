@@ -1,3 +1,5 @@
+import { GeneralInfoTab } from '@/widgets/userProfileTabs/ui/generalInfo/GeneralInfoTab'
+
 export const userProfileTabs = [
   { value: 'generalInformation', title: 'General information' },
   { value: 'devices', title: 'Devices' },
@@ -8,7 +10,7 @@ export const userProfileTabs = [
 export const tabsContent = [
   {
     value: 'generalInformation',
-    content: <p>generalInformation</p>,
+    content: <><GeneralInfoTab/></>,
   },
   {
     value: 'devices',

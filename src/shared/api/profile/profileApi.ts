@@ -1,22 +1,27 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { ProfileResponse, ProfileUpdateRequest } from './profileApi.types'
+import { UploadAvatarResponse } from '@/shared/api/profile/profileApi.types'
+
 
 export const profileApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    getProfile: build.query<ProfileResponse, void>({
+    uploadUserAvatar: build.mutation<UploadAvatarResponse, FormData>({
+      query: formData => ({
+        url: 'v1/users/profile/avatar',
+        method: 'POST',
+        body: formData,
+      }),
+    }),
+
+    deleteUserAvatar: build.mutation<void, void>({
       query: () => ({
-        url: 'v1/users/profile',
-        method: 'GET',
+        url: `v1/users/profile/avatar`,
+        method: 'DELETE',
       }),
     }),
-    updateProfile: build.mutation<void, ProfileUpdateRequest>({
-      query: data => ({
-        url: 'v1/users/profile',
-        method: 'PUT',
-        body: data,
-      }),
-    }),
+
   }),
 })
 
-export const { useGetProfileQuery, useUpdateProfileMutation } = profileApi
+export const {
+ useDeleteUserAvatarMutation,useUploadUserAvatarMutation
+} = profileApi

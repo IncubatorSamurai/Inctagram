@@ -1,0 +1,52 @@
+@use '@/app/_styles/ui/function' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  row-gap: size(60px);
+  align-items: center;
+
+
+  padding: size(78px) size(16px) size(78px);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  row-gap: size(24px);
+
+  & > button > label {
+    cursor: pointer;
+  }
+}
+
+.post_preview {
+  cursor: pointer;
+position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: size(222px);
+  height: size(228px);
+
+  text-align: center;
+
+  background: var(--color-dark-500);
+}
+//.closeButton{
+//  position: absolute;
+//  top:0;
+//  right:0;
+//}
+
+.container_uploaded{
+  .post_preview {
+    width: size(316px);
+    height: size(316px);
+  }
+  .button_selected{
+    display:none;
+  }
+
+}
