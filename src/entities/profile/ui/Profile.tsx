@@ -9,6 +9,7 @@ import { useProfileData } from '@/entities/profile/model/useProfileData'
 import { UserPosts } from '@/entities/profile/ui/posts/UserPosts'
 import { ProfileUserResponse } from '@/shared/api/publicUser/publicUserApi.types'
 import { GetPostsByUserIdRespond } from '@/shared/api/post/postApi.types'
+import Link from 'next/link'
 
 type Props = {
   resPublicData?: ProfileUserResponse
@@ -35,7 +36,9 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
           <div className={s.name}>
             <Typography variant={'h1'}>{userName}</Typography>
             {isMyProfile ? (
-              <Button variant={'secondary'}>{tProfile('profileSettings')}</Button>
+              <Button variant={'secondary'} asChild>
+                <Link href={'/profile/settings'}> {tProfile('profileSettings')}</Link>
+              </Button>
             ) : isLoggedIn ? (
               <div className={s.followButtons}>
                 <Button variant={'primary'}>{tProfile('follow')}</Button>
