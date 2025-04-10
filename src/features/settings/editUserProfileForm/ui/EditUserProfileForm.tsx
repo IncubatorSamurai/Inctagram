@@ -33,10 +33,10 @@ export const EditUserProfileForm = () => {
       dateOfBirth: '',
       aboutMe: 'Brief bio here',
     })
-    console.log(e)
   }
   const { errors } = formState
   console.log(errors)
+
   if (isLoading) return <h1>Loading...</h1>
 
   return (
