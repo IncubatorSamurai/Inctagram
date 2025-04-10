@@ -1,38 +1,30 @@
+'use client'
 import { TabContent, Tabs } from '@/shared/ui/tabs'
-import { userProfileTabs } from '../model/tabs'
-import { GeneralInfoTab } from './generalInfo/GeneralInfoTab'
+import { tabsContent, userProfileTabs } from '../model/tabs'
 import s from './UserProfileTabs.module.scss'
+import { useRouter } from 'next/navigation'
 
-export const UserProfileTabs = () => {
-  const tabsContent = [
-    {
-      value: 'generalInformation',
-      content: <GeneralInfoTab />,
-    },
-    {
-      value: 'devices',
-      content: <p>devices</p>,
-    },
+type Props = {
+  part: string
+}
 
-    {
-      value: 'accountManagement',
-      content: <p>accountManagement</p>,
-    },
-    {
-      value: 'payments',
-      content: <p>payments</p>,
-    },
-  ]
+export const UserProfileTabs = ({ part }: Props) => {
+  const router = useRouter()
 
+  const onValueChange = (e: string) => {
+    router.push(`?part=${e}`)
+  }
   return (
-    <Tabs defaultValue="generalInformation" tabs={userProfileTabs}>
-      <div className={s.tabContainer}>
-        {tabsContent.map((tab, i) => (
-          <TabContent key={i} value={tab.value}>
-            {tab.content}
-          </TabContent>
-        ))}
-      </div>
-    </Tabs>
+    <div className={s.container}>
+      <Tabs onValueChange={onValueChange} value={part} tabs={userProfileTabs} fullWidth>
+        <div className={s.tabContainer}>
+          {tabsContent.map(tab => (
+            <TabContent key={tab.value} value={tab.value}>
+              {tab.content}
+            </TabContent>
+          ))}
+        </div>
+      </Tabs>
+    </div>
   )
 }
