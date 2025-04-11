@@ -1,44 +1,24 @@
 'use client'
 
-import { useRouter } from '@/i18n/routing'
-import { useGoogleLoginMutation } from '@/shared/api/auth/authApi'
 import { GoogleIcon } from '@/shared/assets/icons/GoogleIcon'
-import { PATH } from '@/shared/config/routes'
 import { Button } from '@/shared/ui/button'
-import { useGoogleLogin } from '@react-oauth/google'
 
-import { setIsLoggedIn } from '@/shared/store/appSlice/appSlice'
-import { useAppDispatch } from '@/shared/hooks'
 export const GoogleAuth = () => {
-  const route = useRouter()
-  const [login] = useGoogleLoginMutation()
-  const dispatch = useAppDispatch()
-  const googleLogin = useGoogleLogin({
-    redirect_uri: 'https://picture-verse.com',
-    ux_mode: 'redirect',
-    scope: 'email profile',
-    onSuccess: async ({ code }) => {
-      const response = await login({
-        redirectUrl: 'https://picture-verse.com',
-        code,
-      }).unwrap()
-      // fronted url in redirectUrl
+  const handlerGoogleAuth = () => {
+    const clientId = `${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`
+    const redirectUri = encodeURIComponent(
+      `${window.location.origin}${process.env.NEXT_PUBLIC_CALLBACK_PATH}`
+    )
+    const responseType = 'code'
+    const scope = 'email profile'
 
-      if (response.accessToken) {
-        localStorage.setItem('access_token', response.accessToken)
-        localStorage.setItem('email', response.email)
-        dispatch(setIsLoggedIn({ isLoggedIn: true }))
-        route.push(PATH.HOME)
-      }
-    },
-    onError: error => {
-      console.error('Google login error', error)
-    },
-    flow: 'auth-code',
-  })
+    window.location.assign(
+      `${process.env.NEXT_PUBLIC_GOOGLE_URL}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=${responseType}`
+    )
+  }
 
   return (
-    <Button variant="icon" onClick={googleLogin}>
+    <Button variant="icon" onClick={handlerGoogleAuth}>
       <GoogleIcon width={36} height={36} />
     </Button>
   )
