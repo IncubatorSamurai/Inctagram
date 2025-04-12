@@ -10,7 +10,7 @@ export const userProfileTabs = [
 export const tabsContent = [
   {
     value: 'generalInformation',
-    content: <><GeneralInfoTab/></>,
+    content: <GeneralInfoTab/>,
   },
   {
     value: 'devices',

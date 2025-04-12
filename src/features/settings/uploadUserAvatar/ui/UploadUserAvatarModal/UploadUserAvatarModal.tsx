@@ -9,8 +9,8 @@ type UploadUserAvatarModal = {
 export const UploadUserAvatarModal = ({trigger}:UploadUserAvatarModal) => {
 
   return (
-    <> <Modal trigger={trigger} title={"Add a Profile Photo"} className={s.userAvatarModal}>
-      {/*<Button variant={"primary"}>Save</Button>*/}<UploadAvatar/>
+    <> <Modal trigger={trigger} title={"Add a Profile Photo"} className={s.userAvatarModal} >
+     <UploadAvatar/>
     </Modal></>
 
   )
