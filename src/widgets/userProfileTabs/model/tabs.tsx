@@ -1,3 +1,5 @@
+import Payments from '@/widgets/userProfileTabs/ui/payments/Payments'
+
 export const userProfileTabs = [
   { value: 'generalInformation', title: 'General information' },
   { value: 'devices', title: 'Devices' },
@@ -21,6 +23,6 @@ export const tabsContent = [
   },
   {
     value: 'payments',
-    content: <p>payments</p>,
+    content: <Payments/>,
   },
 ]

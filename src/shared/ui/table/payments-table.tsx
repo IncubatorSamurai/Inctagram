@@ -1,16 +1,8 @@
 import { Root, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from './Table'
-
-export type Payment = {
-  id: string
-  dateOfPayment: string
-  endDateOfSubscription: string
-  price: string
-  subscriptionType: string
-  paymentType: string
-}
+import { MyPayments } from '@/shared/api/payments/paymentsApi.types'
 
 export type Props = {
-  payments: Payment[]
+  payments: MyPayments[]
 }
 
 export const PaymentsTable = ({ payments }: Props) => {
@@ -27,7 +19,7 @@ export const PaymentsTable = ({ payments }: Props) => {
       </TableHead>
       <TableBody>
         {payments.map(payment => (
-          <TableRow key={payment.id}>
+          <TableRow key={payment.userId}>
             <TableCell>{new Date(payment.dateOfPayment).toLocaleDateString('ru-RU')}</TableCell>
             <TableCell>
               {new Date(payment.endDateOfSubscription).toLocaleDateString('ru-RU')}
