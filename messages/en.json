@@ -45,7 +45,8 @@
     "followers": "Followers",
     "publications": "Publications",
     "profileSettingsTabs": {
-      "accountType": "Account type"
+      "accountType": "Account type:",
+      "cost": "Your subscription costs:"
     }
   },
   "post": {

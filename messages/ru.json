@@ -45,7 +45,8 @@
     "followers": "Подписчики",
     "publications": "Публикаций",
     "profileSettingsTabs": {
-      "accountType": "Тип профиля"
+      "accountType": "Тип профиля:",
+      "cost": "Стоимость вашей подписки:"
     }
   },
   "post": {
