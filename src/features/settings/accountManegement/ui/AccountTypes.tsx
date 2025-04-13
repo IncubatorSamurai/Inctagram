@@ -37,7 +37,7 @@ export const AccountTypes = () => {
         {accountState === accountTypes[1].value && (
           <>
             <Typography variant={'h3'}>{t('cost')}</Typography>
-            <Card className={s.accountTypeContainer}>
+            <Card className={s.accountCostContainer}>
               <RadioGroups
                 options={costs}
                 className={s.radioGroup}
@@ -45,6 +45,11 @@ export const AccountTypes = () => {
                 onValueChange={cost => setSubCost(cost)}
               />
             </Card>
+            <div className={s.paymentSystemsContainer}>
+              <Card className={s.payment}>PayPal</Card>
+              or
+              <Card className={s.payment}>Strip</Card>
+            </div>
           </>
         )}
       </div>
