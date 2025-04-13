@@ -1,0 +1,73 @@
+@use '@/app/_styles/ui/function' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: size(60px);
+  align-items: center;
+  height: size(530px);
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  row-gap: size(24px);
+
+  & > button > label {
+    cursor: pointer;
+  }
+}
+
+.post_preview {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: size(222px);
+  height: size(228px);
+
+  text-align: center;
+
+  background: var(--color-dark-500);
+
+  svg {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.button_save {
+  display: none;
+}
+
+.container_uploaded {
+  justify-content: flex-end;
+  height: 490px;
+  width: 100%;
+
+  .post_preview {
+
+    width: size(332px);
+    height: size(340px);
+
+  }
+
+  .controls_uploaded {
+    align-self: flex-end;
+  }
+
+  .button_selected {
+    display: none;
+  }
+
+  .button_save {
+    display: flex;
+
+  }
+
+}

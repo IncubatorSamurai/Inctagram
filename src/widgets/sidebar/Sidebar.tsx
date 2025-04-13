@@ -85,7 +85,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Profile Settings ',
       icon: <SettingsOutlineIcon />,
-      href: PATH.STATISTICS,
+      href: PATH.SETTINGS,
       disabled: false,
       classItem: 'settings',
       activeIcon: <SettingsIcon />,

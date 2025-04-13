@@ -16,7 +16,7 @@
     cursor: pointer;
     position: absolute;
     top: 50%;
-    z-index: 6;
+    //z-index: 1;
     transform: translateY(-45%);
 
 
@@ -43,6 +43,7 @@
 
   .prev_arrow {
     left: 0;
+    z-index: 1;
   }
 }
 
@@ -80,22 +81,17 @@
       height: 6px;
     }
   }
-
 }
 
 .dots_item {
-
   background-color: var(--color-light-100);
   border-radius: 50%;
   width: 10px;
   height: 10px;
-
 }
 
 .active {
-
   background-color: var(--color-accent-500);
   width: 14px;
   height: 14px;
-
 }
