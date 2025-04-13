@@ -1,14 +1,48 @@
-import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
+'use client'
 import s from './UploadUserAvatar.module.scss'
 import { Button } from '@/shared/ui/button'
+import { UploadUserAvatarModal } from '@/features/settings/uploadUserAvatar/ui/UploadUserAvatarModal/UploadUserAvatarModal'
+import { useDeleteUserAvatarMutation, useGetProfileQuery } from '@/shared/api/profile/profileApi'
+import { BlankCover } from '@/shared/ui/profile/blankCover'
+import Image from 'next/image'
+import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
+import { DeleteAvatarModal } from '@/features/settings/uploadUserAvatar/ui/deleteAvatarModal/DeleteAvatarModal'
+
 
 export const UploadUserAvatar = () => {
+  const { data, refetch } = useGetProfileQuery()
+  const [deleteAvatar] = useDeleteUserAvatarMutation()
+  const avatars = data?.avatars || []
+  const onDeleteAvatar = async () => {
+    try {
+      await deleteAvatar().unwrap()
+      await refetch()
+    } catch (e) {
+      console.error('Ошибка при удалении аватара:', e)
+    }
+  }
   return (
     <div className={s.container}>
       <div className={s.avatar}>
-        <ImageIcon width={48} height={48} />
+        {avatars.length > 0 && (
+<DeleteAvatarModal title={"Delete Photo"} trigger={ <Button variant={'icon'} className={s.delete_avatar} >
+  <CloseIcon />
+</Button>} onDeleteAvatar={onDeleteAvatar} />
+
+        )}
+        {avatars.length ? (
+          <Image
+            src={avatars[0].url}
+            className={s.avatar_img}
+            width={200}
+            height={200}
+            alt={'avatar'}
+          />
+        ) : (
+          <BlankCover />
+        )}
       </div>
-      <Button variant="outline"> Add a Profile Photo</Button>
+      <UploadUserAvatarModal trigger={<Button variant="outline"> Add a Profile Photo</Button>} />
     </div>
   )
 }

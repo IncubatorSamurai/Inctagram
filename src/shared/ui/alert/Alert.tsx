@@ -6,6 +6,7 @@ type Props = {
   variant?: 'error' | 'success'
   handleClick?: () => void
   fullWidth?: boolean
+  buttonClose?:boolean
 } & ComponentPropsWithoutRef<'div'>
 
 export const Alert = ({
@@ -13,6 +14,7 @@ export const Alert = ({
   handleClick,
   fullWidth,
   children,
+  buttonClose,
   ...rest
 }: Props) => {
   const isError = variant === 'error'
@@ -20,7 +22,7 @@ export const Alert = ({
   return (
     <div className={clsx(s.container, isError && s.error, fullWidth && s.fullWidth)} {...rest}>
       {children}
-      <button className={clsx(s.close)} onClick={handleClick}></button>
+      {buttonClose && <button className={clsx(s.close)} onClick={handleClick}></button>}
     </div>
   )
 }
