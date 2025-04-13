@@ -6,6 +6,8 @@ import { EditProfileForm, editProfileSchema } from '../model/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
+import { SingleModeCalendar } from '@/shared/ui/datepicker/DatePicker.stories'
+import { Calendar } from '@/shared/ui/datepicker/calendar'
 
 export const EditUserProfileForm = () => {
   const { data, isLoading, isSuccess } = useGetProfileQuery()
@@ -36,15 +38,37 @@ export const EditUserProfileForm = () => {
   }
   const { errors } = formState
   console.log(errors)
-
+  const values = [
+    {
+      label: 'Username',
+      value: 'name',
+    },
+    {
+      label: 'firstName',
+      value: 'firstName',
+    },
+    {
+      label: 'lastName',
+      value: 'lastName',
+    },
+  ]
   if (isLoading) return <h1>Loading...</h1>
 
   return (
     <form className={s.container} onSubmit={handleSubmit(onSubmit)}>
-      <Input label="Username" {...register('name')} />
-      <Input label="Username" {...register('firstName')} />
-      <Input label="Username" {...register('lastName')} />
-      <button>2</button>
+      {values.map((value, i) => (
+        <Input key={i} label={value.label} {...register(value.value as any)} />
+      ))}
+      <Calendar
+        mode={'single'}
+        onSelect={e => {
+          console.log(e)
+        }}
+      />
+      {/* <Input label="Username*" {...register('name')} />
+      <Input label="First Name*" {...register('firstName')} />
+      <Input label="Last Name*" {...register('lastName')} /> */}
+      {/* <button>2</button> */}
     </form>
   )
 }
