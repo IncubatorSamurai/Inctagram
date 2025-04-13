@@ -43,7 +43,10 @@
     "sendMessage": "Отправить сообщение",
     "following": "Подписок",
     "followers": "Подписчики",
-    "publications": "Публикаций"
+    "publications": "Публикаций",
+    "profileSettingsTabs": {
+      "accountType": "Тип профиля"
+    }
   },
   "post": {
     "close": "Закрыть",

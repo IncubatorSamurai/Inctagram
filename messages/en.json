@@ -43,7 +43,10 @@
     "sendMessage": "Send Message",
     "following": "Following",
     "followers": "Followers",
-    "publications": "Publications"
+    "publications": "Publications",
+    "profileSettingsTabs": {
+      "accountType": "Account type"
+    }
   },
   "post": {
     "close": "Close",

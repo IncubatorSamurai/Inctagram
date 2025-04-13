@@ -48,7 +48,7 @@ export const useGetPosts = ({ resPublicPosts }: Props) => {
 
   useEffect(() => {
     if (!posts) {
-      if (resPublicPosts) {
+      if (resPublicPosts && endCursorPostId.current) {
         fetchPosts({
           userId,
           pageSize: 9,
