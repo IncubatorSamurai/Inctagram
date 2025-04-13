@@ -6,6 +6,8 @@ import { useDeleteUserAvatarMutation, useGetProfileQuery } from '@/shared/api/pr
 import { BlankCover } from '@/shared/ui/profile/blankCover'
 import Image from 'next/image'
 import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
+import { DeleteAvatarModal } from '@/features/settings/uploadUserAvatar/ui/deleteAvatarModal/DeleteAvatarModal'
+
 
 export const UploadUserAvatar = () => {
   const { data, refetch } = useGetProfileQuery()
@@ -14,7 +16,7 @@ export const UploadUserAvatar = () => {
   const onDeleteAvatar = async () => {
     try {
       await deleteAvatar().unwrap()
-      await refetch() // 🔁 обновим профиль, чтобы фото исчезло
+      await refetch()
     } catch (e) {
       console.error('Ошибка при удалении аватара:', e)
     }
@@ -23,9 +25,10 @@ export const UploadUserAvatar = () => {
     <div className={s.container}>
       <div className={s.avatar}>
         {avatars.length > 0 && (
-          <Button variant={'icon'} className={s.delete_avatar} onClick={onDeleteAvatar}>
-            <CloseIcon />
-          </Button>
+<DeleteAvatarModal title={"Delete Photo"} trigger={ <Button variant={'icon'} className={s.delete_avatar} >
+  <CloseIcon />
+</Button>} onDeleteAvatar={onDeleteAvatar} />
+
         )}
         {avatars.length ? (
           <Image
