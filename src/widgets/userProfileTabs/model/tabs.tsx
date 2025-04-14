@@ -1,4 +1,4 @@
-import {AccountTypes} from "@/features/settings/accountManegement/ui/AccountTypes";
+import { AccountManagement } from '@/features/settings/accountManegement/ui/AccountManagement'
 
 export const userProfileTabs = [
   { value: 'generalInformation', title: 'General information' },
@@ -19,7 +19,7 @@ export const tabsContent = [
 
   {
     value: 'accountManagement',
-    content: <AccountTypes/>,
+    content: <AccountManagement />,
   },
   {
     value: 'payments',
