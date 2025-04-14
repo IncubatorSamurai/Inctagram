@@ -46,6 +46,30 @@ $dark-color: var(--color-dark-100);
       outline: 0.5rem solid var(--color-dark-500);
     }
   }
+
+  &[data-disabled] {
+    .item {
+      cursor: not-allowed;
+      border: 0.125rem solid $dark-color;
+      .indicator {
+        &::after {
+          background-color: $dark-color;
+        }
+      }
+    }
+    .label {
+      cursor: not-allowed;
+      .typography {
+        color: $dark-color;
+      }
+    }
+    &:hover {
+      .item {
+        outline: none;
+        background-color: transparent;
+      }
+    }
+  }
 }
 .item {
   cursor: pointer;
