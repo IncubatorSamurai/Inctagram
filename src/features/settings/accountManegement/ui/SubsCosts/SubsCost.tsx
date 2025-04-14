@@ -4,19 +4,39 @@ import { Card } from '@/shared/ui/card'
 import s from './SubsCost.module.scss'
 import { RadioGroups } from '@/shared/ui/radio-groups'
 import { useTranslations } from 'next-intl'
+import { useGetCostOfPaymentSubsQuery } from '@/shared/api/subscriptions/subscriptionsApi'
 
-type Props = {
-  subCost: string
-  setSubCost: (state: string) => void
-}
-
-export const SubsCost = ({ subCost, setSubCost }: Props) => {
+export const SubsCost = () => {
   const t = useTranslations('profile.profileSettingsTabs')
-  const costs = [
-    { value: '10per1', label: '$10 per 1 Day', id: '10per1' },
-    { value: '50per7', label: '$50 per 7 Day', id: '50per7' },
-    { value: '100perMonth', label: '$100 per month', id: '100perMonth' },
-  ]
+  const { data: subsCosts, isLoading } = useGetCostOfPaymentSubsQuery()
+
+  if (isLoading || !subsCosts) {
+    return <div>Loading...</div>
+  }
+
+  const costs = subsCosts?.data.map(({ amount, typeDescription }) => {
+    let label: string
+
+    switch (typeDescription) {
+      case 'DAY':
+        label = `$${amount} per 1 Day`
+        break
+      case 'WEEKLY':
+        label = `$${amount} per 7 Day`
+        break
+      case 'MONTHLY':
+        label = `$${amount} per month`
+        break
+      default:
+        label = `$${amount}`
+    }
+
+    return {
+      value: String(amount),
+      label,
+      id: String(amount),
+    }
+  })
 
   return (
     <>
@@ -25,8 +45,7 @@ export const SubsCost = ({ subCost, setSubCost }: Props) => {
         <RadioGroups
           options={costs}
           className={s.radioGroup}
-          defaultValue={subCost}
-          onValueChange={cost => setSubCost(cost)}
+          onValueChange={cost => console.log(cost)}
         />
       </Card>
       <div className={s.paymentSystemsContainer}>
