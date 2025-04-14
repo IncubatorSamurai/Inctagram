@@ -5,10 +5,15 @@ import { useGetProfileQuery, useUpdateProfileMutation } from '@/shared/api/profi
 import { EditProfileForm, editProfileSchema } from '../model/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useEffect } from 'react'
-import { SingleModeCalendar } from '@/shared/ui/datepicker/DatePicker.stories'
+import { useEffect, useState } from 'react'
 import { Calendar } from '@/shared/ui/datepicker/calendar'
-
+import { DatePicker } from '@/shared/ui/datepicker'
+import { PopoverContent, PopoverRoot, PopoverTrigger } from '@/shared/ui/popover'
+import { Button } from '@/shared/ui/button'
+import { Typography } from '@/shared/ui/typography'
+import { format } from 'date-fns'
+import { CalendarOutlineIcon } from '@/shared/assets/icons/CalendarOutlineIcon'
+import { DataPiker } from './DataPiker/DataPiker'
 export const EditUserProfileForm = () => {
   const { data, isLoading, isSuccess } = useGetProfileQuery()
   const [send] = useUpdateProfileMutation()
@@ -52,6 +57,7 @@ export const EditUserProfileForm = () => {
       value: 'lastName',
     },
   ]
+
   if (isLoading) return <h1>Loading...</h1>
 
   return (
@@ -59,12 +65,8 @@ export const EditUserProfileForm = () => {
       {values.map((value, i) => (
         <Input key={i} label={value.label} {...register(value.value as any)} />
       ))}
-      <Calendar
-        mode={'single'}
-        onSelect={e => {
-          console.log(e)
-        }}
-      />
+      <DataPiker />
+
       {/* <Input label="Username*" {...register('name')} />
       <Input label="First Name*" {...register('firstName')} />
       <Input label="Last Name*" {...register('lastName')} /> */}
