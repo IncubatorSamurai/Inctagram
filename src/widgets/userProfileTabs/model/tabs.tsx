@@ -1,3 +1,5 @@
+import { AccountManagement } from '@/features/settings/accountManegement/ui/AccountManagement'
+
 export const userProfileTabs = [
   { value: 'generalInformation', title: 'General information' },
   { value: 'devices', title: 'Devices' },
@@ -17,7 +19,7 @@ export const tabsContent = [
 
   {
     value: 'accountManagement',
-    content: <p>accountManagement</p>,
+    content: <AccountManagement />,
   },
   {
     value: 'payments',
