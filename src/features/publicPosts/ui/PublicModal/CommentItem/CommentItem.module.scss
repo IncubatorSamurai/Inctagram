@@ -1,5 +1,4 @@
 .public_content_item {
-
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -10,8 +9,6 @@
   &:last-child {
     margin-bottom: 0;
   }
-
-
 }
 
 .comment_answer {

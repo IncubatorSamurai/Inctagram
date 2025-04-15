@@ -102,6 +102,10 @@ export type PostDescriptionChange = {
   description?: string
 }
 
+export type PostId = {
+  id: number
+}
+
 export type ResponseGetById = {
   id: number
   userName: string

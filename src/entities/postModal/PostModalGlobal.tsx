@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { Modal } from '@/shared/ui/modal'
 import { useRouter } from '@/i18n/routing'
+// import { PostModal } from '@/features/post/PostModal'
 
 type Props = {
   postId: string
@@ -32,5 +33,6 @@ export const PostModalGlobal = ({ postId }: Props) => {
       <h2>Пост {postId}</h2>
       <p>Это контент поста {postId}</p>
     </Modal>
+    // <PostModal  postId={+postId}/>
   )
 }

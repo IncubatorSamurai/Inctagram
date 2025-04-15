@@ -1,30 +1,25 @@
 'use client'
 import s from './PostModal.module.scss'
-import { Button } from '@/shared/ui/button'
-import { PostModalNew } from './PostModalNew/PostModalNew'
 import { ModalCloseOrDeletePost } from './ModalCloseDeletePost/ModalCloseDeletePost'
 
 import { RightSideHeader } from './RightSideHeader/RightSideHeader'
 
 import { PostContent } from './PostContent/PostContent'
 import { EditDescriptionPost } from './EditDescriptionPost/EditDiscriptionPost'
-import { useCallback, useState } from 'react'
-import { useGetPostByIdMutation } from '@/shared/api/post/postApi'
-import { ResponseGetById } from '@/shared/api/post/postApi.types'
-import { ErrorResponse } from '@/shared/types/auth'
 
-type PostModalProps = {
+import { Modal } from '@/shared/ui/modal'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useGetPostByIdQuery } from '@/shared/api/post/postApi'
+
+type PublicModal = {
   postId: number
 }
 
-export const PostModal = ({ postId }: PostModalProps) => {
-  const [getPostById] = useGetPostByIdMutation()
-
-  const [post, setPost] = useState('')
-
-  const saveTextAreaValue = (value: string) => {
-    setPost(value)
-  }
+export const PublicModalAlex = ({ postId, ...props }: PublicModal) => {
+  const { data } = useGetPostByIdQuery({ id: postId })
 
   const [openEdit, setOpenEdit] = useState(false)
   const changeEdit = () => {
@@ -41,60 +36,94 @@ export const PostModal = ({ postId }: PostModalProps) => {
     setShowDeleteModal(!showDeleteModal)
   }
 
-  const [res, setRes] = useState<ResponseGetById | null>()
-  // const postId = 1081 //5723 //1081 //берем айдишник из урла
-  const getPostHandler = useCallback(async () => {
-    try {
-      const result = await getPostById({ id: postId }).unwrap()
-      setRes(result)
-      setPost(result.description)
-    } catch (error) {
-      const err = error as ErrorResponse
-      console.error(err.data.messages)
-    }
-  }, [getPostById])
+  const [hrefLinkPost, setHrefLinkPost] = useState<string | null>(null)
 
-  // const showSlider = res?.images.length > 1 ? true : false
-  // console.log(res?.images.length);
-  // нужно достать айдишник поста и пробросить для функций удаление/редактирование
-  // паралельный роутинг
+  const router = useRouter()
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const currentUrl = new URL(window.location.href)
+      currentUrl.searchParams.delete('postId')
+      setHrefLinkPost(currentUrl.pathname + currentUrl.search)
+    }
+  }, [])
+
+  const onClose = () => {
+    if (openEdit) {
+      changeOpen()
+    }
+
+    if (!openEdit) {
+      handleConfirmClose()
+    }
+  }
+
+  const handleConfirmClose = () => {
+    if (window.history.length > 2) {
+      router.back()
+    } else if (hrefLinkPost) {
+      router.replace(hrefLinkPost, { scroll: false })
+    }
+  }
+
+  // тут по закрытию вызываем модалку
+  // const onClose = () => {
+  //   // если не включен едит мод то модалка просто закрывается получается мне нужно как-то подхватить функцию из модалки isOpen => !isOpen && onClose()
+  //   if (openEdit) {
+  //     changeOpen()
+  //   }
+  //   if (!openEdit) {
+  //     console.log('close globalModal')
+  //     handleConfirmClose()
+  //   }
+  // }
+
   return (
-    <PostModalNew
-      isOpenEdit={openEdit}
+    <Modal
+      className={s.modal}
+      open={!!postId}
+      onOpenChange={isOpen => !isOpen && onClose()}
+      defaultOpen
+      isTitleHidden
       title="Edit Post"
-      trigger={<Button onClick={getPostHandler}>trigger for modal</Button>}
-      changeEdit={changeOpen}
+      isCloseIcon
+      openEdit={openEdit}
+      {...props}
     >
       <div className={s.root}>
         <div className={s.leftSide}>
-          {}
-          <img src={res?.images[0].url} alt="sliderImg" />
+          {/* СЛАЙДЕР*/}
+          <img src={data?.images[0].url} alt="testImg" />
         </div>
+        {/*-------*/}
         <div className={s.rightSide}>
           <RightSideHeader
+            postUserName={data?.userName}
             changeEdit={changeEdit}
             isOpenEdit={openEdit}
             showDeleteModalHandler={showDeleteModalHandler}
           />
           {openEdit ? (
             <EditDescriptionPost
-              post={post}
-              saveValue={saveTextAreaValue}
+              postId={postId}
+              description={data?.description}
               changeEdit={changeEdit}
             />
           ) : (
             <PostContent
-              post={post}
-              likes={res?.likesCount}
-              whosLikes={res?.avatarWhoLikes}
-              updatedAt={res?.updatedAt}
-              createdAt={res?.createdAt}
+              description={data?.description}
+              ownreName={data?.userName}
+              likes={data?.likesCount}
+              whosLikes={data?.avatarWhoLikes}
+              updatedAt={data?.updatedAt}
+              createdAt={data?.createdAt}
             />
           )}
         </div>
       </div>
       {openModal && (
         <ModalCloseOrDeletePost
+          postId={postId}
           title="Close"
           open={openModal}
           onOpenChange={changeOpen}
@@ -103,11 +132,12 @@ export const PostModal = ({ postId }: PostModalProps) => {
       )}
       {showDeleteModal && (
         <ModalCloseOrDeletePost
+          postId={postId}
           title="Delete"
           open={showDeleteModal}
           onOpenChange={setShowDeleteModal}
         />
       )}
-    </PostModalNew>
+    </Modal>
   )
 }

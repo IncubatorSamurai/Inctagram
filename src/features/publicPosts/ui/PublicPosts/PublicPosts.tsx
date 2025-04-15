@@ -4,12 +4,10 @@ import { CountRegisteredUsers } from '@/features/publicPosts/ui/CounterRegistere
 import { PublicPostsList } from '@/features/publicPosts/ui/PublicPostsList/PublicPostsList'
 
 const PublicPosts = async () => {
-
   const { items, totalUsers } = await getPublicPosts({
-    pageSize:4,
-    sortBy: "createdAt",
+    pageSize: 4,
+    sortBy: 'createdAt',
     sortDirection: 'desc',
-
   })
 
   return (
