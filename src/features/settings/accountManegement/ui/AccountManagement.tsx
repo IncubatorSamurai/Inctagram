@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { CurrentSubs } from '@/features/settings/accountManegement/ui/CurrnetSubs'
 import { AccountType } from '@/features/settings/accountManegement/ui/AccountType'
-import { SubsCost } from '@/features/settings/accountManegement/ui/SubsCosts/SubsCost'
 import { useGetCurrentPaymentSubsQuery } from '@/shared/api/subscriptions/subscriptionsApi'
+import { SubsCost } from '@/features/settings/accountManegement/ui/SubsCosts'
 
 export const AccountManagement = () => {
   const { data } = useGetCurrentPaymentSubsQuery()
