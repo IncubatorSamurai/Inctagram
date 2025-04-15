@@ -6,7 +6,7 @@ import { useGetCurrentPaymentSubsQuery } from '@/shared/api/subscriptions/subscr
 
 export const AccountManagement = () => {
   const { data } = useGetCurrentPaymentSubsQuery()
-  const isActiveSubs = data?.data
+  const isActiveSubs = data?.data.length
 
   const [autoRenewal, setAutoRenewal] = useState(true)
   const accountTypes = [
@@ -18,9 +18,9 @@ export const AccountManagement = () => {
 
   return (
     <div>
-      {!isActiveSubs && <CurrentSubs autoRenewal={autoRenewal} setAutoRenewal={setAutoRenewal} />}
+      {!!isActiveSubs && <CurrentSubs autoRenewal={autoRenewal} setAutoRenewal={setAutoRenewal} />}
       <AccountType
-        activeSubs={!isActiveSubs}
+        activeSubs={!!isActiveSubs}
         accountState={accountState}
         setAccountState={setAccountState}
       />
