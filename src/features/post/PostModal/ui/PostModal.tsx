@@ -66,17 +66,6 @@ export const PublicModalAlex = ({ postId, ...props }: PublicModal) => {
     }
   }
 
-  // тут по закрытию вызываем модалку
-  // const onClose = () => {
-  //   // если не включен едит мод то модалка просто закрывается получается мне нужно как-то подхватить функцию из модалки isOpen => !isOpen && onClose()
-  //   if (openEdit) {
-  //     changeOpen()
-  //   }
-  //   if (!openEdit) {
-  //     console.log('close globalModal')
-  //     handleConfirmClose()
-  //   }
-  // }
 
   return (
     <Modal
@@ -84,10 +73,9 @@ export const PublicModalAlex = ({ postId, ...props }: PublicModal) => {
       open={!!postId}
       onOpenChange={isOpen => !isOpen && onClose()}
       defaultOpen
-      isTitleHidden
-      title="Edit Post"
-      isCloseIcon
-      openEdit={openEdit}
+      isTitleHidden={!openEdit}
+      title={openEdit ? "Edit Post" : 'Post'}
+      isCloseIcon={!openEdit}
       {...props}
     >
       <div className={s.root}>

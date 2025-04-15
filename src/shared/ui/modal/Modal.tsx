@@ -24,7 +24,7 @@ const Modal = ({
   className,
   title,
   trigger,
-  openEdit,
+
   isCloseIcon,
   isTitleHidden,
   ...props
@@ -34,12 +34,11 @@ const Modal = ({
       {trigger && <DialogRadix.Trigger asChild>{trigger}</DialogRadix.Trigger>}
       <DialogRadix.Portal>
         <DialogRadix.Overlay className={s.DialogOverlay} />
-        <DialogRadix.Title></DialogRadix.Title>
         <DialogRadix.Content
           className={clsx(title && s.DialogContent, !title && s.postContent, className)}
           aria-describedby={undefined}
         >
-          {!openEdit && !isTitleHidden && (
+          {title && !isTitleHidden && (
             <div className={s.header}>
               <DialogRadix.Title className={s.DialogTitle}>
                 <Typography variant={'h1'}>{title}</Typography>
@@ -51,43 +50,17 @@ const Modal = ({
               </DialogRadix.Close>
             </div>
           )}
-
-          {/* надо как-то подцепиться к тому что если есть  */}
-          {/* {title && openEdit && (
-            <div className={s.header}>
-              <DialogRadix.Title className={s.DialogTitle}>
-                <Typography variant={'h1'}>{title}</Typography>
-              </DialogRadix.Title>
-              <DialogRadix.Close asChild>
-                <button aria-label={'Close'} className={s.IconButton}>
-                  <CloseIcon />
-                </button>
-              </DialogRadix.Close>
-            </div>
-          )} */}
-
-          {}
-          {openEdit && (
-            <div className={s.header}>
-              <DialogRadix.Title className={s.DialogTitle}>
-                <Typography variant={'h1'}>{title}</Typography>
-              </DialogRadix.Title>
-              <DialogRadix.Close asChild>
-                <button aria-label={'Close'} className={s.IconButton}>
-                  <CloseIcon />
-                </button>
-              </DialogRadix.Close>
-            </div>
+          {title && isTitleHidden && (
+            <VisuallyHidden>
+              <DialogRadix.Title className={s.DialogTitle}>{title}</DialogRadix.Title>
+            </VisuallyHidden>
           )}
-          {}
-
           {!title && isTitleHidden && (
             <VisuallyHidden>
               <DialogRadix.Title className={s.DialogTitle}>NO TITLE</DialogRadix.Title>
             </VisuallyHidden>
           )}
-          {/* добавляем условие по которому показывается крестик !openEdit && */}
-          {!openEdit && isCloseIcon && (
+          {isCloseIcon && (
             <DialogRadix.Close aria-label={'Close'} className={s.closeButton}>
               <CloseIcon />
             </DialogRadix.Close>
