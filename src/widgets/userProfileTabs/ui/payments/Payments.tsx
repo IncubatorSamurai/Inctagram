@@ -130,7 +130,7 @@ const Payments = () => {
   // }, [data, dispatch])
   // const dispatch = useAppDispatch()
   const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(5)
+  const [itemsPerPage, setItemsPerPage] = useState(10)
   const [paginatedData, setPaginatedData] = useState(paymentsPlaceholder)
 
   useEffect(() => {
