@@ -3,11 +3,14 @@ import { DayPicker } from 'react-day-picker'
 import 'react-day-picker/style.css'
 import s from './Calendar.module.scss'
 import clsx from 'clsx'
-import { ru } from 'date-fns/locale'
+import { ru, enUS } from 'date-fns/locale'
+import { useLocale } from 'next-intl'
 
 export type CalendarProps = ComponentProps<typeof DayPicker>
 
 export const Calendar = ({ classNames, className, ...props }: CalendarProps) => {
+  const locale = useLocale()
+
   const modifiers = {
     weekend: (date: Date) => {
       const day = date.getDay()
@@ -15,6 +18,7 @@ export const Calendar = ({ classNames, className, ...props }: CalendarProps) => 
       return day === 0 || day === 6
     },
   }
+
   return (
     <>
       <DayPicker
@@ -43,7 +47,7 @@ export const Calendar = ({ classNames, className, ...props }: CalendarProps) => 
           ...classNames,
         }}
         showOutsideDays
-        locale={ru}
+        locale={locale === 'ru' ? ru : enUS}
         modifiers={modifiers}
         modifiersClassNames={{
           weekend: s.weekend,
