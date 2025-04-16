@@ -24,9 +24,6 @@ export type ProfileResponse = {
   userName: string
   firstName: string
   lastName: string
-  city: string
-  country: string
-  region: string
   dateOfBirth: string
   aboutMe: string
   avatars: IAvatar[]
