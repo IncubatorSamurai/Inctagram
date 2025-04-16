@@ -4,7 +4,7 @@ import s from "./Payments.module.scss"
 import { PaymentsTable } from '@/shared/ui/table'
 // import { useGetMyPaymentsQuery } from '@/shared/api/payments/paymentsApi'
 
-import { useAppDispatch } from '@/shared/hooks'
+// import { useAppDispatch } from '@/shared/hooks'
 import { useEffect, useState } from 'react'
 // import { setAllPayments } from '@/shared/store/paymentsSlice/paymentsSlice'
 import { Pagination } from '@/shared/ui/pagination'
