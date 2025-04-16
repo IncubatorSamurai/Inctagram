@@ -50,7 +50,8 @@
       "lastName": "Last Name",
       "birthDate": "Date of birth",
       "about": "About Me",
-      "dateError": "A user under 13 cannot create a profile."
+      "dateError": "A user under 13 cannot create a profile.",
+      "btn": "Save Changes"
     }
   },
   "post": {

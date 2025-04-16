@@ -98,8 +98,8 @@ export const EditUserProfileForm = () => {
         <DatePicker onChange={handleDateChange} value={localDate} title={t('birthDate')} />
         {errors.birthDate?.message && (
           <Typography variant="error">
-            A user under 13 cannot create a profile.
-            <Link className={s.link} href="/policy">
+            {t('dateError')}
+            <Link className={s.link} href="/auth/privacypolicies">
               Privacy Policy
             </Link>
           </Typography>
@@ -107,7 +107,7 @@ export const EditUserProfileForm = () => {
       </div>
       <TextArea className={s.box} title={t('about')} {...register('textarea')} />
       <Button className={s.button} disabled={isButtonDisabled}>
-        Save Changes
+        {t('btn')}
       </Button>
       <ToastContainer />
     </form>
