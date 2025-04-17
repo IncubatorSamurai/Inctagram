@@ -4,7 +4,9 @@ import { PublicModal } from '@/features/publicPosts/ui/PublicModal'
 
 export default async function PublicModalFetcher({
   searchParams,
-}: { searchParams: { postId?: string } }) {
+}: {
+  searchParams: { postId?: string }
+}) {
   const postId = (await searchParams?.postId) ? Number(searchParams.postId) : null
   if (!postId) {
     return

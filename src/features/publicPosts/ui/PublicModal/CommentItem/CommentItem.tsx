@@ -1,17 +1,17 @@
 // CommentItem.tsx
-import { Comment } from '@/shared/api/post/postApi.types'; // Путь может отличаться
-import Image from 'next/image';
-import { Typography } from '@/shared/ui/typography';
-import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar';
-import { formatDistanceToNow } from 'date-fns';
-import s from "./CommentItem.module.scss"
+import { Comment } from '@/shared/api/post/postApi.types' // Путь может отличаться
+import Image from 'next/image'
+import { Typography } from '@/shared/ui/typography'
+import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
+import { formatDistanceToNow } from 'date-fns'
+import s from './CommentItem.module.scss'
 
 const WIDTH_AVATAR = 36
 const HEIGHT_AVATAR = 36
 
 type CommentItemProps = {
-  comment: Comment;
-};
+  comment: Comment
+}
 
 export const CommentItem = ({ comment }: CommentItemProps) => {
   return (
@@ -41,13 +41,9 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
         </Typography>
 
         {comment.answerCount > 0 && (
-          <span className={s.comment_answer}>
-            View Answers ({comment.answerCount})
-          </span>
+          <span className={s.comment_answer}>View Answers ({comment.answerCount})</span>
         )}
       </div>
     </li>
-  );
-};
-
-
+  )
+}

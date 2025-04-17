@@ -16,7 +16,6 @@ export const RightSideHeader = ({
   isOpenEdit,
   showDeleteModalHandler,
 }: RightSideHeaderProps) => {
-
   const [openTools, setOpenTools] = useState(false)
   const openCloseToolsHadler = () => {
     setOpenTools(!openTools)
@@ -32,7 +31,6 @@ export const RightSideHeader = ({
         <Typography variant="h3">URLProfiele</Typography>
       </div>
       <div className={s.tools} onBlur={() => setOpenTools(false)} tabIndex={0}>
-       
         {!isOpenEdit && <MoreHorizontalIcon onClick={() => setOpenTools(!openTools)} />}
         {openTools && (
           <Tools

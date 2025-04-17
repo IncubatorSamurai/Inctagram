@@ -85,7 +85,7 @@ export const ImageCropDialog = ({ setSelectedFile, selectedFile }: Props) => {
         <Dropdown
           className={s.expandDropdown}
           classItemsContainer={s.expandItemsContainer}
-          iconTrigger={<ExpandOutlineIcon/>}
+          iconTrigger={<ExpandOutlineIcon />}
         >
           <Expand getAspect={setAspect} />
         </Dropdown>

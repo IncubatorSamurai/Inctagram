@@ -9,7 +9,7 @@ export const SwitchStep = () => {
   const prev = () => {
     dispatch(prevStep())
   }
-  
+
   return (
     <Button variant={'icon'} onClick={prev}>
       <ArrowIosBackIcon />
