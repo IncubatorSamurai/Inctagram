@@ -10,7 +10,6 @@ import { useEffect, useState } from 'react'
 import { TextArea } from '@/shared/ui/textarea'
 import { DatePicker } from '@/shared/ui/datepicker'
 import { parse, isValid } from 'date-fns'
-// import { requiredInputs } from '../consts/consts'
 import { Button } from '@/shared/ui/button'
 import { toast, ToastContainer } from 'react-toastify'
 import { Typography } from '@/shared/ui/typography'
@@ -27,14 +26,14 @@ export const EditUserProfileForm = () => {
   const { data, isLoading, isSuccess } = useGetProfileQuery()
   const [updateProfile, { isLoading: isUpdateProfile }] = useUpdateProfileMutation()
 
-  const { register, handleSubmit, formState, reset, setValue } = useForm<EditProfileForm>({
+  const { register, handleSubmit, formState, reset, setValue, getValues } = useForm<EditProfileForm>({
     resolver: zodResolver(editProfileSchema),
     mode: 'onChange',
   })
   const { errors, isValid: isFormValid, isDirty } = formState
 
   useEffect(() => {
-    if (isSuccess && data) {
+    if (isSuccess && data && !localStorage.getItem("dataPrev")) {
       const { userName, firstName, lastName, dateOfBirth } = data
       reset({
         name: userName,
@@ -45,7 +44,19 @@ export const EditUserProfileForm = () => {
       })
       setLocalDate(dateOfBirth ? new Date(dateOfBirth) : undefined)
     }
-  }, [isSuccess, data])
+    if (localStorage.getItem("dataPrev")) {
+
+      const parsed = JSON.parse(localStorage.getItem("dataPrev") || '{}')
+      const { userName, firstName, lastName, dateOfBirth, aboutMe } = parsed
+      reset({
+        name: userName,
+        firstName,
+        lastName,
+        birthDate: dateOfBirth ? new Date(dateOfBirth) : undefined,
+        textarea: aboutMe,
+      })
+    }
+  }, [isSuccess, data, reset])
 
   const onSubmit = (form: EditProfileForm) => {
     updateProfile({
@@ -58,11 +69,24 @@ export const EditUserProfileForm = () => {
       .unwrap()
       .then(() => {
         toast.success('Your settings are saved')
+        localStorage.removeItem("dataPrev")
       })
       .catch(() => {
         toast.error('Error! Server is not available!')
       })
   }
+const onLink = () =>{
+  const form = getValues()
+    const dataPrev = {
+    userName: form.name,
+    firstName: form.firstName,
+    lastName: form.lastName,
+    dateOfBirth: form.birthDate?.toISOString() || '',
+    aboutMe: form.textarea || '',
+
+  }
+  localStorage.setItem("dataPrev", JSON.stringify(dataPrev))
+}
 
   const handleDateChange = (dateStr: string | undefined) => {
     if (!dateStr) return
@@ -99,7 +123,7 @@ export const EditUserProfileForm = () => {
         {errors.birthDate?.message && (
           <Typography variant="error">
             {t('dateError')}
-            <Link className={s.link} href="/auth/privacypolicies">
+            <Link className={s.link} href="/auth/privacypolicies" onClick={onLink}>
               Privacy Policy
             </Link>
           </Typography>
