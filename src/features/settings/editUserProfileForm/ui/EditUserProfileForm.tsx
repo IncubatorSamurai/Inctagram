@@ -16,6 +16,7 @@ import { Typography } from '@/shared/ui/typography'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { requiredInputs } from '../model/requiredInputs'
+import { PATH } from '@/shared/config/routes'
 
 export const EditUserProfileForm = () => {
   const t = useTranslations('profile.generalInfo')
@@ -123,7 +124,7 @@ const onLink = () =>{
         {errors.birthDate?.message && (
           <Typography variant="error">
             {t('dateError')}
-            <Link className={s.link} href="/auth/privacypolicies" onClick={onLink}>
+            <Link className={s.link} href={PATH.PRIVACY_POLICY} onClick={onLink}>
               Privacy Policy
             </Link>
           </Typography>
