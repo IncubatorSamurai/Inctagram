@@ -20,7 +20,7 @@ export const CurrentSubs = ({ currentPaymentSubs }: Props) => {
   const [canceledAutoRenewal, { isLoading }] = useCanceledAutoRenewalMutation()
 
   useEffect(() => {
-    setIsAutoRenewal(!!hasAutoRenewal || localStorage.getItem('isAutoRenewal') === 'true')
+    setIsAutoRenewal(hasAutoRenewal || localStorage.getItem('isAutoRenewal') === 'true')
   }, [hasAutoRenewal])
 
   const handleCheckboxOnChange = (isChecked: boolean) => {
@@ -48,8 +48,10 @@ export const CurrentSubs = ({ currentPaymentSubs }: Props) => {
   return (
     <>
       <Typography variant={'h3'}>{t('currentSubs')}</Typography>
-      {data.map(({ subscriptionId, endDateOfSubscription }) => {
+      {data.map(({ subscriptionId, endDateOfSubscription, autoRenewal }) => {
         const formattedEndDate = parseIsoDate(endDateOfSubscription)
+        const isShowNextPayment =
+          autoRenewal || (isAutoRenewal && data[data.length - 1].subscriptionId === subscriptionId)
 
         return (
           <Card className={s.subsContainer} key={subscriptionId}>
@@ -57,10 +59,12 @@ export const CurrentSubs = ({ currentPaymentSubs }: Props) => {
               <Typography variant={'medium_text_14'}>{t('expireAt')}</Typography>
               <Typography variant={'bold_text_14'}>{formattedEndDate}</Typography>
             </div>
-            <div className={s.nextPayment}>
-              <Typography variant={'medium_text_14'}>{t('nextPayment')}</Typography>
-              <Typography variant={'bold_text_14'}>{formattedEndDate}</Typography>
-            </div>
+            {isShowNextPayment && (
+              <div className={s.nextPayment}>
+                <Typography variant={'medium_text_14'}>{t('nextPayment')}</Typography>
+                <Typography variant={'bold_text_14'}>{formattedEndDate}</Typography>
+              </div>
+            )}
           </Card>
         )
       })}
