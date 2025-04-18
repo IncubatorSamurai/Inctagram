@@ -1,4 +1,4 @@
-import { AccountManagement } from '@/features/settings/accountManegement/ui/AccountManagement'
+import { AccountManagement } from "@/features/settings"
 
 export const userProfileTabs = [
   { value: 'generalInformation', title: 'General information' },
