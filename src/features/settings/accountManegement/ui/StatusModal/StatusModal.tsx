@@ -3,41 +3,49 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from '@/i18n/routing'
 import { DialogClose, Modal } from '@/shared/ui/modal'
 import { Button } from '@/shared/ui/button'
+import s from './StatusModal.module.scss'
+import { Typography } from '@/shared/ui/typography'
 
 type Props = {
-  status: string
+  success: string
 }
 
-export const StatusModal = ({ status }: Props) => {
-  const [hrefLinkPost, setHrefLinkPost] = useState<string | null>(null)
+export const StatusModal = ({ success }: Props) => {
+  const [cleanUrl, setcleanUrl] = useState<string | null>(null)
   const router = useRouter()
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const currentUrl = new URL(window.location.href)
-      currentUrl.searchParams.delete('postId')
-      setHrefLinkPost(currentUrl.pathname + currentUrl.search)
+      currentUrl.searchParams.delete('success')
+      setcleanUrl(currentUrl.pathname + '?' + currentUrl.searchParams.toString())
     }
   }, [])
 
   const closeModal = () => {
-    if (window.history.length > 2) {
+    if (cleanUrl) {
+      router.replace(cleanUrl, { scroll: false })
+    } else {
       router.back()
-    } else if (hrefLinkPost) {
-      router.replace(hrefLinkPost, { scroll: false })
     }
   }
 
   return (
     <Modal
-      open={!!status}
-      title={status === 'error' ? 'Error' : 'Success'}
-      onOpenChange={isOpen => !isOpen && closeModal}
+      open={!!success}
+      title={success === 'error' ? 'Error' : 'Success'}
+      onOpenChange={isOpen => !isOpen && closeModal()}
     >
-      Content
-      <DialogClose asChild>
-        <Button>{status === 'error' ? 'Back to payment' : 'Ok'}</Button>
-      </DialogClose>
+      <div className={s.container}>
+        <Typography variant={'medium_text_16'}>
+          {success === 'error'
+            ? 'Transaction failed. Please, write to support'
+            : 'Payment was successful!'}
+        </Typography>
+        <DialogClose asChild>
+          <Button fullWidth>{success === 'error' ? 'Back to payment' : 'Ok'}</Button>
+        </DialogClose>
+      </div>
     </Modal>
   )
 }

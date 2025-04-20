@@ -13,9 +13,7 @@ export const AccountManagement = () => {
     { value: 'business', label: 'Business', id: 'business' },
   ]
 
-  const [accountState, setAccountState] = useState(
-    !isActiveSubs ? accountTypes[1].value : accountTypes[0].value
-  )
+  const [accountState, setAccountState] = useState(accountTypes[0].value)
 
   if (isLoading) {
     return <div>Loading...</div>
