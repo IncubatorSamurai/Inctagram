@@ -7,17 +7,20 @@ import { addFile, removeFile, selectFiles } from '@/shared/store/postSlice/postS
 import { ImageOutlineIcon } from '@/shared/assets/icons/ImageOutlineIcon'
 import Cropper from 'react-easy-crop'
 import { useAppDispatch } from '@/shared/hooks'
-import {  useState } from 'react'
+import { useState } from 'react'
 import { clsx } from 'clsx'
 import { v4 as uuidv4 } from 'uuid'
 import { useUploadUserAvatarMutation } from '@/shared/api/profile/profileApi'
 import { Alert } from '@/shared/ui/alert'
 import { useAvatarCrop } from '@/shared/hooks/useAvatarCrop'
 
+type UpdateAvatarProps = {
+  onOpenChange: (open: boolean) => void
+}
 const MAX_FILE_SIZE_MB = 10
 const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
 
-export const UploadAvatar = () => {
+export const UploadAvatar = ({ onOpenChange }: UpdateAvatarProps) => {
   const t = useTranslations('post')
   const dispatch = useAppDispatch()
 
@@ -53,7 +56,6 @@ export const UploadAvatar = () => {
     }
   }
 
-
   const onSave = async () => {
     if (!files.length) return
 
@@ -75,6 +77,7 @@ export const UploadAvatar = () => {
       console.log('Аватар загружен успешно', result)
       handleRemoveFile()
       setIsUploaded(false)
+      onOpenChange(false)
     } catch (error) {
       console.error('Ошибка при загрузке аватара:', error)
     }

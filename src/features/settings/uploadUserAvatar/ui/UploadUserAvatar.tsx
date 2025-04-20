@@ -8,7 +8,6 @@ import Image from 'next/image'
 import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
 import { DeleteAvatarModal } from '@/features/settings/uploadUserAvatar/ui/deleteAvatarModal/DeleteAvatarModal'
 
-
 export const UploadUserAvatar = () => {
   const { data, refetch } = useGetProfileQuery()
   const [deleteAvatar] = useDeleteUserAvatarMutation()
@@ -25,10 +24,15 @@ export const UploadUserAvatar = () => {
     <div className={s.container}>
       <div className={s.avatar}>
         {avatars.length > 0 && (
-<DeleteAvatarModal title={"Delete Photo"} trigger={ <Button variant={'icon'} className={s.delete_avatar} >
-  <CloseIcon />
-</Button>} onDeleteAvatar={onDeleteAvatar} />
-
+          <DeleteAvatarModal
+            title={'Delete Photo'}
+            trigger={
+              <Button variant={'icon'} className={s.delete_avatar}>
+                <CloseIcon />
+              </Button>
+            }
+            onDeleteAvatar={onDeleteAvatar}
+          />
         )}
         {avatars.length ? (
           <Image

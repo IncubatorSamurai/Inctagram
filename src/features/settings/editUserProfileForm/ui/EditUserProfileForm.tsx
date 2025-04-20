@@ -17,6 +17,7 @@ import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { requiredInputs } from '../model/requiredInputs'
 import { PATH } from '@/shared/config/routes'
+import { clearProfileStorage, getProfileFromStorage, saveProfileToStorage } from '@/shared/utils/ProfileStorge'
 
 export const EditUserProfileForm = () => {
   const t = useTranslations('profile.generalInfo')
@@ -27,36 +28,44 @@ export const EditUserProfileForm = () => {
   const { data, isLoading, isSuccess } = useGetProfileQuery()
   const [updateProfile, { isLoading: isUpdateProfile }] = useUpdateProfileMutation()
 
-  const { register, handleSubmit, formState, reset, setValue, getValues } = useForm<EditProfileForm>({
-    resolver: zodResolver(editProfileSchema),
-    mode: 'onChange',
-  })
+  const { register, handleSubmit, formState, reset, setValue, getValues } =
+    useForm<EditProfileForm>({
+      resolver: zodResolver(editProfileSchema),
+      mode: 'onChange',
+    })
   const { errors, isValid: isFormValid, isDirty } = formState
 
   useEffect(() => {
-    if (isSuccess && data && !localStorage.getItem("dataPrev")) {
-      const { userName, firstName, lastName, dateOfBirth } = data
-      reset({
-        name: userName,
-        firstName,
-        lastName,
-        birthDate: dateOfBirth ? new Date(dateOfBirth) : undefined,
-        textarea: data.aboutMe,
-      })
-      setLocalDate(dateOfBirth ? new Date(dateOfBirth) : undefined)
-    }
-    if (localStorage.getItem("dataPrev")) {
+    const localData = getProfileFromStorage()
 
-      const parsed = JSON.parse(localStorage.getItem("dataPrev") || '{}')
-      const { userName, firstName, lastName, dateOfBirth, aboutMe } = parsed
-      reset({
-        name: userName,
-        firstName,
-        lastName,
-        birthDate: dateOfBirth ? new Date(dateOfBirth) : undefined,
-        textarea: aboutMe,
-      })
+    if (localData) {
+      reset(localData)
+
+      return
     }
+    if (isSuccess && data) {
+      const { userName, firstName, lastName, dateOfBirth, aboutMe } = data
+      const formData = {
+        name: userName || '',
+        firstName: firstName || '',
+        lastName: lastName || '',
+        birthDate: dateOfBirth ? new Date(dateOfBirth) : undefined,
+        textarea: aboutMe || '',
+      }
+      reset(formData)
+      setLocalDate(formData.birthDate)
+    }
+    // if (localStorage.getItem('dataPrev')) {
+    //   const parsed = JSON.parse(localStorage.getItem('dataPrev') || '{}')
+    //   const { userName, firstName, lastName, dateOfBirth, aboutMe } = parsed
+    //   reset({
+    //     name: userName,
+    //     firstName,
+    //     lastName,
+    //     birthDate: dateOfBirth ? new Date(dateOfBirth) : undefined,
+    //     textarea: aboutMe,
+    //   })
+    // }
   }, [isSuccess, data, reset])
 
   const onSubmit = (form: EditProfileForm) => {
@@ -70,25 +79,16 @@ export const EditUserProfileForm = () => {
       .unwrap()
       .then(() => {
         toast.success('Your settings are saved')
-        localStorage.removeItem("dataPrev")
+        clearProfileStorage()
       })
       .catch(() => {
         toast.error('Error! Server is not available!')
       })
   }
-const onLink = () =>{
-  const form = getValues()
-    const dataPrev = {
-    userName: form.name,
-    firstName: form.firstName,
-    lastName: form.lastName,
-    dateOfBirth: form.birthDate?.toISOString() || '',
-    aboutMe: form.textarea || '',
-
+  const onLink = () => {
+    const form = getValues()
+    saveProfileToStorage(form)
   }
-  localStorage.setItem("dataPrev", JSON.stringify(dataPrev))
-}
-
   const handleDateChange = (dateStr: string | undefined) => {
     if (!dateStr) return
 
