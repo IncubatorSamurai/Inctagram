@@ -7,6 +7,7 @@ import { SubsCost } from '@/features/settings/accountManegement/ui/SubsCosts'
 export const AccountManagement = () => {
   const { data } = useGetCurrentPaymentSubsQuery()
   const isActiveSubs = data?.data.length
+  console.log(data?.data)
 
   const [autoRenewal, setAutoRenewal] = useState(true)
   const accountTypes = [
@@ -14,7 +15,9 @@ export const AccountManagement = () => {
     { value: 'business', label: 'Business', id: 'business' },
   ]
 
-  const [accountState, setAccountState] = useState(accountTypes[0].value)
+  const [accountState, setAccountState] = useState(
+    !isActiveSubs ? accountTypes[1].value : accountTypes[0].value
+  )
 
   return (
     <div>
