@@ -7,7 +7,6 @@ import { SubsCost } from './SubsCosts'
 export const AccountManagement = () => {
   const { data, isLoading } = useGetCurrentPaymentSubsQuery()
   const isActiveSubs = data?.data.length
-  console.log(data?.data)
 
   const accountTypes = [
     { value: 'personal', label: 'Personal', id: 'personal', disabled: isActiveSubs },
