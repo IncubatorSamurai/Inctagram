@@ -50,7 +50,13 @@
       "currentSubs": "Current Subscription:",
       "expireAt": "Expire at",
       "nextPayment": "Next payment",
-      "autoRenewal": "Auto-Renewal"
+      "autoRenewal": "Auto-Renewal",
+      "labelModal": "Auto-renewal will be enabled with this payment. You can disable it anytime in your profile settings.",
+      "IAgree": "I agree",
+      "Or": "Or",
+      "CreatePayment": "Create payment",
+      "Ok": "Ok",
+      "Loading": "Loading..."
     }
   },
   "post": {

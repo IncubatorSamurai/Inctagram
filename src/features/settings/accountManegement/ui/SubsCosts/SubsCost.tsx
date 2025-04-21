@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Typography } from '@/shared/ui/typography'
 import { Card } from '@/shared/ui/card'
 import s from './SubsCost.module.scss'
@@ -13,46 +13,42 @@ import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
 import { Modal } from '@/shared/ui/modal'
 import { Checkbox } from '@/shared/ui/checkbox/Checkbox'
+import { useAbsoluteUrl } from '@/shared/hooks/useFullUrl'
 
 export const SubsCost = () => {
   const t = useTranslations('profile.profileSettingsTabs')
+
   const { data: subsCosts, isLoading } = useGetCostOfPaymentSubsQuery()
+  const newBaseUrl = useAbsoluteUrl()
   const [subscribe] = useSubscriptionsMutation()
 
-  useEffect(() => {
-    if (subsCosts) {
-      setSelectedSubscription(costs[0].originalData)
-    }
-  }, [subsCosts])
-
-  const [modalOpen, setModalOpen] = useState(false)
   const onClose = () => {
-    setModalOpen(!modalOpen)
+    savePyamenthandler('')
+    setAgreeChek(false)
   }
-  const [check, setChek] = useState(false)
+  const [agreeCheck, setAgreeChek] = useState(false)
 
-  const setPaymentHandler = () => {
-    onClose()
+  const [paymentType, setPaymentType] = useState('')
+  const savePyamenthandler = (value: string) => {
+    setPaymentType(value)
   }
 
   const [selectedSubscription, setSelectedSubscription] = useState<{
     amount: number
-    typeDescription: string
-    label: string
+    typeDescription: 'DAY' | 'WEEKLY' | 'MONTHLY' | undefined
   } | null>(null)
 
-  const handleSubscribe = async () => {
+  const handleSubscribe = async (paymentType: string) => {
     if (!selectedSubscription) {
       return
     }
     try {
       const body = {
         typeSubscription: selectedSubscription?.typeDescription,
-        paymentType: 'STRIPE',
+        paymentType: paymentType,
         amount: selectedSubscription?.amount,
-        baseUrl: 'http://localhost:3000/profile/settings?part=accountManagement',
+        baseUrl: newBaseUrl,
       }
-      console.log(body)
 
       const response = await subscribe(body).unwrap()
       if (response.url) {
@@ -64,7 +60,7 @@ export const SubsCost = () => {
   }
 
   if (isLoading || !subsCosts) {
-    return <div>Loading...</div>
+    return <div>{t('Loading')}</div>
   }
 
   const costs = subsCosts?.data.map(item => {
@@ -87,17 +83,10 @@ export const SubsCost = () => {
       value: String(item.amount),
       label,
       id: String(item.amount),
-      originalData: {
-        amount: item.amount,
-        typeDescription: item.typeDescription,
-        label,
-      },
     }
   })
+  const disabledButton = !agreeCheck
 
-  const labelModal =
-    'Auto-renewal will be enabled with this payment. You can disable it anytime in your profile settings'
-  const disabledButton = !check
   return (
     <>
       <Typography variant={'h3'}>{t('cost')}</Typography>
@@ -107,39 +96,44 @@ export const SubsCost = () => {
           options={costs}
           className={s.radioGroup}
           onValueChange={value => {
-            const selected = costs.find(opt => opt.value === value)
-            if (selected?.originalData) {
-              setSelectedSubscription(selected.originalData)
-            }
+            const typeSubscr = subsCosts.data.find(d => d.amount === Number(value))?.typeDescription
+            setSelectedSubscription({ amount: Number(value), typeDescription: typeSubscr })
           }}
         />
       </Card>
       <div className={s.paymentSystemsContainer}>
         <Card className={s.payment}>
-          <Button variant="text" onClick={setPaymentHandler}>
+          <Button variant="text" onClick={() => savePyamenthandler('PAYPAL')}>
             <PayPal />
           </Button>
         </Card>
-        Or
+        <Typography variant="regular_text_14">{t('Or')}</Typography>
         <Card className={s.payment}>
-          <Button variant="text" onClick={setPaymentHandler}>
+          <Button variant="text" onClick={() => savePyamenthandler('STRIPE')}>
             <Stripe />
           </Button>
         </Card>
       </div>
-      {modalOpen && (
-        <Modal open={modalOpen} onOpenChange={onClose} title="Create payment">
-          <div className={s.content}>
-            <Typography variant="regular_text_16">{labelModal}</Typography>
-            <div className={s.checkboxBtnGroup}>
-              <Checkbox id="1" label="I agree" checked={check} onChange={()=>setChek(disabledButton)} />
-              <Button variant="primary" onClick={handleSubscribe} disabled={disabledButton}>
-                OK
-              </Button>
-            </div>
+      <Modal open={!!paymentType} onOpenChange={onClose} title={t('CreatePayment')}>
+        <div className={s.content}>
+          <Typography variant="regular_text_16">{t('labelModal')}</Typography>
+          <div className={s.checkboxBtnGroup}>
+            <Checkbox
+              id="1"
+              label={t('IAgree')}
+              checked={agreeCheck}
+              onChange={value => setAgreeChek(value)}
+            />
+            <Button
+              variant="primary"
+              onClick={() => handleSubscribe(paymentType)}
+              disabled={disabledButton}
+            >
+              {t('Ok')}
+            </Button>
           </div>
-        </Modal>
-      )}
+        </div>
+      </Modal>
     </>
   )
 }

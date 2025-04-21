@@ -9,7 +9,7 @@ export type MyPayments = {
 }
 
 export type SubscriptionBody = {
-  typeSubscription: string
+  typeSubscription: 'DAY' | 'WEEKLY' | 'MONTHLY' | undefined
   paymentType: string
   amount: number
   baseUrl: string
