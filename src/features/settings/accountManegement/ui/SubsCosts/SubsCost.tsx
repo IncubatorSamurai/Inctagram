@@ -25,19 +25,14 @@ export const SubsCost = () => {
     }
   }, [subsCosts])
 
-  //modal
   const [modalOpen, setModalOpen] = useState(false)
   const onClose = () => {
     setModalOpen(!modalOpen)
   }
   const [check, setChek] = useState(false)
-  const checkHandler = () => {
-    setChek(!check)
-  }
-  //
+
   const setPaymentHandler = () => {
     onClose()
-    // handleSubscribe()
   }
 
   const [selectedSubscription, setSelectedSubscription] = useState<{
@@ -134,10 +129,10 @@ export const SubsCost = () => {
       </div>
       {modalOpen && (
         <Modal open={modalOpen} onOpenChange={onClose} title="Create payment">
-          <div className={s.test}>
+          <div className={s.content}>
             <Typography variant="regular_text_16">{labelModal}</Typography>
             <div className={s.checkboxBtnGroup}>
-              <Checkbox id="1" label="I agree" checked={check} onChange={checkHandler} />
+              <Checkbox id="1" label="I agree" checked={check} onChange={()=>setChek(disabledButton)} />
               <Button variant="primary" onClick={handleSubscribe} disabled={disabledButton}>
                 OK
               </Button>

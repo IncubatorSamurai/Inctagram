@@ -25,16 +25,16 @@
     height: 64px;
     border-radius: 8px;
   }
+}
 
-  .test {
-    display: flex;
-    flex-direction: column;
-    background-color: red;
-  }
+.content {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
 
-  .checkboxBtnGroup {
-    display: flex;
-    width: 100%;
-    padding: 18px 0 36px;
-  }
+.checkboxBtnGroup {
+  display: flex;
+  width: 100%;
+  padding: 18px 0 36px;
 }
