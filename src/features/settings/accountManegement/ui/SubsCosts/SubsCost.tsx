@@ -7,10 +7,12 @@ import { RadioGroups } from '@/shared/ui/radio-groups'
 import { useTranslations } from 'next-intl'
 import { useGetCostOfPaymentSubsQuery } from '@/shared/api/subscriptions/subscriptionsApi'
 import { useSubscriptionsMutation } from '@/shared/api/payments/paymentsApi'
-import { PATH } from '@/shared/config/routes'
+
 import { Button } from '@/shared/ui/button'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
+import { Modal } from '@/shared/ui/modal'
+import { Checkbox } from '@/shared/ui/checkbox/Checkbox'
 
 export const SubsCost = () => {
   const t = useTranslations('profile.profileSettingsTabs')
@@ -23,10 +25,19 @@ export const SubsCost = () => {
     }
   }, [subsCosts])
 
-  const [paymentType, setPaymentType] = useState('')
-  const setPaymentHandler = (type: string) => {
-    setPaymentType(type)
-    handleSubscribe()
+  //modal
+  const [modalOpen, setModalOpen] = useState(false)
+  const onClose = () => {
+    setModalOpen(!modalOpen)
+  }
+  const [check, setChek] = useState(false)
+  const checkHandler = () => {
+    setChek(!check)
+  }
+  //
+  const setPaymentHandler = () => {
+    onClose()
+    // handleSubscribe()
   }
 
   const [selectedSubscription, setSelectedSubscription] = useState<{
@@ -42,9 +53,9 @@ export const SubsCost = () => {
     try {
       const body = {
         typeSubscription: selectedSubscription?.typeDescription,
-        paymentType: paymentType,
+        paymentType: 'STRIPE',
         amount: selectedSubscription?.amount,
-        baseUrl: PATH.MYPROFILE,
+        baseUrl: 'http://localhost:3000/profile/settings?part=accountManagement',
       }
       console.log(body)
 
@@ -89,6 +100,9 @@ export const SubsCost = () => {
     }
   })
 
+  const labelModal =
+    'Auto-renewal will be enabled with this payment. You can disable it anytime in your profile settings'
+  const disabledButton = !check
   return (
     <>
       <Typography variant={'h3'}>{t('cost')}</Typography>
@@ -107,17 +121,30 @@ export const SubsCost = () => {
       </Card>
       <div className={s.paymentSystemsContainer}>
         <Card className={s.payment}>
-          <Button variant="text" onClick={() => setPaymentHandler('PAYPAL')}>
+          <Button variant="text" onClick={setPaymentHandler}>
             <PayPal />
           </Button>
         </Card>
         Or
         <Card className={s.payment}>
-          <Button variant="text" onClick={() => setPaymentHandler('STRIPE')}>
+          <Button variant="text" onClick={setPaymentHandler}>
             <Stripe />
           </Button>
         </Card>
       </div>
+      {modalOpen && (
+        <Modal open={modalOpen} onOpenChange={onClose} title="Create payment">
+          <div className={s.test}>
+            <Typography variant="regular_text_16">{labelModal}</Typography>
+            <div className={s.checkboxBtnGroup}>
+              <Checkbox id="1" label="I agree" checked={check} onChange={checkHandler} />
+              <Button variant="primary" onClick={handleSubscribe} disabled={disabledButton}>
+                OK
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </>
   )
 }
