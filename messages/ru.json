@@ -72,6 +72,9 @@
     "addPublicationDescriptions": "Добавьте описание публикации",
     "charCountError": "Максимальное количество символов 500",
     "photos": "фото",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "reset": "Сбросить",
     "filter": {
       "original": "Оригинал",
       "vintage": "Винтаж",
@@ -82,6 +85,10 @@
       "retro": "Ретро",
       "moody": "Атмосферный",
       "golden-hour": "Золотой час"
-    }
+    },
+    "errorUploadImages1": "Вы можете загрузить максимум фотографий:",
+    "errorUploadImages2": "Сейчас загружено:",
+    "file": "Файл",
+    "exceeds": "превышает"
   }
 }
