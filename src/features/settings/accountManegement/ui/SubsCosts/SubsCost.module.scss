@@ -1,27 +1,40 @@
 .accountCostContainer {
+  margin: 18px 0 42px;
   padding: 12px 18px;
-  margin: 18px 0 42px 0;
 
   .radioGroup {
     display: flex;
     flex-direction: column;
-    align-items: start;
     gap: 18px;
+    align-items: start;
   }
 }
 
 .paymentSystemsContainer {
   display: flex;
-  justify-content: end;
-  align-items: center;
   gap: 54px;
+  align-items: center;
+  justify-content: end;
 
   .payment {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
     width: 96px;
     height: 64px;
     border-radius: 8px;
   }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.checkboxBtnGroup {
+  display: flex;
+  width: 100%;
+  padding: 18px 0 36px;
 }

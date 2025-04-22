@@ -12,38 +12,36 @@ type ArrowProps = {
   onClick?: () => void
 }
 
-type SliderSettingsProps =  {
+type SliderSettingsProps = {
   totalSlides: number
   sliderClass?: string
   arrowsClass?: string
   dotsClass?: string
 }
 
-
-const PrevArrow = ({ classNameArrow, onClick }:ArrowProps) => (
+const PrevArrow = ({ classNameArrow, onClick }: ArrowProps) => (
   <button className={classNameArrow} onClick={onClick}>
     <ArrowIosBackIcon />
   </button>
 )
 
-
-const NextArrow = ({ classNameArrow, onClick }:ArrowProps) => (
+const NextArrow = ({ classNameArrow, onClick }: ArrowProps) => (
   <button className={classNameArrow} onClick={onClick}>
     <ArrowIosForwardIcon />
   </button>
 )
 
-
 export const useSliderSettings = ({
-totalSlides,
-sliderClass,
-arrowsClass,
-dotsClass}: SliderSettingsProps) => {
+  totalSlides,
+  sliderClass,
+  arrowsClass,
+  dotsClass,
+}: SliderSettingsProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0)
 
   // Функция для обработки кликов по точкам
   const handleDotClick = (index: number) => {
-    setActiveIndex(index)  // Обновляем активный индекс
+    setActiveIndex(index) // Обновляем активный индекс
   }
 
   return {
@@ -66,7 +64,7 @@ dotsClass}: SliderSettingsProps) => {
         return (
           <div className={clsx(s.dots_list, dotsClass)}>
             <ul className={s.dots}>
-              {visibleDots.map((index) => (
+              {visibleDots.map(index => (
                 <li
                   key={index}
                   className={clsx(s.dots_item, dotsClass, { [s.active]: index === activeIndex })}

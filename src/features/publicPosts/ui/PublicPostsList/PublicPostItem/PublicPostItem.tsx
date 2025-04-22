@@ -27,7 +27,12 @@ export const PublicPostItem = ({ item }: PublicPostItem) => {
   return (
     <li key={item.id} className={`${s.public_post} ${isExpanded ? s.expanded : ''}`}>
       <div className={s.public_posts_img}>
-          <PublicPostImages userName={item.userName} images={item.images} postId={String(item.id)} isExpanded={isExpanded} />
+        <PublicPostImages
+          userName={item.userName}
+          images={item.images}
+          postId={String(item.id)}
+          isExpanded={isExpanded}
+        />
       </div>
 
       <div className={s.public_posts_content}>
