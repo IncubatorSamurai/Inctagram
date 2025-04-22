@@ -1,4 +1,5 @@
 import Payments from '@/widgets/userProfileTabs/ui/payments/Payments'
+import { AccountManagement } from "@/features/settings"
 
 export const userProfileTabs = [
   { value: 'generalInformation', title: 'General information' },
@@ -19,7 +20,7 @@ export const tabsContent = [
 
   {
     value: 'accountManagement',
-    content: <p>accountManagement</p>,
+    content: <AccountManagement />,
   },
   {
     value: 'payments',

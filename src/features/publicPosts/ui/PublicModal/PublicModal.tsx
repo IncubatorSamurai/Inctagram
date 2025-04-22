@@ -44,10 +44,6 @@ export const PublicModal = ({ post, commentsData, postId, ...props }: PublicModa
     }
   }, [])
 
-  // const currentUrl = new URL(window.location.href)
-  // currentUrl.searchParams.delete('postId')
-  // const hrefLinkPost = currentUrl.pathname + currentUrl.search
-
   const onClose = () => {
     if (window.history.length > 2) {
       router.back()

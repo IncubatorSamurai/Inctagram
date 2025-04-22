@@ -1,6 +1,5 @@
 .modal {
-  width: 100%;
-  max-width: size(380px);
+  width: 486px;
 
   .btns {
     display: flex;
@@ -28,6 +27,7 @@
   display: flex;
   flex-direction: column;
   gap: 60px;
+  padding: 1.5rem;
 
   @media screen and (width <= 576px) {
     text-align: center;

@@ -13,9 +13,17 @@ type PostContentProps = {
   whosLikes: string[] | undefined
   updatedAt: string | undefined
   createdAt: string | undefined
+  ownreName: string | undefined
 }
 
-export const PostContent = ({ post,likes,whosLikes,updatedAt,createdAt }: PostContentProps) => {
+export const PostContent = ({
+  ownreName,
+  description,
+  likes,
+  whosLikes,
+  updatedAt,
+  createdAt,
+}: PostContentProps) => {
   //надо конвертировать дату в нормальный вид
   //доделать чтоб были картинки тех кто лайкнул как на макете 
   const userImg =
@@ -26,7 +34,9 @@ export const PostContent = ({ post,likes,whosLikes,updatedAt,createdAt }: PostCo
         <div className={s.postDescription}>
           <div className={s.topContent}>
             <img src={userImg} alt="postOwnerImg" />
-            <Typography variant="bold_text_14">URLProfiele {post}</Typography>
+            <Typography variant="bold_text_14">
+              {ownreName} {description}
+            </Typography>
           </div>
           <div className={s.sideInfo}>{updatedAt}</div>
         </div>

@@ -102,6 +102,10 @@ export type PostDescriptionChange = {
   description?: string
 }
 
+export type PostId = {
+  id: number
+}
+
 export type ResponseGetById = {
   id: number
   userName: string
@@ -189,4 +193,8 @@ export type ResponseGetByName = {
   totalCount: number
   notReadCount: number
   items: ResponseGetById[]
+}
+
+export type DeleteImageForPostArgs = {
+  uploadId: string
 }

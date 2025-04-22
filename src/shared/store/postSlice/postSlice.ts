@@ -1,12 +1,22 @@
-import { Steps } from '@/shared/enums'
 import { Photo } from '@/shared/types'
 import { createSlice } from '@reduxjs/toolkit'
+
+const revokeObjectURLs = (file: Photo) => {
+  if (file.fileUrl) {
+    URL.revokeObjectURL(file.fileUrl)
+  }
+  if (file.croppedFileUrl) {
+    URL.revokeObjectURL(file.croppedFileUrl)
+  }
+  if (file.filteredFileUrl) {
+    URL.revokeObjectURL(file.filteredFileUrl)
+  }
+}
 
 export const postSlice = createSlice({
   name: 'post',
   initialState: {
     files: [] as Photo[],
-    step: 0 as Steps,
   },
   reducers: create => ({
     addFile: create.reducer<{ fileUrl: string; id: string; type: string }>((state, action) => {
@@ -17,46 +27,28 @@ export const postSlice = createSlice({
       })
     }),
     removeFiles: create.reducer(state => {
-      state.files.map(({ fileUrl, croppedFileUrl, filteredFileUrl }) => {
-        if (fileUrl) {
-          URL.revokeObjectURL(fileUrl)
-        }
-        if (croppedFileUrl) {
-          URL.revokeObjectURL(croppedFileUrl)
-        }
-        if (filteredFileUrl) {
-          URL.revokeObjectURL(filteredFileUrl)
-        }
-      })
+      state.files.forEach(file => revokeObjectURLs(file))
       state.files = []
-      state.step = 0
     }),
     removeFile: create.reducer<{ id: string }>((state, action) => {
       const index = state.files.findIndex(file => file.id === action.payload.id)
 
       if (index !== -1) {
-        const file = state.files[index]
-
-        if (file.fileUrl) {
-          URL.revokeObjectURL(file.fileUrl)
-        }
-        if (file.croppedFileUrl) {
-          URL.revokeObjectURL(file.croppedFileUrl)
-        }
-        if (file.filteredFileUrl) {
-          URL.revokeObjectURL(file.filteredFileUrl)
-        }
+        revokeObjectURLs(state.files[index])
+        state.files.splice(index, 1)
       }
-
-      state.files.splice(index, 1)
     }),
     resetCropFile: create.reducer<{ file: Photo }>((state, action) => {
       const index = state.files.findIndex(file => file.id === action.payload.file.id)
 
       if (index !== -1) {
-        const croppedFileUrl = state.files[index].croppedFileUrl
-        if (croppedFileUrl) {
-          URL.revokeObjectURL(croppedFileUrl)
+        const file = state.files[index]
+
+        if (file.croppedFileUrl) {
+          URL.revokeObjectURL(file.croppedFileUrl)
+        }
+        if (file.filteredFileUrl) {
+          URL.revokeObjectURL(file.filteredFileUrl)
         }
 
         state.files[index] = {
@@ -65,6 +57,7 @@ export const postSlice = createSlice({
           cropInit: null,
           aspectInit: null,
           croppedFileUrl: null,
+          filteredFileUrl: null,
         }
       }
     }),
@@ -72,56 +65,44 @@ export const postSlice = createSlice({
       const index = state.files.findIndex(file => file.id === action.payload.file.id)
 
       if (index !== -1) {
-        const croppedFileUrl = state.files[index].croppedFileUrl
-        if (croppedFileUrl) {
-          URL.revokeObjectURL(croppedFileUrl)
+        const file = state.files[index]
+
+        if (file.croppedFileUrl) {
+          URL.revokeObjectURL(file.croppedFileUrl)
+        }
+        if (file.filteredFileUrl) {
+          URL.revokeObjectURL(file.filteredFileUrl)
         }
 
         state.files[index] = {
-          ...state.files[index],
+          ...file,
           ...action.payload.file,
         }
       }
     }),
-    addFilteredFiles: create.reducer<{ fileUrl: string; id: string }>((state, action) => {
+    addFilteredFiles: create.reducer<{ filteredFileUrl: string; id: string }>((state, action) => {
       const index = state.files.findIndex(file => file.id === action.payload.id)
 
       if (index !== -1) {
-        const filteredFileUrl = state.files[index].filteredFileUrl
+        const file = state.files[index]
 
-        if (filteredFileUrl) {
-          URL.revokeObjectURL(filteredFileUrl)
+        if (file.filteredFileUrl) {
+          URL.revokeObjectURL(file.filteredFileUrl)
         }
 
         state.files[index] = {
-          ...state.files[index],
-          filteredFileUrl: action.payload.fileUrl,
+          ...file,
+          filteredFileUrl: action.payload.filteredFileUrl,
         }
       }
     }),
-    nextStep: create.reducer(state => {
-      state.step = state.step + 1
-    }),
-    prevStep: create.reducer(state => {
-      if (state.step === 0) return
-      state.step = state.step - 1
-    }),
   }),
   selectors: {
-    selectStep: state => state.step,
     selectFiles: state => state.files,
   },
 })
 
-export const {
-  addFile,
-  prevStep,
-  nextStep,
-  addFilteredFiles,
-  resetCropFile,
-  saveCropFile,
-  removeFiles,
-  removeFile,
-} = postSlice.actions
-export const { selectStep, selectFiles } = postSlice.selectors
+export const { addFile, addFilteredFiles, resetCropFile, saveCropFile, removeFiles, removeFile } =
+  postSlice.actions
+export const { selectFiles } = postSlice.selectors
 export const postReducer = postSlice.reducer

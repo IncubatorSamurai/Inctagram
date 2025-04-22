@@ -29,7 +29,7 @@ export const Filters = ({ index, canvasContexts }: Props) => {
     })
 
     if (typeof url === 'string' && file.id) {
-      dispatch(addFilteredFiles({ fileUrl: url, id: file.id }))
+      dispatch(addFilteredFiles({ filteredFileUrl: url, id: file.id }))
     }
   }
 
