@@ -34,7 +34,7 @@ export const AddFilters = () => {
     <div className={s.row}>
       <div className={s.slider}>
         <SliderCanvas
-          setIndexState={e => setIndexState(e)}
+          setIndexState={setIndexState}
           index={index}
           setFabricCanvases={setCanvasContexts}
         />

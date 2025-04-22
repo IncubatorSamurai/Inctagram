@@ -50,7 +50,13 @@
       "currentSubs": "Current Subscription:",
       "expireAt": "Expire at",
       "nextPayment": "Next payment",
-      "autoRenewal": "Auto-Renewal"
+      "autoRenewal": "Auto-Renewal",
+      "labelModal": "Auto-renewal will be enabled with this payment. You can disable it anytime in your profile settings.",
+      "IAgree": "I agree",
+      "Or": "Or",
+      "CreatePayment": "Create payment",
+      "Ok": "Ok",
+      "Loading": "Loading..."
     }
   },
   "post": {
@@ -72,6 +78,9 @@
     "addPublicationDescriptions": "Add publication descriptions",
     "charCountError": "Maximum number of characters 500",
     "photos": "photos",
+    "save": "Save",
+    "cancel": "Cancel",
+    "reset": "Reset",
     "filter": {
       "original": "Original",
       "vintage": "Vintage",
@@ -82,6 +91,10 @@
       "retro": "Retro",
       "moody": "Moody",
       "golden-hour": "Golden Hour"
-    }
+    },
+    "errorUploadImages1": "You can upload a maximum of photos:",
+    "errorUploadImages2": "Uploaded now:",
+    "file": "File",
+    "exceeds": "exceeds"
   }
 }
