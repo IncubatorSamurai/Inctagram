@@ -194,3 +194,7 @@ export type ResponseGetByName = {
   notReadCount: number
   items: ResponseGetById[]
 }
+
+export type DeleteImageForPostArgs = {
+  uploadId: string
+}

@@ -28,13 +28,13 @@
     "forgotPasswordSubmit": "The link has been sent by email. If you don’t receive an email send link again.",
     "sendLink": "Send Link",
     "resendLink": "Resend Link",
-    "resendVerifLink" : "Resend verification link",
+    "resendVerifLink": "Resend verification link",
     "backToSignUp": "Back to Sign Up",
     "emailSent": "Email sent",
     "emailConfirmed": "Your email has been confirmed",
     "sentConfirmLink": "We have sent a link to confirm your email to",
     "emailExpired": "Email verification link expired",
-    "sendLinkAgain" : "Looks like the verification link has expired. Not to worry, we can send the link again",
+    "sendLinkAgain": "Looks like the verification link has expired. Not to worry, we can send the link again",
     "congratulations": "Congratulations"
   },
   "profile": {
@@ -43,7 +43,21 @@
     "sendMessage": "Send Message",
     "following": "Following",
     "followers": "Followers",
-    "publications": "Publications"
+    "publications": "Publications",
+    "profileSettingsTabs": {
+      "accountType": "Account type:",
+      "cost": "Your subscription costs:",
+      "currentSubs": "Current Subscription:",
+      "expireAt": "Expire at",
+      "nextPayment": "Next payment",
+      "autoRenewal": "Auto-Renewal",
+      "labelModal": "Auto-renewal will be enabled with this payment. You can disable it anytime in your profile settings.",
+      "IAgree": "I agree",
+      "Or": "Or",
+      "CreatePayment": "Create payment",
+      "Ok": "Ok",
+      "Loading": "Loading..."
+    }
   },
   "post": {
     "close": "Close",
@@ -64,6 +78,9 @@
     "addPublicationDescriptions": "Add publication descriptions",
     "charCountError": "Maximum number of characters 500",
     "photos": "photos",
+    "save": "Save",
+    "cancel": "Cancel",
+    "reset": "Reset",
     "filter": {
       "original": "Original",
       "vintage": "Vintage",
@@ -74,6 +91,10 @@
       "retro": "Retro",
       "moody": "Moody",
       "golden-hour": "Golden Hour"
-    }
+    },
+    "errorUploadImages1": "You can upload a maximum of photos:",
+    "errorUploadImages2": "Uploaded now:",
+    "file": "File",
+    "exceeds": "exceeds"
   }
 }

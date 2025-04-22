@@ -47,20 +47,13 @@ export const useGetPosts = ({ resPublicPosts }: Props) => {
   }, [])
 
   useEffect(() => {
-    if (!posts) {
-      if (resPublicPosts) {
-        fetchPosts({
-          userId,
-          pageSize: 9,
-          endCursorPostId: endCursorPostId.current ?? undefined,
-        })
-      } else {
-        fetchPosts({
-          userId,
-          pageSize: 8,
-          endCursorPostId: null,
-        })
-      }
+    if (!posts && resPublicPosts) {
+      endCursorPostId.current = resPublicPosts.items[resPublicPosts.items.length - 1]?.id.toString()
+      fetchPosts({
+        userId,
+        pageSize: 9,
+        endCursorPostId: endCursorPostId.current ?? undefined,
+      })
     }
   }, [])
 
@@ -68,7 +61,6 @@ export const useGetPosts = ({ resPublicPosts }: Props) => {
     (node: HTMLDivElement | null) => {
       if (isFetching) return
       if (observer.current) observer.current.disconnect()
-
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && posts && posts.length < totalCount) {
           endCursorPostId.current = posts[posts.length - 1]?.id.toString()

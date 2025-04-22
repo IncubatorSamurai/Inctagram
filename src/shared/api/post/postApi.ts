@@ -2,6 +2,12 @@ import { baseApi } from '@/shared/api/baseApi'
 import {
   CreatePostArgs,
   CreatePostResponse,
+  DeleteImageForPostArgs,
+  UploadImageForPostResponse,
+} from './postApi.types'
+import {
+  CreatePostArgs,
+  CreatePostResponse,
   PostId,
   UploadImageForPostResponse,
 } from './postApi.types'
@@ -63,6 +69,12 @@ export const postsApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
+    deleteImageForPost: build.mutation<void, DeleteImageForPostArgs>({
+      query: ({ uploadId }) => ({
+        url: `v1/posts/image/${uploadId}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 })
 
@@ -74,4 +86,5 @@ export const {
   useEditPostDescriptionMutation,
   useGetPostByIdQuery,
   useGetPostByNameMutation,
+  useDeleteImageForPostMutation,
 } = postsApi
