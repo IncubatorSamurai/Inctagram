@@ -1,22 +1,28 @@
 'use client'
-import { DialogTitle, Modal } from '@/shared/ui/modal'
-import s from './AddPostModule.module.scss'
-import { useTranslations } from 'next-intl'
-import { nextStep, removeFiles, selectFiles, selectStep } from '@/shared/store/postSlice/postSlice'
-import { useSelector } from 'react-redux'
-import { useAppDispatch } from '@/shared/hooks'
-import { useEffect, useState } from 'react'
-import { Typography } from '@/shared/ui/typography'
-import { Button } from '@/shared/ui/button'
-import { Steps } from '@/shared/enums/postEnums'
 import {
   AddFilters,
   CloseCreationPostModal,
   Cropping,
   Publication,
-  SwitchStep,
   UploadImages,
 } from '@/features/post'
+import { ArrowIosBackIcon } from '@/shared/assets/icons/ArrowIosBackIcon'
+import { useAppDispatch } from '@/shared/hooks'
+import { removeFiles, selectFiles } from '@/shared/store/postSlice/postSlice'
+import { Button } from '@/shared/ui/button'
+import { DialogTitle, Modal } from '@/shared/ui/modal'
+import { Typography } from '@/shared/ui/typography'
+import { useTranslations } from 'next-intl'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import s from './AddPostModule.module.scss'
+
+enum Steps {
+  AddPhoto = 0,
+  Cropping = 1,
+  Filters = 2,
+  Publication = 3,
+}
 
 type Props = {
   open: boolean
@@ -25,10 +31,9 @@ type Props = {
 
 export const AddPostModal = ({ open, onChange }: Props) => {
   const t = useTranslations('post')
-  const step = useSelector(selectStep)
   const files = useSelector(selectFiles)
   const [isCloseCreationPostModal, setIsCloseCreationPostModal] = useState(false)
-  const [title, setTitle] = useState('')
+  const [currentStep, setCurrentStep] = useState(Steps.AddPhoto)
 
   const dispatch = useAppDispatch()
 
@@ -39,8 +44,6 @@ export const AddPostModal = ({ open, onChange }: Props) => {
   }
 
   const handleCloseCreatePostModal = (open: boolean) => {
-    console.log(open)
-
     if (!open) {
       if (files.length) {
         setIsCloseCreationPostModal(true)
@@ -50,18 +53,19 @@ export const AddPostModal = ({ open, onChange }: Props) => {
     }
   }
 
-  useEffect(() => {
-    if (step === Steps.Step1) {
-      setTitle(t('cropping'))
-    } else if (step === Steps.Step2) {
-      setTitle(t('filters'))
-    } else {
-      setTitle(t('addPhoto'))
+  const getStepTitle = (currentStep: Steps) => {
+    switch (currentStep) {
+      case Steps.Cropping:
+        return t('cropping')
+      case Steps.Filters:
+        return t('filters')
+      default:
+        return t('addPhoto')
     }
-  }, [step])
+  }
 
-  const isShowHeader = !!files.length && step !== Steps.Step3
-  const isShowPrevButton = step !== Steps.Step0
+  const isShowHeader = !!files.length && currentStep !== Steps.Publication
+  const isShowPrevButton = currentStep !== Steps.AddPhoto
 
   return (
     <>
@@ -69,23 +73,32 @@ export const AddPostModal = ({ open, onChange }: Props) => {
         className={s.modal}
         open={open}
         onOpenChange={handleCloseCreatePostModal}
-        title={!files.length ? title : undefined}
+        title={!files.length ? getStepTitle(currentStep) : undefined}
       >
         {isShowHeader && (
           <div className={s.header}>
-            {isShowPrevButton && <SwitchStep />}
+            {isShowPrevButton && (
+              <Button variant={'icon'} onClick={() => setCurrentStep(prev => prev - 1)}>
+                <ArrowIosBackIcon />
+              </Button>
+            )}
             <DialogTitle className={s.DialogTitle}>
-              <Typography variant="h1">{title}</Typography>
+              <Typography variant="h1">{getStepTitle(currentStep)}</Typography>
             </DialogTitle>
-            <Button variant="text" onClick={() => dispatch(nextStep())}>
+            <Button variant="text" onClick={() => setCurrentStep(prev => prev + 1)}>
               {t('next')}
             </Button>
           </div>
         )}
-        {step === Steps.Step0 && <UploadImages />}
-        {step === Steps.Step1 && <Cropping />}
-        {step === Steps.Step2 && <AddFilters />}
-        {step === Steps.Step3 && <Publication closeAllModals={handleCloseAllModals} />}
+        {currentStep === Steps.AddPhoto && <UploadImages />}
+        {currentStep === Steps.Cropping && <Cropping />}
+        {currentStep === Steps.Filters && <AddFilters />}
+        {currentStep === Steps.Publication && (
+          <Publication
+            closeAllModals={handleCloseAllModals}
+            setCurrentStep={() => setCurrentStep(prev => prev - 1)}
+          />
+        )}
       </Modal>
 
       <CloseCreationPostModal

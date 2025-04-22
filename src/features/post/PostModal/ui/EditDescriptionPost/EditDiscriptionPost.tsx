@@ -7,15 +7,16 @@ import { useEditPostDescriptionMutation } from '@/shared/api/post/postApi'
 import { ErrorResponse } from '@/shared/types/auth'
 
 type EditDescriptionProps = {
-  post: string
-  saveValue: (value: string) => void
+  description: string | undefined
+  // saveValue: (value: string) => void
   changeEdit: () => void
+  postId: number
 }
 
-export const EditDescriptionPost = ({ post, saveValue, changeEdit }: EditDescriptionProps) => {
+export const EditDescriptionPost = ({ description, changeEdit, postId }: EditDescriptionProps) => {
   const [editDescription] = useEditPostDescriptionMutation()
-  const [length, setLength] = useState(post.length)
-  const [textTemp, setTextTemp] = useState(post)
+  const [length, setLength] = useState(description?.length)
+  const [textTemp, setTextTemp] = useState(description)
 
   const showPostLength = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextTemp(e.currentTarget.value)
@@ -23,12 +24,9 @@ export const EditDescriptionPost = ({ post, saveValue, changeEdit }: EditDescrip
   }
 
   const saveAndCloseHandler = async () => {
-    saveValue(textTemp)
     changeEdit()
-    const postId = 5694 //хардкодный айди
     try {
-      const res = await editDescription({ id: postId, description: textTemp }).unwrap()
-      console.log(res)
+      await editDescription({ id: postId, description: textTemp }).unwrap()
     } catch (error) {
       const err = error as ErrorResponse
       console.error(err.data.messages)
@@ -51,7 +49,7 @@ export const EditDescriptionPost = ({ post, saveValue, changeEdit }: EditDescrip
           id="description"
           className={s.area}
           maxLength={500}
-          defaultValue={post}
+          defaultValue={description}
         ></textarea>
       </div>
       <div className={s.counter}>

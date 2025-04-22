@@ -1,5 +1,16 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { CreatePostArgs, CreatePostResponse, UploadImageForPostResponse } from './postApi.types'
+import {
+  CreatePostArgs,
+  CreatePostResponse,
+  DeleteImageForPostArgs,
+  UploadImageForPostResponse,
+} from './postApi.types'
+import {
+  CreatePostArgs,
+  CreatePostResponse,
+  PostId,
+  UploadImageForPostResponse,
+} from './postApi.types'
 import {
   GetPostsByNameArgs,
   GetPostsByNameRespond,
@@ -44,17 +55,24 @@ export const postsApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: { description },
       }),
+      invalidatesTags: ['Post'],
     }),
-    getPostById: build.mutation<ResponseGetById, PostDescriptionChange>({
+    getPostById: build.query<ResponseGetById, PostId>({
       query: ({ id }) => ({
         url: `v1/posts/id/${id}`,
-        method: 'GET',
       }),
+      providesTags: ['Post'],
     }),
     getPostByName: build.mutation<ResponseGetByName, Name>({
       query: ({ name }) => ({
         url: `v1/posts/${name}`,
         method: 'GET',
+      }),
+    }),
+    deleteImageForPost: build.mutation<void, DeleteImageForPostArgs>({
+      query: ({ uploadId }) => ({
+        url: `v1/posts/image/${uploadId}`,
+        method: 'DELETE',
       }),
     }),
   }),
@@ -66,6 +84,7 @@ export const {
   useGetPostsByUserNameQuery,
   useDeletePostMutation,
   useEditPostDescriptionMutation,
-  useGetPostByIdMutation,
+  useGetPostByIdQuery,
   useGetPostByNameMutation,
+  useDeleteImageForPostMutation,
 } = postsApi

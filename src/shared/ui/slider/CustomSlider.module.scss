@@ -19,7 +19,6 @@
     //z-index: 1;
     transform: translateY(-45%);
 
-
     svg {
       color: white;
       width: 48px;
@@ -32,7 +31,7 @@
 
     &:hover {
       svg {
-        color: var(--color-accent-100)
+        color: var(--color-accent-100);
       }
     }
   }
@@ -46,7 +45,6 @@
     z-index: 1;
   }
 }
-
 
 .dots {
   position: relative;

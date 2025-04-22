@@ -8,6 +8,7 @@ type Options = {
   value: string
   label: string
   id: string
+  disabled?: boolean
 }
 export type RadioProps = {
   className?: string
@@ -19,12 +20,19 @@ export const RadioGroups = (props: RadioProps) => {
   return (
     <Radio.Root className={clsx(s.root, className)} {...rest}>
       {options.map(radio => (
-        <div key={radio.id} className={s.container}>
-          <Radio.Item className={s.item} value={radio.value} id={radio.id}>
+        <div key={radio.id} className={s.container} data-disabled={radio.disabled ? '' : undefined}>
+          <Radio.Item
+            className={s.item}
+            value={radio.value}
+            id={radio.id}
+            disabled={radio.disabled}
+          >
             <Radio.Indicator className={s.indicator} />
           </Radio.Item>
           <label htmlFor={radio.id} className={clsx(s.label)}>
-            <Typography variant="regular_text_14">{radio.label}</Typography>
+            <Typography variant="regular_text_14" className={s.typography}>
+              {radio.label}
+            </Typography>
           </label>
         </div>
       ))}

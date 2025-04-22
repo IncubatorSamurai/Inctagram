@@ -12,7 +12,7 @@ type ToolsProps = {
 export const Tools = ({ changeEdit, openClose, showDeleteModalHandler }: ToolsProps) => {
   const handler = () => {
     changeEdit()
-    openClose() 
+    openClose()
   }
 
   const deletePostHandler = () => {

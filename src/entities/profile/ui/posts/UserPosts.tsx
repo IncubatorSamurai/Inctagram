@@ -14,7 +14,8 @@ type Props = {
 export const UserPosts = ({ userId, resPublicPosts }: Props) => {
   const { posts, lastPostElementRef, isFetching } = useGetPosts({ resPublicPosts })
   const renderPosts = posts ?? resPublicPosts?.items
-
+  //создаем некое условие по которому модалку показываем или нет
+  // если оно тру (это кликнули на картинку) то мы показываем модалку
   return (
     <section className={s.posts}>
       {renderPosts?.map((post, id) => {

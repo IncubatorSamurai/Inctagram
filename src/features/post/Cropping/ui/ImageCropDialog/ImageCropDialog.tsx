@@ -9,6 +9,7 @@ import Cropper, { Area } from 'react-easy-crop'
 import { getCroppedFile } from '../../lib/getCroppedFile'
 import { Photo } from '@/shared/types'
 import s from './ImageCropDialog.module.scss'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   setSelectedFile: (selectedFile: Photo | null) => void
@@ -16,6 +17,7 @@ type Props = {
 }
 
 export const ImageCropDialog = ({ setSelectedFile, selectedFile }: Props) => {
+  const t = useTranslations('post')
   const [crop, setCrop] = useState(selectedFile.cropInit || { x: 0, y: 0 })
   const [zoom, setZoom] = useState(selectedFile.zoomInit || 1)
   const [aspect, setAspect] = useState(selectedFile.aspectInit || 1)
@@ -85,18 +87,18 @@ export const ImageCropDialog = ({ setSelectedFile, selectedFile }: Props) => {
         <Dropdown
           className={s.expandDropdown}
           classItemsContainer={s.expandItemsContainer}
-          iconTrigger={<ExpandOutlineIcon/>}
+          iconTrigger={<ExpandOutlineIcon />}
         >
           <Expand getAspect={setAspect} />
         </Dropdown>
 
         <div className={s.buttonsWrapper}>
-          <Button onClick={onSaveCropFile}>Save</Button>
+          <Button onClick={onSaveCropFile}>{t('save')}</Button>
           <Button variant="outline" onClick={() => setSelectedFile(null)}>
-            Cancel
+            {t('cancel')}
           </Button>
           <Button variant="outline" onClick={onResetCropFile}>
-            Reset
+            {t('reset')}
           </Button>
         </div>
       </div>
