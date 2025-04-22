@@ -9,8 +9,7 @@ type LikesAndCountProps = {
   createdAt: string | undefined
 }
 
-export const PostLikesAndSent = ({likes,whosLikes,createdAt}:LikesAndCountProps) => {
- 
+export const PostLikesAndSent = ({ likes, whosLikes, createdAt }: LikesAndCountProps) => {
   return (
     <div className={s.postsSideLikes}>
       <div className={s.likeAndSent}>
@@ -23,8 +22,8 @@ export const PostLikesAndSent = ({likes,whosLikes,createdAt}:LikesAndCountProps)
         </div>
       </div>
       <div className={s.info}>
-        <div className={s.imgWhoLikes}> 
-          {whosLikes?.map((el)=><img key={el} src={el} alt='user post'/>)}
+        <div className={s.imgWhoLikes}>
+          {whosLikes?.map(el => <img key={el} src={el} alt="user post" />)}
         </div>
         <div>
           {likes} <span>like</span>

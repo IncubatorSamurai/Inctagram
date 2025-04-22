@@ -30,7 +30,6 @@ const getComments = async ({
     const data = await response.json()
     console.log('Комментарии загружены:', data)
     return data
-
   } catch (error) {
     console.error('Ошибка при выполнении запроса:', error)
     return null

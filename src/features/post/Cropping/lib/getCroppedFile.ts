@@ -1,4 +1,4 @@
-import { Area } from "react-easy-crop"
+import { Area } from 'react-easy-crop'
 
 export const getCroppedFile = (
   fileUrl: string,

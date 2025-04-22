@@ -3,9 +3,9 @@ import s from '@/features/publicPosts/ui/PublicPostsList/PublicPostsList.module.
 import { Button } from '@/shared/ui/button'
 
 export type PostDescriptionProps = {
-  description: string;
-  isExpanded: boolean;
-  onToggleExpand: () => void;
+  description: string
+  isExpanded: boolean
+  onToggleExpand: () => void
 }
 
 const TEXT_CUT = 68

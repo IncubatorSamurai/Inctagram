@@ -1,4 +1,4 @@
-import { Photo } from "@/shared/types"
+import { Photo } from '@/shared/types'
 
 export const convertBlobUrlsToFiles = async (files: Photo[]): Promise<File[]> => {
   const filePromises = files.map(async ({ filteredFileUrl, croppedFileUrl, fileUrl, type }, i) => {
