@@ -1,1 +1,1 @@
-export * from './ui/PostModal'
+export * from './ui/PostsModal'
