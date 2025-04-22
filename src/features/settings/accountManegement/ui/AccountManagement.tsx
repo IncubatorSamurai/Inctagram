@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGetCurrentPaymentSubsQuery } from '@/shared/api/subscriptions/subscriptionsApi'
 import { AccountType } from './AccountType'
 import { CurrentSubs } from './CurrnetSubs'
@@ -14,6 +14,11 @@ export const AccountManagement = () => {
   ]
 
   const [accountState, setAccountState] = useState(accountTypes[0].value)
+
+  useEffect(() => {
+    const activeAccountType = data && isActiveSubs ? accountTypes[1].value : accountTypes[0].value
+    setAccountState(activeAccountType)
+  }, [data])
 
   if (isLoading) {
     return <div>Loading...</div>

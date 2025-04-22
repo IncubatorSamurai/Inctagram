@@ -24,7 +24,7 @@ export const AccountType = ({ activeSubs, accountState, setAccountState }: Props
         <RadioGroups
           options={accountTypes}
           className={s.radioGroup}
-          defaultValue={accountState}
+          value={accountState}
           onValueChange={type => {
             setAccountState(type)
           }}
