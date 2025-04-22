@@ -17,7 +17,11 @@ import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { requiredInputs } from '../model/requiredInputs'
 import { PATH } from '@/shared/config/routes'
-import { clearProfileStorage, getProfileFromStorage, saveProfileToStorage } from '@/shared/utils/ProfileStorge'
+import {
+  clearProfileStorage,
+  getProfileFromStorage,
+  saveProfileToStorage,
+} from '@/shared/utils/ProfileStorge'
 
 export const EditUserProfileForm = () => {
   const t = useTranslations('profile.generalInfo')
@@ -55,17 +59,7 @@ export const EditUserProfileForm = () => {
       reset(formData)
       setLocalDate(formData.birthDate)
     }
-    // if (localStorage.getItem('dataPrev')) {
-    //   const parsed = JSON.parse(localStorage.getItem('dataPrev') || '{}')
-    //   const { userName, firstName, lastName, dateOfBirth, aboutMe } = parsed
-    //   reset({
-    //     name: userName,
-    //     firstName,
-    //     lastName,
-    //     birthDate: dateOfBirth ? new Date(dateOfBirth) : undefined,
-    //     textarea: aboutMe,
-    //   })
-    // }
+
   }, [isSuccess, data, reset])
 
   const onSubmit = (form: EditProfileForm) => {
@@ -124,7 +118,7 @@ export const EditUserProfileForm = () => {
         {errors.birthDate?.message && (
           <Typography variant="error">
             {t('dateError')}
-            <Link className={s.link} href={PATH.PRIVACY_POLICY} onClick={onLink}>
+            <Link className={s.link} href={PATH.PRIVACY_POLICY} onClick={onLink} >
               Privacy Policy
             </Link>
           </Typography>

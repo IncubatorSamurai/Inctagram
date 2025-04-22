@@ -9,13 +9,12 @@ import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
 import { DeleteAvatarModal } from '@/features/settings/uploadUserAvatar/ui/deleteAvatarModal/DeleteAvatarModal'
 
 export const UploadUserAvatar = () => {
-  const { data, refetch } = useGetProfileQuery()
+  const { data} = useGetProfileQuery()
   const [deleteAvatar] = useDeleteUserAvatarMutation()
   const avatars = data?.avatars || []
   const onDeleteAvatar = async () => {
     try {
       await deleteAvatar().unwrap()
-      await refetch()
     } catch (e) {
       console.error('Ошибка при удалении аватара:', e)
     }

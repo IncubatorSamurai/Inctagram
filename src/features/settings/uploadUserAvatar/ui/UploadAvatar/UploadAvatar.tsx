@@ -9,10 +9,11 @@ import Cropper from 'react-easy-crop'
 import { useAppDispatch } from '@/shared/hooks'
 import { useState } from 'react'
 import { clsx } from 'clsx'
-import { v4 as uuidv4 } from 'uuid'
+
 import { useUploadUserAvatarMutation } from '@/shared/api/profile/profileApi'
 import { Alert } from '@/shared/ui/alert'
 import { useAvatarCrop } from '@/shared/hooks/useAvatarCrop'
+import { nanoid } from '@reduxjs/toolkit'
 
 type UpdateAvatarProps = {
   onOpenChange: (open: boolean) => void
@@ -45,7 +46,7 @@ export const UploadAvatar = ({ onOpenChange }: UpdateAvatarProps) => {
       dispatch(removeFile({ id: files[0].id }))
     }
 
-    dispatch(addFile({ fileUrl: URL.createObjectURL(file), id: uuidv4(), type: file.type }))
+    dispatch(addFile({ fileUrl: URL.createObjectURL(file), id: nanoid(), type: file.type }))
     setIsUploaded(true)
   }
 

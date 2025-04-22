@@ -1,5 +1,6 @@
 import { Photo } from '@/shared/types'
 import { createSlice } from '@reduxjs/toolkit'
+import { AvatarProfile } from '@/shared/api/post/postApi.types'
 
 const revokeObjectURLs = (file: Photo) => {
   if (file.fileUrl) {
@@ -17,6 +18,7 @@ export const postSlice = createSlice({
   name: 'post',
   initialState: {
     files: [] as Photo[],
+    avatar: {} as AvatarProfile
   },
   reducers: create => ({
     addFile: create.reducer<{ fileUrl: string; id: string; type: string }>((state, action) => {
