@@ -82,9 +82,6 @@ export const PostsModal = ({ post, commentsData, postId, ...props }: PublicModal
           <NonAuthorizedContent post={post} commentsData={commentsData} />
         )}
       </div>
-      {isLoggedIn ? (
-        <>
-          {openModal && (
             <ModalCloseOrDeletePost
               postId={postId}
               title="Close"
@@ -92,17 +89,13 @@ export const PostsModal = ({ post, commentsData, postId, ...props }: PublicModal
               onOpenChange={changeOpen}
               changeEdit={changeEdit}
             />
-          )}
-          {showDeleteModal && (
+
             <ModalCloseOrDeletePost
               postId={postId}
               title="Delete"
               open={showDeleteModal}
               onOpenChange={setShowDeleteModal}
             />
-          )}
-        </>
-      ) : null}
     </Modal>
   )
 }
