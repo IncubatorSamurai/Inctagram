@@ -11,6 +11,7 @@ type Props = {
   className?: string
   title?: string
   trigger?: ReactNode
+  openEdit?: boolean
   isCloseIcon?: boolean
   isTitleHidden?: boolean
 } & ComponentPropsWithoutRef<typeof DialogRadix.Root>
@@ -23,6 +24,7 @@ const Modal = ({
   className,
   title,
   trigger,
+
   isCloseIcon,
   isTitleHidden,
   ...props
@@ -47,6 +49,11 @@ const Modal = ({
                 </button>
               </DialogRadix.Close>
             </div>
+          )}
+          {title && isTitleHidden && (
+            <VisuallyHidden>
+              <DialogRadix.Title className={s.DialogTitle}>{title}</DialogRadix.Title>
+            </VisuallyHidden>
           )}
           {!title && isTitleHidden && (
             <VisuallyHidden>

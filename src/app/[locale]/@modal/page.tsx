@@ -1,6 +1,7 @@
 import getPublicPost from '@/shared/api/post/serverRequests/getPublicPost'
 import getComments from '@/shared/api/post/serverRequests/getPostComments'
-import { PublicModal } from '@/features/publicPosts/ui/PublicModal'
+
+import { PostsModal } from '@/features/post/PostModal'
 
 export default async function PublicModalPage({
   searchParams,
@@ -18,7 +19,7 @@ export default async function PublicModalPage({
 
   return (
     <div>
-      <PublicModal post={post} commentsData={commentsData} postId={postId} />
+      <PostsModal post={post} commentsData={commentsData} postId={postId} />
     </div>
   )
 }

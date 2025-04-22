@@ -6,6 +6,12 @@ import {
   UploadImageForPostResponse,
 } from './postApi.types'
 import {
+  CreatePostArgs,
+  CreatePostResponse,
+  PostId,
+  UploadImageForPostResponse,
+} from './postApi.types'
+import {
   GetPostsByNameArgs,
   GetPostsByNameRespond,
   Name,
@@ -49,12 +55,13 @@ export const postsApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: { description },
       }),
+      invalidatesTags: ['Post'],
     }),
-    getPostById: build.mutation<ResponseGetById, PostDescriptionChange>({
+    getPostById: build.query<ResponseGetById, PostId>({
       query: ({ id }) => ({
         url: `v1/posts/id/${id}`,
-        method: 'GET',
       }),
+      providesTags: ['Post'],
     }),
     getPostByName: build.mutation<ResponseGetByName, Name>({
       query: ({ name }) => ({
@@ -77,7 +84,7 @@ export const {
   useGetPostsByUserNameQuery,
   useDeletePostMutation,
   useEditPostDescriptionMutation,
-  useGetPostByIdMutation,
+  useGetPostByIdQuery,
   useGetPostByNameMutation,
   useDeleteImageForPostMutation,
 } = postsApi

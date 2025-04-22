@@ -9,9 +9,11 @@ type RightSideHeaderProps = {
   changeEdit: () => void
   isOpenEdit: boolean
   showDeleteModalHandler: () => void
+  postUserName: string | undefined
 }
 
 export const RightSideHeader = ({
+  postUserName,
   changeEdit,
   isOpenEdit,
   showDeleteModalHandler,
@@ -28,7 +30,7 @@ export const RightSideHeader = ({
       {/* добавить условие по которому показывается если это наш пост то показываем шапку иначе нет*/}
       <div className={s.imgAndURLProfile}>
         <img src={userImg} className={s.userAvatar} alt="userAvatar" />
-        <Typography variant="h3">URLProfiele</Typography>
+        <Typography variant="h3">{postUserName}</Typography>
       </div>
       <div className={s.tools} onBlur={() => setOpenTools(false)} tabIndex={0}>
         {!isOpenEdit && <MoreHorizontalIcon onClick={() => setOpenTools(!openTools)} />}
