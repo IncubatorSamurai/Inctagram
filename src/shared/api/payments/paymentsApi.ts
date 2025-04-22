@@ -14,12 +14,7 @@ export const paymentsApi = baseApi.injectEndpoints({
       query: payment => ({
         url: `v1/subscriptions`,
         method: 'POST',
-        body: {
-          typeSubscription: payment.typeSubscription,
-          paymentType: payment.paymentType,
-          amount: payment.amount,
-          baseUrl: payment.baseUrl,
-        },
+        body: payment,
       }),
     }),
   }),

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Typography } from '@/shared/ui/typography'
 import { Card } from '@/shared/ui/card'
 import s from './SubsCost.module.scss'
@@ -21,7 +21,15 @@ export const SubsCost = () => {
   const { data: subsCosts, isLoading } = useGetCostOfPaymentSubsQuery()
   const newBaseUrl = useAbsoluteUrl()
   const [subscribe] = useSubscriptionsMutation()
-
+  useEffect(() => {
+    if (subsCosts?.data.length) {
+      const first = subsCosts.data[0]
+      setSelectedSubscription({
+        amount: first.amount,
+        typeDescription: first.typeDescription,
+      })
+    }
+  }, [subsCosts])
   const onClose = () => {
     savePyamenthandler('')
     setAgreeChek(false)
@@ -49,6 +57,7 @@ export const SubsCost = () => {
         amount: selectedSubscription?.amount,
         baseUrl: newBaseUrl,
       }
+      console.log(body)
 
       const response = await subscribe(body).unwrap()
       if (response.url) {
