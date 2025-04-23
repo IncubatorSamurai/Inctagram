@@ -2,23 +2,16 @@ import { baseApi } from '@/shared/api/baseApi'
 import {
   CreatePostArgs,
   CreatePostResponse,
+  PostId,
   DeleteImageForPostArgs,
   UploadImageForPostResponse,
-} from './postApi.types'
-import {
-  CreatePostArgs,
-  CreatePostResponse,
-  PostId,
-  UploadImageForPostResponse,
-} from './postApi.types'
-import {
   GetPostsByNameArgs,
   GetPostsByNameRespond,
   Name,
   PostDescriptionChange,
   ResponseGetById,
   ResponseGetByName,
-} from '@/shared/api/post/postApi.types'
+} from './postApi.types'
 
 export const postsApi = baseApi.injectEndpoints({
   endpoints: build => ({

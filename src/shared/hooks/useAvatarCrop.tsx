@@ -12,7 +12,7 @@ export const useAvatarCrop = () => {
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
 
-  const onCropComplete = useCallback((_: any, croppedPixels: Area) => {
+  const onCropComplete = useCallback((_: Area, croppedPixels: Area) => {
     setCroppedAreaPixels(croppedPixels)
   }, [])
 
@@ -36,12 +36,12 @@ export const useAvatarCrop = () => {
       croppedAreaPixels.height,
       0,
       0,
-    192,
-    192,
+      192,
+      192
     )
 
-    return new Promise((resolve) => {
-      canvas.toBlob((blob) => {
+    return new Promise(resolve => {
+      canvas.toBlob(blob => {
         resolve(blob)
       }, 'image/png')
     })
@@ -53,7 +53,7 @@ export const useAvatarCrop = () => {
       image.crossOrigin = 'anonymous'
       image.src = url
       image.onload = () => resolve(image)
-      image.onerror = (e) => reject(e)
+      image.onerror = e => reject(e)
     })
   }
 

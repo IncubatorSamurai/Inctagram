@@ -1,15 +1,14 @@
 import { Typography } from '@/shared/ui/typography'
 import s from './PostComment.module.scss'
 import { HeartOutlineIcon } from '@/shared/assets/icons/HeartOutlineIcon'
+import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
 export const PostComment = () => {
-  const userImg =
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8VbvTvQFYrD7AYI3IKB8rdP-vvYm2LkBl-w&s'
   const userName = 'URLProfiele:'
   return (
     <div className={s.root}>
       <div className={s.comment}>
         <div className={s.imgUser}>
-          <img src={userImg} alt="userImg" />
+          <NoAvatar />
         </div>
         <div className={s.userNameAndText}>
           <Typography variant="bold_text_14">

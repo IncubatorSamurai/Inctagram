@@ -1,12 +1,12 @@
 .modal {
   .root {
-    width:972px;
+    width: 972px;
     display: grid;
     grid-template-columns: 1fr 1fr;
 
     .leftSide {
       width: 490px;
-      height: 576px;
+      height: 564px;
 
       img {
         width: 100%;
@@ -15,8 +15,7 @@
     }
 
     .rightSide {
-      width: 486px;
-      height: 576px;
+      height: 564px;
     }
   }
 }
@@ -24,7 +23,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-.slider_img{
+.slider_img {
   display: block;
 }
 .slickSlider {

@@ -27,9 +27,7 @@ const getComments = async ({
       { next: { revalidate: 60 } }
     )
 
-    const data = await response.json()
-    console.log('Комментарии загружены:', data)
-    return data
+    return await response.json()
   } catch (error) {
     console.error('Ошибка при выполнении запроса:', error)
     return null

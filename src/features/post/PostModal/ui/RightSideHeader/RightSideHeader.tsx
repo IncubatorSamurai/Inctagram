@@ -4,6 +4,7 @@ import s from './RightSideHeader.module.scss'
 import { Typography } from '@/shared/ui/typography'
 import { useState } from 'react'
 import { Tools } from '../Tools/Tools'
+import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
 
 type RightSideHeaderProps = {
   changeEdit: () => void
@@ -23,13 +24,11 @@ export const RightSideHeader = ({
     setOpenTools(!openTools)
   }
 
-  const userImg =
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8VbvTvQFYrD7AYI3IKB8rdP-vvYm2LkBl-w&s'
   return (
     <div className={s.postsSideHeader}>
       {/* добавить условие по которому показывается если это наш пост то показываем шапку иначе нет*/}
       <div className={s.imgAndURLProfile}>
-        <img src={userImg} className={s.userAvatar} alt="userAvatar" />
+        <NoAvatar className={s.userAvatar} />
         <Typography variant="h3">{postUserName}</Typography>
       </div>
       <div className={s.tools} onBlur={() => setOpenTools(false)} tabIndex={0}>

@@ -1,11 +1,7 @@
 .postsSide {
-  overflow-y: auto;
   display: flex;
   flex: 1;
   flex-direction: column;
-
-  width: 486px;
-  height: 605px;
 
   .postsSideHeader {
     display: flex;
@@ -20,31 +16,17 @@
       gap: 12px;
       align-items: center;
       padding: 10px;
-
-      img {
-        max-width: 72px;
-        max-height: 48px;
-        border-radius: 50%;
-      }
     }
   }
 
   .postsSideContent {
-    overflow-y: auto;
-    max-height: 332px;
+    height: 336px;
     border-bottom: 1px solid var(--color-dark-100);
 
     .postDescription {
       display: flex;
       flex-direction: column;
       padding: 20px 24px 0;
-
-      img {
-        align-self: flex-start;
-        max-width: 36px;
-        max-height: 36px;
-        border-radius: 50%;
-      }
 
       .topContent {
         display: flex;

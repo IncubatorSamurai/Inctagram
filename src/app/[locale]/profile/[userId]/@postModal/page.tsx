@@ -2,7 +2,13 @@ import { PostsModal } from '@/features/post/PostModal'
 import getPublicPost from '@/shared/api/post/serverRequests/getPublicPost'
 import getComments from '@/shared/api/post/serverRequests/getPostComments'
 
-export default async function PostModal({ searchParams }: { searchParams: { postId: string } }) {
+type PageProps = {
+  searchParams: Promise<{
+    postId?: string
+  }>
+}
+
+export default async function PostModal({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams
   const postId = resolvedSearchParams?.postId ? Number(resolvedSearchParams.postId) : null
   if (!postId) {

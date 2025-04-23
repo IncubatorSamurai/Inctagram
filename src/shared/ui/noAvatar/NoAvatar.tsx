@@ -1,8 +1,14 @@
 import { PersonIcon } from '@/shared/assets/icons/PersonIcon'
 import s from './NoAvatar.module.scss'
-export const NoAvatar = () => {
+import { clsx } from 'clsx'
+
+type Props = {
+  className?: string
+}
+
+export const NoAvatar = ({ className }: Props) => {
   return (
-    <div className={s.no_avatar}>
+    <div className={clsx(s.no_avatar, className)}>
       <PersonIcon />
     </div>
   )

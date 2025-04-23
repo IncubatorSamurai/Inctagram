@@ -3,18 +3,17 @@
   align-items: center;
   justify-content: space-between;
 
-  padding: 12px;
-  border-top: 1px solid var(--color-dark-100);
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--color-dark-100);
 
   .imgAndURLProfile {
     display: flex;
     gap: 12px;
     align-items: center;
-    padding: 10px;
 
     .userAvatar {
-      max-width: 72px;
-      max-height: 48px;
+      max-width: 36px;
+      max-height: 36px;
       border-radius: 50%;
     }
   }
