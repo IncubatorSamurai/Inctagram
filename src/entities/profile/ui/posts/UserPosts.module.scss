@@ -1,0 +1,27 @@
+.posts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+
+  width: 100%;
+  max-height: calc(100vh * 0.8);
+
+  .postWrapper {
+    position: relative;
+    aspect-ratio: 1/1;
+    width: 100%;
+  }
+
+  .post {
+    object-fit: cover;
+  }
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100px;
+}

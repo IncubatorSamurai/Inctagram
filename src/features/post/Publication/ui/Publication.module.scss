@@ -1,0 +1,81 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--color-dark-100);
+
+  .DialogTitle {
+    margin: 0;
+  }
+
+  & > button:last-child {
+    padding: 0.375rem 0.75rem;
+  }
+}
+
+.contentContainer {
+  display: flex;
+
+  width: 100%;
+  max-width: 60.75rem;
+  height: 100%;
+  max-height: 31.375rem;
+
+  .imageSide {
+    position: relative;
+    width: 100%;
+    max-width: 30.625rem;
+    background-color: var(--color-dark-500);
+
+    .image {
+      width: 100%;
+      object-fit: contain;
+    }
+
+    :global(.slick-dots) {
+      bottom: 1rem;
+    }
+  }
+
+  .editSide {
+    width: 30rem;
+
+    .descriptionWrapper {
+      padding: 1.5rem 1.5rem 2.25rem;
+
+      & > div:first-child {
+        padding-bottom: 1.5rem;
+      }
+
+      .avatarWithNameWrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 0.75rem;
+        align-items: center;
+
+        .avatar {
+          border-radius: 50%;
+        }
+      }
+
+      .textareaWithCharCountWrapper {
+        position: relative;
+
+        & > div > textarea {
+          height: 7.5rem;
+        }
+
+        & > p {
+          position: absolute;
+          top: 9.125rem;
+          right: 0;
+
+          color: var(--color-light-900);
+          text-align: end;
+        }
+      }
+    }
+  }
+}

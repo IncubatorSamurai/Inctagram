@@ -27,6 +27,10 @@ import { BookMarkIcon } from '@/shared/assets/icons/BookMarkIcon'
 import { NavItem } from '@/shared/ui/nav-item'
 import { PATH } from '@/shared/config/routes'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
+import { useMeQuery } from '@/shared/api/auth/authApi'
+import { useState } from 'react'
+import { Button } from '@/shared/ui/button/Button'
+import { AddPostModal } from '../post'
 
 export const sidebarItems = {
   primary: [
@@ -43,7 +47,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Create',
       icon: <PlusSquareOutlineIcon />,
-      href: PATH.CREATE,
+      href: '#',
       disabled: false,
       classItem: 'create',
       activeIcon: <PlusSquareIcon />,
@@ -52,7 +56,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'My Profile',
       icon: <PersonOutlineIcon />,
-      href: PATH.PROFILE,
+      href: PATH.MYPROFILE,
       disabled: false,
       classItem: 'profile',
       activeIcon: <PersonIcon />,
@@ -81,7 +85,7 @@ export const sidebarItems = {
       id: uuidv4(),
       name: 'Profile Settings ',
       icon: <SettingsOutlineIcon />,
-      href: PATH.STATISTICS,
+      href: PATH.SETTINGS,
       disabled: false,
       classItem: 'settings',
       activeIcon: <SettingsIcon />,
@@ -144,11 +148,14 @@ export const sidebarItems = {
     },
   ],
 }
+
 type Sidebar = {
   isAdmin?: boolean
 }
 
 export const Sidebar = ({ isAdmin }: Sidebar) => {
+  const { data: meInfo } = useMeQuery()
+  const [isModalOpen, setIsModalOpen] = useState(false)
   return (
     <nav className={s.sidebar}>
       {isAdmin ? (
@@ -161,9 +168,29 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
       ) : (
         <>
           <ul className={clsx(s.sidebar_list, s.primary)}>
-            {sidebarItems.primary.map(item => (
-              <NavItem key={item.id} {...item} />
-            ))}
+            {sidebarItems.primary.map(item => {
+              if (item.name === 'Create') {
+                return (
+                  <li
+                    className={clsx(s.create_item, item.classItem, { [s.active]: isModalOpen })}
+                    key={item.id}
+                    data-disabled={item.disabled}
+                  >
+                    <Button
+                      variant={'icon'}
+                      className={s.nav_create_btn}
+                      onClick={() => setIsModalOpen(true)}
+                    >
+                      {isModalOpen ? item.activeIcon : item.icon}
+                      <span className={s.nav_name}>{item.name}</span>
+                    </Button>
+                  </li>
+                )
+              } else if (item.name === 'My Profile') {
+                item = { ...item, href: `${item.href}/${meInfo?.userId}` }
+              }
+              return <NavItem key={item.id} {...item} />
+            })}
           </ul>
           <ul className={clsx(s.sidebar_list, s.secondary)}>
             {sidebarItems.secondary.map(item => (
@@ -173,6 +200,7 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
           </ul>
         </>
       )}
+      {isModalOpen && <AddPostModal open={isModalOpen} onChange={setIsModalOpen} />}
     </nav>
   )
 }

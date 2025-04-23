@@ -1,0 +1,18 @@
+.delete_avatar_modal {
+  width: 438px;
+
+  .delete_avatar_modal_content {
+    display: flex;
+    flex-direction: column;
+    width: 438px;
+    padding: 24px;
+    row-gap: 54px;
+
+    .delete_controls {
+      align-self: flex-end;
+      display: flex;
+      flex-direction: row;
+      column-gap: 24px;
+    }
+  }
+}

@@ -13,10 +13,10 @@ export const PATH = {
   SETTINGS: '/settings',
   SEARCH: '/search',
   MESSENGER: '/messenger',
-  PROFILE: '/profile',
+  MYPROFILE: '/profile',
   CREATE: '/create',
   LINK_EXPIRED: '/auth/linkexpired',
-  PUBLIC: '/public',
+  PUBLIC: '/',
   PRIVACY_POLICY: '/auth/privacypolicies',
   TERMS_OF_SERVICE: '/auth/termsofservice',
-} as const
+}

@@ -1,0 +1,42 @@
+.postsSide {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  .postsSideHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px;
+    border-bottom: 1px solid var(--color-dark-100);
+
+    .imgAndURLProfile {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 10px;
+    }
+  }
+
+  .postsSideContent {
+    height: 336px;
+    border-bottom: 1px solid var(--color-dark-100);
+
+    .postDescription {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 24px 0;
+
+      .topContent {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .sideInfo {
+        padding: 8px 8px 8px 72px;
+      }
+    }
+  }
+}

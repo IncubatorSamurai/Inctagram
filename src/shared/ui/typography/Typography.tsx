@@ -9,6 +9,7 @@ export const Variant = [
   'h2',
   'h3',
   'regular_text_16',
+  'medium_text_16',
   'bold_text_16',
   'regular_text_14',
   'medium_text_14',

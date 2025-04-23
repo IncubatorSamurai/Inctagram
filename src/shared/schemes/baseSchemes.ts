@@ -34,3 +34,5 @@ export const email = z
   .default('')
 
 export const captcha = z.string().min(1, 'Captha is required').default('')
+
+export const profileName = z.string().min(1, 'First Name is required').max(50).default('')

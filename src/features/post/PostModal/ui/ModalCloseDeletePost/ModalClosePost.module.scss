@@ -1,0 +1,46 @@
+.modal {
+  width: 486px;
+
+  .btns {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  & > div:nth-child(2) {
+    padding: size(30px) size(24px) size(34px);
+  }
+
+  @media screen and (width <= 576px) {
+    max-width: size(330px);
+
+    & > div:nth-child(1) {
+      padding: 0.75rem;
+    }
+
+    & > div:nth-child(2) {
+      padding: size(30px) size(12px) size(34px);
+    }
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding: 1.5rem;
+
+  @media screen and (width <= 576px) {
+    text-align: center;
+  }
+}
+
+.button {
+  align-self: flex-end;
+  width: size(96px);
+
+  @media screen and (width <= 576px) {
+    align-self: unset;
+    width: 100%;
+    padding: 0.75rem 0;
+  }
+}
