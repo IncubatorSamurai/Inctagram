@@ -18,7 +18,14 @@ export const postSlice = createSlice({
   name: 'post',
   initialState: {
     files: [] as Photo[],
-    avatar: {} as AvatarProfile
+    avatar: {
+      id: '',
+      fileUrl: '',
+      type: '',
+      croppedFileUrl: null,
+      zoomInit: null,
+      cropInit: null,
+    } as AvatarProfile,
   },
   reducers: create => ({
     addFile: create.reducer<{ fileUrl: string; id: string; type: string }>((state, action) => {
@@ -27,6 +34,19 @@ export const postSlice = createSlice({
         id: action.payload.id,
         type: action.payload.type,
       })
+    }),
+    addAvatar: create.reducer<{ fileUrl: string; id: string; type: string }>((state, action) => {
+      state.avatar = {
+        fileUrl: action.payload.fileUrl,
+        id: action.payload.id,
+        type: action.payload.type,
+      }
+    }),
+    removeAvatar: create.reducer(state => {
+      if (state.avatar?.fileUrl) {
+        URL.revokeObjectURL(state.avatar.fileUrl)
+      }
+      state.avatar = {} as AvatarProfile
     }),
     removeFiles: create.reducer(state => {
       state.files.forEach(file => revokeObjectURLs(file))
@@ -101,10 +121,19 @@ export const postSlice = createSlice({
   }),
   selectors: {
     selectFiles: state => state.files,
+    selectAvatar: state => state.avatar,
   },
 })
 
-export const { addFile, addFilteredFiles, resetCropFile, saveCropFile, removeFiles, removeFile } =
-  postSlice.actions
-export const { selectFiles } = postSlice.selectors
+export const {
+  addFile,
+  addFilteredFiles,
+  resetCropFile,
+  saveCropFile,
+  removeFiles,
+  removeFile,
+  addAvatar,
+  removeAvatar,
+} = postSlice.actions
+export const { selectFiles, selectAvatar } = postSlice.selectors
 export const postReducer = postSlice.reducer

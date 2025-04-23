@@ -6,6 +6,7 @@ type DeleteAvatarModalProps = {
   trigger:React.ReactNode
 onDeleteAvatar?: () => void
   title :string
+
 }
 export const DeleteAvatarModal = ({title,onDeleteAvatar,trigger}:DeleteAvatarModalProps) => {
 

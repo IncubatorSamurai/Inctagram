@@ -4,6 +4,7 @@
   width: max-content;
   min-width: size(492px);
   max-width: size(972px);
+  z-index: 0;
 
   & > div:nth-child(2) {
     padding: 0;

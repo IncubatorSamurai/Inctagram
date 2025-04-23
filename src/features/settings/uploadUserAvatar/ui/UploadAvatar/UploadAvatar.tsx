@@ -2,36 +2,33 @@
 import { Button } from '@/shared/ui/button/Button'
 import s from './UploadAvatar.module.scss'
 import { useTranslations } from 'next-intl'
-import { useSelector } from 'react-redux'
-import { addFile, removeFile, selectFiles } from '@/shared/store/postSlice/postSlice'
+import { addAvatar, removeAvatar, selectAvatar } from '@/shared/store/postSlice/postSlice'
 import { ImageOutlineIcon } from '@/shared/assets/icons/ImageOutlineIcon'
 import Cropper from 'react-easy-crop'
-import { useAppDispatch } from '@/shared/hooks'
+import { useAppDispatch, useAppSelector } from '@/shared/hooks'
 import { useState } from 'react'
 import { clsx } from 'clsx'
-
 import { useUploadUserAvatarMutation } from '@/shared/api/profile/profileApi'
-import { Alert } from '@/shared/ui/alert'
 import { useAvatarCrop } from '@/shared/hooks/useAvatarCrop'
 import { nanoid } from '@reduxjs/toolkit'
+import { convertToBytes } from '@/shared/utils'
+import { toast } from 'react-toastify'
 
 type UpdateAvatarProps = {
   onOpenChange: (open: boolean) => void
 }
 const MAX_FILE_SIZE_MB = 10
-const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
+const MAX_FILE_SIZE = convertToBytes(MAX_FILE_SIZE_MB)
 
 export const UploadAvatar = ({ onOpenChange }: UpdateAvatarProps) => {
   const t = useTranslations('post')
   const dispatch = useAppDispatch()
 
   const [error, setError] = useState('')
-  const files = useSelector(selectFiles)
+  const avatar = useAppSelector(selectAvatar)
   const [uploadUserAvatar, { isLoading }] = useUploadUserAvatarMutation()
   const [isUploaded, setIsUploaded] = useState(false)
-
   const { crop, setCrop, zoom, setZoom, onCropComplete, getCroppedImage } = useAvatarCrop()
-
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -42,25 +39,25 @@ export const UploadAvatar = ({ onOpenChange }: UpdateAvatarProps) => {
       setError('')
     }
 
-    if (files.length > 0) {
-      dispatch(removeFile({ id: files[0].id }))
+    if (avatar) {
+      dispatch(removeAvatar())
     }
 
-    dispatch(addFile({ fileUrl: URL.createObjectURL(file), id: nanoid(), type: file.type }))
+    dispatch(addAvatar({ fileUrl: URL.createObjectURL(file), id: nanoid(), type: file.type }))
     setIsUploaded(true)
   }
 
-  const handleRemoveFile = () => {
-    if (files.length > 0) {
-      dispatch(removeFile({ id: files[0].id }))
+  const handleRemoveAvatar = () => {
+    if (avatar) {
+      dispatch(removeAvatar())
       setIsUploaded(false)
     }
   }
 
   const onSave = async () => {
-    if (!files.length) return
+    if (!avatar) return
 
-    const fileUrl = files[0].fileUrl
+    const fileUrl = avatar.fileUrl
     const blob = await getCroppedImage(fileUrl)
 
     if (!blob) {
@@ -76,26 +73,21 @@ export const UploadAvatar = ({ onOpenChange }: UpdateAvatarProps) => {
     try {
       const result = await uploadUserAvatar(formData).unwrap()
       console.log('Аватар загружен успешно', result)
-      handleRemoveFile()
+      handleRemoveAvatar()
       setIsUploaded(false)
       onOpenChange(false)
     } catch (error) {
-      console.error('Ошибка при загрузке аватара:', error)
+      toast.error('Ошибка при загрузке аватара:', error || '')
     }
   }
-
+  console.log('avatar now', avatar)
   return (
     <div className={clsx(s.container, isUploaded && !error && s.container_uploaded)}>
-      {error && (
-        <Alert variant={'error'} fullWidth>
-          {error}
-        </Alert>
-      )}
       <div className={s.post_preview}>
-        {files.length > 0 ? (
+        {avatar.id ? (
           <div className={s.imageWrapper}>
             <Cropper
-              image={files[0].fileUrl}
+              image={avatar.fileUrl}
               crop={crop}
               zoom={zoom}
               aspect={1}
@@ -127,7 +119,7 @@ export const UploadAvatar = ({ onOpenChange }: UpdateAvatarProps) => {
           variant="primary"
           className={clsx(s.button, s.button_save)}
           onClick={onSave}
-          disabled={!files.length || isLoading}
+          disabled={!avatar || isLoading}
         >
           Save
         </Button>

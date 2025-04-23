@@ -31,4 +31,8 @@
       margin-right: 1rem;
     }
   }
+  &[data-radix-popper-content-wrapper]{
+    z-index: 9999999999 !important;
+  }
 }
+
