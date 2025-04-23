@@ -19,7 +19,7 @@ export const PaymentsTable = ({ payments }: Props) => {
       </TableHead>
       <TableBody>
         {payments.map(payment => (
-          <TableRow key={payment.userId}>
+          <TableRow key={payment.subscriptionId}>
             <TableCell>{new Date(payment.dateOfPayment).toLocaleDateString('ru-RU')}</TableCell>
             <TableCell>
               {new Date(payment.endDateOfSubscription).toLocaleDateString('ru-RU')}

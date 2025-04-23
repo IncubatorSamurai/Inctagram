@@ -6,8 +6,7 @@ import { useGetMyPaymentsQuery } from '@/shared/api/payments/paymentsApi'
 import { useMemo, useState } from 'react'
 import { Pagination } from '@/shared/ui/pagination'
 
-const Payments = () => {
-
+export const Payments = () => {
   const { data: payments = [] } = useGetMyPaymentsQuery()
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(10)
@@ -38,5 +37,3 @@ const Payments = () => {
     </div>
   )
 }
-
-export default Payments

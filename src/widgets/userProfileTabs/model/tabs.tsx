@@ -1,6 +1,6 @@
 import { GeneralInfoTab } from '../ui/generalInfo/GeneralInfoTab'
-import Payments from '@/widgets/userProfileTabs/ui/payments/Payments'
-import { AccountManagement } from "@/features/settings"
+import { Payments } from '@/widgets/userProfileTabs/ui/payments/Payments'
+import { AccountManagement } from '@/features/settings'
 
 export const userProfileTabs = [
   { value: 'generalInformation', title: 'General information' },
@@ -25,6 +25,6 @@ export const tabsContent = [
   },
   {
     value: 'payments',
-    content: <Payments/>,
+    content: <Payments />,
   },
 ]

@@ -1,4 +1,3 @@
-// import { PostModalGlobal } from '@/entities/postModal'
 import { PostsModal } from '@/features/post/PostModal'
 import getPublicPost from '@/shared/api/post/serverRequests/getPublicPost'
 import getComments from '@/shared/api/post/serverRequests/getPostComments'

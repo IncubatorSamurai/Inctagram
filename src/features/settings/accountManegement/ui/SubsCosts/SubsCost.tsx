@@ -123,7 +123,12 @@ export const SubsCost = () => {
           </Button>
         </Card>
       </div>
-      <Modal open={!!paymentType} onOpenChange={onClose} title={t('CreatePayment')}>
+      <Modal
+        open={!!paymentType}
+        onOpenChange={onClose}
+        title={t('CreatePayment')}
+        className={s.agreeToPayModal}
+      >
         <div className={s.content}>
           <Typography variant="regular_text_16">{t('labelModal')}</Typography>
           <div className={s.checkboxBtnGroup}>

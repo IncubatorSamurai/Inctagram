@@ -33,17 +33,18 @@ export const StatusModal = ({ success }: Props) => {
   return (
     <Modal
       open={!!success}
-      title={success === 'error' ? 'Error' : 'Success'}
+      title={success === 'false' ? 'Error' : 'Success'}
       onOpenChange={isOpen => !isOpen && closeModal()}
+      className={s.statusModal}
     >
       <div className={s.container}>
         <Typography variant={'medium_text_16'}>
-          {success === 'error'
+          {success === 'false'
             ? 'Transaction failed. Please, write to support'
             : 'Payment was successful!'}
         </Typography>
         <DialogClose asChild>
-          <Button fullWidth>{success === 'error' ? 'Back to payment' : 'Ok'}</Button>
+          <Button fullWidth>{success === 'false' ? 'Back to payment' : 'Ok'}</Button>
         </DialogClose>
       </div>
     </Modal>
