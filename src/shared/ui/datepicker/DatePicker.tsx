@@ -30,7 +30,6 @@ export const DatePicker = ({ onChange, value, error, title, disabled }: Props) =
       onChange(format(date, 'dd/MM/yyyy'))
     }
   }
-
   return (
     <PopoverRoot open={isOpen} onOpenChange={setIsOpen}>
       {title && <Typography className={classNames.title}>{title}</Typography>}

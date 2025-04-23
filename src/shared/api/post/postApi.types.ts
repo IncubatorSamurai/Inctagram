@@ -1,7 +1,11 @@
 export type ChildrenMetadata = {
   uploadId: string
 }
-
+export type AvatarProfile = {
+  id: string
+  fileUrl: string
+  type: string
+}
 export type CreatePostArgs = {
   description: string
   childrenMetadata: ChildrenMetadata[]

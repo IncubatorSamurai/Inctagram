@@ -1,24 +1,29 @@
-.LogOutModalContainer {
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-}
+.LogOutModal {
+width:438px;
+  .LogOutModalContainer {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    padding: 24px;
+  }
 
-.LogOutModalBtn {
-  display: flex;
-  flex-direction: row;
-  column-gap: 20px;
-}
+  .LogOutModalBtn {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    justify-content: flex-end;
+  }
 
-.logoutBtn {
-  display: flex;
-  flex-direction: row;
-  column-gap: 20px;
-  align-items: center;
-  justify-content: flex-start;
+  .logoutBtn {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
 
-  padding: 0;
+    padding: 0;
 
-  font-weight: 400;
-  color: inherit;
+    font-weight: 400;
+    color: inherit;
+  }
 }

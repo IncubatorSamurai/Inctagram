@@ -16,7 +16,7 @@
     cursor: pointer;
     position: absolute;
     top: 50%;
-    z-index: 6;
+    //z-index: 1;
     transform: translateY(-45%);
 
     svg {
@@ -42,6 +42,7 @@
 
   .prev_arrow {
     left: 0;
+    z-index: 1;
   }
 }
 

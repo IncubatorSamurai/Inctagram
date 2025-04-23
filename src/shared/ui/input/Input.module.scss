@@ -6,6 +6,12 @@
 .label {
   color: var(--color-light-900);
 }
+.isRequired {
+  &::after {
+    content: '*';
+    color: var(--color-danger-500);
+  }
+}
 
 .eyeIcon,
 .searchIcon {

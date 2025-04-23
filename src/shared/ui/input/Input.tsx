@@ -11,10 +11,11 @@ type Props = {
   label?: string
   error?: string
   type?: string
+  isRequired?: boolean
 } & ComponentProps<'input'>
 
 export const Input = forwardRef<HTMLInputElement, Props>(
-  ({ className, label, error, type = 'text', ...props }, ref) => {
+  ({ className, label, error, type = 'text', isRequired, ...props }, ref) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
     const inputStyle = clsx(
@@ -30,7 +31,9 @@ export const Input = forwardRef<HTMLInputElement, Props>(
 
     return (
       <div className={clsx(s.inputWrapper, className)}>
-        {label && <Typography className={s.label}>{label}</Typography>}
+        {label && (
+          <Typography className={clsx(s.label, isRequired && s.isRequired)}>{label}</Typography>
+        )}
         <div className={s.container}>
           <input
             {...props}

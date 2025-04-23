@@ -9,9 +9,11 @@ import s from './SignUp.module.scss'
 import { PATH } from '@/shared/config/routes'
 import { SignUpForm } from '@/features/auth/signUp'
 import { useTranslations } from 'next-intl'
+import { useTrackPrevPath } from '@/shared/hooks/useTrackPrevPath'
 
 export const SignUpPage = () => {
   const tAuth = useTranslations('auth')
+  useTrackPrevPath()
   return (
     <div>
       <Card className={s.root}>

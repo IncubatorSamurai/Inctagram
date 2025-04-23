@@ -1,3 +1,17 @@
+export type UploadAvatarRequest = {
+  file: File
+}
+type AvatarInfo = {
+  url: string
+  width: number
+  height: number
+  fileSize: number
+  createdAt: string
+}
+
+export type UploadAvatarResponse = {
+  avatars: AvatarInfo[]
+}
 type IAvatar = {
   url: string
   width: number
@@ -10,9 +24,6 @@ export type ProfileResponse = {
   userName: string
   firstName: string
   lastName: string
-  city: string
-  country: string
-  region: string
   dateOfBirth: string
   aboutMe: string
   avatars: IAvatar[]

@@ -17,12 +17,12 @@ export const LogOutModal = ({ logOut, email, trigger }: LogOut) => {
         </Typography>
         <div className={s.LogOutModalBtn}>
           <DialogClose asChild>
-            <Button variant="primary" onClick={logOut} fullWidth>
+            <Button variant="primary" onClick={logOut} >
               Yes
             </Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button variant="primary" fullWidth>
+            <Button variant="primary">
               No
             </Button>
           </DialogClose>

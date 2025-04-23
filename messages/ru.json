@@ -44,6 +44,15 @@
     "following": "Подписок",
     "followers": "Подписчики",
     "publications": "Публикаций",
+    "generalInfo": {
+      "name": "Имя пользователя",
+      "firstName": "Имя",
+      "lastName": "Фамилия",
+      "birthDate": "Дата рождения",
+      "about": "Обо мне",
+      "dateError": "Пользователь младше 13 лет не может создать профиль.",
+      "btn": "Сохранить изменения"
+    },
     "profileSettingsTabs": {
       "accountType": "Тип профиля:",
       "cost": "Стоимость вашей подписки:",
