@@ -4,9 +4,6 @@ export type ChildrenMetadata = {
 export type AvatarProfile = {
   id: string
   fileUrl: string
-  croppedFileUrl?: string | null
-  zoomInit?: number | null
-  cropInit?: { x: number; y: number } | null
   type: string
 }
 export type CreatePostArgs = {

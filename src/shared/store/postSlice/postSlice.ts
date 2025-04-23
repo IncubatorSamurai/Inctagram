@@ -22,9 +22,6 @@ export const postSlice = createSlice({
       id: '',
       fileUrl: '',
       type: '',
-      croppedFileUrl: null,
-      zoomInit: null,
-      cropInit: null,
     } as AvatarProfile,
   },
   reducers: create => ({
@@ -46,7 +43,11 @@ export const postSlice = createSlice({
       if (state.avatar?.fileUrl) {
         URL.revokeObjectURL(state.avatar.fileUrl)
       }
-      state.avatar = {} as AvatarProfile
+      state.avatar = {
+        id: '',
+        fileUrl: '',
+        type: '',
+      } as AvatarProfile
     }),
     removeFiles: create.reducer(state => {
       state.files.forEach(file => revokeObjectURLs(file))

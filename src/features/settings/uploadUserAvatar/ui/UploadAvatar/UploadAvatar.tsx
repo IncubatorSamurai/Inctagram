@@ -6,7 +6,7 @@ import { addAvatar, removeAvatar, selectAvatar } from '@/shared/store/postSlice/
 import { ImageOutlineIcon } from '@/shared/assets/icons/ImageOutlineIcon'
 import Cropper from 'react-easy-crop'
 import { useAppDispatch, useAppSelector } from '@/shared/hooks'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { clsx } from 'clsx'
 import { useUploadUserAvatarMutation } from '@/shared/api/profile/profileApi'
 import { useAvatarCrop } from '@/shared/hooks/useAvatarCrop'
@@ -20,6 +20,8 @@ type UpdateAvatarProps = {
 const MAX_FILE_SIZE_MB = 10
 const MAX_FILE_SIZE = convertToBytes(MAX_FILE_SIZE_MB)
 
+
+
 export const UploadAvatar = ({ onOpenChange }: UpdateAvatarProps) => {
   const t = useTranslations('post')
   const dispatch = useAppDispatch()
@@ -29,12 +31,23 @@ export const UploadAvatar = ({ onOpenChange }: UpdateAvatarProps) => {
   const [uploadUserAvatar, { isLoading }] = useUploadUserAvatarMutation()
   const [isUploaded, setIsUploaded] = useState(false)
   const { crop, setCrop, zoom, setZoom, onCropComplete, getCroppedImage } = useAvatarCrop()
+
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const resetFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
+  }
+
+
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
     if (file.size > MAX_FILE_SIZE) {
+      toast.error(`Error! Photo size must be less than 10 MB!`)
       setError(`Error! Photo size must be less than 10 MB!`)
+resetFileInput()
     } else {
       setError('')
     }
@@ -42,9 +55,10 @@ export const UploadAvatar = ({ onOpenChange }: UpdateAvatarProps) => {
     if (avatar) {
       dispatch(removeAvatar())
     }
-
-    dispatch(addAvatar({ fileUrl: URL.createObjectURL(file), id: nanoid(), type: file.type }))
-    setIsUploaded(true)
+    if (file.size <= MAX_FILE_SIZE) {
+      dispatch(addAvatar({ fileUrl: URL.createObjectURL(file), id: nanoid(), type: file.type }))
+      setIsUploaded(true)
+    }
   }
 
   const handleRemoveAvatar = () => {
@@ -80,11 +94,11 @@ export const UploadAvatar = ({ onOpenChange }: UpdateAvatarProps) => {
       toast.error('Ошибка при загрузке аватара:', error || '')
     }
   }
-  console.log('avatar now', avatar)
+  console.log('File in ref after reset:', fileInputRef.current?.files?.[0])
   return (
     <div className={clsx(s.container, isUploaded && !error && s.container_uploaded)}>
       <div className={s.post_preview}>
-        {avatar.id ? (
+        {avatar.id && !error ? (
           <div className={s.imageWrapper}>
             <Cropper
               image={avatar.fileUrl}
@@ -108,6 +122,7 @@ export const UploadAvatar = ({ onOpenChange }: UpdateAvatarProps) => {
           <label htmlFor="file-upload">{t('selectFromComputer')}</label>
         </Button>
         <input
+          ref={fileInputRef}
           id="file-upload"
           type="file"
           multiple={false}
