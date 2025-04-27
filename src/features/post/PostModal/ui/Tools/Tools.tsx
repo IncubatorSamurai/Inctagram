@@ -7,9 +7,10 @@ type ToolsProps = {
   changeEdit: () => void
   openClose: () => void
   showDeleteModalHandler: () => void
+  isOwner: boolean
 }
 
-export const Tools = ({ changeEdit, openClose, showDeleteModalHandler }: ToolsProps) => {
+export const Tools = ({ isOwner, changeEdit, openClose, showDeleteModalHandler }: ToolsProps) => {
   const handler = () => {
     changeEdit()
     openClose()
@@ -24,11 +25,11 @@ export const Tools = ({ changeEdit, openClose, showDeleteModalHandler }: ToolsPr
     <div className={s.nav_tools}>
       <div className={s.nav_tools_label} onClick={handler}>
         <EditOutlineIcon />
-        <Typography variant="regular_text_14">Edit Post</Typography>
+        <Typography variant="regular_text_14">{isOwner ? 'Edit Post' : 'Unfollow'}</Typography>
       </div>
       <div className={s.nav_tools_label} onClick={deletePostHandler}>
         <TrashOutlineIcon />
-        <Typography variant="regular_text_14"> Delete Post</Typography>
+        <Typography variant="regular_text_14">{isOwner ? 'Delete Post' : 'Copy Link'} </Typography>
       </div>
     </div>
   )

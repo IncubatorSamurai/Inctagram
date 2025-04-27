@@ -23,18 +23,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-.slider_img {
-  display: block;
-}
-.slickSlider {
-  width: 490px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  position: relative;
-}
+
 
 .public_modal_img {
+  width:490px;
   object-fit: cover;
 }
 

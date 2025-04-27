@@ -1,25 +1,18 @@
 import { ExpandOutlineIcon } from '@/shared/assets/icons/ExpandOutlineIcon'
-import { sliderSettings } from '@/shared/config/sliderSettings'
 import { useAppSelector } from '@/shared/hooks'
 import { selectFiles } from '@/shared/store'
 import { Button } from '@/shared/ui/button'
 import Image from 'next/image'
 import { useState } from 'react'
-import Slider from 'react-slick'
 import s from './Cropping.module.scss'
 import { ImageCropDialog } from './ImageCropDialog'
 import { Photo } from '@/shared/types'
+import { CustomSlider } from '@/shared/ui/customSlider/CustomSlider'
 
 export const Cropping = () => {
   const files = useAppSelector(selectFiles)
   const [selectedFile, setSelectedFile] = useState<Photo | null>(null)
   const [slideIndex, setSlideIndex] = useState(0)
-
-  const settings = {
-    ...sliderSettings,
-    initialSlide: slideIndex,
-    beforeChange: (_: number, newIndex: number) => setSlideIndex(newIndex),
-  }
 
   return (
     <div className={s.container}>
@@ -28,7 +21,11 @@ export const Cropping = () => {
       ) : (
         <>
           <div className={s.sliderContainer}>
-            <Slider {...settings}>
+            <CustomSlider
+              className={s.croppingSlider}
+              initialSlide={slideIndex}
+              onSlideChange={({ activeIndex }) => setSlideIndex(activeIndex)}
+            >
               {files.map(file => (
                 <Image
                   key={file.id}
@@ -39,7 +36,7 @@ export const Cropping = () => {
                   alt="image for new post"
                 />
               ))}
-            </Slider>
+            </CustomSlider>
           </div>
           <Button
             variant="icon"

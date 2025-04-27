@@ -11,9 +11,11 @@ type RightSideHeaderProps = {
   isOpenEdit: boolean
   showDeleteModalHandler: () => void
   postUserName: string | undefined
+  isOwner: boolean
 }
 
 export const RightSideHeader = ({
+  isOwner,
   postUserName,
   changeEdit,
   isOpenEdit,
@@ -35,6 +37,7 @@ export const RightSideHeader = ({
         {!isOpenEdit && <MoreHorizontalIcon onClick={() => setOpenTools(!openTools)} />}
         {openTools && (
           <Tools
+            isOwner={isOwner}
             changeEdit={changeEdit}
             openClose={openCloseToolsHadler}
             showDeleteModalHandler={showDeleteModalHandler}

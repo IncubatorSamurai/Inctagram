@@ -1,5 +1,5 @@
 import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
-import s from './PublicModal.module.scss'
+import s from './PublicModalRenderAvatars.module.scss'
 import Image from 'next/image'
 
 const WIDTH_AVATAR = 36

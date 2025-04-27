@@ -1,17 +1,14 @@
 import { ArrowIosBackIcon } from '@/shared/assets/icons/ArrowIosBackIcon'
 import { ImageOutlineIcon } from '@/shared/assets/icons/ImageOutlineIcon'
-import { sliderSettings } from '@/shared/config/sliderSettings'
 import { Button } from '@/shared/ui/button'
 import { DialogTitle } from '@/shared/ui/modal'
 import { TextArea } from '@/shared/ui/textarea'
 import { Typography } from '@/shared/ui/typography'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-import Slider from 'react-slick'
-import 'slick-carousel/slick/slick-theme.css'
-import 'slick-carousel/slick/slick.css'
 import { MAX_DESCRIPTION_LENGTH, usePublication } from '../lib/usePublication'
 import s from './Publication.module.scss'
+import { CustomSlider } from '@/shared/ui/customSlider/CustomSlider'
 
 type Props = {
   closeAllModals: () => void
@@ -44,7 +41,7 @@ export const Publication = ({ closeAllModals, setCurrentStep }: Props) => {
       <div className={s.contentContainer}>
         <div className={s.imageSide}>
           <div className={s.sliderContainer}>
-            <Slider {...sliderSettings}>
+            <CustomSlider>
               {files.map(file => (
                 <Image
                   key={file.id}
@@ -55,7 +52,7 @@ export const Publication = ({ closeAllModals, setCurrentStep }: Props) => {
                   alt="publication image"
                 />
               ))}
-            </Slider>
+            </CustomSlider>
           </div>
         </div>
 
