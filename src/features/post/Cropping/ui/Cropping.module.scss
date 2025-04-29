@@ -11,21 +11,22 @@
   height: 31.375rem;
 
   background-color: var(--color-dark-500);
+  .croppingSlider{
 
-  .image {
-    width: auto;
-    object-fit: contain;
+    .image {
+
+      object-fit: cover;
+      height:502px;
+    }
   }
 
-  :global(.slick-dots) {
-    bottom: 1rem;
-  }
+
 
   .cropButton {
     position: absolute;
     bottom: 1.25rem;
     left: 1.25rem;
-
+    z-index: 3;
     width: 2.25rem;
     height: 2.25rem;
 

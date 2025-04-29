@@ -4,17 +4,25 @@ import { useGetPostByIdQuery } from '@/shared/api/post/postApi'
 import { EditDescriptionPost } from '@/features/post/PostModal/ui/EditDescriptionPost/EditDiscriptionPost'
 import { PostContent } from '@/features/post/PostModal/ui/PostContent/PostContent'
 
-type AuthorizedContentProps= {
+type AuthorizedContentProps = {
   postId: number
   changeEdit: () => void
   openEdit: boolean
   showDeleteModalHandler: () => void
+  isOwner: boolean
 }
-export const AuthorizedContent = ({showDeleteModalHandler, openEdit,changeEdit, postId }:AuthorizedContentProps) => {
+export const AuthorizedContent = ({
+  isOwner,
+  showDeleteModalHandler,
+  openEdit,
+  changeEdit,
+  postId,
+}: AuthorizedContentProps) => {
   const { data } = useGetPostByIdQuery({ id: postId })
   return (
     <div className={s.rightSide}>
       <RightSideHeader
+        isOwner={isOwner}
         postUserName={data?.userName}
         changeEdit={changeEdit}
         isOpenEdit={openEdit}

@@ -1,9 +1,8 @@
-import Slider from 'react-slick'
 import s from './SliderCanvas.module.scss'
 import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { selectFiles } from '@/shared/store/postSlice/postSlice'
-import { sliderSettings } from '@/shared/config/sliderSettings'
+import { CustomSlider } from '@/shared/ui/customSlider/CustomSlider'
 
 type Props = {
   setIndexState: (value: number) => void
@@ -53,14 +52,12 @@ export const SliderCanvas = ({ setIndexState, setFabricCanvases }: Props) => {
     setFabricCanvases(contexts)
   }, [files])
 
-  const settings = {
-    ...sliderSettings,
-    beforeChange: (_: number, next: number) => setIndexState(next),
-  }
-
   return (
     <div ref={containerRef} className={s.container}>
-      <Slider className={s.slider} {...settings}>
+      <CustomSlider
+        className={s.slider}
+        onSlideChange={({ activeIndex }) => setIndexState(activeIndex)}
+      >
         {files.map((_, i) => (
           <div key={i}>
             <canvas
@@ -72,7 +69,7 @@ export const SliderCanvas = ({ setIndexState, setFabricCanvases }: Props) => {
             />
           </div>
         ))}
-      </Slider>
+      </CustomSlider>
     </div>
   )
 }

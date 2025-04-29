@@ -13,6 +13,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       dispatch(setIsLoggedIn({ isLoggedIn: true }))
       localStorage.setItem('email', data.email)
     }
+    if (data?.userName) {
+      localStorage.setItem('userName', data.userName)
+    }
   }, [dispatch, data])
 
   return <div>{children}</div>
