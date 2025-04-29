@@ -2,6 +2,8 @@ import { EditOutlineIcon } from '@/shared/assets/icons/EditOutlineIcon'
 import { TrashOutlineIcon } from '@/shared/assets/icons/TrashOutlineIcon'
 import { Typography } from '@/shared/ui/typography'
 import s from './Tools.module.scss'
+import { CopyIcon } from '@/shared/assets/icons/CopyIcon'
+import { PersonRemoveOutlineIcon } from '@/shared/assets/icons/PersonRemoveOutlineIcon'
 
 type ToolsProps = {
   changeEdit: () => void
@@ -23,14 +25,29 @@ export const Tools = ({ isOwner, changeEdit, openClose, showDeleteModalHandler }
 
   return (
     <div className={s.nav_tools}>
-      <div className={s.nav_tools_label} onClick={handler}>
-        <EditOutlineIcon />
-        <Typography variant="regular_text_14">{isOwner ? 'Edit Post' : 'Unfollow'}</Typography>
-      </div>
-      <div className={s.nav_tools_label} onClick={deletePostHandler}>
-        <TrashOutlineIcon />
-        <Typography variant="regular_text_14">{isOwner ? 'Delete Post' : 'Copy Link'} </Typography>
-      </div>
+      {isOwner ? (
+        <>
+          <div className={s.nav_tools_label} onClick={handler}>
+            <EditOutlineIcon />
+            <Typography variant="regular_text_14">{'Edit Post'}</Typography>
+          </div>
+          <div className={s.nav_tools_label} onClick={deletePostHandler}>
+            <TrashOutlineIcon />
+            <Typography variant="regular_text_14">{'Delete Post'} </Typography>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={s.nav_tools_label} onClick={handler}>
+            <PersonRemoveOutlineIcon />
+            <Typography variant="regular_text_14">{'Unfollow'}</Typography>
+          </div>
+          <div className={s.nav_tools_label} onClick={deletePostHandler}>
+            <CopyIcon />
+            <Typography variant="regular_text_14">{'Copy Link'} </Typography>
+          </div>
+        </>
+      )}
     </div>
   )
 }

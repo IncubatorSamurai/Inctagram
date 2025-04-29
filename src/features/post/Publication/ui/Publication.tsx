@@ -40,7 +40,7 @@ export const Publication = ({ closeAllModals, setCurrentStep }: Props) => {
 
       <div className={s.contentContainer}>
         <div className={s.imageSide}>
-          <div className={s.sliderContainer}>
+          <div className={s.sliderContainerPublication}>
             <CustomSlider>
               {files.map(file => (
                 <Image
