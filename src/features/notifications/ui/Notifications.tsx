@@ -18,6 +18,8 @@ export const Notifications = () => {
     <div>
       <Dropdown
         classItemsContainer={s.dropdown}
+        align={'end'}
+        classContent={s.content}
         isArrow
         iconTrigger={<TriggerButton count={newNotes} />}
       >
