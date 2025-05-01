@@ -5,7 +5,13 @@
   padding: 0 calc(15px + (20 - 15) * ((100vw - 360px) / (1320 - 360)));
   border-bottom: 1px solid var(--color-dark-300);
 }
-
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 232px;
+  width: 100%;
+}
 .container {
   display: flex;
   flex-direction: row;

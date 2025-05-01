@@ -5,65 +5,31 @@ import s from './NotificationItem.module.scss'
 import { Typography } from '@/shared/ui/typography'
 import { formatDistanceToNow } from 'date-fns'
 import { ru } from 'date-fns/locale'
-import { v4 as uuidv4 } from 'uuid'
 
-export type NotificationItem = {
-  id?: string
-  label?: string
+export type NotificationItemProps = {
+  notificationId: number
   path: string
-  text?: string
-  isNew?: boolean
-  date: Date
-} & ComponentPropsWithoutRef<'li'>
-export const notifications = [
-  {
-    id: uuidv4(),
-    title: 'Новое уведомление!',
-    message: 'Следующий платеж у вас спишется через 1 день',
-    date: new Date(Date.now() - 60 * 60 * 1000),
-    isNew: true,
-    path: '#',
-  },
-  {
-    id: uuidv4(),
-    title: 'Новое уведомление!',
-    message: 'Ваша подписка истекает через 7 дней',
-    date: new Date(Date.now() - 24 * 60 * 60 * 1000),
-    isNew: true,
-    path: '#',
-  },
-  {
-    id: uuidv4(),
-    title: 'Новое уведомление!',
-    message: 'Ваша подписка истекает через 7 дней',
-    date: new Date(Date.now() - 24 * 60 * 60 * 1000),
-    isNew: false,
-    path: '#',
-  },
-  {
-    id: uuidv4(),
-    title: 'Новое уведомление!',
-    message: 'Ваша подписка истекает через 7 дней',
-    date: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 день назад
-    isNew: false,
-    path: '#',
-  },
-]
+  title: string
+  message?: string
+  isRead?: boolean
+  createdAt: string
+}
+type Props = NotificationItemProps & ComponentPropsWithoutRef<'li'>
 export const NotificationItem = ({
-  isNew,
-  date,
-  text,
-  id,
-  label,
+  isRead,
+  createdAt,
+  message,
+  notificationId,
   path,
+  title,
   ...props
-}: NotificationItem) => {
+}: Props) => {
   return (
-    <li className={s.notificstion_item} key={id} {...props}>
+    <li className={s.notificstion_item} key={notificationId} {...props}>
       <Link href={path} className={s.notification_link}>
         <div className={s.notification_label}>
-          <Typography variant={'bold_text_14'}>{label}</Typography>
-          {isNew && (
+          <Typography variant={'bold_text_14'}>{title}</Typography>
+          {!isRead && (
             <Typography variant={'small_text'} asChild={true}>
               <span>Новое!</span>
             </Typography>
@@ -71,11 +37,11 @@ export const NotificationItem = ({
         </div>
         <div className={s.notification_content}>
           <div className={s.notification_text}>
-            <Typography variant={'regular_text_14'}>{text}</Typography>
+            <Typography variant={'regular_text_14'}>{message}</Typography>
           </div>
-          <time className={s.notification_date} dateTime={date.toISOString()}>
+          <time className={s.notification_date} dateTime={createdAt}>
             <Typography variant={'small_text'}>
-              {formatDistanceToNow(date, { addSuffix: true, locale: ru })}
+              {formatDistanceToNow(createdAt, { addSuffix: true, locale: ru })}
             </Typography>
           </time>
         </div>

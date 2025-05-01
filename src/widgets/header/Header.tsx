@@ -15,6 +15,7 @@ import { PATH } from '@/shared/config/routes'
 import { useAppSelector } from '@/shared/hooks'
 import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
+import { Notifications } from '@/features/notifications'
 
 type HeaderType = {
   headerTitle?: string
@@ -60,28 +61,31 @@ const Header = ({ isAdmin, headerTitle, headerLogo, ...rest }: HeaderType) => {
               </Typography>
             )}
           </Link>
-          <nav className={s.main_nav}>
-            <LangSelect />
-            {isMobile ? (
-              <Dropdown
-                iconTrigger={<MoreHorizontalIcon />}
-                className={isLoggedIn ? s.header_dropdown : s.header_dropdown_noAuth}
-                classContent={s.header_dropdown_content}
-                classItemsContainer={s.header_dropdown_items_contaner}
-              >
-                {isLoggedIn ? (
-                  <>
-                    <NavList />
-                    <LogOut />
-                  </>
-                ) : (
-                  <HeaderSpecialButtons />
-                )}
-              </Dropdown>
-            ) : isLoggedIn ? undefined : (
-              <HeaderSpecialButtons />
-            )}
-          </nav>
+          <div className={s.row}>
+            <Notifications />
+            <nav className={s.main_nav}>
+              <LangSelect />
+              {isMobile ? (
+                <Dropdown
+                  iconTrigger={<MoreHorizontalIcon />}
+                  className={isLoggedIn ? s.header_dropdown : s.header_dropdown_noAuth}
+                  classContent={s.header_dropdown_content}
+                  classItemsContainer={s.header_dropdown_items_contaner}
+                >
+                  {isLoggedIn ? (
+                    <>
+                      <NavList />
+                      <LogOut />
+                    </>
+                  ) : (
+                    <HeaderSpecialButtons />
+                  )}
+                </Dropdown>
+              ) : isLoggedIn ? undefined : (
+                <HeaderSpecialButtons />
+              )}
+            </nav>
+          </div>
         </div>
       </header>
     </>

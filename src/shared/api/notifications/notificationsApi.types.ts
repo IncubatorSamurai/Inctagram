@@ -1,9 +1,9 @@
 export type NotificationsRequest = {
-  cursor: number
-  isRead: boolean
+  cursor?: number
+  isRead?: boolean
 }
 
-type NotificationItem = {
+export type NotificationItem = {
   id: number
   message: string
   isRead: boolean

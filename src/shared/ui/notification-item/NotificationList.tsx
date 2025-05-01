@@ -1,16 +1,22 @@
-import { NotificationItem, notifications } from '@/shared/ui/notification-item/NotificationItem'
+import {
+  NotificationItem,
+  NotificationItemProps,
+} from '@/shared/ui/notification-item/NotificationItem'
 
-export const NotificationList = () => {
+type Props = {
+  notifications: NotificationItemProps[]
+}
+export const NotificationList = ({ notifications }: Props) => {
   return (
     <>
       {notifications.map(i => (
         <NotificationItem
-          key={i.id}
-          isNew={i.isNew}
-          date={i.date}
-          text={i.message}
-          id={i.id}
-          label={i.title}
+          key={i.notificationId}
+          isRead={i.isRead}
+          createdAt={i.createdAt}
+          message={i.message}
+          notificationId={i.notificationId}
+          title={i.title}
           path={i.path}
         />
       ))}

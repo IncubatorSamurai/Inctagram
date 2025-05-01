@@ -8,7 +8,7 @@ export const notificationsApi = baseApi.injectEndpoints({
         const params = new URLSearchParams()
         if (isRead) params.append('isRead', String(isRead))
         return {
-          url: `v1/notifications/${cursor}?sortBy=notifyAt&pageSize=10${params.toString()}`,
+          url: `v1/notifications/?sortBy=notifyAt&pageSize=10${params.toString()}`,
         }
       },
     }),
