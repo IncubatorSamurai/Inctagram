@@ -9,7 +9,7 @@ export const useTransformNotes = (notifications: NotificationItem[] | undefined)
         ...note,
         path: `/${note.id}`,
         notificationId: note.id,
-        title: note.isRead ? '2200' : '3000',
+        title: note.isRead ? 'Новое уведомление!' : 'Новое уведомление!',
       })
     })
 
