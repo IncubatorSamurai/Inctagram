@@ -13,7 +13,7 @@ import { TriggerButton } from './TriggerButton/TriggerButton'
 export const Notifications = () => {
   const { data } = useGetNotificationQuery({})
   const { newNotifications, newNotes } = useTransformNotes(data?.items)
-  console.log(newNotes)
+  console.log(data)
   return (
     <div>
       <Dropdown
@@ -26,7 +26,7 @@ export const Notifications = () => {
         <Typography variant="medium_text_16">Уведомления</Typography>
         {newNotifications ? (
           <div className={s.notes}>
-            <NotificationList notifications={newNotifications} />
+            <NotificationList notifications={data?.items} />
           </div>
         ) : (
           <Typography>У вас нет новых уведомлений</Typography>

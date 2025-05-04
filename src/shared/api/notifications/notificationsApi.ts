@@ -11,8 +11,19 @@ export const notificationsApi = baseApi.injectEndpoints({
           url: `v1/notifications/?sortBy=notifyAt&pageSize=10${params.toString()}`,
         }
       },
+      providesTags: ['Notifications'],
+    }),
+    readNotifications: builder.mutation<any, any>({
+      query: ids => ({
+        url: 'v1/notifications/mark-as-read',
+        method: 'PUT',
+        body: {
+          ids: ids,
+        },
+      }),
+      invalidatesTags: ['Notifications'],
     }),
   }),
 })
 
-export const { useGetNotificationQuery } = notificationsApi
+export const { useGetNotificationQuery, useReadNotificationsMutation } = notificationsApi
