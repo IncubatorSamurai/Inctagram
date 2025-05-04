@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithRef } from 'react'
 
 import { Link } from '@/i18n/routing'
 import s from './NotificationItem.module.scss'
@@ -14,7 +14,7 @@ export type NotificationItemProps = {
   isRead?: boolean
   createdAt: string
 }
-type Props = NotificationItemProps & ComponentPropsWithoutRef<'li'>
+type Props = NotificationItemProps & ComponentPropsWithRef<'li'>
 export const NotificationItem = ({
   isRead,
   createdAt,

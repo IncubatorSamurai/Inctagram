@@ -4,7 +4,7 @@ import { NotificationsRequest, NotificationsResponse } from './notificationsApi.
 export const notificationsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     getNotification: builder.query<NotificationsResponse, NotificationsRequest>({
-      query: ({ cursor, isRead }) => {
+      query: ({ isRead }) => {
         const params = new URLSearchParams()
         if (isRead) params.append('isRead', String(isRead))
         return {
