@@ -8,18 +8,19 @@ type Props = {
 }
 export const NotificationList = ({ notifications }: Props) => {
   const [read, { isLoading }] = useReadNotificationsMutation()
-  console.log(notifications)
+
   const [readIds, setReadIds] = useState<Set<number | null>>(new Set())
-  console.log(readIds)
+
   useEffect(() => {
-    if (readIds.size > 0 && !isLoading) {
+    if (readIds.size != 0 && !isLoading) {
+      const idsArray = Array.from(readIds).filter((id): id is number => id !== null)
       setTimeout(() => {
-        read(Array.from(readIds))
-        console.log(Array.from(readIds))
+        read(idsArray)
         setReadIds(new Set())
       }, 1000)
     }
   }, [readIds, isLoading])
+
   const itemRef = useRef<(HTMLLIElement | null)[]>([])
   const containerRef = useRef<HTMLDivElement | null>(null)
 

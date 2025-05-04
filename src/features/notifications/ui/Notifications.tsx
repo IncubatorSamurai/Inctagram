@@ -1,19 +1,19 @@
 import { useGetNotificationQuery } from '@/shared/api/notifications/notificationsApi'
 import s from './Notifications.module.scss'
-import { BellOutlineIcon } from '@/shared/assets/icons/BellOutlineIcon'
 import { Dropdown } from '@/shared/ui/dropdown'
 import { NotificationList } from '@/shared/ui/notification-item/NotificationList'
-
-import { useTransformNotes } from '../lib/useTransformNotes'
-import { useState } from 'react'
-import { NotificationItemProps } from '@/shared/ui/notification-item'
 import { Typography } from '@/shared/ui/typography'
 import { TriggerButton } from './TriggerButton/TriggerButton'
+import { useMemo } from 'react'
 
 export const Notifications = () => {
   const { data } = useGetNotificationQuery({})
-  const { newNotifications, newNotes } = useTransformNotes(data?.items)
-  console.log(data)
+  const notifications = data?.items
+
+  const newNotes = useMemo(() => {
+    return notifications?.filter(note => !note.isRead).length
+  }, [notifications])
+
   return (
     <div>
       <Dropdown
@@ -21,12 +21,12 @@ export const Notifications = () => {
         align={'end'}
         classContent={s.content}
         isArrow
-        iconTrigger={<TriggerButton count={newNotes} />}
+        iconTrigger={<TriggerButton count={newNotes || 0} />}
       >
         <Typography variant="medium_text_16">Уведомления</Typography>
-        {newNotifications ? (
+        {notifications ? (
           <div className={s.notes}>
-            <NotificationList notifications={data?.items} />
+            <NotificationList notifications={notifications} />
           </div>
         ) : (
           <Typography>У вас нет новых уведомлений</Typography>

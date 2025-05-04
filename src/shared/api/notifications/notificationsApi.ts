@@ -1,9 +1,9 @@
 import { baseApi } from '../baseApi'
-import { NotificationsRequest, NotificationsResponse } from './notificationsApi.types'
+import { NotificationsArg, NotificationsResponse } from './notificationsApi.types'
 
 export const notificationsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getNotification: builder.query<NotificationsResponse, NotificationsRequest>({
+    getNotification: builder.query<NotificationsResponse, NotificationsArg>({
       query: ({ isRead }) => {
         const params = new URLSearchParams()
         if (isRead) params.append('isRead', String(isRead))
@@ -13,7 +13,7 @@ export const notificationsApi = baseApi.injectEndpoints({
       },
       providesTags: ['Notifications'],
     }),
-    readNotifications: builder.mutation<any, any>({
+    readNotifications: builder.mutation<void, number[]>({
       query: ids => ({
         url: 'v1/notifications/mark-as-read',
         method: 'PUT',

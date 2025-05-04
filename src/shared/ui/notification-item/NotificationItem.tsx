@@ -14,7 +14,7 @@ export const NotificationItem = ({ item, ...props }: Props) => {
   return (
     <li className={s.notificstion_item} key={id} {...props}>
       <div className={s.notification_label}>
-        <Typography variant={'bold_text_14'}>Уведомления</Typography>
+        <Typography variant={'bold_text_14'}>Новое Уведомление</Typography>
         {!isRead && (
           <Typography variant={'small_text'} asChild={true}>
             <span>Новое!</span>

@@ -1,4 +1,4 @@
-export type NotificationsRequest = {
+export type NotificationsArg = {
   cursor?: number
   isRead?: boolean
 }
@@ -14,4 +14,8 @@ export type NotificationsResponse = {
   totalCount: number
   notReadCount: number
   items: NotificationItem[]
+}
+
+export type ReadNotificationsArg = {
+  ids: number[]
 }
