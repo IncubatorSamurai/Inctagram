@@ -18,7 +18,7 @@ export const editProfileSchema = z.object({
   name: name,
   firstName: profileName,
   lastName: profileName,
-  birthDate: z.date().refine(isAdult),
+  birthDate: z.date().refine(isAdult).optional(),
   textarea: z.string().optional(),
 })
 
