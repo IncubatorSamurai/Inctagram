@@ -1,0 +1,25 @@
+
+
+.public_footer_likes {
+  display: flex;
+  align-items: center;
+}
+
+.avatar_likes {
+  display: flex;
+}
+
+.public_footer_avatars {
+  display: flex;
+  margin-right: 28px;
+}
+
+.avatar_like_item {
+  margin-right: -15px;
+}
+
+.likes {
+  display: flex;
+  flex-direction: row;
+  column-gap: 12px;
+}

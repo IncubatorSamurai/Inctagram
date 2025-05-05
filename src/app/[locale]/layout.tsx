@@ -8,6 +8,7 @@ import { Header } from '@/widgets/header'
 import { AuthProvider } from '@/app/_providers'
 import s from './layout.module.scss'
 import LayoutLoggedIn from '@/app/_providers/layoutLoggedIn/layoutLoggedIn'
+import { ToastContainer } from 'react-toastify'
 
 export default async function LocaleLayout({
   children,
@@ -34,7 +35,9 @@ export default async function LocaleLayout({
       <AuthProvider>
         <Header headerTitle={'Inctagram'} />
         <div className={s.container}>
-          <LayoutLoggedIn>{children}</LayoutLoggedIn>
+          <LayoutLoggedIn>
+            {children} <ToastContainer />
+          </LayoutLoggedIn>
         </div>
         {modal}
       </AuthProvider>

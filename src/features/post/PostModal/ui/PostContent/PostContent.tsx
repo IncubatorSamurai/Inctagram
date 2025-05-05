@@ -34,7 +34,6 @@ export const PostContent = ({
       <Scrollbar className={s.postsSideContent}>
         <div className={s.postDescription}>
           <div className={s.topContent}>
-            {/*<Image src={userImg} alt="postOwnerImg" width={36} height={36} />*/}
             <NoAvatar />
             <Typography variant="bold_text_14">
               {ownreName} {description}

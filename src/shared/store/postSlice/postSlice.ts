@@ -1,6 +1,5 @@
 import { Photo } from '@/shared/types'
 import { createSlice } from '@reduxjs/toolkit'
-import { AvatarProfile } from '@/shared/api/post/postApi.types'
 
 const revokeObjectURLs = (file: Photo) => {
   if (file.fileUrl) {
@@ -18,11 +17,6 @@ export const postSlice = createSlice({
   name: 'post',
   initialState: {
     files: [] as Photo[],
-    avatar: {
-      id: '',
-      fileUrl: '',
-      type: '',
-    } as AvatarProfile,
   },
   reducers: create => ({
     addFile: create.reducer<{ fileUrl: string; id: string; type: string }>((state, action) => {
@@ -32,23 +26,7 @@ export const postSlice = createSlice({
         type: action.payload.type,
       })
     }),
-    addAvatar: create.reducer<{ fileUrl: string; id: string; type: string }>((state, action) => {
-      state.avatar = {
-        fileUrl: action.payload.fileUrl,
-        id: action.payload.id,
-        type: action.payload.type,
-      }
-    }),
-    removeAvatar: create.reducer(state => {
-      if (state.avatar?.fileUrl) {
-        URL.revokeObjectURL(state.avatar.fileUrl)
-      }
-      state.avatar = {
-        id: '',
-        fileUrl: '',
-        type: '',
-      } as AvatarProfile
-    }),
+
     removeFiles: create.reducer(state => {
       state.files.forEach(file => revokeObjectURLs(file))
       state.files = []
@@ -122,19 +100,10 @@ export const postSlice = createSlice({
   }),
   selectors: {
     selectFiles: state => state.files,
-    selectAvatar: state => state.avatar,
   },
 })
 
-export const {
-  addFile,
-  addFilteredFiles,
-  resetCropFile,
-  saveCropFile,
-  removeFiles,
-  removeFile,
-  addAvatar,
-  removeAvatar,
-} = postSlice.actions
-export const { selectFiles, selectAvatar } = postSlice.selectors
+export const { addFile, addFilteredFiles, resetCropFile, saveCropFile, removeFiles, removeFile } =
+  postSlice.actions
+export const { selectFiles } = postSlice.selectors
 export const postReducer = postSlice.reducer

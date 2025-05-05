@@ -7,7 +7,7 @@ const PublicPosts = async () => {
   const { items, totalUsers } = await getPublicPosts({
     pageSize: 4,
     sortBy: 'createdAt',
-    sortDirection: 'desc',
+    sortDirection: 'asc',
   })
 
   return (

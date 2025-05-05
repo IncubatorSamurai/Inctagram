@@ -1,1 +1,1 @@
-export * from './PublicModal'
+export * from './PublicModalRenderAvatars'

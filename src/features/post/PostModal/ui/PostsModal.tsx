@@ -1,19 +1,14 @@
 'use client'
 import s from './PostsModal.module.scss'
 import { ModalCloseOrDeletePost } from './ModalCloseDeletePost/ModalCloseDeletePost'
-import Slider from 'react-slick'
 import { Modal } from '@/shared/ui/modal'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
 import { CommentsResponse, Post } from '@/shared/api/post/postApi.types'
-import { useSliderSettings } from '@/shared/ui/slider/CustomSlider'
-import Image from 'next/image'
+import { CustomSlider } from '@/shared/ui/customSlider/CustomSlider'
 import { AuthorizedContent } from '@/features/post/PostModal/ui/ModalContent/AuthorizedContent'
 import { NonAuthorizedContent } from '@/features/post/PostModal/ui/ModalContent/NonAuthorizedContent'
 import { usePostModal } from '@/shared/hooks/usePostModal'
-
-const WIDTH_MODAL_IMAGE = 490
-const HEIGHT_MODAL_IMAGE = 564
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 type PublicModal = {
   post: Post
@@ -22,6 +17,7 @@ type PublicModal = {
 }
 
 export const PostsModal = ({ post, commentsData, postId, ...props }: PublicModal) => {
+  const [isOwner, setIsOwner] = useState<boolean>(false)
   const {
     isLoggedIn,
     openEdit,
@@ -33,14 +29,14 @@ export const PostsModal = ({ post, commentsData, postId, ...props }: PublicModal
     setShowDeleteModal,
     onClose,
   } = usePostModal()
+  const { images, userName } = post
 
-  const { images } = post
-
-  const { settings } = useSliderSettings({
-    sliderClass: s.slider_modal,
-    dotsClass: s.slider_modal_dots,
-    totalSlides: images.length,
-  })
+  useEffect(() => {
+    const userNameUser = localStorage.getItem('userName')
+    if (userNameUser === userName) {
+      setIsOwner(true)
+    }
+  }, [isOwner, userName])
 
   return (
     <Modal
@@ -55,24 +51,16 @@ export const PostsModal = ({ post, commentsData, postId, ...props }: PublicModal
     >
       <div className={s.root}>
         <div className={s.public_modal_img}>
-          <Slider {...settings}>
-            {images.map((image, index) => (
-              <div key={index}>
-                <Image
-                  src={image.url}
-                  alt=""
-                  className={s.slider_img}
-                  priority={true}
-                  width={WIDTH_MODAL_IMAGE}
-                  height={HEIGHT_MODAL_IMAGE}
-                />
-              </div>
+          <CustomSlider {...props}>
+            {images.map((image, i) => (
+              <Image key={i} src={image.url} alt="picture" width={490} height={562} />
             ))}
-          </Slider>
+          </CustomSlider>
         </div>
 
         {isLoggedIn ? (
           <AuthorizedContent
+            isOwner={isOwner}
             postId={postId}
             openEdit={openEdit}
             changeEdit={changeEdit}
@@ -82,20 +70,20 @@ export const PostsModal = ({ post, commentsData, postId, ...props }: PublicModal
           <NonAuthorizedContent post={post} commentsData={commentsData} />
         )}
       </div>
-            <ModalCloseOrDeletePost
-              postId={postId}
-              title="Close"
-              open={openModal}
-              onOpenChange={changeOpen}
-              changeEdit={changeEdit}
-            />
+      <ModalCloseOrDeletePost
+        postId={postId}
+        title="Close"
+        open={openModal}
+        onOpenChange={changeOpen}
+        changeEdit={changeEdit}
+      />
 
-            <ModalCloseOrDeletePost
-              postId={postId}
-              title="Delete"
-              open={showDeleteModal}
-              onOpenChange={setShowDeleteModal}
-            />
+      <ModalCloseOrDeletePost
+        postId={postId}
+        title="Delete"
+        open={showDeleteModal}
+        onOpenChange={setShowDeleteModal}
+      />
     </Modal>
   )
 }

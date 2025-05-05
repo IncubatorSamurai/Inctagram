@@ -2,7 +2,7 @@ import { Dropdown } from '@/shared/ui/dropdown'
 import { Expand } from '../Expand'
 import { ExpandOutlineIcon } from '@/shared/assets/icons/ExpandOutlineIcon'
 import { Button } from '@/shared/ui/button'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { resetCropFile, saveCropFile } from '@/shared/store'
 import { useAppDispatch } from '@/shared/hooks'
 import Cropper, { Area } from 'react-easy-crop'
@@ -60,9 +60,9 @@ export const ImageCropDialog = ({ setSelectedFile, selectedFile }: Props) => {
 
     setSelectedFile(null)
   }
-
+  const modalRef = useRef(null)
   return (
-    <div className={s.container}>
+    <div className={s.container} ref={modalRef}>
       <div>
         <Cropper
           image={selectedFile?.fileUrl}
@@ -85,6 +85,7 @@ export const ImageCropDialog = ({ setSelectedFile, selectedFile }: Props) => {
 
       <div className={s.actionButtons}>
         <Dropdown
+          modalRef={modalRef}
           className={s.expandDropdown}
           classItemsContainer={s.expandItemsContainer}
           iconTrigger={<ExpandOutlineIcon />}

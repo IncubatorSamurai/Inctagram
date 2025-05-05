@@ -22,7 +22,7 @@
 
 .post_preview {
   cursor: pointer;
-
+  overflow-y: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,6 +40,7 @@
   }
 }
 
+
 .imagesCounter {
   padding-bottom: size(5px);
   text-align: end;
@@ -48,11 +49,22 @@
 .sliderContainer {
   width: 100%;
 
+  .addPostSlider {
+
+    .addPostPagination {
+      bottom: size(10px);
+    }
+  }
+
   .imageWrapper {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .image {
       object-fit: cover;
+      height: 228px;
     }
 
     .closeButton {

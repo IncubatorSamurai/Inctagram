@@ -1,7 +1,6 @@
 'use client'
 import { CloseOutlineIcon } from '@/shared/assets/icons/CloseOutlineIcon'
 import { ImageOutlineIcon } from '@/shared/assets/icons/ImageOutlineIcon'
-import { sliderSettings } from '@/shared/config/sliderSettings'
 import { useAppDispatch } from '@/shared/hooks'
 import { addFile, removeFile, selectFiles } from '@/shared/store/postSlice/postSlice'
 import { Button } from '@/shared/ui/button/Button'
@@ -10,11 +9,10 @@ import { nanoid } from '@reduxjs/toolkit'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
-import Slider from 'react-slick'
-import 'slick-carousel/slick/slick-theme.css'
-import 'slick-carousel/slick/slick.css'
 import s from './UploadImages.module.scss'
 import { convertToBytes } from '@/shared/utils'
+import { CustomSlider } from '@/shared/ui/customSlider/CustomSlider'
+import { toast } from 'react-toastify'
 
 const MAX_FILES = 10
 const MAX_FILE_SIZE_MB = 20
@@ -34,18 +32,15 @@ export const UploadImages = () => {
     const fileArray = Array.from(inputFiles)
 
     if (files.length + fileArray.length > MAX_FILES) {
-      console.error(
-        `${t('errorUploadImages1')} ${MAX_FILES}. ${t('errorUploadImages2')} ${files.length}`
-      )
+      toast.error('You cannot upload more then 10 files')
       return
     }
 
     const validFiles = fileArray.filter(file => {
       if (file.size > convertToBytes(MAX_FILE_SIZE_MB)) {
-        console.error(`${t('file')} ${file.name} ${t('exceeds')} ${MAX_FILE_SIZE_MB} MB`)
+        toast.error('File size must be less than 20 MB!')
         return false
       }
-
       return true
     })
 
@@ -69,7 +64,7 @@ export const UploadImages = () => {
         <div className={s.post_preview}>
           {files.length > 0 ? (
             <div className={s.sliderContainer}>
-              <Slider {...sliderSettings}>
+              <CustomSlider className={s.addPostSlider} navigation={false}>
                 {files.map(({ fileUrl, id }) => (
                   <div key={id} className={s.imageWrapper}>
                     <Image
@@ -88,7 +83,7 @@ export const UploadImages = () => {
                     </Button>
                   </div>
                 ))}
-              </Slider>
+              </CustomSlider>
             </div>
           ) : (
             <ImageOutlineIcon />

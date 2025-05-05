@@ -20,6 +20,7 @@ export type DropdownProps = {
   classItemsContainer?: string
   children?: React.ReactNode
   labelName?: string
+  modalRef?: React.Ref<HTMLDivElement> | null
 }
 export const Dropdown = ({
   classContent,
@@ -29,8 +30,11 @@ export const Dropdown = ({
   iconTrigger,
   className,
   classItemsContainer,
+  modalRef,
   ...props
 }: DropdownProps) => {
+  const container =
+    modalRef && typeof modalRef !== 'function' ? (modalRef.current ?? undefined) : undefined
   return (
     <div className={className}>
       <DropdownMenu.Root {...props}>
@@ -40,7 +44,7 @@ export const Dropdown = ({
           </Button>
         </DropdownMenu.Trigger>
 
-        <DropdownMenu.Portal>
+        <DropdownMenu.Portal container={container}>
           <DropdownMenu.Content className={clsx(s.Content, classContent)} sideOffset={5}>
             {labelName && (
               <DropdownMenu.Label className={s.Label}>
