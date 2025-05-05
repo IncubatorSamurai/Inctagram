@@ -1,7 +1,6 @@
 'use client'
 
 import { Input } from '@/shared/ui/input'
-import s from './EditUserProfileForm.module.scss'
 import { useGetProfileQuery, useUpdateProfileMutation } from '@/shared/api/profile/profileApi'
 import { EditProfileForm, editProfileSchema } from '../model/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -22,6 +21,7 @@ import {
   getProfileFromStorage,
   saveProfileToStorage,
 } from '@/shared/utils/ProfileStorge'
+import s from './EditUserProfileForm.module.scss'
 
 export const EditUserProfileForm = () => {
   const t = useTranslations('profile.generalInfo')
@@ -59,7 +59,6 @@ export const EditUserProfileForm = () => {
       reset(formData)
       setLocalDate(formData.birthDate)
     }
-
   }, [isSuccess, data, reset])
 
   const onSubmit = (form: EditProfileForm) => {
@@ -118,7 +117,7 @@ export const EditUserProfileForm = () => {
         {errors.birthDate?.message && (
           <Typography variant="error">
             {t('dateError')}
-            <Link className={s.link} href={PATH.PRIVACY_POLICY} onClick={onLink} >
+            <Link className={s.link} href={PATH.PRIVACY_POLICY} onClick={onLink}>
               Privacy Policy
             </Link>
           </Typography>
