@@ -56,7 +56,7 @@ export const EditUserProfileForm = () => {
         birthDate: dateOfBirth ? new Date(dateOfBirth) : undefined,
         textarea: aboutMe || '',
       }
-      reset(formData, { keepDirty: false, keepValues: true })
+      reset(formData)
       setLocalDate(formData.birthDate)
     }
   }, [isSuccess, data, reset])
@@ -89,7 +89,7 @@ export const EditUserProfileForm = () => {
 
     if (!isValid(parsed)) return
     setLocalDate(parsed)
-    console.log('birthDate:', getValues('birthDate'))
+
     //сохраняем дату в react-hook-form
     setValue('birthDate', parsed, {
       shouldValidate: true,
