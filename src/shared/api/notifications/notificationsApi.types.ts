@@ -1,6 +1,7 @@
 export type NotificationsArg = {
-  cursor?: number
+  cursor?: string
   isRead?: boolean
+  pageSize?: number
 }
 
 export type NotificationItem = {

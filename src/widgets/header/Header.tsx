@@ -62,7 +62,7 @@ const Header = ({ isAdmin, headerTitle, headerLogo, ...rest }: HeaderType) => {
             )}
           </Link>
           <div className={s.row}>
-            <Notifications />
+            {isLoggedIn && <Notifications />}
             <nav className={s.main_nav}>
               <LangSelect />
               {isMobile ? (

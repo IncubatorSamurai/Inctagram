@@ -5,11 +5,10 @@ import { routing } from '@/i18n/routing'
 import { ReactNode } from 'react'
 import { locales } from '@/shared/types/locale'
 import { Header } from '@/widgets/header'
-import { AuthProvider } from '@/app/_providers'
+import { AuthProvider, SocketProvider } from '@/app/_providers'
 import s from './layout.module.scss'
 import LayoutLoggedIn from '@/app/_providers/layoutLoggedIn/layoutLoggedIn'
 import { ToastContainer } from 'react-toastify'
-import { NotificationsProvider } from '../_providers/NotificationsProvider/NotificationsProvider'
 
 export default async function LocaleLayout({
   children,
@@ -34,7 +33,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <AuthProvider>
-        <NotificationsProvider>
+        <SocketProvider>
           <Header headerTitle={'Inctagram'} />
           <div className={s.container}>
             <LayoutLoggedIn>
@@ -42,7 +41,7 @@ export default async function LocaleLayout({
             </LayoutLoggedIn>
           </div>
           {modal}
-        </NotificationsProvider>
+        </SocketProvider>
       </AuthProvider>
     </NextIntlClientProvider>
   )

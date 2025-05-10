@@ -6,6 +6,7 @@ import clsx from 'clsx'
 type Props = {
   count: number
 }
+
 export const TriggerButton = ({ count }: Props) => {
   return (
     <Typography

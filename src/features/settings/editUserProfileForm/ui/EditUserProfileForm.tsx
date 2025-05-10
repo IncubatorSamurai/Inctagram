@@ -49,6 +49,7 @@ export const EditUserProfileForm = () => {
     }
     if (isSuccess && data) {
       const { userName, firstName, lastName, dateOfBirth, aboutMe } = data
+      console.log('dateOfBirth', dateOfBirth, 'dateOfBirth')
       const formData = {
         name: userName || '',
         firstName: firstName || '',
@@ -56,10 +57,9 @@ export const EditUserProfileForm = () => {
         birthDate: dateOfBirth ? new Date(dateOfBirth) : undefined,
         textarea: aboutMe || '',
       }
-      reset(formData)
+      reset(formData, { keepDirty: false, keepValues: true })
       setLocalDate(formData.birthDate)
     }
-
   }, [isSuccess, data, reset])
 
   const onSubmit = (form: EditProfileForm) => {
@@ -90,15 +90,15 @@ export const EditUserProfileForm = () => {
 
     if (!isValid(parsed)) return
     setLocalDate(parsed)
-
+    console.log('birthDate:', getValues('birthDate'))
     //сохраняем дату в react-hook-form
     setValue('birthDate', parsed, {
       shouldValidate: true,
       shouldDirty: true,
     })
   }
-  const isButtonDisabled = !isDirty || !isFormValid || isUpdateProfile
-
+  const isButtonDisabled = !isFormValid || isUpdateProfile || !isDirty
+  console.log(isDirty, isFormValid, isUpdateProfile)
   if (isLoading) return <h1>Loading...</h1>
 
   return (
@@ -118,7 +118,7 @@ export const EditUserProfileForm = () => {
         {errors.birthDate?.message && (
           <Typography variant="error">
             {t('dateError')}
-            <Link className={s.link} href={PATH.PRIVACY_POLICY} onClick={onLink} >
+            <Link className={s.link} href={PATH.PRIVACY_POLICY} onClick={onLink}>
               Privacy Policy
             </Link>
           </Typography>
