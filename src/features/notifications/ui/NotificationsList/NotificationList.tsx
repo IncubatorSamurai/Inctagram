@@ -3,7 +3,7 @@ import {
   useReadNotificationsMutation,
 } from '@/shared/api/notifications/notificationsApi'
 import { NotificationItem } from '@/shared/ui/notification-item/NotificationItem'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { shouldStopFetching } from '../../lib/shouldStopFetching'
 import { useDebouncedEffect } from '@/shared/hooks'
 import { NotificationsResponse } from '@/shared/api/notifications/notificationsApi.types'
@@ -20,8 +20,6 @@ export const NotificationList = ({ data }: Props) => {
 
   const [readIds, setReadIds] = useState<Set<number>>(new Set())
 
-  const pendingReadIds = useRef<Set<number>>(new Set())
-
   const isShouldStopFetching = shouldStopFetching(data)
 
   const observeParams = {
@@ -37,7 +35,6 @@ export const NotificationList = ({ data }: Props) => {
         .unwrap()
         .then(() => {
           setReadIds(new Set())
-          pendingReadIds.current.clear()
         })
     },
     [readIds],
