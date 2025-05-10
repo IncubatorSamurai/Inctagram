@@ -4,7 +4,7 @@ interface Notification {
   id: number
 }
 
-interface UseNotificationsObserverProps {
+type UseNotificationsObserverProps = {
   notifications: Notification[]
   isFetching: boolean
   isLoading: boolean
