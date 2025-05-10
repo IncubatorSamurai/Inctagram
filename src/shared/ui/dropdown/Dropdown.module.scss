@@ -14,8 +14,8 @@
 .dropdown_items_container {
   overflow-y: scroll;
 
-  max-width: 417px;
-  max-height: 330px;
+  max-width: 355px;
+  max-height: 424px;
   margin: 0;
   padding: 0;
 
@@ -46,7 +46,7 @@
 .Arrow {
   transform: rotate(-180deg) translateY(3px);
   color: var(--color-dark-100);
-
+  right: 0;
   path {
     fill: var(--color-dark-300);
 

@@ -20,6 +20,7 @@ export type DropdownProps = {
   classItemsContainer?: string
   children?: React.ReactNode
   labelName?: string
+  align?: 'start' | 'center' | 'end'
   modalRef?: React.Ref<HTMLDivElement> | null
 }
 export const Dropdown = ({
@@ -28,6 +29,7 @@ export const Dropdown = ({
   labelName,
   isArrow,
   iconTrigger,
+  align,
   className,
   classItemsContainer,
   modalRef,
@@ -45,7 +47,11 @@ export const Dropdown = ({
         </DropdownMenu.Trigger>
 
         <DropdownMenu.Portal container={container}>
-          <DropdownMenu.Content className={clsx(s.Content, classContent)} sideOffset={5}>
+          <DropdownMenu.Content
+            align={align}
+            className={clsx(s.Content, classContent)}
+            sideOffset={5}
+          >
             {labelName && (
               <DropdownMenu.Label className={s.Label}>
                 <Typography variant={'h3'}>{labelName}</Typography>

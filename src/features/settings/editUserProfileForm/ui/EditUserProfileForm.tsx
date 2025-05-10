@@ -96,7 +96,7 @@ export const EditUserProfileForm = () => {
       shouldDirty: true,
     })
   }
-  const isButtonDisabled = !isDirty || !isFormValid || isUpdateProfile
+  const isButtonDisabled = !isFormValid || isUpdateProfile || !isDirty
 
   if (isLoading) return <h1>Loading...</h1>
 
