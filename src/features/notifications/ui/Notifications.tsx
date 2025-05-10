@@ -4,7 +4,6 @@ import { Dropdown } from '@/shared/ui/dropdown'
 import { NotificationList } from '@/features/notifications/ui/NotificationsList/NotificationList'
 import { Typography } from '@/shared/ui/typography'
 import { TriggerButton } from './TriggerButton/TriggerButton'
-import { NotificationItem } from '@/shared/api/notifications/notificationsApi.types'
 
 export const Notifications = () => {
   const { data } = useGetNotificationQuery({ cursor: '' })
