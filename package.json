@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED='0' next dev --experimental-https -p 443",
+    "dev": "next dev --turbopack",
+    "dev-prod": "cross-env NODE_TLS_REJECT_UNAUTHORIZED='0' next dev --experimental-https -p 443",
     "build": "next build",
     "start": "next start",
     "format": "prettier --write src",

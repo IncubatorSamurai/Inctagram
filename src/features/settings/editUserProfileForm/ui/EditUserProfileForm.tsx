@@ -49,7 +49,6 @@ export const EditUserProfileForm = () => {
     }
     if (isSuccess && data) {
       const { userName, firstName, lastName, dateOfBirth, aboutMe } = data
-      console.log('dateOfBirth', dateOfBirth, 'dateOfBirth')
       const formData = {
         name: userName || '',
         firstName: firstName || '',
@@ -98,7 +97,7 @@ export const EditUserProfileForm = () => {
     })
   }
   const isButtonDisabled = !isFormValid || isUpdateProfile || !isDirty
-  console.log(isDirty, isFormValid, isUpdateProfile)
+
   if (isLoading) return <h1>Loading...</h1>
 
   return (
