@@ -6,7 +6,7 @@ import { PostsModal } from '@/features/post/PostModal'
 export default async function PublicModalPage({
   searchParams,
 }: {
-  searchParams: { postId?: string }
+  searchParams: Promise<{ postId?: string }>
 }) {
   const resolvedSearchParams = await searchParams
   const postId = resolvedSearchParams?.postId ? Number(resolvedSearchParams.postId) : null
