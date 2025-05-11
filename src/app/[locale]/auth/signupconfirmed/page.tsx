@@ -1,3 +1,4 @@
+'use client'
 import { SignUpConfirmedPage } from '@/pagesComponents'
 
 export default function SignUpConfirmed() {

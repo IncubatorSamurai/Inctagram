@@ -1,3 +1,4 @@
+'use client'
 import { RecoveryPage } from '@/pagesComponents'
 
 export default function Recovery() {
