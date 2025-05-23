@@ -10,9 +10,8 @@ import Image from 'next/image'
 type NonAuthorizedContentProps = {
   post: Post
   commentsData: CommentsResponse | null
-
 }
-export const NonAuthorizedContent = ({post, commentsData}:NonAuthorizedContentProps) => {
+export const NonAuthorizedContent = ({ post, commentsData }: NonAuthorizedContentProps) => {
   const comments = commentsData?.items || []
   const { avatarOwner, userName, likesCount, createdAt, avatarWhoLikes } = post
   return (

@@ -1,3 +1,4 @@
+'use client'
 import { Policy, PrivacyPolicyText } from '@/pagesComponents'
 import { useTranslations } from 'next-intl'
 

@@ -3,8 +3,7 @@
   display: flex;
   flex-direction: column;
   width: 400px;
-
-  border-top: 1px solid var(--color-light-900);
+  border-top: 1px solid var(--color-dark-100);
 }
 
 .notification_link {
@@ -21,6 +20,7 @@
   flex-direction: column;
 
   .notification_date p {
+    margin-bottom: 12px;
     color: var(--color-light-900);
   }
 }

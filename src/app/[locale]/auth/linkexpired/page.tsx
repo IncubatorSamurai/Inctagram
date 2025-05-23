@@ -1,3 +1,4 @@
+'use client'
 import { LinkExpiredPage } from '@/pagesComponents'
 
 export default function LinkExpired() {
