@@ -36,7 +36,18 @@
 
       .sideInfo {
         padding: 8px 8px 8px 72px;
+        .date_description{
+          color: var(--color-light-900);
+        }
       }
+
     }
   }
+}
+.likeOn{
+  color: var(--color-danger-300);
+}
+
+.comments_list{
+  padding-left: 24px;
 }
