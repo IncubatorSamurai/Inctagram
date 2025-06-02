@@ -9,22 +9,13 @@ import { parseIsoDate } from '@/shared/utils'
 
 // type Optional<T> = T | undefined
 type PostContentProps = {
-  likes: number | undefined
-  whosLikes: string[] | undefined
   updatedAt: string | undefined
   createdAt: string | undefined
   ownreName: string | undefined
   description: string | undefined
 }
 
-export const PostContent = ({
-  ownreName,
-  description,
-  likes,
-  whosLikes,
-  updatedAt,
-  createdAt,
-}: PostContentProps) => {
+export const PostContent = ({ ownreName, description, updatedAt, createdAt }: PostContentProps) => {
   //надо конвертировать дату в нормальный вид
   //доделать чтоб были картинки тех кто лайкнул как на макете
   const data = updatedAt && parseIsoDate(updatedAt)
@@ -45,7 +36,7 @@ export const PostContent = ({
         <PostComment />
         {/* тут будет map по всем комментариям к этому посту */}
       </Scrollbar>
-      <PostLikesAndSent likes={likes} whosLikes={whosLikes} createdAt={createdAt} />
+      <PostLikesAndSent createdAt={createdAt} />
       <AddComment />
     </div>
   )
