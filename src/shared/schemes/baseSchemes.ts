@@ -35,4 +35,9 @@ export const email = z
 
 export const captcha = z.string().min(1, 'Captha is required').default('')
 
-export const profileName = z.string().min(1, 'First Name is required').max(50).default('')
+export const profileName = z
+  .string()
+  .min(1, 'First Name is required')
+  .max(50, 'Maximum number of characters is 50')
+  .regex(nameValidation.REGEX, { message: nameValidation.ERROR_MESSAGES.PATTERN })
+  .default('')
