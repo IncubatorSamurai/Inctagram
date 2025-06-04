@@ -22,9 +22,6 @@ export const usersApi = baseApi.injectEndpoints({
         if (arg.pageNumber === 1) return newItems
         return { ...newItems, items: [...currentCacheData.items, ...newItems.items] }
       },
-      forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg
-      },
     }),
     getUser: builder.query<GetUserResponse, GetUserRequest>({
       query: ({ userName }) => ({
