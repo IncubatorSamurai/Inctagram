@@ -1,3 +1,5 @@
+import { SearchPage } from '@/pagesComponents'
+
 export default function Search() {
-  return <div>Search</div>
+  return <SearchPage />
 }
