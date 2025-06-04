@@ -39,7 +39,6 @@
   },
   "profile": {
     "profileSettings": "Настройки профиля",
-    "follow": "Подписаться",
     "sendMessage": "Отправить сообщение",
     "following": "Подписок",
     "followers": "Подписчики",
@@ -105,5 +104,21 @@
     "errorUploadImages2": "Сейчас загружено:",
     "file": "Файл",
     "exceeds": "превышает"
+  },
+  "search": {
+    "search": "Поиск",
+    "recentRequests": "Последние запросы",
+    "noRecentRequests": "Нет последних запросов",
+    "searchUsersEmptyText": "Упс! Это место выглядит пустым!",
+    "searchError": "Ошибка при загрузке",
+    "loading": "Загрузка..."
+  },
+  "follow": {
+    "follow": "Подписаться",
+    "followSuccessText": "Вы успешно подписались на пользователя",
+    "followErrorText": "Не удалось подписаться на пользователя",
+    "unfollowSuccessText": "Вы успешно отписались от пользователя",
+    "unfollowErrorText": "Не удалось отписаться от пользователя",
+    "unfollow": "Отписаться"
   }
 }
