@@ -5,6 +5,7 @@ import { Button } from '@/shared/ui/button'
 import { useDeletePostMutation } from '@/shared/api/post/postApi'
 import { ErrorResponse } from '@/shared/types/auth'
 import * as DialogRadix from '@radix-ui/react-dialog'
+import { useRouter, useParams } from 'next/navigation'
 
 type ModalClosePostProps = {
   title: string
@@ -22,16 +23,22 @@ export const ModalCloseOrDeletePost = ({
   changeEdit = () => {},
 }: ModalClosePostProps) => {
   const [deletePost] = useDeletePostMutation()
+  const router = useRouter()
   const handler = () => {
     onOpenChange(true)
     changeEdit()
   }
+  const params = useParams()
+
   const deletePostHandler = async () => {
+    if (!postId) return
     try {
       await deletePost({ id: postId }).unwrap()
     } catch (error) {
       const err = error as ErrorResponse
       console.error(err.data.messages)
+    } finally {
+      router.push(`/profile/${params.userId}`)
     }
   }
 

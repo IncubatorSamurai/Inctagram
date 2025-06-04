@@ -11,16 +11,12 @@
   height: 31.375rem;
 
   background-color: var(--color-dark-500);
-  .croppingSlider{
-
+  .croppingSlider {
     .image {
-
       object-fit: cover;
-      height:502px;
+      height: 502px;
     }
   }
-
-
 
   .cropButton {
     position: absolute;
