@@ -5,7 +5,7 @@ export type PostLikesStatus = {
   likeStatus: LikeStatus
 }
 
-type Avatars = {
+export type Avatars = {
   url: string
   createdAt: string
   fileSize: number

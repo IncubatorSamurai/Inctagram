@@ -10,10 +10,11 @@ type Props = {
 export const PostLikesAvatars = ({ id }: Props) => {
   const { data } = useGetPostLikesQuery(id ?? '', { skip: !id })
 
+  const transformedArray = [...(data?.items ?? [])].reverse().slice(0, 3)
   return (
     <div className={s.container}>
       <div className={s.row}>
-        {data?.items.map(item => (
+        {transformedArray.map(item => (
           <div key={item.id}>
             {!item?.avatars.length ? (
               <NoAvatar />

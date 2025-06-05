@@ -6,6 +6,7 @@ import { useMeQuery } from '@/shared/api/auth/authApi'
 import { useAppDispatch } from '@/shared/hooks'
 import { HeartIcon } from '@/shared/assets/icons/HeartIcon'
 import { useEffect, useState } from 'react'
+import { testUser } from '../../../consts/consts'
 
 type Props = {
   id: string
@@ -17,7 +18,6 @@ export const LikePost = ({ id, likesItems }: Props) => {
   const { data: meData } = useMeQuery()
   const [like] = useLikeStatusMutation()
   const isAlreadyLike = likesItems?.some(item => item.userId === meData?.userId)
-
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -28,8 +28,10 @@ export const LikePost = ({ id, likesItems }: Props) => {
     dispatch(
       postLikeApi.util.updateQueryData('getPostLikes', id, draft => {
         if (isAlreadyLike) {
+          draft.items.splice(-1, 1)
           draft.totalCount -= 1
         } else {
+          draft.items.push(testUser)
           draft.totalCount += 1
         }
       })
