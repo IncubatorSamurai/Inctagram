@@ -10,8 +10,12 @@
 .likeAndSent {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 24px;
 }
-
+.date {
+  color: var(--color-light-900);
+  margin-top: 5px;
+}
 .postsSideLikes {
   display: flex;
   flex-direction: column;
