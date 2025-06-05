@@ -37,7 +37,7 @@ export default async function LocaleLayout({
           <Header headerTitle={'Inctagram'} />
           <div className={s.container}>
             <LayoutLoggedIn>
-              {children} <ToastContainer />
+              {children} <ToastContainer position="bottom-left" />
             </LayoutLoggedIn>
           </div>
           {modal}
