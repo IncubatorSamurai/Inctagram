@@ -82,14 +82,13 @@ export const CommentItem = ({ isLoggedIn, comment }: CommentItemProps) => {
             onPublish={onPublishAnswer}
           />
         )}
-        {comment.answerCount > 0 && (
+        {isLoggedIn && comment.answerCount > 0 && (
           <Button onClick={onVisibleAnswer} variant="text">
             <span className={s.toggle_answer}>
               {isAnswersVisible ? 'Hide Answers' : 'View Answers'} ({comment.answerCount})
             </span>
           </Button>
         )}
-
         {isAnswersVisible && answersData && (
           <ul>
             {answersData.items.map(answer => (

@@ -10,7 +10,7 @@ import { formatDistanceToNow } from 'date-fns'
 
 type PostContentProps = {
   likes: number | undefined
-  whosLikes: string[] | undefined
+  whoLikes: string[] | undefined
   updatedAt: string | undefined
   createdAt: string | undefined
   ownreName: string | undefined
@@ -24,7 +24,7 @@ export const PostContent = ({
   isLoggedIn,
   description,
   likes,
-  whosLikes,
+  whoLikes,
   updatedAt,
   createdAt,
   postId,
@@ -58,7 +58,7 @@ export const PostContent = ({
           )}
         </ul>
       </Scrollbar>
-      <PostLikesAndSent likes={likes} whosLikes={whosLikes} createdAt={createdAt} />
+      <PostLikesAndSent likes={likes} whosLikes={whoLikes} createdAt={createdAt} />
       <AddContent placeholder={'Comment'} onPublish={() => {}} />
     </div>
   )

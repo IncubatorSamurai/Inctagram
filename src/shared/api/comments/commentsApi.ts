@@ -7,7 +7,6 @@ import {
   GetCommentsAnswersArg,
   postAnswerCommentArg,
   UpdateCommentAnswersLikesArg,
-  UpdateCommentLikesArg,
   UpdateCommentLikesResponse,
 } from '@/shared/api/comments/commentsApi.types'
 import { postsApi } from '@/shared/api/post/postApi'
@@ -19,7 +18,6 @@ export const commentsApi = baseApi.injectEndpoints({
         url: `v1/posts/${postId}/comments/${commentId}/likes`,
         method: 'GET',
       }),
-      providesTags: ['Post'],
     }),
     getCommentAnswers: build.query<AnswersResponse, GetCommentsAnswersArg>({
       query: ({ postId, commentId }) => ({
@@ -28,14 +26,15 @@ export const commentsApi = baseApi.injectEndpoints({
       }),
       providesTags: (result, error, { commentId }) => [{ type: 'CommentAnswers', id: commentId }],
     }),
-    updateCommentLike: build.mutation<UpdateCommentLikesResponse, UpdateCommentLikesArg>({
+    updateCommentLike: build.mutation<
+      void,
+      { postId: number; commentId: number; likeStatus: 'LIKE' | 'NONE' }
+    >({
       query: ({ postId, commentId, likeStatus }) => ({
         url: `v1/posts/${postId}/comments/${commentId}/like-status`,
         method: 'PUT',
         body: { likeStatus },
       }),
-
-      // ⬇️ OPTIMISTIC UPDATE только одного комментария
       async onQueryStarted({ postId, commentId, likeStatus }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           postsApi.util.updateQueryData('getCommentsByPostId', { postId }, draft => {
@@ -50,7 +49,7 @@ export const commentsApi = baseApi.injectEndpoints({
         try {
           await queryFulfilled
         } catch {
-          patchResult.undo() // если ошибка — откат
+          patchResult.undo()
         }
       },
     }),
@@ -92,22 +91,6 @@ export const commentsApi = baseApi.injectEndpoints({
         body: { content },
       }),
 
-      async onQueryStarted({ postId, commentId }, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          postsApi.util.updateQueryData('getCommentsByPostId', { postId }, draft => {
-            const comment = draft.items.find(c => c.id === commentId)
-            if (comment) {
-              comment.answerCount += 1
-            }
-          })
-        )
-
-        try {
-          await queryFulfilled
-        } catch {
-          patchResult.undo()
-        }
-      },
       invalidatesTags: (result, error, { commentId }) => [
         { type: 'CommentAnswers', id: commentId },
       ],

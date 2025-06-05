@@ -16,8 +16,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     if (data?.userName) {
       localStorage.setItem('userName', data.userName)
     }
-
-    localStorage.setItem('isBlocked', JSON.stringify(data?.isBlocked))
   }, [dispatch, data])
 
   return <div>{children}</div>

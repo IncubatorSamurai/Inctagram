@@ -18,7 +18,7 @@ type PostModal = {
 
 export const PostsModal = ({ post, commentsData, postId, ...props }: PostModal) => {
   const [isOwner, setIsOwner] = useState<boolean>(false)
-  const [isBlocked, setIsBlocked] = useState<boolean>(false)
+
   const {
     isLoggedIn,
     openEdit,
@@ -34,14 +34,10 @@ export const PostsModal = ({ post, commentsData, postId, ...props }: PostModal) 
 
   useEffect(() => {
     const userNameUser = localStorage.getItem('userName')
-    const isBlockedUser = localStorage.getItem('isBlocked')
     if (userNameUser === userName) {
       setIsOwner(true)
     }
-    if (isBlockedUser === 'true') {
-      setIsBlocked(true)
-    }
-  }, [isOwner, userName, isBlocked])
+  }, [isOwner, userName])
 
   return (
     <Modal

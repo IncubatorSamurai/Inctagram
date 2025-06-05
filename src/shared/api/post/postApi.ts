@@ -31,6 +31,7 @@ export const postsApi = baseApi.injectEndpoints({
         method: 'GET',
         params,
       }),
+      providesTags: ['Comments'],
     }),
     uploadImageForPost: build.mutation<UploadImageForPostResponse, FormData>({
       query: formData => ({

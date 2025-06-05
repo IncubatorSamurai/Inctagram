@@ -45,9 +45,6 @@ export const AnswerItem = ({ answer, onLike }: AnswerItem) => {
               <span className={s.answer_like_count}>Like: {answer.likeCount} </span>
             </Typography>
           )}
-          <Button asChild variant={'text'} className={s.answer_btn}>
-            <Typography variant={'semi-bold_small_text'}>{'Answer'}</Typography>
-          </Button>
         </div>
         <Button
           variant={'icon'}
