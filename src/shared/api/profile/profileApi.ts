@@ -1,6 +1,9 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { ProfileResponse, ProfileUpdateRequest, UploadAvatarResponse } from '@/shared/api/profile/profileApi.types'
-
+import {
+  ProfileResponse,
+  ProfileUpdateRequest,
+  UploadAvatarResponse,
+} from '@/shared/api/profile/profileApi.types'
 
 export const profileApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -25,7 +28,7 @@ export const profileApi = baseApi.injectEndpoints({
         url: 'v1/users/profile',
         method: 'GET',
       }),
-      providesTags: ['Profile']
+      providesTags: ['Profile'],
     }),
     updateProfile: build.mutation<void, ProfileUpdateRequest>({
       query: data => ({
@@ -39,5 +42,8 @@ export const profileApi = baseApi.injectEndpoints({
 })
 
 export const {
- useDeleteUserAvatarMutation,useUploadUserAvatarMutation, useUpdateProfileMutation,useGetProfileQuery
+  useDeleteUserAvatarMutation,
+  useUploadUserAvatarMutation,
+  useUpdateProfileMutation,
+  useGetProfileQuery,
 } = profileApi

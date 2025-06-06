@@ -6,7 +6,7 @@ type Props = {
   variant?: 'error' | 'success'
   handleClick?: () => void
   fullWidth?: boolean
-  buttonClose?:boolean
+  buttonClose?: boolean
 } & ComponentPropsWithoutRef<'div'>
 
 export const Alert = ({
