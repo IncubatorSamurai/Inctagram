@@ -39,7 +39,6 @@
   },
   "profile": {
     "profileSettings": "Profile Settings",
-    "follow": "Follow",
     "sendMessage": "Send Message",
     "following": "Following",
     "followers": "Followers",
@@ -105,5 +104,21 @@
     "errorUploadImages2": "Uploaded now:",
     "file": "File",
     "exceeds": "exceeds"
+  },
+  "search": {
+    "search": "Search",
+    "recentRequests": "Recent requests",
+    "noRecentRequests": "No recent requests",
+    "searchUsersEmptyText": "Oops! This place looks empty!",
+    "searchError": "Error during loading",
+    "loading": "Loading..."
+  },
+  "follow": {
+    "follow": "Follow",
+    "followSuccessText": "You have successfully followed user",
+    "followErrorText": "Failed to follow user",
+    "unfollowSuccessText": "You have successfully unfollowed user",
+    "unfollowErrorText": "Failed to unfollow user",
+    "unfollow": "Unfollow"
   }
 }
