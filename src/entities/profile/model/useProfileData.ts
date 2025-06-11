@@ -1,9 +1,9 @@
-import { useParams } from 'next/navigation'
 import { useMeQuery } from '@/shared/api/auth/authApi'
-import { useGetPublicProfileQuery } from '@/shared/api/publicUser/publicUserApi'
 import { ProfileUserResponse } from '@/shared/api/publicUser/publicUserApi.types'
+import { useGetUserQuery } from '@/shared/api/users/usersApi'
 import { useAppSelector } from '@/shared/hooks'
 import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
+import { useParams } from 'next/navigation'
 
 type Props = {
   resPublicData?: ProfileUserResponse
@@ -18,20 +18,20 @@ export const useProfileData = ({ resPublicData }: Props) => {
   const { data: meData } = useMeQuery()
   const isMyProfile = meData?.userId === Number(userId)
 
-  const { data: publicInfoProfile = resPublicData } = useGetPublicProfileQuery(
-    { profileId: userId as string },
-    { skip: !!resPublicData }
-  )
-  const userName = publicInfoProfile?.userName as string
-  const avatarSrc = publicInfoProfile?.avatars[0]?.url
+  const { data: user } = useGetUserQuery({
+    userName: resPublicData?.userName as string,
+  })
+
+  const userName = user?.userName as string
+  const avatarSrc = user?.avatars[0]?.url
+  const aboutMe = user?.aboutMe
+  const isFollowing = user?.isFollowing || false
 
   const followArray = [
-    publicInfoProfile?.userMetadata.following ? publicInfoProfile?.userMetadata.following : 0,
-    publicInfoProfile?.userMetadata.followers ? publicInfoProfile?.userMetadata.followers : 0,
-    publicInfoProfile?.userMetadata.publications ? publicInfoProfile?.userMetadata.publications : 0,
+    user?.followingCount || 0,
+    user?.followersCount || 0,
+    user?.publicationsCount || 0,
   ]
 
-  const aboutMe = publicInfoProfile?.aboutMe
-
-  return { avatarSrc, isMyProfile, isLoggedIn, userName, followArray, aboutMe, userId }
+  return { avatarSrc, isMyProfile, isLoggedIn, userName, followArray, aboutMe, userId, isFollowing }
 }

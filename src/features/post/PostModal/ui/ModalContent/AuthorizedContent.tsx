@@ -21,6 +21,7 @@ export const AuthorizedContent = ({
   postId,
 }: AuthorizedContentProps) => {
   const { data } = useGetPostByIdQuery({ id: postId })
+
   return (
     <div className={s.rightSide}>
       <RightSideHeader
@@ -42,8 +43,6 @@ export const AuthorizedContent = ({
           postId={postId}
           description={data?.description}
           ownreName={data?.userName}
-          likes={data?.likesCount}
-          whosLikes={data?.avatarWhoLikes}
           updatedAt={data?.updatedAt}
           createdAt={data?.createdAt}
         />

@@ -1,15 +1,16 @@
 'use client'
-import s from './Profile.module.scss'
-import Image from 'next/image'
-import { Typography } from '@/shared/ui/typography'
-import { Button } from '@/shared/ui/button'
-import { BlankCover } from '@/shared/ui/profile/blankCover/BlankCover'
-import { useTranslations } from 'next-intl'
 import { useProfileData } from '@/entities/profile/model/useProfileData'
 import { UserPosts } from '@/entities/profile/ui/posts/UserPosts'
-import { ProfileUserResponse } from '@/shared/api/publicUser/publicUserApi.types'
+import { FollowButton } from '@/features/followUser'
 import { GetPostsByUserIdRespond } from '@/shared/api/post/postApi.types'
+import { ProfileUserResponse } from '@/shared/api/publicUser/publicUserApi.types'
+import { Button } from '@/shared/ui/button'
+import { BlankCover } from '@/shared/ui/profile/blankCover/BlankCover'
+import { Typography } from '@/shared/ui/typography'
+import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 import Link from 'next/link'
+import s from './Profile.module.scss'
 
 type Props = {
   resPublicData?: ProfileUserResponse
@@ -17,12 +18,20 @@ type Props = {
 }
 
 export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
-  const tProfile = useTranslations('profile')
+  const t = useTranslations('profile')
 
-  const { avatarSrc, isMyProfile, isLoggedIn, userName, followArray, aboutMe, userId } =
-    useProfileData({
-      resPublicData,
-    })
+  const {
+    avatarSrc,
+    isMyProfile,
+    isLoggedIn,
+    userName,
+    followArray,
+    aboutMe,
+    userId,
+    isFollowing,
+  } = useProfileData({
+    resPublicData,
+  })
 
   return (
     <div className={s.profilePage}>
@@ -37,12 +46,12 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
             <Typography variant={'h1'}>{userName}</Typography>
             {isMyProfile ? (
               <Button variant={'secondary'} asChild>
-                <Link href={'/profile/settings'}> {tProfile('profileSettings')}</Link>
+                <Link href={'/profile/settings'}> {t('profileSettings')}</Link>
               </Button>
             ) : isLoggedIn ? (
               <div className={s.followButtons}>
-                <Button variant={'primary'}>{tProfile('follow')}</Button>
-                <Button variant={'secondary'}>{tProfile('sendMessage')}</Button>
+                <FollowButton userId={+userId} userName={userName} isFollowing={isFollowing} />
+                <Button variant="secondary">{t('sendMessage')}</Button>
               </div>
             ) : null}
           </div>
@@ -51,9 +60,9 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
               <li key={i} className={s.followInfoItem}>
                 <Typography variant={'bold_text_14'}>{item}</Typography>
                 <Typography variant={'regular_text_14'}>
-                  {i === 0 && tProfile('following')}
-                  {i === 1 && tProfile('followers')}
-                  {i === 2 && tProfile('publications')}
+                  {i === 0 && t('following')}
+                  {i === 1 && t('followers')}
+                  {i === 2 && t('publications')}
                 </Typography>
               </li>
             ))}
