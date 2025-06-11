@@ -10,12 +10,14 @@ type AuthorizedContentProps = {
   openEdit: boolean
   showDeleteModalHandler: () => void
   isOwner: boolean
+  isLoggedIn: boolean
 }
 export const AuthorizedContent = ({
   isOwner,
   showDeleteModalHandler,
   openEdit,
   changeEdit,
+  isLoggedIn,
   postId,
 }: AuthorizedContentProps) => {
   const { data } = useGetPostByIdQuery({ id: postId })
@@ -37,6 +39,8 @@ export const AuthorizedContent = ({
         />
       ) : (
         <PostContent
+          isLoggedIn={isLoggedIn}
+          postId={postId}
           description={data?.description}
           ownreName={data?.userName}
           updatedAt={data?.updatedAt}

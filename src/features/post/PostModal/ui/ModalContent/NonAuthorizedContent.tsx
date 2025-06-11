@@ -5,13 +5,19 @@ import { Typography } from '@/shared/ui/typography'
 import { Scrollbar } from '@/shared/ui/scrollbar'
 import { CommentItem } from '@/features/publicPosts/ui/PublicModal/CommentItem'
 import { renderLikeAvatars } from '@/features/publicPosts/ui/PublicModal/PublicModalRenderAvatars'
-import { format } from 'date-fns'
 import Image from 'next/image'
+import { parseIsoDate } from '@/shared/utils'
+
 type NonAuthorizedContentProps = {
   post: Post
   commentsData: CommentsResponse | null
+  isLoggedIn: boolean
 }
-export const NonAuthorizedContent = ({ post, commentsData }: NonAuthorizedContentProps) => {
+export const NonAuthorizedContent = ({
+  isLoggedIn,
+  post,
+  commentsData,
+}: NonAuthorizedContentProps) => {
   const comments = commentsData?.items || []
   const { avatarOwner, userName, likesCount, createdAt, avatarWhoLikes } = post
   return (
@@ -28,7 +34,9 @@ export const NonAuthorizedContent = ({ post, commentsData }: NonAuthorizedConten
       <ul className={s.public_content_list}>
         <Scrollbar className={s.modal_scroll}>
           {comments?.length > 0 ? (
-            comments.map(comment => <CommentItem key={comment.id} comment={comment} />)
+            comments.map(comment => (
+              <CommentItem isLoggedIn={isLoggedIn} key={comment.id} comment={comment} />
+            ))
           ) : (
             <li>No comments</li>
           )}
@@ -46,7 +54,7 @@ export const NonAuthorizedContent = ({ post, commentsData }: NonAuthorizedConten
           </div>
         </div>
         <Typography variant={'small_text'} className={s.item_comment_date}>
-          {format(new Date(createdAt), 'MMMM d, yyyy')}
+          {parseIsoDate(createdAt)}
         </Typography>
       </div>
     </div>
