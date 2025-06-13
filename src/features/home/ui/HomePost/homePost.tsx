@@ -4,10 +4,12 @@ import { Typography } from '@/shared/ui/typography'
 import { Post } from '@/shared/api/pageHome/pageHomeApi.types'
 import { parseIsoDate } from '@/shared/utils'
 import { useGetUserQuery } from '@/shared/api/users/usersApi'
-import { HeaderHomePost } from '@/features/home/ui/post/HeaderHomePost/HeaderHomePost'
-import { HomePostImages } from '@/features/home/ui/post/PostImages/HomePostImages'
-import { HomePostInteraction } from '@/features/home/ui/post/FooterHomePost/PostInteraction/HomePostInteraction'
-import { HomePostLikes } from '@/features/home/ui/post/FooterHomePost/HomePostLikes/HomePostLikes'
+import {
+  HeaderHomePost,
+  HomePostImages,
+  HomePostInteraction,
+  HomePostLikes,
+} from '@/features/home/ui'
 import { AddContent } from '@/features/post/PostModal/ui/AddComment/AddComment'
 
 const WIDTH_AVATAR = 36

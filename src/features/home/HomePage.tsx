@@ -1,5 +1,5 @@
 'use client'
-import { HomePost } from '@/entities/homePost/homePost'
+import { HomePost } from '@/features/home/ui/HomePost/homePost'
 import { Scrollbar } from '@/shared/ui/scrollbar'
 import s from './homePage.module.scss'
 import { useGetHomePosts } from '@/features/home/model'
