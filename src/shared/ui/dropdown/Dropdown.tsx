@@ -23,6 +23,7 @@ export type DropdownProps = {
   align?: 'start' | 'center' | 'end'
   modalRef?: React.Ref<HTMLDivElement> | null
 }
+
 export const Dropdown = ({
   classContent,
   children,
@@ -37,6 +38,7 @@ export const Dropdown = ({
 }: DropdownProps) => {
   const container =
     modalRef && typeof modalRef !== 'function' ? (modalRef.current ?? undefined) : undefined
+
   return (
     <div className={className}>
       <DropdownMenu.Root {...props}>
