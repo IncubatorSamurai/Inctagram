@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import s from './Policy.module.scss'
 import { Button } from '@/shared/ui/button'
 import { Link } from '@/i18n/routing'
@@ -24,7 +24,8 @@ export const Policy = ({ policyHeader, policyText, ...props }: Policy) => {
       <div className={s.policy_header}>
         <Button variant={'text'} asChild={true}>
           <Link href={`${prev}`}>
-            <ArrowBackOutlineIcon /> <span> {prev === "/profile/settings" ? "Back to Settings" : "Back to Sing Up"} </span>
+            <ArrowBackOutlineIcon />{' '}
+            <span> {prev === '/profile/settings' ? 'Back to Settings' : 'Back to Sing Up'} </span>
           </Link>
         </Button>
         <Typography variant={'h1'} className={s.policy_header_text}>
