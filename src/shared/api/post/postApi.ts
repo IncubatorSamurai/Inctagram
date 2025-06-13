@@ -1,16 +1,18 @@
 import { baseApi } from '@/shared/api/baseApi'
 import {
+  CommentsResponse,
   CreatePostArgs,
   CreatePostResponse,
-  PostId,
   DeleteImageForPostArgs,
-  UploadImageForPostResponse,
+  GetCommentsByPostIdArgs,
   GetPostsByNameArgs,
   GetPostsByNameRespond,
   Name,
   PostDescriptionChange,
+  PostId,
   ResponseGetById,
   ResponseGetByName,
+  UploadImageForPostResponse,
 } from './postApi.types'
 
 export const postsApi = baseApi.injectEndpoints({
@@ -22,6 +24,14 @@ export const postsApi = baseApi.injectEndpoints({
         body: payload,
       }),
       invalidatesTags: ['Post'],
+    }),
+    getCommentsByPostId: build.query<CommentsResponse, GetCommentsByPostIdArgs>({
+      query: ({ postId, ...params }) => ({
+        url: `v1/posts/${postId}/comments`,
+        method: 'GET',
+        params,
+      }),
+      providesTags: ['Comments'],
     }),
     uploadImageForPost: build.mutation<UploadImageForPostResponse, FormData>({
       query: formData => ({
@@ -73,6 +83,7 @@ export const postsApi = baseApi.injectEndpoints({
 
 export const {
   useCreatePostMutation,
+  useGetCommentsByPostIdQuery,
   useUploadImageForPostMutation,
   useGetPostsByUserNameQuery,
   useDeletePostMutation,
