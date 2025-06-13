@@ -1,17 +1,18 @@
 'use client'
 import { HomePost } from '@/entities/homePost/homePost'
-import { useGetPublicationsFollowersQuery } from '@/shared/api/pageHome/pageHomeApi'
 import { Scrollbar } from '@/shared/ui/scrollbar'
+import s from './homePage.module.scss'
+import { useGetHomePosts } from '@/features/home/model'
 
 export const HomePage = () => {
-  const { data } = useGetPublicationsFollowersQuery({ pageSize: 10 })
-  const posts = data?.items
+  const { posts, lastPostElementRef } = useGetHomePosts()
 
   return (
     <Scrollbar>
-      {posts?.map(post => {
+      {posts?.map((post, index) => {
+        const isLast = index === posts.length - 1
         return (
-          <div key={post.id}>
+          <div key={post.id} className={s.container} ref={isLast ? lastPostElementRef : null}>
             <HomePost {...post}></HomePost>
           </div>
         )

@@ -11,9 +11,20 @@ export const pageHomeApi = baseApi.injectEndpoints({
       serializeQueryArgs: ({ endpointName }) => endpointName,
       merge: (currentCacheData, newItems) => {
         currentCacheData.items.push(...newItems.items)
+        const { nextCursor, page, pageSize, pagesCount, totalCount, prevCursor } = newItems
+
+        Object.assign(currentCacheData, {
+          nextCursor,
+          page,
+          pageSize,
+          pagesCount,
+          totalCount,
+          prevCursor,
+        })
       },
     }),
   }),
 })
 
-export const { useGetPublicationsFollowersQuery } = pageHomeApi
+export const { useGetPublicationsFollowersQuery, useLazyGetPublicationsFollowersQuery } =
+  pageHomeApi

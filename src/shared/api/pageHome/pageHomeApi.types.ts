@@ -1,7 +1,7 @@
 export type PublicationsFollowersArgs = {
   pageSize: number
   pageNumber?: number
-  endCursorPostId?: number
+  endCursorPostId?: number | null
 }
 
 export type HomePagePostsRespond = {
@@ -14,7 +14,7 @@ export type HomePagePostsRespond = {
   items: Post[]
 }
 
-type Image = {
+export type ImageProps = {
   url: string
   width: number
   height: number
@@ -33,7 +33,7 @@ export type Post = {
   userName: string
   description: string
   location: string
-  images: Image[]
+  images: ImageProps[]
   createdAt: string
   updatedAt: string
   ownerId: number
