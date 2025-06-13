@@ -8,6 +8,7 @@ import { HeaderHomePost } from '@/features/home/ui/post/HeaderHomePost/HeaderHom
 import { HomePostImages } from '@/features/home/ui/post/PostImages/HomePostImages'
 import { HomePostInteraction } from '@/features/home/ui/post/FooterHomePost/PostInteraction/HomePostInteraction'
 import { HomePostLikes } from '@/features/home/ui/post/FooterHomePost/HomePostLikes/HomePostLikes'
+import { AddContent } from '@/features/post/PostModal/ui/AddComment/AddComment'
 
 const WIDTH_AVATAR = 36
 const HEIGHT_AVATAR = 36
@@ -57,12 +58,7 @@ export const HomePost = ({ ...props }: Post) => {
         <Typography variant={'bold_text_14'} className={s.viewComments}>
           View All Comments (114)
         </Typography>
-        {/*<div className={s.addComment}>*/}
-        {/*  <textarea maxLength={500} placeholder="Add a Comment..." rows={1}></textarea>*/}
-        {/*  <Button name="Publish" variant="text">*/}
-        {/*    Publish*/}
-        {/*  </Button>*/}
-        {/*</div>*/}
+        <AddContent className={s.addComment} placeholder={'comment'} />
       </div>
     </div>
   )
