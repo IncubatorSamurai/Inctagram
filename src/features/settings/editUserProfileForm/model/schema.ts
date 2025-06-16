@@ -1,4 +1,4 @@
-import { name, profileName } from '@/shared/schemes/baseSchemes'
+import { firstName, lastName, name } from '@/shared/schemes/baseSchemes'
 import { z } from 'zod'
 
 const isAdult = (date: Date) => {
@@ -16,8 +16,8 @@ const isAdult = (date: Date) => {
 
 export const editProfileSchema = z.object({
   name: name,
-  firstName: profileName,
-  lastName: profileName,
+  firstName: firstName,
+  lastName: lastName,
   birthDate: z.date().refine(isAdult).optional(),
   textarea: z.string().optional(),
 })
