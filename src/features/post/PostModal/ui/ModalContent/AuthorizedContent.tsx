@@ -45,6 +45,8 @@ export const AuthorizedContent = ({
           ownreName={data?.userName}
           updatedAt={data?.updatedAt}
           createdAt={data?.createdAt}
+          whoLikes={data?.avatarWhoLikes}
+          likes={data?.likesCount}
         />
       )}
     </div>

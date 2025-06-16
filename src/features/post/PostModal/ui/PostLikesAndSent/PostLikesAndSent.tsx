@@ -9,7 +9,9 @@ import { PostLikesAvatars } from './PostLikesAvatars/PostLikesAvatars'
 import { LikePost } from './LikePost/LikePost'
 
 type LikesAndCountProps = {
-  createdAt?: string | undefined
+  createdAt: string | undefined
+  likes: number | undefined
+  whoLikes: string[] | undefined
 }
 
 export const PostLikesAndSent = ({ createdAt }: LikesAndCountProps) => {

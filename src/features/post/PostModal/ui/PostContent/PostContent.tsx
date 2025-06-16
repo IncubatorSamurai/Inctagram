@@ -58,7 +58,7 @@ export const PostContent = ({
           )}
         </ul>
       </Scrollbar>
-      <PostLikesAndSent likes={likes} whosLikes={whoLikes} createdAt={createdAt} />
+      <PostLikesAndSent likes={likes} whoLikes={whoLikes} createdAt={createdAt} />
       <AddContent placeholder={'Comment'} onPublish={() => {}} />
     </div>
   )
