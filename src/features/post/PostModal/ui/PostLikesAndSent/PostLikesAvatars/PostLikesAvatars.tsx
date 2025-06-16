@@ -17,14 +17,14 @@ export const PostLikesAvatars = ({ id }: Props) => {
         {transformedArray.map(item => (
           <div key={item.id}>
             {!item?.avatars.length ? (
-              <NoAvatar />
+              <NoAvatar className={s.avatar} />
             ) : (
               <Image
                 className={s.avatar}
                 src={item?.avatars[1].url}
                 alt="avatarOwner"
-                width={36}
-                height={36}
+                width={24}
+                height={24}
               />
             )}
           </div>

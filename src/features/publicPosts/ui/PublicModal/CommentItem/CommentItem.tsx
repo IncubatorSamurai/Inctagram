@@ -43,6 +43,7 @@ export const CommentItem = ({ isLoggedIn, comment }: CommentItemProps) => {
             alt="from-avatar"
             width={WIDTH_AVATAR}
             height={HEIGHT_AVATAR}
+            className={s.avatar}
           />
         ) : (
           <NoAvatar />
