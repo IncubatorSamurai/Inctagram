@@ -1,0 +1,25 @@
+.postFunctions {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 18px;
+  gap: 20px;
+
+  > :last-child {
+    margin-left: auto;
+  }
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.description {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+
+  > :first-child {
+    flex-shrink: 0;
+  }
+}

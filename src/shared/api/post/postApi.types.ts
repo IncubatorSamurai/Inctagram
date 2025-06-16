@@ -97,6 +97,10 @@ export type GetPostsByUserIdArgs = Omit<GetPostsByNameArgs, 'userName' | 'pageNu
   endCursorPostId?: string | null
 }
 
+export type GetCommentsByPostIdArgs = Omit<GetPostsByNameArgs, 'userName'> & {
+  postId: number
+}
+
 export type GetPostsByUserIdRespond = Omit<GetPostsByNameRespond, 'notReadCount'> & {
   totalUsers: number
 }
