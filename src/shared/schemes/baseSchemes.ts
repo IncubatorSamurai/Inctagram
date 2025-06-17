@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { nameValidation, passwordValidation } from '../lib'
+import { firstAndLastNameValidation, nameValidation, passwordValidation } from '../lib'
 
 export const newPassword = z
   .string()
@@ -35,9 +35,16 @@ export const email = z
 
 export const captcha = z.string().min(1, 'Captha is required').default('')
 
-export const profileName = z
+export const firstName = z
   .string()
   .min(1, 'First Name is required')
   .max(50, 'Maximum number of characters is 50')
-  .regex(nameValidation.REGEX, { message: nameValidation.ERROR_MESSAGES.PATTERN })
+  .regex(firstAndLastNameValidation.REGEX, { message: firstAndLastNameValidation.ERROR_MESSAGES.PATTERN })
+  .default('')
+
+  export const lastName = z
+  .string()
+  .min(1, 'Last Name is required')
+  .max(50, 'Maximum number of characters is 50')
+  .regex(firstAndLastNameValidation.REGEX, { message: firstAndLastNameValidation.ERROR_MESSAGES.PATTERN })
   .default('')
