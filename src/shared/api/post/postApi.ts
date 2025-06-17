@@ -1,6 +1,8 @@
 import { baseApi } from '@/shared/api/baseApi'
 import {
+  CommentResponse,
   CommentsResponse,
+  CreateComment,
   CreatePostArgs,
   CreatePostResponse,
   DeleteImageForPostArgs,
@@ -78,6 +80,43 @@ export const postsApi = baseApi.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    addComment: build.mutation<CommentResponse, CreateComment>({
+      query: payload => ({
+        url: `v1/posts/${payload.postId}/comments`,
+        method: 'POST',
+        body: { content: payload.content },
+      }),
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        const tempId = Date.now()
+        const patchResult = dispatch(
+          postsApi.util.updateQueryData(
+            'getCommentsByPostId',
+            { postId: +payload.postId },
+            draft => {
+              draft.items.unshift({
+                id: tempId,
+                content: payload.content,
+                createdAt: new Date().toISOString(),
+                postId: +payload.postId,
+                from: {
+                  id: tempId,
+                  username: 'string',
+                  avatars: [],
+                },
+                answerCount: 0,
+                likeCount: 0,
+                isLiked: false,
+              })
+            }
+          )
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
+    }),
   }),
 })
 
@@ -91,4 +130,5 @@ export const {
   useGetPostByIdQuery,
   useGetPostByNameMutation,
   useDeleteImageForPostMutation,
+  useAddCommentMutation,
 } = postsApi

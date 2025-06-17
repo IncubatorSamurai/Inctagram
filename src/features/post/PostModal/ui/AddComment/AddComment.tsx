@@ -11,6 +11,8 @@ type AddContent = {
   className?: string
 }
 export const AddContent = ({ className, value, onChange, placeholder, onPublish }: AddContent) => {
+  const disabledBTN = !value
+
   return (
     <div className={clsx(s.postsSideAddComment, className)}>
       <textarea
@@ -24,6 +26,7 @@ export const AddContent = ({ className, value, onChange, placeholder, onPublish 
         onClick={onPublish}
         name="Publish"
         variant="text"
+        disabled={disabledBTN}
       >
         Publish
       </Button>
