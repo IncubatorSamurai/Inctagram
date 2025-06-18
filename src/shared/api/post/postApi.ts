@@ -86,36 +86,7 @@ export const postsApi = baseApi.injectEndpoints({
         method: 'POST',
         body: { content: payload.content },
       }),
-      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        const tempId = Date.now()
-        const patchResult = dispatch(
-          postsApi.util.updateQueryData(
-            'getCommentsByPostId',
-            { postId: +payload.postId },
-            draft => {
-              draft.items.unshift({
-                id: tempId,
-                content: payload.content,
-                createdAt: new Date().toISOString(),
-                postId: +payload.postId,
-                from: {
-                  id: tempId,
-                  username: 'string',
-                  avatars: [],
-                },
-                answerCount: 0,
-                likeCount: 0,
-                isLiked: false,
-              })
-            }
-          )
-        )
-        try {
-          await queryFulfilled
-        } catch {
-          patchResult.undo()
-        }
-      },
+      invalidatesTags:["Comments"]
     }),
   }),
 })
