@@ -1,6 +1,8 @@
 import { baseApi } from '@/shared/api/baseApi'
 import {
+  CommentResponse,
   CommentsResponse,
+  CreateComment,
   CreatePostArgs,
   CreatePostResponse,
   DeleteImageForPostArgs,
@@ -78,6 +80,14 @@ export const postsApi = baseApi.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    addComment: build.mutation<CommentResponse, CreateComment>({
+      query: payload => ({
+        url: `v1/posts/${payload.postId}/comments`,
+        method: 'POST',
+        body: { content: payload.content },
+      }),
+      invalidatesTags:["Comments"]
+    }),
   }),
 })
 
@@ -91,4 +101,5 @@ export const {
   useGetPostByIdQuery,
   useGetPostByNameMutation,
   useDeleteImageForPostMutation,
+  useAddCommentMutation,
 } = postsApi
