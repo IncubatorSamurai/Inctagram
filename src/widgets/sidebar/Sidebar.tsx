@@ -36,11 +36,11 @@ export const sidebarItems = {
   primary: [
     {
       id: uuidv4(),
-      name: 'Home',
+      name: 'Feed',
       icon: <HomeOutlineIcon />,
-      href: PATH.HOME,
+      href: PATH.FEED,
       disabled: false,
-      classItem: 'home',
+      classItem: 'feed',
       activeIcon: <HomeIcon />,
     },
     {

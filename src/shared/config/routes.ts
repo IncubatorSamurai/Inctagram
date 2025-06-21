@@ -1,5 +1,5 @@
 export const PATH = {
-  HOME: '/home',
+  FEED: '/feed',
   SIGNIN: '/auth/signin',
   SIGNUP: '/auth/signup',
   NEW_PASSWORD: '/auth/create-new-password',

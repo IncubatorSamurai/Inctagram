@@ -3,9 +3,10 @@ import React, { PropsWithChildren, useEffect } from 'react'
 import { useMeQuery } from '@/shared/api/auth/authApi'
 import { useAppDispatch } from '@/shared/hooks'
 import { setIsLoggedIn } from '@/shared/store/appSlice/appSlice'
+import { Loader } from '@/shared/ui/loader'
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const { data } = useMeQuery()
+  const { data, isLoading } = useMeQuery()
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -17,6 +18,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem('userName', data.userName)
     }
   }, [dispatch, data])
+
+  if (isLoading) {
+    return <Loader />
+  }
 
   return <div>{children}</div>
 }

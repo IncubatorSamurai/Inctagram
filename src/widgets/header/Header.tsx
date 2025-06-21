@@ -44,7 +44,7 @@ const Header = ({ isAdmin, headerTitle, headerLogo, ...rest }: HeaderType) => {
     <>
       <header className={s.header} {...rest}>
         <div className={s.container}>
-          <Link className={s.header_logo} href={isLoggedIn ? PATH.HOME : PATH.PUBLIC}>
+          <Link className={s.header_logo} href={isLoggedIn ? PATH.FEED : PATH.PUBLIC}>
             {headerLogo && (
               <Image
                 src={headerLogo}
