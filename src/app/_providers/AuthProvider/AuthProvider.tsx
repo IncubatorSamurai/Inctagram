@@ -4,6 +4,7 @@ import { useMeQuery } from '@/shared/api/auth/authApi'
 import { useAppDispatch } from '@/shared/hooks'
 import { setIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { Loader } from '@/shared/ui/loader'
+import s from './AuthProvider.module.scss'
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const { data, isLoading } = useMeQuery()
@@ -20,7 +21,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   }, [dispatch, data])
 
   if (isLoading) {
-    return <Loader />
+    return (
+      <div className={s.container}>
+        <Loader />
+      </div>
+    )
   }
 
   return <div>{children}</div>
