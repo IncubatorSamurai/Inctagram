@@ -11,9 +11,12 @@ import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import s from './Profile.module.scss'
+import { MeResponse } from '@/shared/api/auth/authApi.types'
+import { GetUserResponse } from '@/shared/api/users/usersApi.types'
 
 type Props = {
-  resPublicData?: ProfileUserResponse
+  me?: MeResponse
+  resPublicData?: ProfileUserResponse | GetUserResponse
   resPublicPosts?: GetPostsByUserIdRespond
 }
 

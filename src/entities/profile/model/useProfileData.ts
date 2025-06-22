@@ -1,15 +1,21 @@
-import { useMeQuery } from '@/shared/api/auth/authApi'
+import { authApi, useMeQuery } from '@/shared/api/auth/authApi'
 import { ProfileUserResponse } from '@/shared/api/publicUser/publicUserApi.types'
 import { useGetUserQuery } from '@/shared/api/users/usersApi'
-import { useAppSelector } from '@/shared/hooks'
+import { useAppDispatch, useAppSelector } from '@/shared/hooks'
 import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { useParams } from 'next/navigation'
+import { GetUserResponse } from '@/shared/api/users/usersApi.types'
+import { MeResponse } from '@/shared/api/auth/authApi.types'
+import { useEffect, useRef } from 'react'
 
 type Props = {
-  resPublicData?: ProfileUserResponse
+  resPublicData?: ProfileUserResponse | GetUserResponse
+  me?: MeResponse
 }
 
-export const useProfileData = ({ resPublicData }: Props) => {
+export const useProfileData = ({ resPublicData, me }: Props) => {
+  const needInit = useRef(!!me)
+  const dispatch = useAppDispatch()
   const params = useParams()
   const { userId: id } = params
   const userId = id as string
@@ -21,6 +27,19 @@ export const useProfileData = ({ resPublicData }: Props) => {
   const { data: user } = useGetUserQuery({
     userName: resPublicData?.userName as string,
   })
+
+  useEffect(() => {
+    if (needInit.current && me) {
+      dispatch(authApi.util.upsertQueryData('me', undefined, me))
+      needInit.current = false
+    }
+  }, [me])
+
+  useEffect(() => {
+    return () => {
+      dispatch(authApi.util.resetApiState())
+    }
+  }, [])
 
   const userName = user?.userName as string
   const avatarSrc = user?.avatars[0]?.url

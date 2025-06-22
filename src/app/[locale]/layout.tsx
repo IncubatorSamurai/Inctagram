@@ -5,7 +5,7 @@ import { routing } from '@/i18n/routing'
 import { ReactNode } from 'react'
 import { locales } from '@/shared/types/locale'
 import { Header } from '@/widgets/header'
-import { AuthProvider, SocketProvider } from '@/app/_providers'
+import { SocketProvider } from '@/app/_providers'
 import s from './layout.module.scss'
 import LayoutLoggedIn from '@/app/_providers/layoutLoggedIn/layoutLoggedIn'
 import { ToastContainer } from 'react-toastify'
@@ -20,29 +20,23 @@ export default async function LocaleLayout({
   modal: ReactNode
 }) {
   const { locale } = await params
-  // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale as locales)) {
     notFound()
   }
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
 
   const messages = await getMessages()
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <AuthProvider>
-        <SocketProvider>
-          <Header headerTitle={'Inctagram'} />
-          <div className={s.container}>
-            <LayoutLoggedIn>
-              {children} <ToastContainer position="bottom-left" />
-            </LayoutLoggedIn>
-          </div>
-          {modal}
-        </SocketProvider>
-      </AuthProvider>
+      <SocketProvider>
+        <Header headerTitle={'Inctagram'} />
+        <div className={s.container}>
+          <LayoutLoggedIn>
+            {children} <ToastContainer position="bottom-left" />
+          </LayoutLoggedIn>
+        </div>
+        {modal}
+      </SocketProvider>
     </NextIntlClientProvider>
   )
 }

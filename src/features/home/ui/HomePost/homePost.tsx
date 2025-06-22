@@ -33,7 +33,7 @@ export const HomePost = ({ ...props }: Post) => {
     userName: ownerUserName,
   })
 
-  const isFollowing = user?.isFollowing || true
+  const isFollowing = user?.isFollowing ?? false
 
   return (
     <div className={s.container}>

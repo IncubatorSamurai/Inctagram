@@ -27,7 +27,6 @@ import { BookMarkIcon } from '@/shared/assets/icons/BookMarkIcon'
 import { NavItem } from '@/shared/ui/nav-item'
 import { PATH } from '@/shared/config/routes'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
-import { useMeQuery } from '@/shared/api/auth/authApi'
 import { useState } from 'react'
 import { Button } from '@/shared/ui/button/Button'
 import { AddPostModal } from '../post'
@@ -151,10 +150,10 @@ export const sidebarItems = {
 
 type Sidebar = {
   isAdmin?: boolean
+  userId: number
 }
 
-export const Sidebar = ({ isAdmin }: Sidebar) => {
-  const { data: meInfo } = useMeQuery()
+export const Sidebar = ({ isAdmin, userId }: Sidebar) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   return (
     <nav className={s.sidebar}>
@@ -187,7 +186,7 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
                   </li>
                 )
               } else if (item.name === 'My Profile') {
-                item = { ...item, href: `${item.href}/${meInfo?.userId}` }
+                item = { ...item, href: `${item.href}/${userId}` }
               }
               return <NavItem key={item.id} {...item} />
             })}
