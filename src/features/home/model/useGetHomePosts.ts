@@ -1,9 +1,5 @@
-import {
-  pageHomeApi,
-  useLazyGetPublicationsFollowersQuery,
-} from '@/shared/api/pageHome/pageHomeApi'
+import { useLazyGetPublicationsFollowersQuery } from '@/shared/api/pageHome/pageHomeApi'
 import { useCallback, useEffect, useRef } from 'react'
-import { useAppDispatch } from '@/shared/hooks'
 
 const PAGE_SIZE = 3
 
