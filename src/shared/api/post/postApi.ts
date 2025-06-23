@@ -12,7 +12,6 @@ import {
   PostDescriptionChange,
   PostId,
   ResponseGetById,
-  // ResponseGetByName,
   UploadImageForPostResponse,
 } from './postApi.types'
 import { publicPostApi } from './publicPosts'
