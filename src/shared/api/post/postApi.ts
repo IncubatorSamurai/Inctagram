@@ -12,9 +12,10 @@ import {
   PostDescriptionChange,
   PostId,
   ResponseGetById,
-  ResponseGetByName,
+  // ResponseGetByName,
   UploadImageForPostResponse,
 } from './postApi.types'
+import { publicPostApi } from './publicPosts'
 
 export const postsApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -52,19 +53,18 @@ export const postsApi = baseApi.injectEndpoints({
         url: `v1/posts/${id}`,
         method: 'DELETE',
       }),
-      // async onQueryStarted( {id} , { dispatch, queryFulfilled }) {
-      //   const patchResult = dispatch(
-      //   baseApi.util.updateQueryData('getPublicPostsByUserId',undefined, draft => {
-      //       console.log(draft);
-            
-      //     })
-      //   )
-      //   try {
-      //     await queryFulfilled
-      //   } catch {
-      //     patchResult.undo()
-      //   }
-      // },
+      async onQueryStarted({id}, {dispatch, queryFulfilled}) {
+        const patchResult = dispatch(
+          publicPostApi.util.updateQueryData('getPublicPostsByUserId', undefined, draft => {
+            return draft.items.filter(post => post.id !== id)
+          })
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      }
     }),
     editPostDescription: build.mutation<void, PostDescriptionChange>({
       query: ({ id, description }) => ({
