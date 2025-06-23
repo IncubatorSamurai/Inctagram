@@ -55,7 +55,7 @@ export const ModalCloseOrDeletePost = ({
           <Typography variant="regular_text_16" id="modalDescription">
             {title === 'Delete' && ` Are you sure you want to ${title} this post?`}
             {title === 'Close' &&
-              ` Do you really want to close the edition of the publication? If you close changes won’t be saved`}
+              `Do you really want to finish editing? If you close the changes you have made will not be saved`}
           </Typography>
         </DialogRadix.Title>
 

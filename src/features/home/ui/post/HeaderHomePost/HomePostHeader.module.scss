@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 8px;
+
+  > :last-child {
+    margin-left: auto;
+  }
+
+  .postTime {
+    color: var(--color-light-900);
+  }
+
+  .dot {
+    width: 4px;
+    height: 4px;
+    background-color: var(--color-light-700);
+    border-radius: 50%;
+  }
+
+  .avatar {
+    border-radius: 50%;
+  }
+}
+
+.dropDownContainer {
+  overflow: hidden;
+}

@@ -1,0 +1,53 @@
+.answer_item {
+  display: flex;
+  column-gap: 16px;
+  position: relative;
+  margin-bottom: 16px;
+
+  .answer_bottom {
+    color: var(--color-light-900);
+    font-size: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 5px;
+
+    .item_answer_date {
+      color: inherit;
+      font-size: inherit;
+    }
+    .answer_like_count {
+      color: inherit;
+      font-size: inherit;
+    }
+    .answer_btn {
+      color: inherit;
+      font-size: inherit;
+      padding: 5px;
+    }
+  }
+
+  .answer_item_comment {
+    padding-right: 64px;
+
+    span {
+      margin-right: 5px;
+    }
+  }
+
+  .like_btn {
+    position: absolute;
+    right: 20px;
+    top: 0;
+  }
+
+  .like_on {
+    color: var(--color-danger-300);
+  }
+}
+
+.answer_avatar {
+  img {
+    border-radius: 50%;
+  }
+}

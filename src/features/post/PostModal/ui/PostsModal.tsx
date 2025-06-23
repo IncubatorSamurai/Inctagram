@@ -10,14 +10,15 @@ import { usePostModal } from '@/shared/hooks/usePostModal'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
-type PublicModal = {
+type PostModal = {
   post: Post
   commentsData: CommentsResponse | null
   postId: number
 }
 
-export const PostsModal = ({ post, commentsData, postId, ...props }: PublicModal) => {
+export const PostsModal = ({ post, commentsData, postId, ...props }: PostModal) => {
   const [isOwner, setIsOwner] = useState<boolean>(false)
+
   const {
     isLoggedIn,
     openEdit,
@@ -60,6 +61,7 @@ export const PostsModal = ({ post, commentsData, postId, ...props }: PublicModal
 
         {isLoggedIn ? (
           <AuthorizedContent
+            isLoggedIn={isLoggedIn}
             isOwner={isOwner}
             postId={postId}
             openEdit={openEdit}
@@ -67,7 +69,7 @@ export const PostsModal = ({ post, commentsData, postId, ...props }: PublicModal
             showDeleteModalHandler={showDeleteModalHandler}
           />
         ) : (
-          <NonAuthorizedContent post={post} commentsData={commentsData} />
+          <NonAuthorizedContent isLoggedIn={isLoggedIn} post={post} commentsData={commentsData} />
         )}
       </div>
       <ModalCloseOrDeletePost

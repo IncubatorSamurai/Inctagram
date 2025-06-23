@@ -1,43 +1,40 @@
 import { BookMarkOutlineIcon } from '@/shared/assets/icons/BookMarkOutlineIcon'
-import { HeartOutlineIcon } from '@/shared/assets/icons/HeartOutlineIcon'
 import { PaperPlaneIcon } from '@/shared/assets/icons/PaperPlaneIcon'
 import s from './PostLikesAndSent.module.scss'
-import Image from 'next/image'
 import { parseIsoDate } from '@/shared/utils'
+import { useGetPostLikesQuery } from '@/shared/api/post/likes/postLikeApi'
+import { useSearchParams } from 'next/navigation'
+import { Typography } from '@/shared/ui/typography'
+import { PostLikesAvatars } from './PostLikesAvatars/PostLikesAvatars'
+import { LikePost } from './LikePost/LikePost'
 
 type LikesAndCountProps = {
-  likes: number | undefined
-  whosLikes: string[] | undefined
   createdAt: string | undefined
+  likes: number | undefined
+  whoLikes: string[] | undefined
 }
 
-export const PostLikesAndSent = ({ likes, whosLikes, createdAt }: LikesAndCountProps) => {
-  const data = createdAt && parseIsoDate(createdAt)
+export const PostLikesAndSent = ({ createdAt }: LikesAndCountProps) => {
+  const searchParams = useSearchParams()
+  const postId = searchParams.get('postId')
+  const { data } = useGetPostLikesQuery(postId ?? '', { skip: !postId })
+
+  const createDate = createdAt && parseIsoDate(createdAt)
   return (
     <div className={s.postsSideLikes}>
       <div className={s.likeAndSent}>
         <div className={s.likeS}>
-          <HeartOutlineIcon />
+          <LikePost id={postId ?? ''} likesItems={data?.items} />
           <PaperPlaneIcon />
         </div>
-        <div>
-          <BookMarkOutlineIcon />
-        </div>
+        <BookMarkOutlineIcon />
       </div>
       <div className={s.info}>
-        {whosLikes?.map(el => (
-          <Image
-            key={el}
-            className={s.imgWhoLikes}
-            src={el}
-            alt="user post"
-            width={24}
-            height={24}
-          />
-        ))}
-        {likes} <span>like</span>
+        <PostLikesAvatars id={postId ?? ''} />
       </div>
-      <div>{data}</div>
+      <Typography className={s.date} variant="small_text">
+        {createDate}
+      </Typography>
     </div>
   )
 }

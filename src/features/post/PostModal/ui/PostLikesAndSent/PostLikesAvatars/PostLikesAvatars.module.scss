@@ -1,0 +1,22 @@
+.avatar {
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+
+  > svg {
+    height: 18px;
+    width: 18px;
+  }
+}
+.row {
+  display: flex;
+  margin: 0 15px 0 5px;
+  div {
+    display: flex;
+    margin: 0 -3px;
+  }
+}
+.container {
+  display: flex;
+  align-items: center;
+}

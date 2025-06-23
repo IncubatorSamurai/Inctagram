@@ -97,6 +97,10 @@ export type GetPostsByUserIdArgs = Omit<GetPostsByNameArgs, 'userName' | 'pageNu
   endCursorPostId?: string | null
 }
 
+export type GetCommentsByPostIdArgs = Omit<GetPostsByNameArgs, 'userName'> & {
+  postId: number
+}
+
 export type GetPostsByUserIdRespond = Omit<GetPostsByNameRespond, 'notReadCount'> & {
   totalUsers: number
 }
@@ -201,4 +205,30 @@ export type ResponseGetByName = {
 
 export type DeleteImageForPostArgs = {
   uploadId: string
+}
+
+export type CreateComment = {
+  postId: string
+  content: string
+}
+
+export type CommentResponse = {
+  id: number
+  postId: number
+  from: FromType
+  constent: string
+  createdAt: string
+  answerCount: number
+  likeCount: number
+  isLiked: boolean
+}
+
+type FromType = {
+  id: number
+  username: string
+  avatars: Avatars[]
+}
+
+type Avatars = {
+  url: string
 }

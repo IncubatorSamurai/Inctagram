@@ -4,7 +4,7 @@
   justify-content: space-between;
 
   //   margin-top: auto;
-  padding: 18px 24px 12px;
+  padding: 12px 24px 12px;
 
   & textarea {
     resize: none;
@@ -14,5 +14,6 @@
 
     background-color: inherit;
     outline: none;
+    height: 24px;
   }
 }
