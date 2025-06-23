@@ -2,10 +2,8 @@ import { baseApi } from '../baseApi'
 
 export const deviceApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-	//TODO: Алексей назвови метод getAllDevices, или поменяй у меня в deleteSingleDevice
-    getAllDevices: builder.query<any, any>({
-      query: () => `v1/sessions`,
-    }),
+    //TODO: Алексей назвови метод getAllDevices, или поменяй у меня в deleteSingleDevice & deleteAllDevices
+ 
     deleteSingleDevice: builder.mutation<void, number>({
       query: id => ({ url: `v1/sessions/${id}`, method: 'DELETE' }),
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
@@ -21,6 +19,22 @@ export const deviceApi = baseApi.injectEndpoints({
         }
       },
     }),
+    deleteAllDevices: builder.mutation<void, void>({
+      query: () => ({ url: `v1/sessions/terminate-all`, method: 'DELETE' }),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          deviceApi.util.updateQueryData('getAllDevices', {}, draft => {
+            draft.others = []
+          })
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
+    }),
   }),
 })
-export const { useGetAllDevicesQuery, useDeleteSingleDeviceMutation } = deviceApi
+export const { useGetAllDevicesQuery, useDeleteSingleDeviceMutation, useDeleteAllDevicesMutation } =
+  deviceApi
