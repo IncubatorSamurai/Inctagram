@@ -1,0 +1,59 @@
+.root {
+  background-color: 'inherit';
+
+  .cardRoot {
+    min-height: 120px;
+    margin-bottom: 12px;
+  }
+
+  .nameDevice {
+    padding-bottom: 13px;
+  }
+
+  .btnTerminate {
+    display: flex;
+    flex-direction: row-reverse;
+    padding-top: 12px;
+  }
+
+  .currentDevise {
+    padding-bottom: 6px;
+  }
+
+  .wrapperDevice {
+    display: flex;
+    gap: 12px;
+    padding: 24px;
+  }
+
+  .activeSessions {
+    padding-bottom: 18px;
+  }
+
+  .wrapperSession {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 24px;
+  }
+
+  .sessionLeft {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+.logoutBtn {
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding: 0;
+
+  font-weight: 400;
+  color: inherit;
+}

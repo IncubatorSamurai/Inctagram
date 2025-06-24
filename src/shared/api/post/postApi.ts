@@ -86,7 +86,7 @@ export const postsApi = baseApi.injectEndpoints({
         method: 'POST',
         body: { content: payload.content },
       }),
-      invalidatesTags:["Comments"]
+      invalidatesTags: ['Comments'],
     }),
   }),
 })
