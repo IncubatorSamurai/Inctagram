@@ -15,12 +15,14 @@ export const useProfileData = ({ resPublicData }: Props) => {
   const userId = id as string
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
-  const { data: meData } = useMeQuery()
+  const { data: meData, isLoading: meLoading } = useMeQuery()
   const isMyProfile = meData?.userId === Number(userId)
 
-  const { data: user } = useGetUserQuery({
+  const { data: user, isLoading: dataLoading } = useGetUserQuery({
     userName: resPublicData?.userName as string,
   })
+
+  const isLoading = meLoading || dataLoading
 
   const userName = user?.userName as string
   const avatarSrc = user?.avatars[0]?.url
@@ -33,5 +35,15 @@ export const useProfileData = ({ resPublicData }: Props) => {
     user?.publicationsCount || 0,
   ]
 
-  return { avatarSrc, isMyProfile, isLoggedIn, userName, followArray, aboutMe, userId, isFollowing }
+  return {
+    avatarSrc,
+    isMyProfile,
+    isLoggedIn,
+    userName,
+    followArray,
+    aboutMe,
+    userId,
+    isFollowing,
+    isLoading,
+  }
 }

@@ -11,6 +11,7 @@ import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import s from './Profile.module.scss'
+import { Loader } from '@/shared/ui/loader'
 
 type Props = {
   resPublicData?: ProfileUserResponse
@@ -29,9 +30,18 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
     aboutMe,
     userId,
     isFollowing,
+    isLoading,
   } = useProfileData({
     resPublicData,
   })
+
+  if (isLoading) {
+    return (
+      <div className={s.loader}>
+        <Loader />
+      </div>
+    )
+  }
 
   return (
     <div className={s.profilePage}>
