@@ -3,8 +3,9 @@ import s from './Devisec.module.scss'
 import { Card } from '@/shared/ui/card'
 import { Button } from '@/shared/ui/button/Button'
 import { BrowserIcon } from './BrowserIcon'
-import { useGetDevicesQuery } from '../../../../shared/api/devices/devicesApi'
 import { Device } from './device/Device'
+import { useGetDevicesQuery } from '@/shared/api/devices/devicesApi'
+
 
 export const Devisec = () => {
   const { data } = useGetDevicesQuery()
@@ -43,6 +44,7 @@ export const Devisec = () => {
       {sesions?.map(el => {
         return (
           <Device
+          id={el.deviceId}
             key={el.deviceId}
             device={el.deviceName}
             ip={el.ip}

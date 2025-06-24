@@ -11,9 +11,10 @@ type Props = {
   osName: string
   osVersion: string
   lastVisit: string
+  id:number
 }
 
-export const Device = ({ device, ip, osName, osVersion, lastVisit }: Props) => {
+export const Device = ({ device, ip, osName, osVersion, lastVisit, id }: Props) => {
   const sessionDevice = device || 'Desctop'
   return (
     <Card className={s.cardRoot}>
