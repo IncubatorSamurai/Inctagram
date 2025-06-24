@@ -39,12 +39,16 @@ export const firstName = z
   .string()
   .min(1, 'First Name is required')
   .max(50, 'Maximum number of characters is 50')
-  .regex(firstAndLastNameValidation.REGEX, { message: firstAndLastNameValidation.ERROR_MESSAGES.PATTERN })
+  .regex(firstAndLastNameValidation.REGEX, {
+    message: firstAndLastNameValidation.ERROR_MESSAGES.PATTERN,
+  })
   .default('')
 
-  export const lastName = z
+export const lastName = z
   .string()
   .min(1, 'Last Name is required')
   .max(50, 'Maximum number of characters is 50')
-  .regex(firstAndLastNameValidation.REGEX, { message: firstAndLastNameValidation.ERROR_MESSAGES.PATTERN })
+  .regex(firstAndLastNameValidation.REGEX, {
+    message: firstAndLastNameValidation.ERROR_MESSAGES.PATTERN,
+  })
   .default('')
