@@ -9,6 +9,7 @@ import { SocketProvider } from '@/app/_providers'
 import s from './layout.module.scss'
 import LayoutLoggedIn from '@/app/_providers/layoutLoggedIn/layoutLoggedIn'
 import { ToastContainer } from 'react-toastify'
+import { AuthProvider } from '@/app/_providers/AuthProvider/AuthProvider'
 
 export default async function LocaleLayout({
   children,
@@ -28,15 +29,17 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <SocketProvider>
-        <Header headerTitle={'Inctagram'} />
-        <div className={s.container}>
-          <LayoutLoggedIn>
-            {children} <ToastContainer position="bottom-left" />
-          </LayoutLoggedIn>
-        </div>
-        {modal}
-      </SocketProvider>
+      <AuthProvider>
+        <SocketProvider>
+          <Header headerTitle={'Inctagram'} />
+          <div className={s.container}>
+            <LayoutLoggedIn>
+              {children} <ToastContainer position="bottom-left" />
+            </LayoutLoggedIn>
+          </div>
+          {modal}
+        </SocketProvider>
+      </AuthProvider>
     </NextIntlClientProvider>
   )
 }

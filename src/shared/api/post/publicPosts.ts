@@ -8,10 +8,13 @@ export const publicPostApi = baseApi.injectEndpoints({
         params,
         url: `v1/public-posts/user/${userId}/${endCursorPostId ?? ''}`,
       }),
-      serializeQueryArgs: ({ endpointName }) => endpointName,
+      serializeQueryArgs: ({ queryArgs }) => {
+        return queryArgs.userId
+      },
       merge: (currentCacheData, newItems) => {
         currentCacheData.items.push(...newItems.items)
       },
+      keepUnusedDataFor: 0,
     }),
   }),
 })

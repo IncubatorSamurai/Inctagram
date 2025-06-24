@@ -7,6 +7,10 @@ import { useGetHomePosts } from '@/features/home/model'
 export const HomePage = () => {
   const { posts, lastPostElementRef } = useGetHomePosts()
 
+  // if (isLoading) {
+  //   return <Loader />
+  // }
+
   return (
     <Scrollbar>
       {posts?.map((post, index) => {

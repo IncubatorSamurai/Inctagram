@@ -30,6 +30,7 @@ import { LogOut } from '@/features/auth/logout/ui/LogOut'
 import { useState } from 'react'
 import { Button } from '@/shared/ui/button/Button'
 import { AddPostModal } from '../post'
+import { useMeQuery } from '@/shared/api/auth/authApi'
 
 export const sidebarItems = {
   primary: [
@@ -150,11 +151,19 @@ export const sidebarItems = {
 
 type Sidebar = {
   isAdmin?: boolean
-  userId: number
 }
 
-export const Sidebar = ({ isAdmin, userId }: Sidebar) => {
+export const Sidebar = ({ isAdmin }: Sidebar) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { data } = useMeQuery()
+  // const router = useRouter()
+
+  // useEffect(() => {
+  //   if (data?.userId) {
+  //     router.push(PATH.FEED)
+  //   }
+  // }, [])
+
   return (
     <nav className={s.sidebar}>
       {isAdmin ? (
@@ -186,7 +195,7 @@ export const Sidebar = ({ isAdmin, userId }: Sidebar) => {
                   </li>
                 )
               } else if (item.name === 'My Profile') {
-                item = { ...item, href: `${item.href}/${userId}` }
+                item = { ...item, href: `${item.href}/${data?.userId}` }
               }
               return <NavItem key={item.id} {...item} />
             })}
