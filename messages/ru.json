@@ -64,7 +64,12 @@
       "Or": "Или",
       "CreatePayment": "Оформить оплату",
       "Ok": "Да",
-      "Loading": "Загрузка..."
+      "Loading": "Загрузка...",
+      "lastVisit": "Последний визит",
+      "currentDevice": "Текущее устройство",
+      "activeSession": "Активные сессии",
+      "logOutAllDevices": "Завершить все остальные сеансы",
+      "logOutSingleDevice": "Выйти"
     }
   },
   "post": {

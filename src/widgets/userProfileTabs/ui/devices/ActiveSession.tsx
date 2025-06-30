@@ -5,10 +5,10 @@ type ActiveSes = {
   name: string
 }
 
-export const ActiveSesion = ({ name }: ActiveSes) => {
+export const ActiveSession = ({ name }: ActiveSes) => {
   return (
     <div>
-      {name === 'Desctop' && <DesktopIcon />}
+      {name === 'Desktop' && <DesktopIcon />}
       {name === 'mobile' && <PhoneIcon />}
       {/* {name === 'tablet' && <MicrosoftEdgeIcon />} */}
     </div>

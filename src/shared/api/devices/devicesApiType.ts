@@ -3,7 +3,7 @@ export type SessionsGet = {
   others: Device[]
 }
 
-type Device = {
+export type Device = {
   deviceId: number
   ip: string
   lastActive: string
