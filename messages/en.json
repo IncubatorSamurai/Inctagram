@@ -64,7 +64,12 @@
       "Or": "Or",
       "CreatePayment": "Create payment",
       "Ok": "Ok",
-      "Loading": "Loading..."
+      "Loading": "Loading...",
+      "lastVisit": "Last visit",
+      "currentDevice": "Current device",
+      "activeSession": "Active sessions",
+      "logOutAllDevices":"Terminate all other session",
+      "logOutSingleDevice":"Log out"
     }
   },
   "post": {

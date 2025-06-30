@@ -10,7 +10,7 @@ export const passwordValidation = {
   },
 } as const
 export const firstAndLastNameValidation = {
-REGEX: /^[a-zA-Zа-яА-Я_.-]+$/,
+  REGEX: /^[a-zA-Zа-яА-Я_.-]+$/,
   ERROR_MESSAGES: {
     PATTERN: 'Name must contain A-Z; a-z А-Я; а-я',
     MISMATCH: 'The passwords must match',

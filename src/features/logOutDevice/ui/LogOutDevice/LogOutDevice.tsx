@@ -1,18 +1,19 @@
-import { useDeleteSingleDeviceMutation, useGetAllDevicesQuery } from '@/shared/api/device/deviceApi'
 import { Button } from '@/shared/ui/button'
 import { LogOutIcon } from '@/shared/assets/icons/LogOutIcon'
+import { useDeleteSingleDeviceMutation } from '@/shared/api/devices/devicesApi'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   id: number
 }
 export const LogOutDevice = ({ id }: Props) => {
-  const { data } = useGetAllDevicesQuery({})
   const [deleteAllDevices] = useDeleteSingleDeviceMutation()
-  console.log(data)
+
+  const tabTranslation = useTranslations('profile.profileSettingsTabs')
 
   return (
     <Button onClick={() => deleteAllDevices(id)} variant="icon">
-      <LogOutIcon /> Log Out
+      <LogOutIcon /> {tabTranslation('logOutSingleDevice')}
     </Button>
   )
 }

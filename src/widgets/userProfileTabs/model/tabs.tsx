@@ -1,7 +1,7 @@
 import { GeneralInfoTab } from '../ui/generalInfo/GeneralInfoTab'
 import { Payments } from '@/widgets/userProfileTabs/ui/payments/Payments'
 import { AccountManagement } from '@/features/settings'
-import { DeviceTab } from '@/widgets/deviceTab'
+import { Devices } from '../ui/devices/Devices'
 
 export const userProfileTabs = [
   { value: 'generalInformation', title: 'General information' },
@@ -17,7 +17,7 @@ export const tabsContent = [
   },
   {
     value: 'devices',
-    content: <DeviceTab />,
+    content: <Devices />,
   },
 
   {

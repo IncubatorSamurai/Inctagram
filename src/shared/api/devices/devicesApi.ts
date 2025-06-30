@@ -1,14 +1,19 @@
-import { baseApi } from '../baseApi'
+import { baseApi } from '@/shared/api/baseApi'
+import { SessionsGet } from './devicesApiType'
 
-export const deviceApi = baseApi.injectEndpoints({
-  endpoints: builder => ({
-    //TODO: Алексей назвови метод getAllDevices, или поменяй у меня в deleteSingleDevice & deleteAllDevices
- 
-    deleteSingleDevice: builder.mutation<void, number>({
+export const sessionApi = baseApi.injectEndpoints({
+  endpoints: build => ({
+    getDevices: build.query<SessionsGet, void>({
+      query: () => ({
+        url: 'v1/sessions',
+      }),
+    }),
+
+    deleteSingleDevice: build.mutation<void, number>({
       query: id => ({ url: `v1/sessions/${id}`, method: 'DELETE' }),
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          deviceApi.util.updateQueryData('getAllDevices', {}, draft => {
+          sessionApi.util.updateQueryData('getDevices', undefined, draft => {
             draft.others = draft.others.filter(item => item.deviceId !== id)
           })
         )
@@ -19,11 +24,11 @@ export const deviceApi = baseApi.injectEndpoints({
         }
       },
     }),
-    deleteAllDevices: builder.mutation<void, void>({
+    deleteAllDevices: build.mutation<void, void>({
       query: () => ({ url: `v1/sessions/terminate-all`, method: 'DELETE' }),
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          deviceApi.util.updateQueryData('getAllDevices', {}, draft => {
+          sessionApi.util.updateQueryData('getDevices', undefined, draft => {
             draft.others = []
           })
         )
@@ -36,5 +41,6 @@ export const deviceApi = baseApi.injectEndpoints({
     }),
   }),
 })
-export const { useGetAllDevicesQuery, useDeleteSingleDeviceMutation, useDeleteAllDevicesMutation } =
-  deviceApi
+
+export const { useDeleteAllDevicesMutation, useDeleteSingleDeviceMutation, useGetDevicesQuery } =
+  sessionApi
