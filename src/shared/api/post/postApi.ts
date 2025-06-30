@@ -9,13 +9,12 @@ import {
   GetCommentsByPostIdArgs,
   GetPostsByNameArgs,
   GetPostsByNameRespond,
-  Name,
   PostDescriptionChange,
   PostId,
   ResponseGetById,
-  ResponseGetByName,
   UploadImageForPostResponse,
 } from './postApi.types'
+import { publicPostApi } from './publicPosts'
 
 export const postsApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -53,6 +52,18 @@ export const postsApi = baseApi.injectEndpoints({
         url: `v1/posts/${id}`,
         method: 'DELETE',
       }),
+      async onQueryStarted({id}, {dispatch, queryFulfilled}) {
+        const patchResult = dispatch(
+          publicPostApi.util.updateQueryData('getPublicPostsByUserId', undefined, draft => {
+            return draft.items.filter(post => post.id !== id)
+          })
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      }
     }),
     editPostDescription: build.mutation<void, PostDescriptionChange>({
       query: ({ id, description }) => ({
@@ -67,12 +78,6 @@ export const postsApi = baseApi.injectEndpoints({
         url: `v1/posts/id/${id}`,
       }),
       providesTags: ['Post'],
-    }),
-    getPostByName: build.mutation<ResponseGetByName, Name>({
-      query: ({ name }) => ({
-        url: `v1/posts/${name}`,
-        method: 'GET',
-      }),
     }),
     deleteImageForPost: build.mutation<void, DeleteImageForPostArgs>({
       query: ({ uploadId }) => ({
@@ -99,7 +104,6 @@ export const {
   useDeletePostMutation,
   useEditPostDescriptionMutation,
   useGetPostByIdQuery,
-  useGetPostByNameMutation,
   useDeleteImageForPostMutation,
   useAddCommentMutation,
 } = postsApi
