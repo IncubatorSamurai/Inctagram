@@ -4,6 +4,7 @@ import { useGetUserQuery } from '@/shared/api/users/usersApi'
 import { useAppSelector } from '@/shared/hooks'
 import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { useParams } from 'next/navigation'
+import { useGetPublicProfileQuery } from '@/shared/api/publicUser/publicUserApi'
 
 type Props = {
   resPublicData?: ProfileUserResponse
@@ -15,23 +16,43 @@ export const useProfileData = ({ resPublicData }: Props) => {
   const userId = id as string
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
-  const { data: meData } = useMeQuery()
+  const { data: meData, isLoading: meLoading } = useMeQuery(undefined, { skip: !isLoggedIn })
   const isMyProfile = meData?.userId === Number(userId)
 
-  const { data: user } = useGetUserQuery({
-    userName: resPublicData?.userName as string,
-  })
+  const { data: privateDataUser, isLoading: privateLoading } = useGetUserQuery(
+    {
+      userName: resPublicData?.userName as string,
+    },
+    { skip: !meData }
+  )
 
-  const userName = user?.userName as string
-  const avatarSrc = user?.avatars[0]?.url
-  const aboutMe = user?.aboutMe
-  const isFollowing = user?.isFollowing || false
+  const { data: user, isLoading: dataLoading } = useGetPublicProfileQuery(
+    { profileId: userId },
+    { skip: !!meData }
+  )
+
+  const isLoading = meLoading || dataLoading || privateLoading
+
+  const userName = privateDataUser?.userName || (user?.userName as string)
+  const avatarSrc = privateDataUser?.avatars[0].url || user?.avatars[0]?.url
+  const aboutMe = privateDataUser?.aboutMe || user?.aboutMe
+  const isFollowing = privateDataUser?.isFollowing || false
 
   const followArray = [
-    user?.followingCount || 0,
-    user?.followersCount || 0,
-    user?.publicationsCount || 0,
+    privateDataUser?.followingCount || user?.userMetadata.following || 0,
+    privateDataUser?.followersCount || user?.userMetadata.followers || 0,
+    privateDataUser?.publicationsCount || user?.userMetadata.publications || 0,
   ]
 
-  return { avatarSrc, isMyProfile, isLoggedIn, userName, followArray, aboutMe, userId, isFollowing }
+  return {
+    avatarSrc,
+    isMyProfile,
+    isLoggedIn,
+    userName,
+    followArray,
+    aboutMe,
+    userId,
+    isFollowing,
+    isLoading,
+  }
 }

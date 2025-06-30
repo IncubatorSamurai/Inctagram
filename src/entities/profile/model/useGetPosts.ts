@@ -41,12 +41,6 @@ export const useGetPosts = ({ resPublicPosts }: Props) => {
   }, [resPublicPosts])
 
   useEffect(() => {
-    return () => {
-      dispatch(publicPostApi.util.resetApiState())
-    }
-  }, [])
-
-  useEffect(() => {
     if (!posts && resPublicPosts) {
       endCursorPostId.current = resPublicPosts.items[resPublicPosts.items.length - 1]?.id.toString()
       fetchPosts({

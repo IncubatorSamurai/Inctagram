@@ -1,5 +1,4 @@
 'use client'
-import GlobalLoader from '@/entities/loading/loading'
 import { Link } from '@/i18n/routing'
 import { PATH } from '@/shared/config/routes'
 import { useDebouncedEffect } from '@/shared/hooks'
@@ -11,6 +10,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { useInfiniteSearch } from '../model/useInfiniteSearch'
 import s from './SearchUser.module.scss'
+import { Loader } from '@/shared/ui/loader'
 
 type Props = {
   searchUser: string
@@ -30,7 +30,11 @@ export const SearchUser = ({ searchUser }: Props) => {
   const showEmptyState = !searchTerm || (!users.length && !isFetching)
 
   if (showLoader) {
-    return <GlobalLoader />
+    return (
+      <div className={s.loader}>
+        <Loader />
+      </div>
+    )
   }
 
   if (isError) {

@@ -1,10 +1,14 @@
 'use client'
-import React, { PropsWithChildren, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useMeQuery } from '@/shared/api/auth/authApi'
 import { useAppDispatch } from '@/shared/hooks'
-import { setIsLoggedIn } from '@/shared/store/appSlice/appSlice'
+import { setIsLoggedIn } from '@/shared/store'
 
-export const AuthProvider = ({ children }: PropsWithChildren) => {
+export const AuthProvider = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) => {
   const { data } = useMeQuery()
   const dispatch = useAppDispatch()
 

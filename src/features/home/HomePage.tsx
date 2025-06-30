@@ -3,9 +3,18 @@ import { HomePost } from '@/features/home/ui/HomePost/homePost'
 import { Scrollbar } from '@/shared/ui/scrollbar'
 import s from './homePage.module.scss'
 import { useGetHomePosts } from '@/features/home/model'
+import { Loader } from '@/shared/ui/loader'
 
 export const HomePage = () => {
-  const { posts, lastPostElementRef } = useGetHomePosts()
+  const { posts, lastPostElementRef, isLoading } = useGetHomePosts()
+
+  if (isLoading) {
+    return (
+      <div className={s.loader}>
+        <Loader />
+      </div>
+    )
+  }
 
   return (
     <Scrollbar>

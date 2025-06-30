@@ -27,20 +27,20 @@ import { BookMarkIcon } from '@/shared/assets/icons/BookMarkIcon'
 import { NavItem } from '@/shared/ui/nav-item'
 import { PATH } from '@/shared/config/routes'
 import { LogOut } from '@/features/auth/logout/ui/LogOut'
-import { useMeQuery } from '@/shared/api/auth/authApi'
 import { useState } from 'react'
 import { Button } from '@/shared/ui/button/Button'
 import { AddPostModal } from '../post'
+import { useMeQuery } from '@/shared/api/auth/authApi'
 
 export const sidebarItems = {
   primary: [
     {
       id: uuidv4(),
-      name: 'Home',
+      name: 'Feed',
       icon: <HomeOutlineIcon />,
-      href: PATH.HOME,
+      href: PATH.FEED,
       disabled: false,
-      classItem: 'home',
+      classItem: 'feed',
       activeIcon: <HomeIcon />,
     },
     {
@@ -154,8 +154,9 @@ type Sidebar = {
 }
 
 export const Sidebar = ({ isAdmin }: Sidebar) => {
-  const { data: meInfo } = useMeQuery()
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { data } = useMeQuery()
+
   return (
     <nav className={s.sidebar}>
       {isAdmin ? (
@@ -187,7 +188,7 @@ export const Sidebar = ({ isAdmin }: Sidebar) => {
                   </li>
                 )
               } else if (item.name === 'My Profile') {
-                item = { ...item, href: `${item.href}/${meInfo?.userId}` }
+                item = { ...item, href: `${item.href}/${data?.userId}` }
               }
               return <NavItem key={item.id} {...item} />
             })}

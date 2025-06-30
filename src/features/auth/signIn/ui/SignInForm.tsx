@@ -14,6 +14,7 @@ import { setIsLoggedIn } from '@/shared/store/appSlice/appSlice'
 import { useAppDispatch } from '@/shared/hooks'
 import { SignInSchema, SignInSchemaData } from '@/shared/schemes/signInSchema'
 import { useTranslations } from 'next-intl'
+import { setCookie } from 'cookies-next/client'
 
 export const SignInForm = () => {
   const [errorMessage, setEmailMessage] = useState('')
@@ -37,8 +38,9 @@ export const SignInForm = () => {
   useEffect(() => {
     if (data?.accessToken) {
       localStorage.setItem('access_token', data?.accessToken)
+      setCookie('access_token', data?.accessToken)
       dispatch(setIsLoggedIn({ isLoggedIn: true }))
-      router.push(PATH.HOME)
+      router.push(PATH.FEED)
       return
     }
 

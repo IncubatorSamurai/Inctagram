@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef } from 'react'
 const PAGE_SIZE = 3
 
 export const useGetHomePosts = () => {
-  const [getHomePosts, { data, isFetching }] = useLazyGetPublicationsFollowersQuery()
+  const [getHomePosts, { data, isFetching, isLoading }] = useLazyGetPublicationsFollowersQuery()
 
   const endCursorPostId = useRef<number | null>(null)
   const observer = useRef<IntersectionObserver | null>(null)
@@ -39,5 +39,6 @@ export const useGetHomePosts = () => {
   return {
     posts,
     lastPostElementRef,
+    isLoading,
   }
 }

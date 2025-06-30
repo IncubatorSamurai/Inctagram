@@ -22,9 +22,9 @@ export const pageHomeApi = baseApi.injectEndpoints({
           prevCursor,
         })
       },
+      keepUnusedDataFor: 0,
     }),
   }),
 })
 
-export const { useGetPublicationsFollowersQuery, useLazyGetPublicationsFollowersQuery } =
-  pageHomeApi
+export const { useLazyGetPublicationsFollowersQuery } = pageHomeApi
