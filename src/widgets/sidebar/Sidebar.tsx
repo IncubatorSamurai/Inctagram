@@ -156,13 +156,6 @@ type Sidebar = {
 export const Sidebar = ({ isAdmin }: Sidebar) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { data } = useMeQuery()
-  // const router = useRouter()
-
-  // useEffect(() => {
-  //   if (data?.userId) {
-  //     router.push(PATH.FEED)
-  //   }
-  // }, [])
 
   return (
     <nav className={s.sidebar}>

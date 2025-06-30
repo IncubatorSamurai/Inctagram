@@ -1,6 +1,6 @@
 export async function getPublicPosts(userId: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}v1/public-posts/user/${userId}/,?pageSize=8`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}v1/posts/user/${userId}/,?pageSize=8`,
     {
       cache: 'no-store',
     }

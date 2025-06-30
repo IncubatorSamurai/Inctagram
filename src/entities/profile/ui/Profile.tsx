@@ -35,7 +35,7 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
     resPublicData,
   })
 
-  if (isLoading) {
+  if (isLoading && !resPublicPosts && !resPublicData) {
     return (
       <div className={s.loader}>
         <Loader />

@@ -6,7 +6,7 @@ export const publicPostApi = baseApi.injectEndpoints({
     getPublicPostsByUserId: build.query<GetPostsByUserIdRespond, GetPostsByUserIdArgs>({
       query: ({ userId, endCursorPostId, ...params }) => ({
         params,
-        url: `v1/public-posts/user/${userId}/${endCursorPostId ?? ''}`,
+        url: `v1/posts/user/${userId}/${endCursorPostId ?? ''}`,
       }),
       serializeQueryArgs: ({ queryArgs }) => {
         return queryArgs.userId
@@ -19,4 +19,4 @@ export const publicPostApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetPublicPostsByUserIdQuery, useLazyGetPublicPostsByUserIdQuery } = publicPostApi
+export const { useLazyGetPublicPostsByUserIdQuery } = publicPostApi
