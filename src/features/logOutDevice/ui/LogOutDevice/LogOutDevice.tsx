@@ -7,12 +7,12 @@ type Props = {
   id: number
 }
 export const LogOutDevice = ({ id }: Props) => {
-  const [deleteAllDevices] = useDeleteSingleDeviceMutation()
+  const [deleteSingleDevice] = useDeleteSingleDeviceMutation()
 
   const tabTranslation = useTranslations('profile.profileSettingsTabs')
 
   return (
-    <Button onClick={() => deleteAllDevices(id)} variant="icon">
+    <Button onClick={() => deleteSingleDevice(id)} variant="icon">
       <LogOutIcon /> {tabTranslation('logOutSingleDevice')}
     </Button>
   )
