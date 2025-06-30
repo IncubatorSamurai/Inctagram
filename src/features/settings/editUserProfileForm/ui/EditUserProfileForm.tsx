@@ -22,6 +22,7 @@ import {
   saveProfileToStorage,
 } from '@/shared/utils/ProfileStorge'
 import s from './EditUserProfileForm.module.scss'
+import { Loader } from '@/shared/ui/loader'
 
 export const EditUserProfileForm = () => {
   const t = useTranslations('profile.generalInfo')
@@ -98,7 +99,13 @@ export const EditUserProfileForm = () => {
   }
   const isButtonDisabled = !isFormValid || isUpdateProfile || !isDirty
 
-  if (isLoading) return <h1>Loading...</h1>
+  if (isLoading) {
+    return (
+      <div className={s.loader}>
+        <Loader />
+      </div>
+    )
+  }
 
   return (
     <form className={s.container} onSubmit={handleSubmit(onSubmit)}>
