@@ -1,10 +1,10 @@
 import { baseApi } from '@/shared/api/baseApi'
 import {
-  GetUsersResponse,
-  GetUsersRequest,
-  GetUserResponse,
-  GetUserRequest,
   FollowRequest,
+  GetUserRequest,
+  GetUserResponse,
+  GetUsersRequest,
+  GetUsersResponse,
   unFollowRequest,
 } from './usersApi.types'
 
@@ -47,5 +47,10 @@ export const usersApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useLazyGetUsersQuery, useGetUserQuery, useFollowMutation, useUnfollowMutation } =
-  usersApi
+export const {
+  useGetUsersQuery,
+  useLazyGetUsersQuery,
+  useGetUserQuery,
+  useFollowMutation,
+  useUnfollowMutation,
+} = usersApi

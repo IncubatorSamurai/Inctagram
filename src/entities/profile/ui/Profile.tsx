@@ -11,6 +11,10 @@ import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import s from './Profile.module.scss'
+import { setSelectedUser } from '@/shared/store/messengerSlice/messengerSlice'
+import { useAppDispatch } from '@/shared/hooks'
+import { useRouter } from 'next/navigation'
+import SocketApi from '@/shared/api/sokets/soket'
 import { Loader } from '@/shared/ui/loader'
 
 type Props = {
@@ -20,7 +24,27 @@ type Props = {
 
 export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   const t = useTranslations('profile')
+  const dispatch = useAppDispatch()
+  const router = useRouter()
+  const handleSendMessageClick = () => {
+    const accessToken = localStorage.getItem('accessToken')
+    const ws = SocketApi.getInstance()
 
+    if (accessToken && !ws.isSocketConnected()) {
+      ws.connection(accessToken)
+      console.log('🌐 Сокет подключён при переходе из профиля')
+    }
+    console.log('➡️ Клик по кнопке "Send Message"')
+
+    dispatch(
+      setSelectedUser({
+        id: +userId, // userId у тебя из useProfileData — преобразуем в число
+        name: userName,
+        avatar: avatarSrc || '',
+      })
+    )
+    router.push('/messenger')
+  }
   const {
     avatarSrc,
     isMyProfile,
@@ -61,7 +85,9 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
             ) : isLoggedIn ? (
               <div className={s.followButtons}>
                 <FollowButton userId={+userId} userName={userName} isFollowing={isFollowing} />
-                <Button variant="secondary">{t('sendMessage')}</Button>
+                <Button variant="secondary" onClick={handleSendMessageClick}>
+                  {t('sendMessage')}
+                </Button>
               </div>
             ) : null}
           </div>
