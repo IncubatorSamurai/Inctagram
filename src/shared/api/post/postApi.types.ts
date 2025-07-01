@@ -164,7 +164,7 @@ export type PublicPostsRequest = {
   sortDirection?: 'asc' | 'desc'
 }
 
-type Avatar = {
+export type Avatar = {
   url?: string
 }
 

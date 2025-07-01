@@ -1,0 +1,53 @@
+.message_item {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  padding: 25px 7px 7px 7px;
+  width: auto;
+  max-width: 60%;
+  background: var(--color-accent-900);
+  position: relative;
+}
+
+.message_time {
+  color: var(--color-accent-100);
+}
+
+.close_message {
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  position: absolute;
+  right: 5px;
+  top: 6px;
+}
+
+.message_edit {
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  position: absolute;
+  right: 25px;
+  top: 6px;
+}
+
+.message_status {
+  svg {
+    width: 15px;
+    height: 15px;
+    color: var(--color-accent-100);
+  }
+
+}
+
+.message_date {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 4px;
+}
