@@ -34,6 +34,7 @@ export const HomePostInteraction = ({
         <PaperPlaneIcon />
         <BookMarkOutlineIcon />
       </div>
+
       <div className={s.description}>
         {avatarOwner ? (
           <Image

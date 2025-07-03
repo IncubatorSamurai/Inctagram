@@ -8,9 +8,10 @@ import {
   HeaderHomePost,
   HomePostImages,
   HomePostInteraction,
-  HomePostLikes,
+  // HomePostLikes,
 } from '@/features/home/ui'
 import { AddContent } from '@/features/post/PostModal/ui/AddComment/AddComment'
+import { PostLikes } from '@/features/postLikes'
 
 const WIDTH_AVATAR = 36
 const HEIGHT_AVATAR = 36
@@ -56,7 +57,8 @@ export const HomePost = ({ ...props }: Post) => {
           description={description}
           ownerUserName={ownerUserName}
         />
-        <HomePostLikes avatarWhoLikes={avatarWhoLikes} likesCount={likesCount} />
+        <PostLikes />
+        {/* <HomePostLikes avatarWhoLikes={avatarWhoLikes} likesCount={likesCount} /> */}
         <Typography variant={'bold_text_14'} className={s.viewComments}>
           View All Comments (114)
         </Typography>
