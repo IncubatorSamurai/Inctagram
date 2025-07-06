@@ -3,19 +3,17 @@ import s from './PostLikesAvatars.module.scss'
 import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
 import Image from 'next/image'
 import { Typography } from '@/shared/ui/typography'
-import { LikesModal } from '../LikesModal/LikesModal'
+import { LikesModal } from '../LikesModal/ui/LikesModal'
 
 type Props = {
   id: number
 }
 export const PostLikesAvatars = ({ id }: Props) => {
   const { data } = useGetPostLikesQuery(id, { skip: !id })
-
   const transformedArray = [...(data?.items ?? [])].reverse().slice(0, 3)
   return (
     <div className={s.container}>
-      <LikesModal />
-      <div className={s.row}>
+      <LikesModal items={data?.items}  trigger ={    <div className={s.row}>
         {transformedArray.map(item => (
           <div key={item.id}>
             {!item?.avatars.length ? (
@@ -31,7 +29,8 @@ export const PostLikesAvatars = ({ id }: Props) => {
             )}
           </div>
         ))}
-      </div>
+      </div>}/>
+  
       <Typography variant="medium_text_14">
         {data?.totalCount} <b>&quot;Like&quot;</b>{' '}
       </Typography>
