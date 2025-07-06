@@ -3,16 +3,18 @@ import s from './PostLikesAvatars.module.scss'
 import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
 import Image from 'next/image'
 import { Typography } from '@/shared/ui/typography'
+import { LikesModal } from '../LikesModal/LikesModal'
 
 type Props = {
   id: number
 }
 export const PostLikesAvatars = ({ id }: Props) => {
-  const { data } = useGetPostLikesQuery(id , { skip: !id })
+  const { data } = useGetPostLikesQuery(id, { skip: !id })
 
   const transformedArray = [...(data?.items ?? [])].reverse().slice(0, 3)
   return (
     <div className={s.container}>
+      <LikesModal />
       <div className={s.row}>
         {transformedArray.map(item => (
           <div key={item.id}>

@@ -19,6 +19,7 @@ export const postLikeApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['PostLikes'],
     }),
+    
   }),
 })
 export const { useGetPostLikesQuery, useLikeStatusMutation } = postLikeApi
