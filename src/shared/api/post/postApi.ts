@@ -52,18 +52,22 @@ export const postsApi = baseApi.injectEndpoints({
         url: `v1/posts/${id}`,
         method: 'DELETE',
       }),
-      async onQueryStarted({id}, {dispatch, queryFulfilled}) {
+      async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          publicPostApi.util.updateQueryData('getPublicPostsByUserId', undefined, draft => {
-            return draft.items.filter(post => post.id !== id)
-          })
+          publicPostApi.util.updateQueryData(
+            'getPublicPostsByUserId',
+            { userId: '4', endCursorPostId: null },
+            draft => {
+              draft.items.filter(post => post.id !== id)
+            }
+          )
         )
         try {
           await queryFulfilled
         } catch {
           patchResult.undo()
         }
-      }
+      },
     }),
     editPostDescription: build.mutation<void, PostDescriptionChange>({
       query: ({ id, description }) => ({

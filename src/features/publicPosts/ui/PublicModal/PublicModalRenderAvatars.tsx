@@ -12,7 +12,7 @@ export const renderLikeAvatars = (likesCount: number, avatarWhoLikes: string[] |
         {avatarWhoLikes[index] ? (
           <Image
             src={avatarWhoLikes[index]}
-            alt={`User aАvatar ${index}`}
+            alt={`User avatar ${index}`}
             width={WIDTH_AVATAR}
             height={HEIGHT_AVATAR}
           />
