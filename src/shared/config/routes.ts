@@ -17,6 +17,6 @@ export const PATH = {
   CREATE: '/create',
   LINK_EXPIRED: '/auth/linkexpired',
   PUBLIC: '/',
-  PRIVACY_POLICY: '/auth/privacypolicies',
-  TERMS_OF_SERVICE: '/auth/termsofservice',
+  PRIVACY_POLICY: '/privacypolicies',
+  TERMS_OF_SERVICE: '/termsofservice',
 }
