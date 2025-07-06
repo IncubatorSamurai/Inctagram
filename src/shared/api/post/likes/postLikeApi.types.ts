@@ -1,7 +1,7 @@
 type LikeStatus = 'NONE' | 'LIKE' | 'DISLIKE'
 
 export type PostLikesStatus = {
-  id: string
+  id: number
   likeStatus: LikeStatus
 }
 

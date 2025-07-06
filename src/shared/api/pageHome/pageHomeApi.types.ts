@@ -43,3 +43,6 @@ export type Post = {
   isLiked: boolean
   avatarWhoLikes: string[]
 }
+
+export type PostLike = Pick<Post, 'avatarWhoLikes' | 'likesCount' | 'id'>
+export type PostInteraction = Pick<Post, 'isLiked' | 'avatarOwner' | 'description' | 'id'>

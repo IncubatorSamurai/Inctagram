@@ -5,10 +5,10 @@ import Image from 'next/image'
 import { Typography } from '@/shared/ui/typography'
 
 type Props = {
-  id: string
+  id: number
 }
 export const PostLikesAvatars = ({ id }: Props) => {
-  const { data } = useGetPostLikesQuery(id ?? '', { skip: !id })
+  const { data } = useGetPostLikesQuery(id , { skip: !id })
 
   const transformedArray = [...(data?.items ?? [])].reverse().slice(0, 3)
   return (

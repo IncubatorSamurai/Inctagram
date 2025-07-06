@@ -4,14 +4,9 @@ import { Typography } from '@/shared/ui/typography'
 import { Post } from '@/shared/api/pageHome/pageHomeApi.types'
 import { parseIsoDate } from '@/shared/utils'
 import { useGetUserQuery } from '@/shared/api/users/usersApi'
-import {
-  HeaderHomePost,
-  HomePostImages,
-  HomePostInteraction,
-  // HomePostLikes,
-} from '@/features/home/ui'
+import { HeaderHomePost, HomePostImages, HomePostInteraction } from '@/features/home/ui'
 import { AddContent } from '@/features/post/PostModal/ui/AddComment/AddComment'
-import { PostLikes } from '@/features/postLikes'
+import { PostLikesAvatars } from '@/features/post-like/PostLikesAvatars/PostLikesAvatars'
 
 const WIDTH_AVATAR = 36
 const HEIGHT_AVATAR = 36
@@ -24,11 +19,8 @@ export const HomePost = ({ ...props }: Post) => {
   const postId = props.id
   const description = props.description
   const isLiked = props.isLiked
-  const likesCount = props.likesCount
 
   const images = props.images
-
-  const avatarWhoLikes = props.avatarWhoLikes
 
   const { data: user } = useGetUserQuery({
     userName: ownerUserName,
@@ -50,6 +42,7 @@ export const HomePost = ({ ...props }: Post) => {
       <HomePostImages postId={postId} images={images} ownerUserName={ownerUserName} />
       <div className={s.footer}>
         <HomePostInteraction
+          id={postId}
           isLiked={isLiked}
           avatarOwner={avatarOwner}
           WIDTH_AVATAR={WIDTH_AVATAR}
@@ -57,8 +50,7 @@ export const HomePost = ({ ...props }: Post) => {
           description={description}
           ownerUserName={ownerUserName}
         />
-        <PostLikes />
-        {/* <HomePostLikes avatarWhoLikes={avatarWhoLikes} likesCount={likesCount} /> */}
+        <PostLikesAvatars id={postId} />
         <Typography variant={'bold_text_14'} className={s.viewComments}>
           View All Comments (114)
         </Typography>
