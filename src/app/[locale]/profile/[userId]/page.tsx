@@ -11,5 +11,6 @@ export default async function ProfilePage({ params }: Props) {
     getPublicData(userId),
     getPublicPosts(userId),
   ])
+
   return <Profile resPublicData={resPublicData} resPublicPosts={resPublicPosts} />
 }

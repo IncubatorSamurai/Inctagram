@@ -2,8 +2,9 @@
 import { Scrollbar } from '@/shared/ui/scrollbar/Scrollbar'
 import s from './layout.module.scss'
 import { Sidebar } from '@/widgets/sidebar'
+import React from 'react'
 import { useAppSelector } from '@/shared/hooks'
-import { selectIsLoggedIn } from '@/shared/store/appSlice/appSlice'
+import { selectIsLoggedIn } from '@/shared/store'
 
 export default function LayoutLoggedIn({
   children,

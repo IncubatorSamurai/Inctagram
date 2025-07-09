@@ -7,6 +7,7 @@ import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
 import { useGetCommentsByPostIdQuery } from '@/shared/api/post/postApi'
 import { CommentItem } from '@/features/publicPosts/ui/PublicModal/CommentItem'
 import { formatDistanceToNow } from 'date-fns'
+import { useAddComment } from '@/shared/hooks/useAddComment'
 
 type PostContentProps = {
   likes: number | undefined
@@ -32,6 +33,7 @@ export const PostContent = ({
   const date = updatedAt && formatDistanceToNow(new Date(updatedAt))
   const { data } = useGetCommentsByPostIdQuery({ postId })
   const comments = data?.items || []
+  const { changeTextarea, comment, submitComment } = useAddComment()
   return (
     <div className={s.postsSide}>
       <Scrollbar className={s.postsSideContent}>
@@ -59,7 +61,12 @@ export const PostContent = ({
         </ul>
       </Scrollbar>
       <PostLikesAndSent likes={likes} whoLikes={whoLikes} createdAt={createdAt} />
-      <AddContent placeholder={'Comment'} onPublish={() => {}} />
+      <AddContent
+        placeholder={'Comment'}
+        onPublish={submitComment}
+        onChange={changeTextarea}
+        value={comment}
+      />
     </div>
   )
 }

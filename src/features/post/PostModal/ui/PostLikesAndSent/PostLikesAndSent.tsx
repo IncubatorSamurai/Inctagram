@@ -27,9 +27,7 @@ export const PostLikesAndSent = ({ createdAt }: LikesAndCountProps) => {
           <LikePost id={postId ?? ''} likesItems={data?.items} />
           <PaperPlaneIcon />
         </div>
-        <div>
-          <BookMarkOutlineIcon />
-        </div>
+        <BookMarkOutlineIcon />
       </div>
       <div className={s.info}>
         <PostLikesAvatars id={postId ?? ''} />

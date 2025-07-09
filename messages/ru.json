@@ -64,7 +64,12 @@
       "Or": "Или",
       "CreatePayment": "Оформить оплату",
       "Ok": "Да",
-      "Loading": "Загрузка..."
+      "Loading": "Загрузка...",
+      "lastVisit": "Последний визит",
+      "currentDevice": "Текущее устройство",
+      "activeSession": "Активные сессии",
+      "logOutAllDevices": "Завершить все остальные сеансы",
+      "logOutSingleDevice": "Выйти"
     }
   },
   "post": {
@@ -120,5 +125,9 @@
     "unfollowSuccessText": "Вы успешно отписались от пользователя",
     "unfollowErrorText": "Не удалось отписаться от пользователя",
     "unfollow": "Отписаться"
+  },
+  "feed": {
+    "viewAllComments": "Показать все комментарии",
+    "noComments": "Комментариев пока нет"
   }
 }

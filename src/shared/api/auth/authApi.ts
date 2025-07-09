@@ -19,7 +19,6 @@ export const authApi = baseApi.injectEndpoints({
       query: () => ({
         url: 'v1/auth/me',
       }),
-      providesTags: ['Me'],
     }),
     login: build.mutation<LoginResponse, LoginArgs>({
       query: payload => ({

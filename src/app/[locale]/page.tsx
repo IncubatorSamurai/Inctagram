@@ -1,7 +1,5 @@
 import PublicPosts from '@/features/publicPosts/ui/PublicPosts/PublicPosts'
 
-//TODO: if we are loggedIn => redirect to home, else load PublicPage
-
-export default function Page() {
+export default async function Page() {
   return <PublicPosts />
 }

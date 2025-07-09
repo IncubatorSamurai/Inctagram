@@ -35,7 +35,7 @@ export const usePublication = (closeAllModals: () => void) => {
       uploadIdImages = uploadImageResponse.images.map(res => ({ uploadId: res.uploadId }))
 
       await createPost({ description, childrenMetadata: uploadIdImages }).unwrap()
-      router.push(PATH.HOME)
+      router.push(PATH.FEED)
       closeAllModals()
       dispatch(removeFiles())
     } catch (e) {

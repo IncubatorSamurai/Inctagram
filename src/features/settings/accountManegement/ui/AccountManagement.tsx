@@ -3,6 +3,8 @@ import { useGetCurrentPaymentSubsQuery } from '@/shared/api/subscriptions/subscr
 import { AccountType } from './AccountType'
 import { CurrentSubs } from './CurrnetSubs'
 import { SubsCost } from './SubsCosts'
+import { Loader } from '@/shared/ui/loader'
+import s from './AccountManagement.module.scss'
 
 export const AccountManagement = () => {
   const { data, isLoading } = useGetCurrentPaymentSubsQuery()
@@ -21,7 +23,11 @@ export const AccountManagement = () => {
   }, [data])
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return (
+      <div className={s.loader}>
+        <Loader />
+      </div>
+    )
   }
 
   return (

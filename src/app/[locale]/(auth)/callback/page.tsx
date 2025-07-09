@@ -33,7 +33,7 @@ export default function Callback() {
 
         dispatch(setIsLoggedIn({ isLoggedIn: true }))
 
-        router.push(PATH.HOME)
+        router.push(PATH.FEED)
       } catch (error) {
         console.error('Authorization error: ', error)
         router.push(PATH.SIGNUP)

@@ -1,19 +1,20 @@
 import { baseApi } from '@/shared/api/baseApi'
 import {
+  CommentResponse,
   CommentsResponse,
+  CreateComment,
   CreatePostArgs,
   CreatePostResponse,
   DeleteImageForPostArgs,
   GetCommentsByPostIdArgs,
   GetPostsByNameArgs,
   GetPostsByNameRespond,
-  Name,
   PostDescriptionChange,
   PostId,
   ResponseGetById,
-  ResponseGetByName,
   UploadImageForPostResponse,
 } from './postApi.types'
+import { publicPostApi } from './publicPosts'
 
 export const postsApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -51,6 +52,22 @@ export const postsApi = baseApi.injectEndpoints({
         url: `v1/posts/${id}`,
         method: 'DELETE',
       }),
+      async onQueryStarted({ id, userId }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          publicPostApi.util.updateQueryData(
+            'getPublicPostsByUserId',
+            { userId: String(userId) },
+            draft => {
+              draft.items = draft.items.filter(post => post.id !== id)
+            }
+          )
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
     }),
     editPostDescription: build.mutation<void, PostDescriptionChange>({
       query: ({ id, description }) => ({
@@ -66,17 +83,19 @@ export const postsApi = baseApi.injectEndpoints({
       }),
       providesTags: ['Post'],
     }),
-    getPostByName: build.mutation<ResponseGetByName, Name>({
-      query: ({ name }) => ({
-        url: `v1/posts/${name}`,
-        method: 'GET',
-      }),
-    }),
     deleteImageForPost: build.mutation<void, DeleteImageForPostArgs>({
       query: ({ uploadId }) => ({
         url: `v1/posts/image/${uploadId}`,
         method: 'DELETE',
       }),
+    }),
+    addComment: build.mutation<CommentResponse, CreateComment>({
+      query: payload => ({
+        url: `v1/posts/${payload.postId}/comments`,
+        method: 'POST',
+        body: { content: payload.content },
+      }),
+      invalidatesTags: ['Comments'],
     }),
   }),
 })
@@ -89,6 +108,6 @@ export const {
   useDeletePostMutation,
   useEditPostDescriptionMutation,
   useGetPostByIdQuery,
-  useGetPostByNameMutation,
   useDeleteImageForPostMutation,
+  useAddCommentMutation,
 } = postsApi

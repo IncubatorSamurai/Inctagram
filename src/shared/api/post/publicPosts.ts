@@ -6,14 +6,19 @@ export const publicPostApi = baseApi.injectEndpoints({
     getPublicPostsByUserId: build.query<GetPostsByUserIdRespond, GetPostsByUserIdArgs>({
       query: ({ userId, endCursorPostId, ...params }) => ({
         params,
-        url: `v1/public-posts/user/${userId}/${endCursorPostId ?? ''}`,
+        url: `v1/posts/user/${userId}/${endCursorPostId ?? ''}`,
       }),
-      serializeQueryArgs: ({ endpointName }) => endpointName,
-      merge: (currentCacheData, newItems) => {
-        currentCacheData.items.push(...newItems.items)
+      serializeQueryArgs: ({ queryArgs }) => {
+        return queryArgs.userId
       },
+      merge: (currentCacheData, newItems) => {
+        const existingIds = new Set(currentCacheData.items.map(item => item.id))
+        const uniqueNewItems = newItems.items.filter(item => !existingIds.has(item.id))
+        currentCacheData.items.push(...uniqueNewItems)
+      },
+      keepUnusedDataFor: 0,
     }),
   }),
 })
 
-export const { useGetPublicPostsByUserIdQuery, useLazyGetPublicPostsByUserIdQuery } = publicPostApi
+export const { useLazyGetPublicPostsByUserIdQuery } = publicPostApi

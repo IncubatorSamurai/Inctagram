@@ -38,7 +38,7 @@ export const SignInForm = () => {
     if (data?.accessToken) {
       localStorage.setItem('access_token', data?.accessToken)
       dispatch(setIsLoggedIn({ isLoggedIn: true }))
-      router.push(PATH.HOME)
+      router.push(PATH.FEED)
       return
     }
 
