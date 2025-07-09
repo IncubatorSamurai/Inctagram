@@ -17,6 +17,7 @@ export const LinkExpiredPage = () => {
   const router = useRouter()
   const tAuth = useTranslations('auth')
   const tCommon = useTranslations('common')
+  const baseUrl = window.location.origin + '/recovery'
 
   const email = searchParams.get('email') as string
 
@@ -24,7 +25,7 @@ export const LinkExpiredPage = () => {
     try {
       await resendRecoveryCode({
         email: email,
-        baseUrl: window.location.origin,
+        baseUrl: baseUrl,
       }).unwrap()
 
       setIsModalOpen(true)
