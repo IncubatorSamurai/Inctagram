@@ -12,7 +12,9 @@ export const publicPostApi = baseApi.injectEndpoints({
         return queryArgs.userId
       },
       merge: (currentCacheData, newItems) => {
-        currentCacheData.items.push(...newItems.items)
+        const existingIds = new Set(currentCacheData.items.map(item => item.id))
+        const uniqueNewItems = newItems.items.filter(item => !existingIds.has(item.id))
+        currentCacheData.items.push(...uniqueNewItems)
       },
       keepUnusedDataFor: 0,
     }),

@@ -4,7 +4,7 @@ import { Button } from '@/shared/ui/button'
 
 export const GitHubAuth = () => {
   const onClickHandler = () => {
-    const redirectUrl = encodeURIComponent(window.location.origin + '/auth')
+    const redirectUrl = encodeURIComponent(window.location.origin)
     window.location.assign(`${process.env.NEXT_PUBLIC_GITHUB_URL}?redirect_url=${redirectUrl}`)
   }
 

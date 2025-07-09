@@ -5,7 +5,6 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react'
-import { setCookie } from 'cookies-next/client'
 
 const mutex = new Mutex()
 
@@ -45,7 +44,6 @@ export const baseQueryWithReauth: BaseQueryFn<
         if (refreshResult.data) {
           const responseData = refreshResult.data as { accessToken: string }
           localStorage.setItem('access_token', responseData.accessToken)
-          setCookie('access_token', responseData.accessToken)
           result = await baseQueryWithAccessToken(args, api, extraOptions)
         }
       } finally {
