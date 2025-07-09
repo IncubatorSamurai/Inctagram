@@ -10,7 +10,6 @@ import { useRouter } from '@/i18n/routing'
 import { PATH } from '@/shared/config/routes'
 import s from './LogOutModal/LogOutModal.module.scss'
 import { LogOutIcon } from '@/shared/assets/icons/LogOutIcon'
-import { deleteCookie } from 'cookies-next/client'
 
 export const LogOut = () => {
   const dispatch = useAppDispatch()
@@ -27,7 +26,6 @@ export const LogOut = () => {
       await logout().unwrap()
       localStorage.removeItem('email')
       localStorage.removeItem('access_token')
-      deleteCookie('access_token')
       dispatch(setIsLoggedIn({ isLoggedIn: false }))
       router.push(PATH.SIGNIN)
     } catch (err) {

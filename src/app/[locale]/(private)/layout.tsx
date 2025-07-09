@@ -1,18 +1,23 @@
-import { ReactNode } from 'react'
-import { getMeData } from '@/shared/utils/getMeData'
-import { redirect } from 'next/navigation'
+'use client'
+import { ReactNode, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { selectIsLoggedIn } from '@/shared/store'
+import { useRouter } from '@/i18n/routing'
 import { PATH } from '@/shared/config/routes'
 
-export default async function Layout({
+export default function Layout({
   children,
 }: Readonly<{
   children: ReactNode
 }>) {
-  const me = await getMeData()
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const router = useRouter()
 
-  if (!me) {
-    redirect(PATH.SIGNIN)
-  }
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push(PATH.SIGNIN)
+    }
+  }, [])
 
   return <>{children}</>
 }

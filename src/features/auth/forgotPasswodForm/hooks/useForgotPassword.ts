@@ -16,6 +16,7 @@ export const useForgotPassword = () => {
 
   const recaptchaRef = useRef<ReCAPTCHA>(null)
   const [passwordRecovery, { isLoading, isSuccess }] = usePasswordRecoveryMutation()
+  const baseUrl = window.location.origin + '/recovery'
 
   const {
     register,
@@ -39,7 +40,7 @@ export const useForgotPassword = () => {
       await passwordRecovery({
         email: data.email,
         recaptcha: data.captcha,
-        baseUrl: window.location.origin,
+        baseUrl: baseUrl,
       }).unwrap()
 
       setSubmittedEmail(data.email)
