@@ -12,6 +12,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import s from './Profile.module.scss'
 import { Loader } from '@/shared/ui/loader'
+import { FollowersModal } from './followers/modal/FollowersModal'
+import { useState } from 'react'
+import { useGetFollowersQuery } from '@/shared/api/followers/followersApi'
+
 
 type Props = {
   resPublicData?: ProfileUserResponse
@@ -20,7 +24,7 @@ type Props = {
 
 export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   const t = useTranslations('profile')
-
+ const [isModalOpen, setIsModalOpen] = useState(false)
   const {
     avatarSrc,
     isMyProfile,
@@ -34,6 +38,11 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   } = useProfileData({
     resPublicData,
   })
+
+const data = useGetFollowersQuery({name: userName})
+const fCount = followArray[1]
+
+
 
   if (isLoading && !resPublicPosts && !resPublicData) {
     return (
@@ -51,6 +60,7 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
         ) : (
           <BlankCover />
         )}
+        {isModalOpen && <FollowersModal open={isModalOpen} onChange={setIsModalOpen} fCount={fCount} followers={data.currentData?.items}/>}
         <div className={s.profileInfo}>
           <div className={s.name}>
             <Typography variant={'h1'}>{userName}</Typography>
@@ -71,7 +81,8 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
                 <Typography variant={'bold_text_14'}>{item}</Typography>
                 <Typography variant={'regular_text_14'}>
                   {i === 0 && t('following')}
-                  {i === 1 && t('followers')}
+                  {i === 1 && <Button variant='icon' onClick={()=>setIsModalOpen(true)}>{t('followers')}</Button>}
+                  {/* {i === 1 && t('followers')} */}
                   {i === 2 && t('publications')}
                 </Typography>
               </li>
