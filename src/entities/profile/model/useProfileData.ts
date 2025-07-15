@@ -33,9 +33,7 @@ export const useProfileData = ({ resPublicData }: Props) => {
 
   const isLoading = meLoading || dataLoading || privateLoading
 
-  const getSafeAvatar = (userData?: {
-    avatars?: Array<{ url?: string }>
-  }) => {
+  const getSafeAvatar = (userData?: { avatars?: Array<{ url?: string }> }) => {
     return userData?.avatars?.[0]?.url || null
   }
 

@@ -61,3 +61,23 @@ export type FollowRequest = {
 export type unFollowRequest = {
   userId: number
 }
+
+export type Followers = {
+  totalCount: number
+  pagesCount: number
+  page: number
+  pageSize: number
+  prevCursor: number
+  nextCursor: number
+  items: FollowerItem[]
+}
+
+export type FollowerItem = {
+  id: number
+  userId: number
+  userName: string
+  createdAt: string
+  avatars: Avatar[]
+  isFollowing: boolean
+  isFollowedBy: boolean
+}

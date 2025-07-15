@@ -2,7 +2,18 @@
   min-width: 644px;
   min-height: 564px;
 
-  .searchInput {
+  .content {
+    width: 100%;
     padding: 24px;
+
+    .searchInput {
+      padding-bottom: 24px;
+    }
+
+    .followersList {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
   }
 }

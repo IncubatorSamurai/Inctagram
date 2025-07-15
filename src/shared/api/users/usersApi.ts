@@ -6,6 +6,7 @@ import {
   GetUserRequest,
   FollowRequest,
   unFollowRequest,
+  Followers,
 } from './usersApi.types'
 
 export const usersApi = baseApi.injectEndpoints({
@@ -35,17 +36,29 @@ export const usersApi = baseApi.injectEndpoints({
         method: 'POST',
         body: payload,
       }),
-      invalidatesTags: ['User'],
+      invalidatesTags: ['User', 'Followers'],
     }),
     unfollow: builder.mutation<void, unFollowRequest>({
       query: ({ userId }) => ({
         url: `v1/users/follower/${userId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['User'],
+      invalidatesTags: ['User', 'Followers'],
+    }),
+    getFollowers: builder.query<Followers, GetUserRequest>({
+      query: ({ userName }) => ({
+        url: `v1/users/${userName}/followers`,
+        method: 'GET',
+      }),
+      providesTags: ['Followers'],
     }),
   }),
 })
 
-export const { useLazyGetUsersQuery, useGetUserQuery, useFollowMutation, useUnfollowMutation } =
-  usersApi
+export const {
+  useLazyGetUsersQuery,
+  useGetUserQuery,
+  useFollowMutation,
+  useUnfollowMutation,
+  useGetFollowersQuery,
+} = usersApi
