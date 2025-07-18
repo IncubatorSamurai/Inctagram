@@ -7,6 +7,7 @@ import {
   FollowRequest,
   unFollowRequest,
   Followers,
+  GetFollowersRequest,
 } from './usersApi.types'
 
 export const usersApi = baseApi.injectEndpoints({
@@ -45,10 +46,14 @@ export const usersApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['User', 'Followers'],
     }),
-    getFollowers: builder.query<Followers, GetUserRequest>({
-      query: ({ userName }) => ({
+    getFollowers: builder.query<Followers, GetFollowersRequest>({
+      query: ({ userName, coursor, search }) => ({
         url: `v1/users/${userName}/followers`,
         method: 'GET',
+        params: {
+          coursor,
+          search,
+        },
       }),
       providesTags: ['Followers'],
     }),

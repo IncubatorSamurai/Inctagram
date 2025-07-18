@@ -81,3 +81,9 @@ export type FollowerItem = {
   isFollowing: boolean
   isFollowedBy: boolean
 }
+
+export type GetFollowersRequest = {
+  userName: string
+  search?: string
+  coursor?: number
+}

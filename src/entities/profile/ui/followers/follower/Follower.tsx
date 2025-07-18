@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import s from './Follower.module.scss'
 import { Typography } from '@/shared/ui/typography'
-import { Button } from '@/shared/ui/button'
 import { FollowButton } from '@/features/followUser'
 import { BlankCover } from '@/shared/ui/profile/blankCover'
 
@@ -28,7 +27,6 @@ export const Follower = ({ avatarSrc, profileUrl, isFollowing, userId, userName 
       </div>
       <div className={s.btnGroup}>
         <FollowButton isFollowing={isFollowing} userId={userId} userName={userName} />
-        <Button variant="icon">Delete</Button>
       </div>
     </div>
   )

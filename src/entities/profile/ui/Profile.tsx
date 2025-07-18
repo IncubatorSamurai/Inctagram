@@ -14,7 +14,6 @@ import s from './Profile.module.scss'
 import { Loader } from '@/shared/ui/loader'
 import { FollowersModal } from './followers/modal/FollowersModal'
 import { useState } from 'react'
-// import { useGetFollowersQuery } from '@/shared/api/users/usersApi'
 
 type Props = {
   resPublicData?: ProfileUserResponse
@@ -51,7 +50,7 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   return (
     <div className={s.profilePage}>
       <section className={s.profile}>
-        {avatarSrc ? (
+        {avatarSrc && typeof avatarSrc === 'string' ? (
           <Image src={avatarSrc} className={s.avatar} width={200} height={200} alt={'avatar'} />
         ) : (
           <BlankCover />
@@ -89,7 +88,6 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
                       {t('followers')}
                     </Button>
                   )}
-                  {/* {i === 1 && t('followers')} */}
                   {i === 2 && t('publications')}
                 </Typography>
               </li>

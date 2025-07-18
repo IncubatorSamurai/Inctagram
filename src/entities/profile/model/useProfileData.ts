@@ -33,19 +33,11 @@ export const useProfileData = ({ resPublicData }: Props) => {
 
   const isLoading = meLoading || dataLoading || privateLoading
 
-  const getSafeAvatar = (userData?: { avatars?: Array<{ url?: string }> }) => {
-    return userData?.avatars?.[0]?.url || null
-  }
 
   const userName = privateDataUser?.userName || (user?.userName as string)
-  const avatarSrc = getSafeAvatar(privateDataUser) || getSafeAvatar(user)
+  const avatarSrc = privateDataUser?.avatars?.[0]?.url || user?.avatars?.[0]?.url || null
   const aboutMe = privateDataUser?.aboutMe || user?.aboutMe
   const isFollowing = privateDataUser?.isFollowing || false
-
-  // const userName = privateDataUser?.userName || (user?.userName as string)
-  // const avatarSrc = privateDataUser?.avatars[0].url || user?.avatars[0]?.url
-  // const aboutMe = privateDataUser?.aboutMe || user?.aboutMe
-  // const isFollowing = privateDataUser?.isFollowing || false
 
   const followArray = [
     privateDataUser?.followingCount || user?.userMetadata.following || 0,
