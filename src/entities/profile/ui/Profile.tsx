@@ -30,7 +30,7 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   const handleSendMessageClick = () => {
     dispatch(
       setSelectedUser({
-        id: +userId, // userId у тебя из useProfileData — преобразуем в число
+        id: +userId,
         name: userName || '',
         avatar: avatarSrc ? [{ url: avatarSrc }] : [],
       })
