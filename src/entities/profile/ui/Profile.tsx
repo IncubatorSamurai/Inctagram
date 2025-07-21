@@ -32,7 +32,7 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
       setSelectedUser({
         id: +userId,
         name: userName || '',
-        avatar: avatarSrc ? [{ url: avatarSrc }] : [],
+        avatar: avatarSrc || '',
       })
     )
     router.push('/messenger')
