@@ -6,6 +6,8 @@ import {
   GetUserRequest,
   FollowRequest,
   unFollowRequest,
+  GetFollowingResponse,
+  GetFollowingRequest,
 } from './usersApi.types'
 
 export const usersApi = baseApi.injectEndpoints({
@@ -44,8 +46,20 @@ export const usersApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
+    getFollowingByUserName: builder.query<GetFollowingResponse, GetFollowingRequest>({
+      query: ({ userName, ...params }) => ({
+        url: `v1/users/${userName}/following`,
+        params,
+      }),
+      providesTags: ['Following'],
+    }),
   }),
 })
 
-export const { useLazyGetUsersQuery, useGetUserQuery, useFollowMutation, useUnfollowMutation } =
-  usersApi
+export const {
+  useLazyGetUsersQuery,
+  useGetUserQuery,
+  useFollowMutation,
+  useUnfollowMutation,
+  useLazyGetFollowingByUserNameQuery,
+} = usersApi

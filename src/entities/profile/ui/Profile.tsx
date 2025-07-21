@@ -12,6 +12,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import s from './Profile.module.scss'
 import { Loader } from '@/shared/ui/loader'
+import { FollowingModal } from '@/features/followingModal'
 
 type Props = {
   resPublicData?: ProfileUserResponse
@@ -68,12 +69,19 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
           <div className={s.statistics}>
             {followArray.map((item, i) => (
               <li key={i} className={s.followInfoItem}>
-                <Typography variant={'bold_text_14'}>{item}</Typography>
-                <Typography variant={'regular_text_14'}>
-                  {i === 0 && t('following')}
-                  {i === 1 && t('followers')}
-                  {i === 2 && t('publications')}
-                </Typography>
+                {i === 0 && <FollowingModal followingCount={item} userName={userName} />}
+                {i === 1 && (
+                  <>
+                    <Typography variant={'bold_text_14'}>{item}</Typography>
+                    <Typography variant={'regular_text_14'}>{t('followers')}</Typography>
+                  </>
+                )}
+                {i === 2 && (
+                  <>
+                    <Typography variant={'bold_text_14'}>{item}</Typography>
+                    <Typography variant={'regular_text_14'}>{t('publications')}</Typography>
+                  </>
+                )}
               </li>
             ))}
           </div>
