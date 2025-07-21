@@ -17,7 +17,6 @@ type MessengerUserItem = {
   userSearch: boolean
 }
 export const MessengerUserItem = ({
-  id,
   userSearch,
   userName,
   ownerId,
@@ -29,7 +28,7 @@ export const MessengerUserItem = ({
   lastName,
 }: MessengerUserItem) => {
   return (
-    <li key={id} className={s.user_item} onClick={onClick}>
+    <li className={s.user_item} onClick={onClick}>
       {avatars?.[0]?.url ? (
         <Image src={avatars[0].url} width={48} height={48} alt="avatar" className={s.user_avatar} />
       ) : (
@@ -45,7 +44,7 @@ export const MessengerUserItem = ({
       ) : (
         <div className={s.user_text_content}>
           <div className={s.user_item_name_date}>
-            <Typography variant="bold_text_14">{userName}</Typography>
+            <Typography variant="bold_text_14">{userName ? userName : 'No Name'}</Typography>
             {createdAt && (
               <Typography variant="small_text">
                 <span className={s.message_time}>
