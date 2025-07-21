@@ -14,7 +14,7 @@ import s from './Profile.module.scss'
 import { setSelectedUser } from '@/shared/store/messengerSlice/messengerSlice'
 import { useAppDispatch } from '@/shared/hooks'
 import { useRouter } from 'next/navigation'
-import SocketApi from '@/shared/api/sokets/soket'
+
 import { Loader } from '@/shared/ui/loader'
 
 type Props = {
@@ -26,21 +26,13 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   const t = useTranslations('profile')
   const dispatch = useAppDispatch()
   const router = useRouter()
+
   const handleSendMessageClick = () => {
-    const accessToken = localStorage.getItem('accessToken')
-    const ws = SocketApi.getInstance()
-
-    if (accessToken && !ws.isSocketConnected()) {
-      ws.connection(accessToken)
-      console.log('🌐 Сокет подключён при переходе из профиля')
-    }
-    console.log('➡️ Клик по кнопке "Send Message"')
-
     dispatch(
       setSelectedUser({
         id: +userId, // userId у тебя из useProfileData — преобразуем в число
-        name: userName,
-        avatar: avatarSrc || '',
+        name: userName || '',
+        avatar: avatarSrc ? [{ url: avatarSrc }] : [],
       })
     )
     router.push('/messenger')

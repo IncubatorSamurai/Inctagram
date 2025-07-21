@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { Avatar } from '@/shared/api/post/postApi.types'
 
 export const messengerSlice = createSlice({
   name: 'messenger',
   initialState: {
     selectedUserId: null as number | null,
     selectedUserName: '',
-    selectedUserAvatar: '',
+    selectedUserAvatar: [] as Avatar[],
   },
   selectors: {
     selectSelectedUserId: state => state.selectedUserId,
@@ -16,7 +17,7 @@ export const messengerSlice = createSlice({
     setSelectedUser: create.reducer<{
       id: number
       name: string
-      avatar: string
+      avatar: Avatar[]
     }>((state, action) => {
       state.selectedUserId = action.payload.id
       state.selectedUserName = action.payload.name
@@ -26,7 +27,7 @@ export const messengerSlice = createSlice({
     clearSelectedUser: create.reducer(state => {
       state.selectedUserId = null
       state.selectedUserName = ''
-      state.selectedUserAvatar = ''
+      state.selectedUserAvatar = []
     }),
   }),
 })

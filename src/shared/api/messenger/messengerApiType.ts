@@ -28,7 +28,21 @@ export type MessageUpdateRequest = {
   id: number
   message: string
 }
-
+export type MessageDeleteParams = {
+  id: number
+  dialoguePartnerId: number
+}
+export type GetLatestMessagesParams = {
+  cursor?: number
+  pageSize?: number
+  searchName?: string
+}
+export type GetMessagesByUserParams = {
+  dialoguePartnerId: number
+  cursor?: number
+  pageSize?: number
+  searchName?: string
+}
 export type Message = {
   id: number
   ownerId: number

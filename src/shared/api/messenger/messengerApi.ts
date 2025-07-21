@@ -1,6 +1,13 @@
+'use client'
+
 import { baseApi } from '@/shared/api/baseApi'
 import SocketApi from '@/shared/api/sokets/soket'
-import { Message, MessageSendRequest } from './messengerApiType'
+import {
+  GetLatestMessagesParams,
+  GetMessagesByUserParams,
+  Message,
+  MessageDeleteParams,
+} from './messengerApiType'
 
 export type MessengerListResponse = {
   pageSize: number
@@ -11,48 +18,40 @@ export type MessengerListResponse = {
 
 export const messengerApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getLatestMessages: builder.query<
-      MessengerListResponse,
-      { cursor?: number; pageSize?: number; searchName?: string }
-    >({
-      query: ({ cursor, pageSize = 12, searchName }) => {
-        const params = new URLSearchParams()
-        if (cursor) params.append('cursor', cursor.toString())
-        if (pageSize) params.append('pageSize', pageSize.toString())
-        if (searchName) params.append('searchName', searchName)
-
-        return {
-          url: `v1/messenger?${params.toString()}`,
-          method: 'GET',
-        }
-      },
-      serializeQueryArgs: ({ endpointName }) => endpointName,
+    getLatestMessages: builder.query<MessengerListResponse, GetLatestMessagesParams>({
+      query: params => ({
+        url: `v1/messenger`,
+        method: 'GET',
+        params,
+      }),
+      // serializeQueryArgs: ({ queryArgs }) => JSON.stringify(queryArgs),
       merge: (currentCache, newData) => {
-        currentCache.items.push(...newData.items)
+        const combined = [...currentCache.items, ...newData.items]
+        const uniqueMap = new Map()
+
+        for (const item of combined) {
+          uniqueMap.set(item.id, item)
+        }
+
+        currentCache.items = Array.from(uniqueMap.values())
         currentCache.pageSize = newData.pageSize
         currentCache.totalCount = newData.totalCount
         currentCache.notReadCount = newData.notReadCount
       },
+      providesTags: [{ type: 'ChatHistory', id: 'LIST' }],
     }),
 
-    getMessagesByUser: builder.query<
-      MessengerListResponse,
-      { dialoguePartnerId: number; cursor?: number; pageSize?: number }
-    >({
-      query: ({ dialoguePartnerId, cursor, pageSize = 12 }) => {
-        const params = new URLSearchParams()
-        if (cursor) params.append('cursor', cursor.toString())
-        if (pageSize) params.append('pageSize', pageSize.toString())
-
-        return {
-          url: `v1/messenger/${dialoguePartnerId}?${params.toString()}`,
-          method: 'GET',
-        }
-      },
+    getMessagesByUser: builder.query<MessengerListResponse, GetMessagesByUserParams>({
+      query: ({ dialoguePartnerId, ...params }) => ({
+        url: `v1/messenger/${dialoguePartnerId}`,
+        method: 'GET',
+        params,
+      }),
       transformResponse: (response: MessengerListResponse) => ({
         ...response,
         items: response.items.reverse(),
       }),
+
       async onCacheEntryAdded(
         { dialoguePartnerId },
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
@@ -62,15 +61,21 @@ export const messengerApi = baseApi.injectEndpoints({
         try {
           await cacheDataLoaded
 
-          const handleReceive = (message: Message) => {
+          const currentUserId = Number(localStorage.getItem('userId'))
+          const userId = Number(dialoguePartnerId)
+
+          const handleMessage = (message: Message) => {
+            const isRelevant =
+              (message.ownerId === currentUserId && message.receiverId === userId) ||
+              (message.ownerId === userId && message.receiverId === currentUserId)
+
+            if (!isRelevant) return
+
             updateCachedData(draft => {
-              const index = draft.items.findIndex(m => m.id === message.id)
-              if (index !== -1) {
-                draft.items[index] = message
-              } else if (
-                message.ownerId === dialoguePartnerId ||
-                message.receiverId === dialoguePartnerId
-              ) {
+              const exists = draft.items.some(m => m.id === message.id)
+              if (exists) {
+                draft.items = draft.items.map(m => (m.id === message.id ? message : m))
+              } else {
                 draft.items.push(message)
                 draft.totalCount += 1
               }
@@ -84,16 +89,17 @@ export const messengerApi = baseApi.injectEndpoints({
             })
           }
 
-          ws.subscribeReceiveMessage(handleReceive)
-          ws.subscribeMessageUpdate(handleReceive)
+          // Подписка
+          ws.subscribeReceiveMessage(handleMessage)
+          ws.subscribeMessageSend(handleMessage)
+          ws.subscribeMessageUpdate(handleMessage)
           ws.subscribeMessageDeleted(handleDelete)
-          ws.subscribeMessageSend(handleReceive)
-        } catch (e) {
-          console.error('Socket error:', e)
-        }
 
-        await cacheEntryRemoved
-        ws.disconnect()
+          // Отписка при размонтировании кэша
+          await cacheEntryRemoved
+        } catch (error) {
+          console.error('[messengerApi] WebSocket error:', error)
+        }
       },
     }),
 
@@ -101,27 +107,15 @@ export const messengerApi = baseApi.injectEndpoints({
       query: ids => ({
         url: 'v1/messenger',
         method: 'PUT',
-        body: {
-          ids,
-        },
+        body: { ids },
       }),
     }),
 
-    sendMessage: builder.mutation<Message, MessageSendRequest>({
-      async queryFn(body) {
-        const ws = SocketApi.getInstance()
-        return new Promise(resolve => {
-          ws.sendMessage(body, data => {
-            resolve({ data: data.message })
-          })
-        })
-      },
-    }),
-
-    deleteMessage: builder.mutation<void, { id: number; dialoguePartnerId: number }>({
-      query: ({ id }) => ({
+    deleteMessage: builder.mutation<void, MessageDeleteParams>({
+      query: ({ id, ...params }) => ({
         url: `v1/messenger/${id}`,
         method: 'DELETE',
+        params,
       }),
       async onQueryStarted({ id, dialoguePartnerId }, { dispatch, queryFulfilled, getState }) {
         const patchMessages = dispatch(
@@ -155,14 +149,13 @@ export const messengerApi = baseApi.injectEndpoints({
       },
     }),
   }),
-
   overrideExisting: false,
 })
 
 export const {
   useGetLatestMessagesQuery,
   useLazyGetMessagesByUserQuery,
+  useGetMessagesByUserQuery,
   useUpdateMessageStatusMutation,
   useDeleteMessageMutation,
-  useSendMessageMutation,
 } = messengerApi

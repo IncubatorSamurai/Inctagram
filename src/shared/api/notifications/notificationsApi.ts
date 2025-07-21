@@ -27,27 +27,30 @@ export const notificationsApi = baseApi.injectEndpoints({
       },
       async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
         const ws = SocketApi.getInstance()
+
+        const listener = (event: NotificationItem) => {
+          const el: NotificationItem = {
+            id: event.id,
+            message: event.message,
+            isRead: event.isRead,
+            createdAt: event.createdAt,
+          }
+          updateCachedData(draft => {
+            if (!el.isRead) {
+              draft.items.unshift(el)
+              draft.notReadCount += 1
+            }
+          })
+        }
         try {
           await cacheDataLoaded
-          const listener = (event: NotificationItem) => {
-            const el: NotificationItem = {
-              id: event.id,
-              message: event.message,
-              isRead: event.isRead,
-              createdAt: event.createdAt,
-            }
-            updateCachedData(draft => {
-              if (!el.isRead) {
-                draft.items.unshift(el)
-                draft.notReadCount += 1
-              }
-            })
-          }
 
           ws.subscribeNotifications(listener)
-        } catch {}
+        } catch (error) {
+          console.error(error)
+        }
         await cacheEntryRemoved
-        ws.disconnect()
+        ws.unsubscribeNotifications(listener)
       },
     }),
     readNotifications: builder.mutation<void, number[]>({
