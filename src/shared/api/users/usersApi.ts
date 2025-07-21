@@ -47,13 +47,10 @@ export const usersApi = baseApi.injectEndpoints({
       invalidatesTags: ['User', 'Followers'],
     }),
     getFollowers: builder.query<Followers, GetFollowersRequest>({
-      query: ({ userName, coursor, search }) => ({
-        url: `v1/users/${userName}/followers`,
+      query: args => ({
+        url: `v1/users/${args.userName}/followers`,
         method: 'GET',
-        params: {
-          coursor,
-          search,
-        },
+        params: { ...args },
       }),
       providesTags: ['Followers'],
     }),
@@ -62,6 +59,7 @@ export const usersApi = baseApi.injectEndpoints({
 
 export const {
   useLazyGetUsersQuery,
+  useLazyGetFollowersQuery,
   useGetUserQuery,
   useFollowMutation,
   useUnfollowMutation,

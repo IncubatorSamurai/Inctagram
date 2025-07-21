@@ -23,6 +23,7 @@ type Props = {
 export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   const t = useTranslations('profile')
   const [isModalOpen, setIsModalOpen] = useState(false)
+
   const {
     avatarSrc,
     isMyProfile,

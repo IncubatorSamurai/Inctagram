@@ -86,4 +86,6 @@ export type GetFollowersRequest = {
   userName: string
   search?: string
   coursor?: number
+  pageSize?: number
+  pageNumber?: number
 }
