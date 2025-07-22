@@ -7,14 +7,8 @@ import {
   GetMessagesByUserParams,
   Message,
   MessageDeleteParams,
+  MessengerListResponse,
 } from './messengerApiType'
-
-export type MessengerListResponse = {
-  pageSize: number
-  totalCount: number
-  notReadCount: number
-  items: Message[]
-}
 
 export const messengerApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -24,13 +18,25 @@ export const messengerApi = baseApi.injectEndpoints({
         method: 'GET',
         params,
       }),
-      // serializeQueryArgs: ({ queryArgs }) => JSON.stringify(queryArgs),
+      // Фильтрация битых чатов сразу после получения данных
+      transformResponse: (response: MessengerListResponse) => ({
+        ...response,
+        items: response.items.filter(chat => {
+          // Проверяем, что есть userName и хотя бы ownerId или receiverId
+          return chat.userName?.trim() && (chat.ownerId != null || chat.receiverId != null)
+        }),
+      }),
       merge: (currentCache, newData) => {
         const combined = [...currentCache.items, ...newData.items]
-        const uniqueMap = new Map()
+        const uniqueMap = new Map<number, Message>()
 
         for (const item of combined) {
-          uniqueMap.set(item.id, item)
+          const chatKey =
+            item.ownerId === Number(localStorage.getItem('userId')) ? item.receiverId : item.ownerId
+
+          if (chatKey) {
+            uniqueMap.set(chatKey, item)
+          }
         }
 
         currentCache.items = Array.from(uniqueMap.values())

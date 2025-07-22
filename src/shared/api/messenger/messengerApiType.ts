@@ -43,6 +43,12 @@ export type GetMessagesByUserParams = {
   pageSize?: number
   searchName?: string
 }
+export type MessengerListResponse = {
+  pageSize: number
+  totalCount: number
+  notReadCount: number
+  items: Message[]
+}
 export type Message = {
   id: number
   ownerId: number

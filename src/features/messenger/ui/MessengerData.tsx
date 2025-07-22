@@ -4,17 +4,13 @@ import { useEffect, useState } from 'react'
 import s from './MessengerData.module.scss'
 import { Input } from '@/shared/ui/input'
 import { Scrollbar } from '@/shared/ui/scrollbar'
-import { Button } from '@/shared/ui/button/Button'
 import Image from 'next/image'
 import { v4 } from 'uuid'
 import {
-  useDeleteMessageMutation,
   useGetLatestMessagesQuery,
   useLazyGetMessagesByUserQuery,
 } from '@/shared/api/messenger/messengerApi'
 import { useGetUsersQuery } from '@/shared/api/users/usersApi'
-import SocketApi from '@/shared/api/sokets/soket'
-import { Message } from '@/shared/api/messenger/messengerApiType'
 import { Typography } from '@/shared/ui/typography'
 import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
 import { Avatar } from '@/shared/api/post/postApi.types'
@@ -23,10 +19,12 @@ import {
   selectSelectedUserId,
   selectSelectedUserName,
 } from '@/shared/store/messengerSlice/messengerSlice'
-import { useAppSelector } from '@/shared/hooks'
+import { useAppSelector, useDebouncedEffect } from '@/shared/hooks'
 import { MessengerUserItem } from '@/features/messenger/ui/MessengerUserItem/MessengerUserItem'
 import { MessageItem } from '@/features/messenger/ui/MessageItem/MessageItem'
-import { toast } from 'react-toastify'
+import { Loader } from '@/shared/ui/loader'
+import { useMessagesLogic } from '@/shared/hooks/useMessageLogic'
+import { MessengerTextField } from '@/features/messenger/ui/MessengerTextField/MessengerTextField'
 
 export const MessengerData = () => {
   const [searchUser, setSearchUser] = useState('')
@@ -34,18 +32,15 @@ export const MessengerData = () => {
   const [avatar, setAvatar] = useState('')
   const [debouncedValue, setDebouncedValue] = useState('')
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null)
-  const [messageText, setMessageText] = useState('')
-  const [editingMessage, setEditingMessage] = useState<Message | null>(null)
-
   const selectedUserIdFromStore = useAppSelector(selectSelectedUserId)
   const selectedUserNameFromStore = useAppSelector(selectSelectedUserName)
   const selectedUserAvatarFromStore = useAppSelector(selectSelectedUserAvatar)
   const userId = Number(localStorage.getItem('userId'))
+
   const { data: chatList, refetch: refetchChat } = useGetLatestMessagesQuery({ pageSize: 12 })
   const { data: usersData } = useGetUsersQuery({ pageNumber: 1, pageSize: 1000 })
-  const allUsers = usersData?.items || []
 
-  const [deleteMessage] = useDeleteMessageMutation()
+  const allUsers = usersData?.items || []
   const [getMessagesByUser, { data: messagesData, isFetching }] = useLazyGetMessagesByUserQuery()
 
   const handleSelectUser = async (userId: number, userName: string, avatar: Avatar[]) => {
@@ -62,69 +57,33 @@ export const MessengerData = () => {
     if (selectedUserIdFromStore) {
       setSelectedUserId(selectedUserIdFromStore)
       setName(selectedUserNameFromStore)
-      setAvatar(selectedUserAvatarFromStore[0]?.url || '')
+      setAvatar(selectedUserAvatarFromStore)
       getMessagesByUser({ dialoguePartnerId: selectedUserIdFromStore })
     }
   }, [selectedUserIdFromStore])
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
+  useDebouncedEffect(
+    () => {
       setDebouncedValue(searchUser.trim().toLowerCase())
-    }, 300)
-    return () => clearTimeout(timeout)
-  }, [searchUser])
-
-  const handleDeleteMessage = async (messageId: number, dialoguePartnerId: number) => {
-    try {
-      await deleteMessage({ id: messageId, dialoguePartnerId }).unwrap()
-      toast.success('Message deleted successfully')
-    } catch (error) {
-      toast.error('Ошибка при удалении сообщения:', error!)
-    }
-  }
-
-  const handleSendMessage = async () => {
-    const ws = SocketApi.getInstance()
-    if (!selectedUserId || !messageText.trim()) return
-    if (selectedUserId === userId) {
-      toast.error('Нельзя отправить сообщение самому себе')
-      return
-    }
-    const trimmed = messageText.trim()
-    ws.sendMessage({ receiverId: selectedUserId, message: trimmed })
-    setMessageText('')
-    const chatExists = chatList?.items?.some(
-      chat => chat.receiverId === selectedUserId || chat.ownerId === selectedUserId
-    )
-    if (!chatExists) await refetchChat()
-  }
-
-  const handleEditMessage = () => {
-    if (!editingMessage || !messageText.trim()) return
-    const ws = SocketApi.getInstance()
-    ws.updateMessage({ id: editingMessage.id, message: messageText.trim() })
-    setEditingMessage(null)
-    setMessageText('')
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      if (editingMessage) {
-        handleEditMessage()
-      } else {
-        handleSendMessage()
-      }
-    }
-  }
-
-  const handleCancelEdit = () => {
-    setEditingMessage(null)
-    setMessageText('')
-  }
+    },
+    [searchUser],
+    300
+  )
 
   const filteredUsers = debouncedValue
     ? allUsers.filter(user => user.userName?.toLowerCase().startsWith(debouncedValue))
     : []
+  const {
+    messageText,
+    setMessageText,
+    editingMessage,
+    setEditingMessage,
+    handleSendMessage,
+    handleEditMessage,
+    handleDeleteMessage,
+    handleKeyDown,
+    handleCancelEdit,
+  } = useMessagesLogic(selectedUserId, userId, chatList, refetchChat)
 
   return (
     <section className={s.messenger}>
@@ -198,7 +157,9 @@ export const MessengerData = () => {
 
           <div className={s.messenger_content_chat}>
             {isFetching ? (
-              <p>Загрузка сообщений...</p>
+              <div className={s.chat_loader}>
+                <Loader />
+              </div>
             ) : messagesData?.items.length ? (
               <Scrollbar orientation="vertical">
                 <ul className={s.messenger_content_list}>
@@ -226,29 +187,15 @@ export const MessengerData = () => {
               </div>
             )}
 
-            <div className={s.messenger_chat_textarea}>
-              <Input
-                type="text"
-                placeholder="Type a message"
-                value={messageText}
-                onChange={e => setMessageText(e.target.value)}
-                onKeyDown={handleKeyDown}
-              />
-              {editingMessage ? (
-                <>
-                  <Button variant="text" onClick={handleEditMessage} disabled={!messageText.trim()}>
-                    Save
-                  </Button>
-                  <Button variant="text" onClick={handleCancelEdit}>
-                    Cancel
-                  </Button>
-                </>
-              ) : (
-                <Button variant="text" onClick={handleSendMessage} disabled={!messageText.trim()}>
-                  Send message
-                </Button>
-              )}
-            </div>
+            <MessengerTextField
+              messageText={messageText}
+              editingMessage={editingMessage}
+              onChange={e => setMessageText(e.target.value)}
+              onSend={handleSendMessage}
+              onEdit={handleEditMessage}
+              onCancelEdit={handleCancelEdit}
+              onKeyDown={handleKeyDown}
+            />
           </div>
         </div>
       </div>
