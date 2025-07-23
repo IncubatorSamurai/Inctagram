@@ -37,3 +37,31 @@ body {
 
   background-color: var(--color-dark-700);
 }
+
+// Стили для скролла FireFox
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-light-100) var(--color-dark-300);
+}
+
+// Стили для скролла Chrome
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track:horizontal {
+  background-color: var(--color-dark-300);
+}
+
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb:horizontal {
+  background-color: var(--color-dark-300);
+  border: 3px solid var(--color-dark-300);
+  border-radius: 5px;
+
+  &:hover {
+    background-color: var(--color-accent-100);
+  }
+}

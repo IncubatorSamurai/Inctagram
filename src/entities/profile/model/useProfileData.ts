@@ -34,7 +34,7 @@ export const useProfileData = ({ resPublicData }: Props) => {
   const isLoading = meLoading || dataLoading || privateLoading
 
   const userName = privateDataUser?.userName || (user?.userName as string)
-  const avatarSrc = privateDataUser?.avatars[0].url || user?.avatars[0]?.url
+  const avatarSrc = privateDataUser?.avatars[0]?.url || user?.avatars[0]?.url
   const aboutMe = privateDataUser?.aboutMe || user?.aboutMe
   const isFollowing = privateDataUser?.isFollowing || false
 

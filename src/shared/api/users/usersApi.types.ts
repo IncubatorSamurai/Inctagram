@@ -83,4 +83,5 @@ export type GetFollowingResponse = {
 export type FollowingItem = {
   isFollowing: boolean
   isFollowedBy: boolean
+  userId: number
 } & Omit<Item, 'firstName' | 'lastName'>

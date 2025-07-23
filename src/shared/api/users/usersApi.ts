@@ -51,6 +51,13 @@ export const usersApi = baseApi.injectEndpoints({
         url: `v1/users/${userName}/following`,
         params,
       }),
+      serializeQueryArgs: ({ endpointName, queryArgs }) => {
+        return `${endpointName}-${queryArgs.search || ''}-${queryArgs.userName}`
+      },
+      merge: (currentCacheData, newItems, { arg }) => {
+        if (arg.pageNumber === 1) return newItems
+        return { ...newItems, items: [...currentCacheData.items, ...newItems.items] }
+      },
       providesTags: ['Following'],
     }),
   }),
