@@ -11,9 +11,10 @@ type Props = {
   userName: string
   isFollowing: boolean
   variant?: 'icon'
+  className?: string
 }
 
-export const FollowButton = ({ userId, userName, isFollowing, variant }: Props) => {
+export const FollowButton = ({ userId, userName, isFollowing, variant, className }: Props) => {
   const t = useTranslations('follow')
 
   const [follow, { isLoading: isFollowLoading }] = useFollowMutation()
@@ -61,5 +62,5 @@ export const FollowButton = ({ userId, userName, isFollowing, variant }: Props) 
     } as const
   }
 
-  return <Button {...getButtonProps()} />
+  return <Button className={className} {...getButtonProps()} />
 }
