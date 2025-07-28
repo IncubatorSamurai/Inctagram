@@ -1,7 +1,7 @@
-import { useLazyGetFollowersQuery } from '@/shared/api/users/usersApi'
-import { useCallback, useEffect, useRef } from 'react'
+import { useLazyGetFollowersQuery, usersApi } from '@/shared/api/users/usersApi'
+import { useEffect, useRef, useCallback } from 'react'
 
-const PAGE_SIZE = 12
+const PAGE_SIZE = 9
 
 type Props = {
   searchTerm: string
@@ -9,13 +9,14 @@ type Props = {
   userName: string
 }
 
+export type UpdateFollowingThunk = ReturnType<typeof usersApi.util.updateQueryData>
+
 export const useInfiniteFollowerSearch = ({
   searchTerm,
   userName,
   pageSize = PAGE_SIZE,
 }: Props) => {
   const prevSearchTerm = useRef('')
-  const prevUserName = useRef('')
   const observer = useRef<IntersectionObserver | null>(null)
   const isLoading = useRef(false)
 
@@ -25,19 +26,43 @@ export const useInfiniteFollowerSearch = ({
   const paginationInfo = {
     currentPage: data?.page || 0,
     hasNextPage: (data?.page || 0) < (data?.pagesCount || 0),
+    nextCoursor: data?.nextCursor,
+  }
+
+  const updateQuery = ({
+    userId,
+    isFollowing,
+  }: {
+    userId: number
+    isFollowing: boolean
+  }): UpdateFollowingThunk => {
+    return usersApi.util.updateQueryData(
+      'getFollowers',
+      { userName, search: searchTerm, pageSize },
+      draft => {
+        const user = draft.items.find(item => item.userId === userId)
+        if (user) {
+          user.isFollowing = isFollowing
+        }
+      }
+    )
   }
 
   useEffect(() => {
-    if (prevUserName.current !== userName) {
-      prevUserName.current = userName
+    if (!searchTerm) {
+      if (!userName) return
+      fetchFollower({
+        userName,
+        pageSize,
+      })
       prevSearchTerm.current = ''
+      return
     }
 
     if (prevSearchTerm.current !== searchTerm || !searchTerm) {
       fetchFollower({
         userName,
         search: searchTerm,
-        pageNumber: 1,
         pageSize,
       })
       prevSearchTerm.current = searchTerm
@@ -60,11 +85,11 @@ export const useInfiniteFollowerSearch = ({
 
       observer.current = new IntersectionObserver(
         entries => {
-          if (entries[0].isIntersecting && users.length > 0 && paginationInfo.hasNextPage) {
+          if (entries[0].isIntersecting && users.length > 0 && paginationInfo.nextCoursor) {
             fetchFollower({
               userName,
               search: searchTerm,
-              pageNumber: paginationInfo.currentPage + 1,
+              cursor: paginationInfo.nextCoursor,
               pageSize,
             })
             isLoading.current = false
@@ -75,15 +100,7 @@ export const useInfiniteFollowerSearch = ({
 
       if (node) observer.current.observe(node)
     },
-    [
-      isFetching,
-      paginationInfo.hasNextPage,
-      fetchFollower,
-      userName,
-      searchTerm,
-      pageSize,
-      users.length,
-    ]
+    [isFetching, paginationInfo.nextCoursor, fetchFollower]
   )
 
   return {
@@ -92,6 +109,7 @@ export const useInfiniteFollowerSearch = ({
     isFetching,
     isError,
     isLoading: isLoading.current,
-    hasNextPage: paginationInfo.hasNextPage,
+    nextCursor: paginationInfo.nextCoursor,
+    updateQuery,
   }
 }

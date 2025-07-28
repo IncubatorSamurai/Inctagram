@@ -85,7 +85,7 @@ export type FollowerItem = {
 export type GetFollowersRequest = {
   userName: string
   search?: string
-  coursor?: number
+  cursor?: number
   pageSize?: number
   pageNumber?: number
 }

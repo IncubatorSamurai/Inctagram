@@ -6,15 +6,24 @@ import { BlankCover } from '@/shared/ui/profile/blankCover'
 import { forwardRef } from 'react'
 import Link from 'next/link'
 import { PATH } from '@/shared/config/routes'
+import { UpdateFollowingThunk } from '../modal/model/useInfiniteFollowersSearch'
 type Props = {
   avatarSrc?: string
   isFollowing: boolean
   userName: string
   userId: number
+  isMe: boolean
+    updateQuery?: ({
+      userId,
+      isFollowing,
+    }: {
+      userId: number
+      isFollowing: boolean
+    }) => UpdateFollowingThunk
 }
 
 export const Follower = forwardRef<HTMLDivElement, Props>(
-  ({ avatarSrc, isFollowing, userId, userName }, ref) => {
+  ({ avatarSrc, isFollowing, userId, userName, isMe , updateQuery}, ref) => {
     return (
       <div className={s.root}>
         <div className={s.avaName} ref={ref}>
@@ -28,11 +37,10 @@ export const Follower = forwardRef<HTMLDivElement, Props>(
           </Typography>
         </div>
         <div className={s.btnGroup}>
-          <FollowButton isFollowing={isFollowing} userId={userId} userName={userName} />
+          {!isMe && <FollowButton isFollowing={isFollowing} userId={userId} userName={userName} updateQuery={updateQuery} />}
         </div>
       </div>
     )
   }
 )
-
 Follower.displayName = 'Follower'

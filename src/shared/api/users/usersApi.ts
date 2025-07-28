@@ -37,14 +37,14 @@ export const usersApi = baseApi.injectEndpoints({
         method: 'POST',
         body: payload,
       }),
-      invalidatesTags: ['User', 'Followers'],
+      invalidatesTags: ['User'],
     }),
     unfollow: builder.mutation<void, unFollowRequest>({
       query: ({ userId }) => ({
         url: `v1/users/follower/${userId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['User', 'Followers'],
+      invalidatesTags: ['User'],
     }),
     getFollowers: builder.query<Followers, GetFollowersRequest>({
       query: args => ({
@@ -52,6 +52,13 @@ export const usersApi = baseApi.injectEndpoints({
         method: 'GET',
         params: { ...args },
       }),
+      serializeQueryArgs: ({ endpointName, queryArgs }) => {
+        return `${endpointName}-${queryArgs.search || ''}-${queryArgs.userName}`
+      },
+      merge: (currentCacheData, newItems, { arg }) => {
+        if (!arg.cursor) return newItems
+        return { ...newItems, items: [...currentCacheData.items, ...newItems.items] }
+      },
       providesTags: ['Followers'],
     }),
   }),

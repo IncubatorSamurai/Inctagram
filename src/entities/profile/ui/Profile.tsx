@@ -13,7 +13,7 @@ import Link from 'next/link'
 import s from './Profile.module.scss'
 import { Loader } from '@/shared/ui/loader'
 import { FollowersModal } from './followers/modal/FollowersModal'
-import { useState } from 'react'
+
 
 type Props = {
   resPublicData?: ProfileUserResponse
@@ -22,7 +22,6 @@ type Props = {
 
 export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   const t = useTranslations('profile')
-  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const {
     avatarSrc,
@@ -37,8 +36,6 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   } = useProfileData({
     resPublicData,
   })
-
-  const fCount = followArray[1]
 
   if (isLoading && !resPublicPosts && !resPublicData) {
     return (
@@ -55,14 +52,6 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
           <Image src={avatarSrc} className={s.avatar} width={200} height={200} alt={'avatar'} />
         ) : (
           <BlankCover />
-        )}
-        {isModalOpen && (
-          <FollowersModal
-            open={isModalOpen}
-            onChange={setIsModalOpen}
-            fCount={fCount}
-            userName={userName}
-          />
         )}
         <div className={s.profileInfo}>
           <div className={s.name}>
@@ -81,16 +70,19 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
           <div className={s.statistics}>
             {followArray.map((item, i) => (
               <li key={i} className={s.followInfoItem}>
-                <Typography variant={'bold_text_14'}>{item}</Typography>
-                <Typography variant={'regular_text_14'}>
-                  {i === 0 && t('following')}
-                  {i === 1 && (
-                    <Button variant="icon" onClick={() => setIsModalOpen(true)}>
-                      {t('followers')}
-                    </Button>
-                  )}
-                  {i === 2 && t('publications')}
-                </Typography>
+                {i === 0 && (
+                  <>
+                    <Typography variant={'bold_text_14'}>{item}</Typography>
+                    <Typography variant={'regular_text_14'}>{t('following')}</Typography>
+                  </>
+                )}
+                {i === 1 && <FollowersModal fCount={item} userName={userName} />}
+                {i === 2 && (
+                  <>
+                    <Typography variant={'bold_text_14'}>{item}</Typography>
+                    <Typography variant={'regular_text_14'}>{t('publications')}</Typography>
+                  </>
+                )}
               </li>
             ))}
           </div>

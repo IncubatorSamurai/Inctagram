@@ -1,14 +1,11 @@
 .modal {
-  min-width: 644px;
-  min-height: 564px;
+  overflow: hidden;
+  width: 644px;
+  max-height: 564px;
 
   .content {
     width: 100%;
     padding: 24px;
-
-    .searchInput {
-      padding-bottom: 24px;
-    }
 
     .followersList {
       display: flex;
@@ -16,4 +13,8 @@
       gap: 14px;
     }
   }
+}
+
+.trigger {
+  cursor: pointer;
 }
