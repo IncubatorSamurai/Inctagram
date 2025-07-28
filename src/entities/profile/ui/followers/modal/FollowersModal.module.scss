@@ -1,17 +1,11 @@
 .modal {
-  overflow: hidden;
   width: 644px;
-  max-height: 564px;
+  height: 564px;
 
   .content {
     width: 100%;
-    padding: 24px;
-
-    .followersList {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+    max-height: 506px;
+    padding: 1.5rem;
   }
 }
 
