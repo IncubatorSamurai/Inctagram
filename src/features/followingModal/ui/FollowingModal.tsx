@@ -13,6 +13,7 @@ import { useAppSelector, useDebouncedEffect } from '@/shared/hooks'
 import { selectIsLoggedIn } from '@/shared/store'
 import { useInfiniteFollowingSearch } from '@/features/followingModal/modal/useInfiniteFollowingSearch'
 import { Loader } from '@/shared/ui/loader'
+import { Link } from '@/i18n/routing'
 
 type Props = {
   followingCount: number
@@ -64,6 +65,7 @@ export const FollowingModal = ({ followingCount, userName }: Props) => {
               {followingUsers?.map((item, index) => {
                 const avatarUrl = item?.avatars?.[0]?.url
                 const isLastUser = index === followingUsers.length - 1
+                const profileLink = `/profile/${item.userId}`
 
                 return (
                   <div
@@ -71,7 +73,7 @@ export const FollowingModal = ({ followingCount, userName }: Props) => {
                     className={s.followingItem}
                     ref={isLastUser ? lastElementRef : null}
                   >
-                    <div className={s.avatarAndName}>
+                    <Link href={profileLink} className={s.avatarAndName} shallow scroll={false}>
                       {avatarUrl ? (
                         <Image
                           src={avatarUrl}
@@ -84,7 +86,7 @@ export const FollowingModal = ({ followingCount, userName }: Props) => {
                         <BlankCover className={s.blankCover} />
                       )}
                       <Typography>{item.userName}</Typography>
-                    </div>
+                    </Link>
                     {item.userId !== meData?.userId && (
                       <FollowButton
                         userId={item.userId}
