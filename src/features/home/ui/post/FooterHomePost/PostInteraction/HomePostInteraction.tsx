@@ -1,6 +1,4 @@
 import React from 'react'
-import { HeartIcon } from '@/shared/assets/icons/HeartIcon'
-import { HeartOutlineIcon } from '@/shared/assets/icons/HeartOutlineIcon'
 import { MessageCircleOutlineIcon } from '@/shared/assets/icons/MessageCircleOutlineIcon'
 import { PaperPlaneIcon } from '@/shared/assets/icons/PaperPlaneIcon'
 import { BookMarkOutlineIcon } from '@/shared/assets/icons/BookMarkOutlineIcon'
@@ -8,29 +6,38 @@ import Image from 'next/image'
 import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
 import { Typography } from '@/shared/ui/typography'
 import s from './HomePostInteraction.module.scss'
+import { Link } from '@/i18n/routing'
+import { LikePost } from '@/features/post/PostModal/ui/PostLikesAndSent/LikePost/LikePost'
+import { useGetPostLikesQuery } from '@/shared/api/post/likes/postLikeApi'
 
 type Props = {
-  isLiked: boolean
+  postId: string
   avatarOwner: string
   WIDTH_AVATAR: number
   HEIGHT_AVATAR: number
   description: string
   ownerUserName: string
+  hrefLinkPost: string
 }
 
 export const HomePostInteraction = ({
-  isLiked,
+  postId,
   description,
   avatarOwner,
   WIDTH_AVATAR,
   HEIGHT_AVATAR,
   ownerUserName,
+  hrefLinkPost,
 }: Props) => {
+  const { data: likesData } = useGetPostLikesQuery(postId ?? '', { skip: !postId })
+
   return (
     <>
       <div className={s.postFunctions}>
-        {isLiked ? <HeartIcon color={'red'} /> : <HeartOutlineIcon />}
-        <MessageCircleOutlineIcon />
+        <LikePost id={postId ?? ''} likesItems={likesData?.items} />
+        <Link href={hrefLinkPost} shallow scroll={false}>
+          <MessageCircleOutlineIcon className={s.linkIcon} />
+        </Link>
         <PaperPlaneIcon />
         <BookMarkOutlineIcon />
       </div>

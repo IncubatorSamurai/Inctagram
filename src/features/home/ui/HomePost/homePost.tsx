@@ -15,6 +15,7 @@ import { enUS, ru } from 'date-fns/locale'
 import { useLocale, useTranslations } from 'next-intl'
 import { useAddComment } from '@/shared/hooks/useAddComment'
 import { useGetCommentsByPostIdQuery } from '@/shared/api/post/postApi'
+import { Link } from '@/i18n/routing'
 
 const WIDTH_AVATAR = 36
 const HEIGHT_AVATAR = 36
@@ -34,7 +35,6 @@ export const HomePost = ({ ...props }: Post) => {
 
   const postId = String(props.id)
   const description = props.description
-  const isLiked = props.isLiked
   const likesCount = props.likesCount
 
   const images = props.images
@@ -55,6 +55,8 @@ export const HomePost = ({ ...props }: Post) => {
 
   const countComments = commentsData?.totalCount ? `(${commentsData?.totalCount})` : null
 
+  const hrefLinkPost = `/feed?postId=${postId}`
+
   return (
     <div className={s.container}>
       <HeaderHomePost
@@ -69,17 +71,20 @@ export const HomePost = ({ ...props }: Post) => {
       <HomePostImages postId={postId} images={images} ownerUserName={ownerUserName} />
       <div className={s.footer}>
         <HomePostInteraction
-          isLiked={isLiked}
+          postId={postId}
           avatarOwner={avatarOwner}
           WIDTH_AVATAR={WIDTH_AVATAR}
           HEIGHT_AVATAR={HEIGHT_AVATAR}
           description={description}
           ownerUserName={ownerUserName}
+          hrefLinkPost={hrefLinkPost}
         />
         <HomePostLikes avatarWhoLikes={avatarWhoLikes} likesCount={likesCount} />
-        <Typography variant={'bold_text_14'} className={s.viewComments}>
-          {stateComments} {countComments}
-        </Typography>
+        <Link href={hrefLinkPost} shallow scroll={false} className={s.link}>
+          <Typography variant={'bold_text_14'} className={s.viewComments}>
+            {stateComments} {countComments}
+          </Typography>
+        </Link>
         <AddContent
           className={s.addComment}
           placeholder={'Comment'}
