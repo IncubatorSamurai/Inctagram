@@ -1,16 +1,9 @@
-.searchUserContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  min-height: 564px;
+.searchUserEmptyWrapper {
+  margin: 5.25rem auto 0;
+  text-align: center;
 
-  .searchUserEmptyWrapper {
-    margin: 5.25rem auto 0;
-    text-align: center;
-
-    & > p {
-      color: var(--color-light-900);
-    }
+  & > p {
+    color: var(--color-light-900);
   }
 
   .userWrapper {
@@ -53,6 +46,6 @@
   flex-direction: column;
   gap: 24px;
 
-  max-height: 420px;
-  padding: 12px 1px 0 0;
+  max-height: 397px;
+  padding: 1px;
 }

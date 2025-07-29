@@ -1,7 +1,7 @@
 import { useLazyGetFollowersQuery, usersApi } from '@/shared/api/users/usersApi'
 import { useEffect, useRef, useCallback } from 'react'
 
-const PAGE_SIZE = 9
+const PAGE_SIZE = 12
 
 type Props = {
   searchTerm: string

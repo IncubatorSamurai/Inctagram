@@ -44,7 +44,6 @@ export const FollowerContent = ({ searchUser, userName }: Props) => {
   }
 
   return (
-    <div className={s.searchUserContainer}>
       <div className={s.followersList}>
         {users.map((user, i) => {
           const avatarSrc = user?.avatars?.[0]?.url
@@ -62,11 +61,10 @@ export const FollowerContent = ({ searchUser, userName }: Props) => {
             />
           )
         })}
-      </div>
-
       {isFetching && nextCursor && (
         <Typography variant="regular_text_14">{t('loading')}</Typography>
       )}
-    </div>
+      </div>
+
   )
 }
