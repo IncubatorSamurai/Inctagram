@@ -1,12 +1,16 @@
 .modal {
   width: 644px;
-  height: 564px;
+  height: 574px;
 
   .content {
     width: 100%;
     max-height: 506px;
     padding: 1.5rem;
   }
+}
+
+.searchInput {
+  margin-bottom: 24px;
 }
 
 .trigger {
