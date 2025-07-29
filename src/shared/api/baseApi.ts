@@ -15,5 +15,6 @@ export const baseApi = createApi({
     'Comments',
     'CommentAnswers',
     'Followers',
+    'Following',
   ],
 })
