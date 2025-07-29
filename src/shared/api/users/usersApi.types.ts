@@ -62,7 +62,7 @@ export type unFollowRequest = {
   userId: number
 }
 
-export type GetFollowingRequest = {
+export type GetFollowRequest = {
   userName: string
   search?: string
   pageSize?: number
@@ -71,13 +71,13 @@ export type GetFollowingRequest = {
 }
 
 export type GetFollowingResponse = {
-
   totalCount: number
   pagesCount: number
   page: number
   pageSize: number
   prevCursor: number
   nextCursor: number
+  items: FollowingItem[]
 }
 
 export type FollowerItem = {
@@ -90,14 +90,6 @@ export type FollowerItem = {
   isFollowedBy: boolean
 }
 
-export type GetFollowersRequest = {
-  userName: string
-  search?: string
-  cursor?: number
-  pageSize?: number
-  pageNumber?: number
-}
-
 export type Followers = {
   totalCount: number
   pagesCount: number
@@ -108,10 +100,8 @@ export type Followers = {
   items: FollowerItem[]
 }
 
-
 export type FollowingItem = {
   isFollowing: boolean
   isFollowedBy: boolean
   userId: number
 } & Omit<Item, 'firstName' | 'lastName'>
-

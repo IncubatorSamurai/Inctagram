@@ -1,7 +1,6 @@
 import { useLazyGetFollowingByUserNameQuery, usersApi } from '@/shared/api/users/usersApi'
 import { useCallback, useEffect, useRef } from 'react'
-
-export type UpdateFollowingThunk = ReturnType<typeof usersApi.util.updateQueryData>
+import { UpdateFollowingThunk } from '@/shared/types'
 
 const PAGE_SIZE = 12
 
