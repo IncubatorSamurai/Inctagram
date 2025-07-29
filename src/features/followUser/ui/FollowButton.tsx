@@ -1,6 +1,8 @@
+import { UpdateFollowingThunk } from '@/entities/profile/ui/followers/modal/model/useInfiniteFollowersSearch'
 import { useFollowMutation, useUnfollowMutation } from '@/shared/api/users/usersApi'
 import { PersonAddOutlineIcon } from '@/shared/assets/icons/PersonAddOutlineIcon'
 import { PersonRemoveOutlineIcon } from '@/shared/assets/icons/PersonRemoveOutlineIcon'
+import { useAppDispatch } from '@/shared/hooks'
 import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
 import { useTranslations } from 'next-intl'
