@@ -2,7 +2,7 @@
   padding: 43px 24px;
 }
 
-.messanger_container {
+.messenger_container {
   height: 100%;
   display: grid;
   grid-template-columns: minmax(267px, 30%) 1fr;
@@ -11,7 +11,7 @@
 
 .messenger_user_header,
 .messenger_content_header,
-.messanger_users_list {
+.messenger_users_list {
   border: 1px solid var(--color-dark-100);
   background: var(--color-dark-500);
 }
@@ -26,7 +26,9 @@
   grid-template-rows:72px 1fr;
   height: 100%;
 }
-
+.user_avatar {
+  border-radius: 50%;
+}
 .messenger_content {
   display: grid;
   grid-template-rows:auto 1fr;
@@ -42,7 +44,7 @@
   column-gap: 12px;
 }
 
-.messanger_users_list {
+.messenger_users_list {
   border-top: none;
   height: 584px;
   overflow: hidden;
@@ -55,7 +57,7 @@
   }
 }
 
-.messanger_list {
+.messenger_list {
   display: flex;
   flex-direction: column;
 }
@@ -105,9 +107,10 @@
     border-radius: 8px;
   }
 }
-.chat_loader{
+
+.chat_loader {
   display: flex;
- align-items: center;
+  align-items: center;
   justify-content: center;
   width: 100%;
 }

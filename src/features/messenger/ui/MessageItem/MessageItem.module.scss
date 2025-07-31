@@ -2,38 +2,51 @@
   display: flex;
   flex-direction: column;
   border-radius: 8px;
-  padding: 25px 7px 7px 7px;
+  padding: 7px;
   width: auto;
   max-width: 60%;
-  background: var(--color-accent-900);
+  background: var(--color-dark-300);
   position: relative;
+  align-self: flex-start
 }
+
+
 
 .message_time {
-  color: var(--color-accent-100);
+  color: var(--color-light-900);
 }
 
-.close_message {
-  svg {
-    width: 15px;
-    height: 15px;
+
+.my_message {
+  padding: 25px 7px 7px 7px;
+  align-self: flex-end;
+  background: var(--color-accent-900);
+  .message_time {
+    color: var(--color-accent-100);
   }
+  .close_message {
+    svg {
+      width: 15px;
+      height: 15px;
+    }
 
-  position: absolute;
-  right: 5px;
-  top: 6px;
-}
-
-.message_edit {
-  svg {
-    width: 14px;
-    height: 14px;
+    position: absolute;
+    right: 5px;
+    top: 6px;
   }
+  .message_edit {
+    svg {
+      width: 14px;
+      height: 14px;
+    }
 
-  position: absolute;
-  right: 25px;
-  top: 6px;
+    position: absolute;
+    right: 25px;
+    top: 6px;
+  }
 }
+
+
 
 .message_status {
   svg {

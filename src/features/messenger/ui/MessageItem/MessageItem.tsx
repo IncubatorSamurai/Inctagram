@@ -6,13 +6,14 @@ import { Button } from '@/shared/ui/button'
 import { EditIcon } from '@/shared/assets/icons/EditIcon'
 import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
 
-type MessageItem = {
+type MessageItemProp = {
   id: number
   messageText?: string
   createdAt: string
   status: string
   onEdit: () => void
   onDelete: () => void
+  isMyMessage: boolean
 }
 export const MessageItem = ({
   id,
@@ -21,9 +22,10 @@ export const MessageItem = ({
   status,
   onDelete,
   onEdit,
-}: MessageItem) => {
+  isMyMessage,
+}: MessageItemProp) => {
   return (
-    <li key={id} className={s.message_item}>
+    <li key={id} className={`${s.message_item} ${isMyMessage ? s.my_message : ''}`}>
       <Typography variant={'regular_text_14'}>{messageText}</Typography>
       <div className={s.message_date}>
         <Typography variant={'small_text'} asChild>
@@ -35,15 +37,31 @@ export const MessageItem = ({
           </span>
         </Typography>
         <span className={s.message_status}>
-          {status === 'SENT' ? <CheckMarkOutlineIcon /> : <DoneAllOutlineIcon />}
+          {status === 'SENT' && (
+            <>
+              <CheckMarkOutlineIcon /> SENT <>{status}</>
+            </>
+          )}
+          {(status === 'RECEIVED' || status === 'READ') && (
+            <>
+              <DoneAllOutlineIcon /> RECIVED
+            </>
+          )}
         </span>
       </div>
-      <Button variant={'icon'} className={s.message_edit} onClick={onEdit}>
-        <EditIcon />
-      </Button>
-      <Button variant={'icon'} className={s.close_message} onClick={onDelete}>
-        <CloseIcon />
-      </Button>
+      {isMyMessage && (
+        <>
+          <Button variant="icon" className={s.message_edit} onClick={onEdit}>
+            <EditIcon />
+          </Button>
+
+          <Button variant="icon" className={s.close_message} onClick={onDelete}>
+            <CloseIcon />
+          </Button>
+        </>
+      )}
     </li>
   )
 }
+
+MessageItem.displayName = 'MessageItem'

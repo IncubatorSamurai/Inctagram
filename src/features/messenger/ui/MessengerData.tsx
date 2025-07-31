@@ -13,40 +13,46 @@ import {
 import { useGetUsersQuery } from '@/shared/api/users/usersApi'
 import { Typography } from '@/shared/ui/typography'
 import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
-import { Avatar } from '@/shared/api/post/postApi.types'
 import {
   selectSelectedUserAvatar,
   selectSelectedUserId,
   selectSelectedUserName,
+  setSelectedUser,
 } from '@/shared/store/messengerSlice/messengerSlice'
-import { useAppSelector, useDebouncedEffect } from '@/shared/hooks'
+import { useAppDispatch, useAppSelector, useDebouncedEffect } from '@/shared/hooks'
 import { MessengerUserItem } from '@/features/messenger/ui/MessengerUserItem/MessengerUserItem'
 import { MessageItem } from '@/features/messenger/ui/MessageItem/MessageItem'
 import { Loader } from '@/shared/ui/loader'
 import { useMessagesLogic } from '@/shared/hooks/useMessageLogic'
 import { MessengerTextField } from '@/features/messenger/ui/MessengerTextField/MessengerTextField'
+import { Avatar } from '@/shared/api/post/postApi.types'
+import { Message } from '@/shared/api/messenger/messengerApiType'
 
 export const MessengerData = () => {
   const [searchUser, setSearchUser] = useState('')
-  const [name, setName] = useState('')
-  const [avatar, setAvatar] = useState('')
   const [debouncedValue, setDebouncedValue] = useState('')
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null)
-  const selectedUserIdFromStore = useAppSelector(selectSelectedUserId)
-  const selectedUserNameFromStore = useAppSelector(selectSelectedUserName)
-  const selectedUserAvatarFromStore = useAppSelector(selectSelectedUserAvatar)
+  const selectedUserId = useAppSelector(selectSelectedUserId)
+  const name = useAppSelector(selectSelectedUserName)
+  const avatar = useAppSelector(selectSelectedUserAvatar)
   const userId = Number(localStorage.getItem('userId'))
+  const dispatch = useAppDispatch()
 
   const { data: chatList, refetch: refetchChat } = useGetLatestMessagesQuery({ pageSize: 12 })
   const { data: usersData } = useGetUsersQuery({ pageNumber: 1, pageSize: 1000 })
-
   const allUsers = usersData?.items || []
-  const [getMessagesByUser, { data: messagesData, isFetching }] = useLazyGetMessagesByUserQuery()
 
-  const handleSelectUser = async (userId: number, userName: string, avatar: Avatar[]) => {
-    setSelectedUserId(userId)
-    setName(userName)
-    setAvatar(avatar?.[0]?.url || '')
+  const [getMessagesByUser, { data: messagesData, isFetching }] = useLazyGetMessagesByUserQuery()
+  const getPartnerId = (chat: Message): number => {
+    return chat.ownerId === userId ? chat.receiverId : chat.ownerId
+  }
+  const handleSelectUser = async (userId: number, userName: string, avatars: Avatar[]) => {
+    dispatch(
+      setSelectedUser({
+        id: userId,
+        name: userName,
+        avatar: avatars?.[0]?.url || '',
+      })
+    )
     setEditingMessage(null)
     setMessageText('')
     setSearchUser('')
@@ -54,13 +60,10 @@ export const MessengerData = () => {
   }
 
   useEffect(() => {
-    if (selectedUserIdFromStore) {
-      setSelectedUserId(selectedUserIdFromStore)
-      setName(selectedUserNameFromStore)
-      setAvatar(selectedUserAvatarFromStore)
-      getMessagesByUser({ dialoguePartnerId: selectedUserIdFromStore })
+    if (selectedUserId) {
+      getMessagesByUser({ dialoguePartnerId: selectedUserId })
     }
-  }, [selectedUserIdFromStore])
+  }, [selectedUserId])
 
   useDebouncedEffect(
     () => {
@@ -73,6 +76,7 @@ export const MessengerData = () => {
   const filteredUsers = debouncedValue
     ? allUsers.filter(user => user.userName?.toLowerCase().startsWith(debouncedValue))
     : []
+
   const {
     messageText,
     setMessageText,
@@ -88,7 +92,7 @@ export const MessengerData = () => {
   return (
     <section className={s.messenger}>
       <h2 className={s.messenger_title}>Messenger</h2>
-      <div className={s.messanger_container}>
+      <div className={s.messenger_container}>
         <div className={s.messenger_users}>
           <div className={s.messenger_user_header}>
             <Input
@@ -98,9 +102,9 @@ export const MessengerData = () => {
               onChange={e => setSearchUser(e.target.value)}
             />
           </div>
-          <div className={s.messanger_users_list}>
+          <div className={s.messenger_users_list}>
             <Scrollbar orientation="vertical">
-              <ul className={s.messanger_list}>
+              <ul className={s.messenger_list}>
                 {debouncedValue && filteredUsers.length > 0
                   ? filteredUsers.map(user => (
                       <MessengerUserItem
@@ -116,6 +120,7 @@ export const MessengerData = () => {
                   : chatList?.items.map(chat => (
                       <MessengerUserItem
                         key={v4()}
+                        userId={userId}
                         id={chat.id}
                         userSearch={false}
                         userName={chat.userName}
@@ -124,7 +129,7 @@ export const MessengerData = () => {
                         messageText={chat.messageText}
                         ownerId={chat.ownerId}
                         onClick={() =>
-                          handleSelectUser(chat.receiverId, chat.userName, chat.avatars)
+                          handleSelectUser(getPartnerId(chat), chat.userName, chat.avatars)
                         }
                       />
                     ))}
@@ -169,6 +174,7 @@ export const MessengerData = () => {
                       id={message.id}
                       messageText={message.messageText}
                       status={message.status}
+                      isMyMessage={message.ownerId === userId}
                       createdAt={message.createdAt}
                       onEdit={() => {
                         setEditingMessage(message)

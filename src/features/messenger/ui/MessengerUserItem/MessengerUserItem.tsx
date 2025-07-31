@@ -15,9 +15,11 @@ type MessengerUserItem = {
   firstName?: string | null
   lastName?: string | null
   userSearch: boolean
+  userId?: number
 }
 export const MessengerUserItem = ({
   userSearch,
+  userId,
   userName,
   ownerId,
   avatars,
@@ -58,7 +60,7 @@ export const MessengerUserItem = ({
           </div>
           <div>
             <Typography variant="small_text" className={s.message_last_text}>
-              {ownerId ? 'You: ' : ''}
+              {ownerId === userId ? 'You: ' : ''}
               {messageText}
             </Typography>
           </div>

@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { useDeleteMessageMutation } from '@/shared/api/messenger/messengerApi'
+import { messengerApi, useDeleteMessageMutation } from '@/shared/api/messenger/messengerApi'
 import { Message, MessengerListResponse } from '@/shared/api/messenger/messengerApiType'
 import SocketApi from '@/shared/api/sokets/soket'
 import { toast } from 'react-toastify'
+import { useAppDispatch } from '@/shared/hooks/useAppDispatch'
 
 export const useMessagesLogic = (
   selectedUserId: number | null,
@@ -10,6 +11,7 @@ export const useMessagesLogic = (
   chatList: MessengerListResponse | undefined,
   refetchChat: () => void
 ) => {
+  const dispatch = useAppDispatch()
   const [messageText, setMessageText] = useState('')
   const [editingMessage, setEditingMessage] = useState<Message | null>(null)
   const [deleteMessage] = useDeleteMessageMutation()
@@ -21,9 +23,11 @@ export const useMessagesLogic = (
       toast.error('Нельзя отправить сообщение самому себе')
       return
     }
-    const trimmed = messageText.trim()
-    ws.sendMessage({ receiverId: selectedUserId, message: trimmed })
+    const trimmedMessage = messageText.trim()
+    ws.sendMessage({ receiverId: selectedUserId, message: trimmedMessage })
     setMessageText('')
+
+    dispatch(messengerApi.util.invalidateTags([{ type: 'ChatHistory', id: selectedUserId }]))
     const chatExists = chatList?.items?.some(
       chat => chat.receiverId === selectedUserId || chat.ownerId === selectedUserId
     )

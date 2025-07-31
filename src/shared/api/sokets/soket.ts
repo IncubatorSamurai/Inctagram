@@ -10,7 +10,6 @@ import {
 class SocketApi {
   private static instance: SocketApi
   private socket: Socket | null = null
-  private refCount: number = 0
 
   private constructor() {}
 
@@ -23,8 +22,7 @@ class SocketApi {
 
   connection(accessToken: string) {
     if (this.socket) {
-      this.refCount++
-      console.log('[WS] 🔁 Повторное подключение, refCount =', this.refCount)
+      console.log('[WS] 🔁 Уже подключено')
       return
     }
 
@@ -37,7 +35,6 @@ class SocketApi {
     }
 
     this.socket = io('https://inctagram.work', queryParams)
-    this.refCount = 1
 
     this.socket.on('connect', () => {
       console.log('[WS] ✅ Подключено:', this.socket?.id)
@@ -49,44 +46,41 @@ class SocketApi {
   }
 
   disconnect() {
-    this.refCount--
-    console.log('[WS] 🔻 Уменьшили refCount:', this.refCount)
-
-    if (this.refCount <= 0) {
-      console.log('[WS] ❌ Отключение WebSocket вручную...')
-      this.socket?.disconnect()
+    if (this.socket) {
+      console.log('[WS] ❌ Отключение WebSocket...')
+      this.socket.disconnect()
       this.socket = null
-      this.refCount = 0
     }
   }
 
   subscribeNotifications(callback: (data: NotificationItem) => void) {
     this.socket?.on('notifications', callback)
   }
+
   unsubscribeNotifications(callback: (data: NotificationItem) => void) {
     this.socket?.off('notifications', callback)
   }
+
   subscribeReceiveMessage(callback: (data: Message) => void) {
-    this.socket?.on(WS_EVENT_PATH.RECEIVE_MESSAGE, callback)
+    this.socket?.on(WS_EVENT_PATH.RECEIVE_MESSAGE, message => {
+      console.log('[WS] ✅ RECEIVE_MESSAGE:', message)
+      callback(message)
+    })
   }
 
-  // subscribeMessageSend(callback: (data: Message) => void) {
-  //   this.socket?.on(WS_EVENT_PATH.MESSAGE_SEND, callback)
-  // }
   subscribeMessageSend(callback: (data: Message) => void) {
     this.socket?.on(WS_EVENT_PATH.MESSAGE_SEND, message => {
       console.log('[WS] 📩 Message received from another user:', message)
 
-      // 🔁 Подтверждаем получение — это критично
       this.socket?.emit(WS_EVENT_PATH.RECEIVE_MESSAGE, {
         message,
         receiverId: message.receiverId,
       })
-
-      // ✅ Прокидываем дальше в логику приложения (например, onCacheEntryAdded)
+      console.log(message.status)
       callback(message)
     })
   }
+
   subscribeMessageUpdate(callback: (data: Message) => void) {
     this.socket?.on(WS_EVENT_PATH.UPDATE_MESSAGE, callback)
   }
@@ -105,10 +99,6 @@ class SocketApi {
 
   deleteMessage(messageId: number) {
     this.socket?.emit(WS_EVENT_PATH.MESSAGE_DELETED, messageId)
-  }
-
-  updateMessageStatus(messageId: number, status: 'SENT' | 'RECEIVED' | 'READ') {
-    this.socket?.emit(WS_EVENT_PATH.UPDATE_MESSAGE, { id: messageId, status })
   }
 }
 

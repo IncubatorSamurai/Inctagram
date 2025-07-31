@@ -13,9 +13,10 @@ import Link from 'next/link'
 import s from './Profile.module.scss'
 import { setSelectedUser } from '@/shared/store/messengerSlice/messengerSlice'
 import { useAppDispatch } from '@/shared/hooks'
-import { useRouter } from 'next/navigation'
 
 import { Loader } from '@/shared/ui/loader'
+import { PATH } from '@/shared/config/routes'
+import { useRouter } from '@/i18n/routing'
 
 type Props = {
   resPublicData?: ProfileUserResponse
@@ -35,7 +36,7 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
         avatar: avatarSrc || '',
       })
     )
-    router.push('/messenger')
+    router.push(PATH.MESSENGER)
   }
   const {
     avatarSrc,

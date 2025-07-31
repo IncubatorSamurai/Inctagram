@@ -50,7 +50,6 @@ export const notificationsApi = baseApi.injectEndpoints({
           console.error(error)
         }
         await cacheEntryRemoved
-        ws.unsubscribeNotifications(listener)
       },
     }),
     readNotifications: builder.mutation<void, number[]>({

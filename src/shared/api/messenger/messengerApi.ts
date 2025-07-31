@@ -22,12 +22,12 @@ export const messengerApi = baseApi.injectEndpoints({
       transformResponse: (response: MessengerListResponse) => ({
         ...response,
         items: response.items.filter(chat => {
-          // Проверяем, что есть userName и хотя бы ownerId или receiverId
           return chat.userName?.trim() && (chat.ownerId != null || chat.receiverId != null)
         }),
       }),
       merge: (currentCache, newData) => {
-        const combined = [...currentCache.items, ...newData.items]
+        // Новые чаты ставим впереди
+        const combined = [...newData.items, ...currentCache.items]
         const uniqueMap = new Map<number, Message>()
 
         for (const item of combined) {
@@ -35,16 +35,43 @@ export const messengerApi = baseApi.injectEndpoints({
             item.ownerId === Number(localStorage.getItem('userId')) ? item.receiverId : item.ownerId
 
           if (chatKey) {
-            uniqueMap.set(chatKey, item)
+            if (!uniqueMap.has(chatKey)) {
+              uniqueMap.set(chatKey, item)
+            } else {
+              const existing = uniqueMap.get(chatKey)!
+              if (new Date(item.createdAt) > new Date(existing.createdAt)) {
+                uniqueMap.set(chatKey, item)
+              }
+            }
           }
         }
 
+        // Превращаем в массив, чтобы новые были в начале
         currentCache.items = Array.from(uniqueMap.values())
         currentCache.pageSize = newData.pageSize
         currentCache.totalCount = newData.totalCount
         currentCache.notReadCount = newData.notReadCount
       },
-      providesTags: [{ type: 'ChatHistory', id: 'LIST' }],
+      providesTags: result =>
+        result
+          ? [
+              ...result.items.map(chat => ({
+                type: 'ChatHistory' as const,
+                id:
+                  chat.ownerId === Number(localStorage.getItem('userId'))
+                    ? chat.receiverId
+                    : chat.ownerId,
+              })),
+              { type: 'ChatHistory', id: 'LIST' },
+            ]
+          : [{ type: 'ChatHistory', id: 'LIST' }],
+    }),
+    updateMessageStatus: builder.mutation<void, number[]>({
+      query: ids => ({
+        url: 'v1/messenger',
+        method: 'PUT',
+        body: { ids: ids },
+      }),
     }),
 
     getMessagesByUser: builder.query<MessengerListResponse, GetMessagesByUserParams>({
@@ -107,14 +134,6 @@ export const messengerApi = baseApi.injectEndpoints({
           console.error('[messengerApi] WebSocket error:', error)
         }
       },
-    }),
-
-    updateMessageStatus: builder.mutation<void, number[]>({
-      query: ids => ({
-        url: 'v1/messenger',
-        method: 'PUT',
-        body: { ids },
-      }),
     }),
 
     deleteMessage: builder.mutation<void, MessageDeleteParams>({
