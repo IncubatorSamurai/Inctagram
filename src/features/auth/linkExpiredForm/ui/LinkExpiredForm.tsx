@@ -11,11 +11,13 @@ import s from './LinkExpiredForm.module.scss'
 import { ErrorResponse } from '@/shared/types/auth'
 import { LinkExpiredData, linkExpiredFormSchema } from '@/shared/schemes/linkExpiredFormSchema'
 import { useTranslations } from 'next-intl'
+import { useAbsoluteUrl } from '@/shared/hooks/useFullUrl'
 
 export const LinkExpiredForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [resendEmail, { isSuccess, error }] = useResendEmailMutation()
   const tAuth = useTranslations('auth')
+  const url = useAbsoluteUrl()
 
   const { register, handleSubmit, formState } = useForm<LinkExpiredData>({
     resolver: zodResolver(linkExpiredFormSchema),
@@ -40,7 +42,7 @@ export const LinkExpiredForm = () => {
   }, [router, error, isSuccess])
 
   const onSubmit = (data: LinkExpiredData) => {
-    resendEmail({ email: data?.email, baseUrl: 'http://localhost:3000/auth/' })
+    resendEmail({ email: data?.email, baseUrl: url })
   }
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>

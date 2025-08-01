@@ -125,5 +125,9 @@
     "unfollowSuccessText": "You have successfully unfollowed user",
     "unfollowErrorText": "Failed to unfollow user",
     "unfollow": "Unfollow"
+  },
+  "feed": {
+    "viewAllComments": "View All Comments",
+    "noComments": "No Comments"
   }
 }

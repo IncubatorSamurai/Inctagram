@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  justify-content: space-between;
+
+  .avaName {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+
+    .avatar {
+      border-radius: 50%;
+    }
+  }
+
+  .btnGroup {
+    display: flex;
+    gap: 60px;
+  }
+}
+
+.blancAvatar {
+  width: 36px;
+  height: 36px;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}

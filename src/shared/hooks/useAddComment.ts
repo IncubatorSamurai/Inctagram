@@ -2,11 +2,11 @@ import { ChangeEvent, useState } from 'react'
 import { useAddCommentMutation } from '../api/post/postApi'
 import { useSearchParams } from 'next/navigation'
 
-export const useAddComment = () => {
+export const useAddComment = (postId?: string) => {
   const [comment, setComment] = useState('')
   const [addComment] = useAddCommentMutation()
   const searchParams = useSearchParams()
-  const postIdForSwagger = searchParams.get('postId') as string
+  const postIdForSwagger = postId ?? (searchParams.get('postId') as string)
 
   const changeTextarea = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.currentTarget.value)

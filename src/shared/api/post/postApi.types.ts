@@ -108,6 +108,7 @@ export type GetPostsByUserIdRespond = Omit<GetPostsByNameRespond, 'notReadCount'
 export type PostDescriptionChange = {
   id: number
   description?: string
+  userId?: number
 }
 
 export type PostId = {
