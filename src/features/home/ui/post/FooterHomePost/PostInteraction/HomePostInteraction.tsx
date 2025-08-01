@@ -1,6 +1,4 @@
 import React from 'react'
-import { HeartIcon } from '@/shared/assets/icons/HeartIcon'
-import { HeartOutlineIcon } from '@/shared/assets/icons/HeartOutlineIcon'
 import { MessageCircleOutlineIcon } from '@/shared/assets/icons/MessageCircleOutlineIcon'
 import { PaperPlaneIcon } from '@/shared/assets/icons/PaperPlaneIcon'
 import { BookMarkOutlineIcon } from '@/shared/assets/icons/BookMarkOutlineIcon'
@@ -9,31 +7,28 @@ import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
 import { Typography } from '@/shared/ui/typography'
 import s from './HomePostInteraction.module.scss'
 
+import { PostInteraction } from '@/shared/api/pageHome/pageHomeApi.types'
+import { LikePost } from '@/features/post-like/LikePost/LikePost'
+
 type Props = {
-  isLiked: boolean
-  avatarOwner: string
   WIDTH_AVATAR: number
   HEIGHT_AVATAR: number
-  description: string
   ownerUserName: string
-}
+} & PostInteraction
 
-export const HomePostInteraction = ({
-  isLiked,
-  description,
-  avatarOwner,
-  WIDTH_AVATAR,
-  HEIGHT_AVATAR,
-  ownerUserName,
-}: Props) => {
+export const HomePostInteraction = (props: Props) => {
+  const { isLiked, description, avatarOwner, WIDTH_AVATAR, HEIGHT_AVATAR, ownerUserName, id } =
+    props
+
   return (
     <>
       <div className={s.postFunctions}>
-        {isLiked ? <HeartIcon color={'red'} /> : <HeartOutlineIcon />}
+        <LikePost isLiked={isLiked} id={id} />
         <MessageCircleOutlineIcon />
         <PaperPlaneIcon />
         <BookMarkOutlineIcon />
       </div>
+
       <div className={s.description}>
         {avatarOwner ? (
           <Image
