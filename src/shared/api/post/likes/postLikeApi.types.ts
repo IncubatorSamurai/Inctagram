@@ -31,3 +31,8 @@ export type PostLike = {
   prevCursor: number
   totalCount: number
 }
+
+export type PostLikeRequest = {
+  id: number
+  search?: string
+}

@@ -24,7 +24,7 @@ export const LikePost = ({ id, isLiked }: Props) => {
 
   const updatePostLikesCache = () => {
     dispatch(
-      postLikeApi.util.updateQueryData('getPostLikes', id, draft => {
+      postLikeApi.util.updateQueryData('getPostLikes', {id}, draft => {
         if (isMyLike) {
           draft.items.splice(-1, 1)
           draft.totalCount -= 1

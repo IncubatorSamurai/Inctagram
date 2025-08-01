@@ -19,8 +19,8 @@ export const PostLikesAndSent = ({ createdAt }: LikesAndCountProps) => {
   const postId = searchParams.get('postId')
 
   const numId = Number(postId)
-  const { data } = useGetPostLikesQuery(numId, { skip: !postId })
-
+  const { data } = useGetPostLikesQuery({id:numId}, { skip: !postId })
+console.log(data,'datadata')
   const createDate = createdAt && parseIsoDate(createdAt)
   return (
     <div className={s.postsSideLikes}>

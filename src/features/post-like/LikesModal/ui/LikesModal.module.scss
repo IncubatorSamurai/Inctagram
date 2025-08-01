@@ -1,8 +1,13 @@
 .modal {
   max-width: 644px;
   width: 100%;
+  display: block;
 }
-.container {
+
+.wrapper {
   width: 100%;
   padding: 24px;
+}
+.container {
+  margin-top: 24px;
 }
