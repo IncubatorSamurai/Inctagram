@@ -27,7 +27,7 @@ export const useMessagesLogic = (
     ws.sendMessage({ receiverId: selectedUserId, message: trimmedMessage })
     setMessageText('')
 
-    dispatch(messengerApi.util.invalidateTags([{ type: 'ChatHistory', id: selectedUserId }]))
+    dispatch(messengerApi.util.invalidateTags([{ type: 'ChatHistory', id: 'LIST' }]))
     const chatExists = chatList?.items?.some(
       chat => chat.receiverId === selectedUserId || chat.ownerId === selectedUserId
     )

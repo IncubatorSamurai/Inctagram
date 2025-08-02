@@ -52,19 +52,7 @@ export const messengerApi = baseApi.injectEndpoints({
         currentCache.totalCount = newData.totalCount
         currentCache.notReadCount = newData.notReadCount
       },
-      providesTags: result =>
-        result
-          ? [
-              ...result.items.map(chat => ({
-                type: 'ChatHistory' as const,
-                id:
-                  chat.ownerId === Number(localStorage.getItem('userId'))
-                    ? chat.receiverId
-                    : chat.ownerId,
-              })),
-              { type: 'ChatHistory', id: 'LIST' },
-            ]
-          : [{ type: 'ChatHistory', id: 'LIST' }],
+      providesTags: [{ type: 'ChatHistory', id: 'LIST' }],
     }),
     updateMessageStatus: builder.mutation<void, number[]>({
       query: ids => ({
