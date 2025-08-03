@@ -10,7 +10,6 @@ import {
   useGetLatestMessagesQuery,
   useLazyGetMessagesByUserQuery,
 } from '@/shared/api/messenger/messengerApi'
-import { useGetUsersQuery } from '@/shared/api/users/usersApi'
 import { Typography } from '@/shared/ui/typography'
 import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
 import {
@@ -27,6 +26,7 @@ import { useMessagesLogic } from '@/shared/hooks/useMessageLogic'
 import { MessengerTextField } from '@/features/messenger/ui/MessengerTextField/MessengerTextField'
 import { Avatar } from '@/shared/api/post/postApi.types'
 import { Message } from '@/shared/api/messenger/messengerApiType'
+import { useGetUsersQuery } from '@/shared/api/users/usersApi'
 
 export const MessengerData = () => {
   const [searchUser, setSearchUser] = useState('')
