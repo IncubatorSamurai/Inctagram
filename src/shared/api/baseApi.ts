@@ -15,5 +15,7 @@ export const baseApi = createApi({
     'Comments',
     'CommentAnswers',
     'ChatHistory',
+    'Followers',
+    'Following',
   ],
 })

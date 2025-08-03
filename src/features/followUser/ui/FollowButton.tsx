@@ -5,16 +5,26 @@ import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
 import { useTranslations } from 'next-intl'
 import { toast } from 'react-toastify'
+import { useAppDispatch } from '@/shared/hooks'
+import { UpdateFollowingThunk } from '@/shared/types'
 
 type Props = {
   userId: number
   userName: string
   isFollowing: boolean
+  updateQuery?: ({
+    userId,
+    isFollowing,
+  }: {
+    userId: number
+    isFollowing: boolean
+  }) => UpdateFollowingThunk
   variant?: 'icon'
 }
 
-export const FollowButton = ({ userId, userName, isFollowing, variant }: Props) => {
+export const FollowButton = ({ userId, userName, isFollowing, variant, updateQuery }: Props) => {
   const t = useTranslations('follow')
+  const dispatch = useAppDispatch()
 
   const [follow, { isLoading: isFollowLoading }] = useFollowMutation()
   const [unfollow, { isLoading: isUnfollowLoading }] = useUnfollowMutation()
@@ -22,15 +32,23 @@ export const FollowButton = ({ userId, userName, isFollowing, variant }: Props) 
   const isLoading = isFollowLoading || isUnfollowLoading
 
   const handleFollow = async () => {
+    const patch = updateQuery && dispatch(updateQuery({ userId, isFollowing: true }))
     follow({ selectedUserId: userId })
       .then(() => toast.success(`${t('followSuccessText')} ${userName}`))
-      .catch(() => toast.error(`${t('followErrorText')} ${userName}`))
+      .catch(() => {
+        if (patch) patch.undo()
+        toast.error(`${t('followErrorText')} ${userName}`)
+      })
   }
 
   const handleUnfollow = () => {
+    const patch = updateQuery && dispatch(updateQuery({ userId, isFollowing: false }))
     unfollow({ userId: userId })
       .then(() => toast.success(`${t('unfollowSuccessText')} ${userName}`))
-      .catch(() => toast.error(`${t('unfollowErrorText')} ${userName}`))
+      .catch(() => {
+        if (patch) patch.undo()
+        toast.error(`${t('unfollowErrorText')} ${userName}`)
+      })
   }
 
   const getButtonProps = () => {
