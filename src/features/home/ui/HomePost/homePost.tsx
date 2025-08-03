@@ -29,9 +29,8 @@ export const HomePost = ({ ...props }: Post) => {
     locale: lang,
   })
 
-  const postId = String(props.id)
+  const postId = props.id
   const description = props.description
-  const likesCount = props.likesCount
   const isLiked = props.isLiked
 
   const images = props.images
@@ -42,7 +41,7 @@ export const HomePost = ({ ...props }: Post) => {
 
   const isFollowing = user?.isFollowing ?? false
 
-  const { changeTextarea, comment, submitComment } = useAddComment(postId)
+  const { changeTextarea, comment, submitComment } = useAddComment(String(postId))
   const { data: commentsData } = useGetCommentsByPostIdQuery({ postId: props.id })
 
   const stateComments =

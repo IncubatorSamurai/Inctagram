@@ -6,7 +6,7 @@ import s from './HomePostImages.module.scss'
 
 type Props = {
   images: ImageProps[]
-  postId: string
+  postId: number
   ownerUserName: string
 }
 
