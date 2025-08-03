@@ -6,7 +6,7 @@ import { Typography } from '@/shared/ui/typography'
 import { useTranslations } from 'next-intl'
 import { toast } from 'react-toastify'
 import { useAppDispatch } from '@/shared/hooks'
-import { UpdateFollowingThunk } from '@/features/followingModal/modal/useInfiniteFollowingSearch'
+import { UpdateFollowingThunk } from '@/shared/types'
 
 type Props = {
   userId: number

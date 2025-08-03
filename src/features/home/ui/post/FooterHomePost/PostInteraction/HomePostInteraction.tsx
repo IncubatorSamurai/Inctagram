@@ -10,37 +10,31 @@ import { Link } from '@/i18n/routing'
 import { LikePost } from '@/features/post/PostModal/ui/PostLikesAndSent/LikePost/LikePost'
 import { useGetPostLikesQuery } from '@/shared/api/post/likes/postLikeApi'
 
+import { PostInteraction } from '@/shared/api/pageHome/pageHomeApi.types'
+import { LikePost } from '@/features/post-like/LikePost/LikePost'
+
 type Props = {
-  postId: string
-  avatarOwner: string
   WIDTH_AVATAR: number
   HEIGHT_AVATAR: number
-  description: string
   ownerUserName: string
   hrefLinkPost: string
-}
+} & PostInteraction
 
-export const HomePostInteraction = ({
-  postId,
-  description,
-  avatarOwner,
-  WIDTH_AVATAR,
-  HEIGHT_AVATAR,
-  ownerUserName,
-  hrefLinkPost,
-}: Props) => {
-  const { data: likesData } = useGetPostLikesQuery(postId ?? '', { skip: !postId })
+export const HomePostInteraction = (props: Props) => {
+  const { isLiked, description, avatarOwner, WIDTH_AVATAR, HEIGHT_AVATAR, ownerUserName, id, hrefLinkPost } =
+    props
 
   return (
     <>
       <div className={s.postFunctions}>
-        <LikePost id={postId ?? ''} likesItems={likesData?.items} />
+        <LikePost isLiked={isLiked} id={id} />
         <Link href={hrefLinkPost} shallow scroll={false}>
           <MessageCircleOutlineIcon className={s.linkIcon} />
         </Link>
         <PaperPlaneIcon />
         <BookMarkOutlineIcon />
       </div>
+
       <div className={s.description}>
         {avatarOwner ? (
           <Image

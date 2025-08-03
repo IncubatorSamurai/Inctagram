@@ -3,13 +3,9 @@ import s from './homePost.module.scss'
 import { Typography } from '@/shared/ui/typography'
 import { Post } from '@/shared/api/pageHome/pageHomeApi.types'
 import { useGetUserQuery } from '@/shared/api/users/usersApi'
-import {
-  HeaderHomePost,
-  HomePostImages,
-  HomePostInteraction,
-  HomePostLikes,
-} from '@/features/home/ui'
+import { HeaderHomePost, HomePostImages, HomePostInteraction } from '@/features/home/ui'
 import { AddContent } from '@/features/post/PostModal/ui/AddComment/AddComment'
+import { PostLikesAvatars } from '@/features/post-like/PostLikesAvatars/PostLikesAvatars'
 import { formatDistanceToNow } from 'date-fns'
 import { enUS, ru } from 'date-fns/locale'
 import { useLocale, useTranslations } from 'next-intl'
@@ -36,10 +32,9 @@ export const HomePost = ({ ...props }: Post) => {
   const postId = String(props.id)
   const description = props.description
   const likesCount = props.likesCount
+  const isLiked = props.isLiked
 
   const images = props.images
-
-  const avatarWhoLikes = props.avatarWhoLikes
 
   const { data: user } = useGetUserQuery({
     userName: ownerUserName,
@@ -71,7 +66,8 @@ export const HomePost = ({ ...props }: Post) => {
       <HomePostImages postId={postId} images={images} ownerUserName={ownerUserName} />
       <div className={s.footer}>
         <HomePostInteraction
-          postId={postId}
+          id={postId}
+          isLiked={isLiked}
           avatarOwner={avatarOwner}
           WIDTH_AVATAR={WIDTH_AVATAR}
           HEIGHT_AVATAR={HEIGHT_AVATAR}
@@ -79,7 +75,7 @@ export const HomePost = ({ ...props }: Post) => {
           ownerUserName={ownerUserName}
           hrefLinkPost={hrefLinkPost}
         />
-        <HomePostLikes avatarWhoLikes={avatarWhoLikes} likesCount={likesCount} />
+        <PostLikesAvatars id={postId} />
         <Link href={hrefLinkPost} shallow scroll={false} className={s.link}>
           <Typography variant={'bold_text_14'} className={s.viewComments}>
             {stateComments} {countComments}

@@ -14,7 +14,7 @@ export const Device = ({ data }: Props) => {
   const sessionDevice = data?.deviceName || 'Desktop'
 
   const tabTranslation = useTranslations('profile.profileSettingsTabs')
-  
+
   return (
     <Card className={s.cardRoot}>
       <div className={s.wrapperSession}>

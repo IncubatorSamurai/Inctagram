@@ -3,7 +3,7 @@ import { PostLike, PostLikesStatus } from './postLikeApi.types'
 
 export const postLikeApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    getPostLikes: build.query<PostLike, string>({
+    getPostLikes: build.query<PostLike, number>({
       query: id => ({
         url: `v1/posts/${id}/likes`,
       }),

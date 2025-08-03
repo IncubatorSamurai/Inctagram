@@ -1,30 +1,32 @@
-import { useLazyGetFollowingByUserNameQuery, usersApi } from '@/shared/api/users/usersApi'
-import { useCallback, useEffect, useRef } from 'react'
-import { UpdateFollowingThunk } from '@/shared/types'
+import { useLazyGetFollowersQuery, usersApi } from '@/shared/api/users/usersApi'
+import { useEffect, useRef, useCallback } from 'react'
 
 const PAGE_SIZE = 12
 
 type Props = {
   searchTerm: string
-  userName: string
   pageSize?: number
+  userName: string
 }
 
-export const useInfiniteFollowingSearch = ({
-  userName,
+export type UpdateFollowingThunk = ReturnType<typeof usersApi.util.updateQueryData>
+
+export const useInfiniteFollowerSearch = ({
   searchTerm,
+  userName,
   pageSize = PAGE_SIZE,
 }: Props) => {
   const prevSearchTerm = useRef('')
   const observer = useRef<IntersectionObserver | null>(null)
   const isLoading = useRef(false)
 
-  const [fetchFollowing, { data, isFetching, isError }] = useLazyGetFollowingByUserNameQuery()
+  const [fetchFollower, { data, isFetching, isError }] = useLazyGetFollowersQuery()
 
-  const followingUsers = data?.items || []
+  const users = data?.items || []
   const paginationInfo = {
     currentPage: data?.page || 0,
     hasNextPage: (data?.page || 0) < (data?.pagesCount || 0),
+    nextCoursor: data?.nextCursor,
   }
 
   const updateQuery = ({
@@ -35,14 +37,13 @@ export const useInfiniteFollowingSearch = ({
     isFollowing: boolean
   }): UpdateFollowingThunk => {
     return usersApi.util.updateQueryData(
-      'getFollowingByUserName',
+      'getFollowers',
       { userName, search: searchTerm, pageSize },
       draft => {
         const user = draft.items.find(item => item.userId === userId)
         if (user) {
           user.isFollowing = isFollowing
         }
-        draft.totalCount += isFollowing ? 1 : -1
       }
     )
   }
@@ -50,25 +51,30 @@ export const useInfiniteFollowingSearch = ({
   useEffect(() => {
     if (!searchTerm) {
       if (!userName) return
-      fetchFollowing({ userName, pageNumber: 1, pageSize })
+      fetchFollower({
+        userName,
+        pageSize,
+      })
       prevSearchTerm.current = ''
       return
     }
 
-    if (prevSearchTerm.current !== searchTerm) {
-      fetchFollowing({ userName, search: searchTerm, pageNumber: 1, pageSize })
+    if (prevSearchTerm.current !== searchTerm || !searchTerm) {
+      fetchFollower({
+        userName,
+        search: searchTerm,
+        pageSize,
+      })
       prevSearchTerm.current = searchTerm
       isLoading.current = true
     } else {
       isLoading.current = false
     }
-  }, [searchTerm, pageSize, fetchFollowing, userName])
+  }, [searchTerm, pageSize, fetchFollower, userName])
 
   useEffect(() => {
     return () => {
-      if (observer.current) {
-        observer.current.disconnect()
-      }
+      observer.current?.disconnect()
     }
   }, [])
 
@@ -79,19 +85,14 @@ export const useInfiniteFollowingSearch = ({
 
       observer.current = new IntersectionObserver(
         entries => {
-          if (
-            entries[0].isIntersecting &&
-            followingUsers.length > 0 &&
-            paginationInfo.hasNextPage
-          ) {
-            fetchFollowing({
+          if (entries[0].isIntersecting && users.length > 0 && paginationInfo.nextCoursor) {
+            fetchFollower({
               userName,
               search: searchTerm,
-              pageNumber: paginationInfo.currentPage + 1,
+              cursor: paginationInfo.nextCoursor,
               pageSize,
             })
-
-            if (isLoading.current) isLoading.current = false
+            isLoading.current = false
           }
         },
         { rootMargin: '100px' }
@@ -99,16 +100,16 @@ export const useInfiniteFollowingSearch = ({
 
       if (node) observer.current.observe(node)
     },
-    [isFetching, paginationInfo.hasNextPage, fetchFollowing]
+    [isFetching, paginationInfo.nextCoursor, fetchFollower]
   )
 
   return {
-    followingUsers,
+    users,
     lastElementRef,
     isFetching,
     isError,
-    updateQuery,
     isLoading: isLoading.current,
-    hasNextPage: paginationInfo.hasNextPage,
+    nextCursor: paginationInfo.nextCoursor,
+    updateQuery,
   }
 }
