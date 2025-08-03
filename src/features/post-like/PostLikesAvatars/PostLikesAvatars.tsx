@@ -38,7 +38,7 @@ export const PostLikesAvatars = ({ id }: Props) => {
       />
 
       <Typography variant="medium_text_14">
-        {data?.totalCount} <b>&quot;Like&quot;</b>{' '}
+        {data?.totalCount} <b>&quot;Like&quot;</b>
       </Typography>
     </div>
   )

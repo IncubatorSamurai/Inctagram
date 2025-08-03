@@ -40,3 +40,8 @@ export type PostLikeRequest = {
   pageNumber?: number
   cursor?: number
 }
+
+export type PostLikeRequest = {
+  id: number
+  search?: string
+}
