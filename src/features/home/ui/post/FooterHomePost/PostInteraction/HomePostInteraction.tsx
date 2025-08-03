@@ -6,6 +6,9 @@ import Image from 'next/image'
 import { NoAvatar } from '@/shared/ui/noAvatar/NoAvatar'
 import { Typography } from '@/shared/ui/typography'
 import s from './HomePostInteraction.module.scss'
+import { Link } from '@/i18n/routing'
+import { LikePost } from '@/features/post/PostModal/ui/PostLikesAndSent/LikePost/LikePost'
+import { useGetPostLikesQuery } from '@/shared/api/post/likes/postLikeApi'
 
 import { PostInteraction } from '@/shared/api/pageHome/pageHomeApi.types'
 import { LikePost } from '@/features/post-like/LikePost/LikePost'
@@ -14,17 +17,20 @@ type Props = {
   WIDTH_AVATAR: number
   HEIGHT_AVATAR: number
   ownerUserName: string
+  hrefLinkPost: string
 } & PostInteraction
 
 export const HomePostInteraction = (props: Props) => {
-  const { isLiked, description, avatarOwner, WIDTH_AVATAR, HEIGHT_AVATAR, ownerUserName, id } =
+  const { isLiked, description, avatarOwner, WIDTH_AVATAR, HEIGHT_AVATAR, ownerUserName, id, hrefLinkPost } =
     props
 
   return (
     <>
       <div className={s.postFunctions}>
         <LikePost isLiked={isLiked} id={id} />
-        <MessageCircleOutlineIcon />
+        <Link href={hrefLinkPost} shallow scroll={false}>
+          <MessageCircleOutlineIcon className={s.linkIcon} />
+        </Link>
         <PaperPlaneIcon />
         <BookMarkOutlineIcon />
       </div>
