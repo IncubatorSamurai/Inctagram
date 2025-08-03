@@ -1,21 +1,16 @@
-import { useGetPostLikesQuery } from '@/shared/api/post/likes/postLikeApi'
-import { useDebouncedValue } from '@/shared/hooks' // 👈 либо свой аналог
 import { Input } from '@/shared/ui/input'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
+import { useDebouncedEffect } from '@/shared/hooks'
 
 type Props = {
-	id: number
+  setTerm: (term: string) => void
 }
 
-export const SearchLikes = ({ id }: Props) => {
+export const SearchLikes = ({ setTerm }: Props) => {
   const [searchLikes, setSearchLikes] = useState('')
+  useDebouncedEffect(() => setTerm(searchLikes.trim()), [searchLikes], 500)
 
-
-  const { data, isFetching } = useGetPostLikesQuery({ id, search: searchLikes },{skip : !searchLikes})
- 
- 
- console.log(data)
   const t = useTranslations('search')
 
   return (

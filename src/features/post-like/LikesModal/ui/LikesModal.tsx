@@ -1,26 +1,57 @@
 import { Modal } from '@/shared/ui/modal'
 import s from './LikesModal.module.scss'
-import { ReactNode } from 'react'
-import { PostLikeItem } from '@/shared/api/post/likes/postLikeApi.types'
+import { ReactNode, useState } from 'react'
 import { UserFollowStatus } from './UserFollowStatus/UserFollowStatus'
 import { SearchLikes } from './SearchLikes/SearchLikes'
+import { useInfiniteLikesSearch } from '@/features/post-like/LikesModal/model/useInfiniteLikesSearch'
+import { Loader } from '@/shared/ui/loader'
+import { Typography } from '@/shared/ui/typography'
 
 type Props = {
   trigger: ReactNode
-  items: PostLikeItem[] | undefined
-  id: number
+  postId: number
 }
-export const LikesModal = ({ trigger, items, id }: Props) => {
-  if (!items) return
+export const LikesModal = ({ trigger, postId }: Props) => {
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const { lastElementRef, likesUsers, isFetching, hasNextPage, isLoading } = useInfiniteLikesSearch(
+    {
+      postId,
+      searchTerm,
+    }
+  )
+
+  const showLoader = isFetching && searchTerm && isLoading
+
+  if (!likesUsers) return
   return (
     <Modal title="Likes" trigger={trigger} className={s.modal}>
       <div className={s.wrapper}>
-        <SearchLikes id={id} />
-        <div className={s.container}>
-          {items.map(user => (
-            <UserFollowStatus key={user?.id} user={user} />
-          ))}
+        <SearchLikes setTerm={setSearchTerm} />
+        <div className={s.list}>
+          {showLoader ? (
+            <div className={s.loader}>
+              <Loader />
+            </div>
+          ) : (
+            <>
+              {likesUsers.map((user, index) => {
+                const isLastUser = index === likesUsers.length - 1
+
+                return (
+                  <UserFollowStatus
+                    key={user?.id}
+                    user={user}
+                    ref={isLastUser ? lastElementRef : null}
+                  />
+                )
+              })}
+            </>
+          )}
         </div>
+        {isFetching && hasNextPage && (
+          <Typography variant="regular_text_14">...Loading...</Typography>
+        )}
       </div>
     </Modal>
   )
