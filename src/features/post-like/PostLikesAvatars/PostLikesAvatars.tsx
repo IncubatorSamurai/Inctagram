@@ -9,28 +9,34 @@ type Props = {
   id: number
 }
 export const PostLikesAvatars = ({ id }: Props) => {
-  const { data } = useGetPostLikesQuery(id, { skip: !id })
+  const { data } = useGetPostLikesQuery({ postId: id }, { skip: !id })
   const transformedArray = [...(data?.items ?? [])].reverse().slice(0, 3)
   return (
     <div className={s.container}>
-      <LikesModal items={data?.items}  trigger ={    <div className={s.row}>
-        {transformedArray.map(item => (
-          <div key={item.id}>
-            {!item?.avatars.length ? (
-              <NoAvatar className={s.avatar} />
-            ) : (
-              <Image
-                className={s.avatar}
-                src={item?.avatars[1].url}
-                alt="avatarOwner"
-                width={24}
-                height={24}
-              />
-            )}
+      <LikesModal
+        postId={id}
+        items={data?.items}
+        trigger={
+          <div className={s.row}>
+            {transformedArray.map(item => (
+              <div key={item.id}>
+                {!item?.avatars.length ? (
+                  <NoAvatar className={s.avatar} />
+                ) : (
+                  <Image
+                    className={s.avatar}
+                    src={item?.avatars[1].url}
+                    alt="avatarOwner"
+                    width={24}
+                    height={24}
+                  />
+                )}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>}/>
-  
+        }
+      />
+
       <Typography variant="medium_text_14">
         {data?.totalCount} <b>&quot;Like&quot;</b>{' '}
       </Typography>

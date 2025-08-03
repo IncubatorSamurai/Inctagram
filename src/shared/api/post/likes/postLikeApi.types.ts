@@ -30,4 +30,13 @@ export type PostLike = {
   pageSize: number
   prevCursor: number
   totalCount: number
+  pagesCount: number
+}
+
+export type PostLikeRequest = {
+  postId: number
+  search?: string
+  pageSize?: number
+  pageNumber?: number
+  cursor?: number
 }

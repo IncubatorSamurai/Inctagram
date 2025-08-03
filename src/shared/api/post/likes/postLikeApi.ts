@@ -1,12 +1,17 @@
 import { baseApi } from '../../baseApi'
-import { PostLike, PostLikesStatus } from './postLikeApi.types'
+import { PostLike, PostLikeRequest, PostLikesStatus } from './postLikeApi.types'
 
 export const postLikeApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    getPostLikes: build.query<PostLike, number>({
-      query: id => ({
-        url: `v1/posts/${id}/likes`,
+    getPostLikes: build.query<PostLike, PostLikeRequest>({
+      query: ({ postId, ...params }) => ({
+        url: `v1/posts/${postId}/likes`,
+        params,
       }),
+      merge: (currentCacheData, newItems, { arg }) => {
+        if (arg.pageNumber === 1) return newItems
+        return { ...newItems, items: [...currentCacheData.items, ...newItems.items] }
+      },
       providesTags: ['PostLikes'],
     }),
     likeStatus: build.mutation<void, PostLikesStatus>({
@@ -19,7 +24,6 @@ export const postLikeApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['PostLikes'],
     }),
-    
   }),
 })
-export const { useGetPostLikesQuery, useLikeStatusMutation } = postLikeApi
+export const { useGetPostLikesQuery, useLikeStatusMutation, useLazyGetPostLikesQuery } = postLikeApi
