@@ -1,10 +1,10 @@
 import { baseApi } from '@/shared/api/baseApi'
 import {
-  GetUsersResponse,
-  GetUsersRequest,
-  GetUserResponse,
-  GetUserRequest,
   FollowRequest,
+  GetUserRequest,
+  GetUserResponse,
+  GetUsersRequest,
+  GetUsersResponse,
   unFollowRequest,
   Followers,
   GetFollowingResponse,

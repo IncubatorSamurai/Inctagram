@@ -14,14 +14,14 @@ type PostContentProps = {
   whoLikes: string[] | undefined
   updatedAt: string | undefined
   createdAt: string | undefined
-  ownreName: string | undefined
+  ownerName: string | undefined
   description: string | undefined
   postId: number
   isLoggedIn: boolean
 }
 
 export const PostContent = ({
-  ownreName,
+  ownerName,
   isLoggedIn,
   description,
   likes,
@@ -40,7 +40,7 @@ export const PostContent = ({
         <div className={s.postDescription}>
           <div className={s.topContent}>
             <NoAvatar />
-            <Typography variant="bold_text_14">{ownreName}</Typography>
+            <Typography variant="bold_text_14">{ownerName}</Typography>
             <Typography variant="regular_text_14">{description}</Typography>
           </div>
           <div className={s.sideInfo}>

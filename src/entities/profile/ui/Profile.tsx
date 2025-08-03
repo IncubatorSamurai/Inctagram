@@ -11,7 +11,11 @@ import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import s from './Profile.module.scss'
+import { setSelectedUser } from '@/shared/store/messengerSlice/messengerSlice'
+import { useAppDispatch } from '@/shared/hooks'
 import { Loader } from '@/shared/ui/loader'
+import { PATH } from '@/shared/config/routes'
+import { useRouter } from '@/i18n/routing'
 import { FollowersModal } from './followers/modal/FollowersModal'
 import { FollowingModal } from '@/features/followingModal'
 
@@ -22,7 +26,19 @@ type Props = {
 
 export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   const t = useTranslations('profile')
+  const dispatch = useAppDispatch()
+  const router = useRouter()
 
+  const handleSendMessageClick = () => {
+    dispatch(
+      setSelectedUser({
+        id: +userId,
+        name: userName || '',
+        avatar: avatarSrc || '',
+      })
+    )
+    router.push(PATH.MESSENGER)
+  }
   const {
     avatarSrc,
     isMyProfile,
@@ -63,7 +79,9 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
             ) : isLoggedIn ? (
               <div className={s.followButtons}>
                 <FollowButton userId={+userId} userName={userName} isFollowing={isFollowing} />
-                <Button variant="secondary">{t('sendMessage')}</Button>
+                <Button variant="secondary" onClick={handleSendMessageClick}>
+                  {t('sendMessage')}
+                </Button>
               </div>
             ) : null}
           </div>
