@@ -52,7 +52,7 @@ export const messengerApi = baseApi.injectEndpoints({
         currentCache.totalCount = newData.totalCount
         currentCache.notReadCount = newData.notReadCount
       },
-      providesTags: [{ type: 'ChatHistory', id: 'LIST' }],
+      providesTags: ['ChatHistory'],
     }),
     updateMessageStatus: builder.mutation<void, number[]>({
       query: ids => ({

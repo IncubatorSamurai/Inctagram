@@ -16,7 +16,7 @@ export const useMessagesLogic = (
   const [editingMessage, setEditingMessage] = useState<Message | null>(null)
   const [deleteMessage] = useDeleteMessageMutation()
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = () => {
     const ws = SocketApi.getInstance()
     if (!selectedUserId || !messageText.trim()) return
     if (selectedUserId === userId) {
@@ -27,11 +27,11 @@ export const useMessagesLogic = (
     ws.sendMessage({ receiverId: selectedUserId, message: trimmedMessage })
     setMessageText('')
 
-    dispatch(messengerApi.util.invalidateTags([{ type: 'ChatHistory', id: 'LIST' }]))
+    dispatch(messengerApi.util.invalidateTags(['ChatHistory']))
     const chatExists = chatList?.items?.some(
       chat => chat.receiverId === selectedUserId || chat.ownerId === selectedUserId
     )
-    if (!chatExists) await refetchChat()
+    if (!chatExists) refetchChat()
   }
 
   const handleEditMessage = () => {
