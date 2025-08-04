@@ -15,7 +15,6 @@ export const PostLikesAvatars = ({ id }: Props) => {
     <div className={s.container}>
       <LikesModal
         postId={id}
-        items={data?.items}
         trigger={
           <div className={s.row}>
             {transformedArray.map(item => (
