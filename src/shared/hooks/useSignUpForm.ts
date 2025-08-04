@@ -42,7 +42,7 @@ export const useSignUpForm = () => {
       const registrationData = {
         userName: dataForm.name,
         password: dataForm.newPassword,
-        baseUrl: window.location.origin,
+        baseUrl: window.location.origin + '/registration-confirmation',
         email: dataForm.email,
       }
       await registration(registrationData).unwrap()

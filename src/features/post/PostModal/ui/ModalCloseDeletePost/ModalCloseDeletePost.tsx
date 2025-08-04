@@ -33,7 +33,7 @@ export const ModalCloseOrDeletePost = ({
   const deletePostHandler = async () => {
     if (!postId) return
     try {
-      await deletePost({ id: postId }).unwrap()
+      await deletePost({ id: postId, userId: Number(params.userId) }).unwrap()
     } catch (error) {
       const err = error as ErrorResponse
       console.error(err.data.messages)

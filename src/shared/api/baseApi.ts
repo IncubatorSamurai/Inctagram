@@ -14,5 +14,8 @@ export const baseApi = createApi({
     'PostLikes',
     'Comments',
     'CommentAnswers',
+    'ChatHistory',
+    'Followers',
+    'Following',
   ],
 })

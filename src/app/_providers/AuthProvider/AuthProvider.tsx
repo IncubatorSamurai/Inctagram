@@ -20,6 +20,9 @@ export const AuthProvider = ({
     if (data?.userName) {
       localStorage.setItem('userName', data.userName)
     }
+    if (data?.userId) {
+      localStorage.setItem('userId', String(data.userId))
+    }
   }, [dispatch, data])
 
   return <div>{children}</div>

@@ -10,7 +10,10 @@ export const pageHomeApi = baseApi.injectEndpoints({
       query: ({ ...params }) => ({ url: `v1/home/publications-followers`, params }),
       serializeQueryArgs: ({ endpointName }) => endpointName,
       merge: (currentCacheData, newItems) => {
-        currentCacheData.items.push(...newItems.items)
+        const existingIds = new Set(currentCacheData.items.map(item => item.id))
+        const uniqueNewItems = newItems.items.filter(item => !existingIds.has(item.id))
+        currentCacheData.items.push(...uniqueNewItems)
+
         const { nextCursor, page, pageSize, pagesCount, totalCount, prevCursor } = newItems
 
         Object.assign(currentCacheData, {

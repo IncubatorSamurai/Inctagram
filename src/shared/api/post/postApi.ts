@@ -52,13 +52,13 @@ export const postsApi = baseApi.injectEndpoints({
         url: `v1/posts/${id}`,
         method: 'DELETE',
       }),
-      async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ id, userId }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           publicPostApi.util.updateQueryData(
             'getPublicPostsByUserId',
-            { userId: '4', endCursorPostId: null },
+            { userId: String(userId) },
             draft => {
-              draft.items.filter(post => post.id !== id)
+              draft.items = draft.items.filter(post => post.id !== id)
             }
           )
         )
