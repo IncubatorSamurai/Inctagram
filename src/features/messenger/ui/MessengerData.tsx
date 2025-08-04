@@ -27,24 +27,56 @@ import { MessengerTextField } from '@/features/messenger/ui/MessengerTextField/M
 import { Avatar } from '@/shared/api/post/postApi.types'
 import { Message } from '@/shared/api/messenger/messengerApiType'
 import { useGetUsersQuery } from '@/shared/api/users/usersApi'
+import { useIntersectionObserver } from '@/shared/hooks/useIntersectionObserver'
 
+const PAGE_SIZE_USERS = 20
+const PAGE_SIZE_MESSAGES = 12
 export const MessengerData = () => {
   const [searchUser, setSearchUser] = useState('')
   const [debouncedValue, setDebouncedValue] = useState('')
+  const [page, setPage] = useState(1)
+
   const selectedUserId = useAppSelector(selectSelectedUserId)
   const name = useAppSelector(selectSelectedUserName)
   const avatar = useAppSelector(selectSelectedUserAvatar)
   const userId = Number(localStorage.getItem('userId'))
   const dispatch = useAppDispatch()
 
-  const { data: chatList, refetch: refetchChat } = useGetLatestMessagesQuery({ pageSize: 12 })
-  const { data: usersData } = useGetUsersQuery({ pageNumber: 1, pageSize: 1000 })
+  const { data: chatList, refetch: refetchChat } = useGetLatestMessagesQuery({
+    pageSize: PAGE_SIZE_MESSAGES,
+  })
+  const { data: usersData, isFetching: isUsersFetching } = useGetUsersQuery(
+    { pageNumber: page, pageSize: PAGE_SIZE_USERS, search: debouncedValue },
+    { skip: !debouncedValue }
+  )
+
   const allUsers = usersData?.items || []
+  const { isInView, targetRef } = useIntersectionObserver()
+
+  useEffect(() => {
+    if (isInView && !isUsersFetching && usersData?.nextCursor) {
+      setPage(prev => prev + 1)
+    }
+  }, [isInView, isUsersFetching])
+
+  useDebouncedEffect(
+    () => {
+      setDebouncedValue(searchUser.trim().toLowerCase())
+    },
+    [searchUser],
+    300
+  )
+
+  useEffect(() => {
+    setPage(1)
+  }, [debouncedValue])
 
   const [getMessagesByUser, { data: messagesData, isFetching }] = useLazyGetMessagesByUserQuery()
+
   const getPartnerId = (chat: Message): number => {
     return chat.ownerId === userId ? chat.receiverId : chat.ownerId
   }
+
   const handleSelectUser = async (userId: number, userName: string, avatars: Avatar[]) => {
     dispatch(
       setSelectedUser({
@@ -64,18 +96,6 @@ export const MessengerData = () => {
       getMessagesByUser({ dialoguePartnerId: selectedUserId })
     }
   }, [selectedUserId])
-
-  useDebouncedEffect(
-    () => {
-      setDebouncedValue(searchUser.trim().toLowerCase())
-    },
-    [searchUser],
-    300
-  )
-
-  const filteredUsers = debouncedValue
-    ? allUsers.filter(user => user.userName?.toLowerCase().startsWith(debouncedValue))
-    : []
 
   const {
     messageText,
@@ -105,8 +125,8 @@ export const MessengerData = () => {
           <div className={s.messenger_users_list}>
             <Scrollbar orientation="vertical">
               <ul className={s.messenger_list}>
-                {debouncedValue && filteredUsers.length > 0
-                  ? filteredUsers.map(user => (
+                {debouncedValue && allUsers.length > 0
+                  ? allUsers.map(user => (
                       <MessengerUserItem
                         key={v4()}
                         onClick={() => handleSelectUser(user.id, user.userName, user.avatars)}
@@ -133,6 +153,7 @@ export const MessengerData = () => {
                         }
                       />
                     ))}
+                {debouncedValue && <div ref={targetRef} />}
               </ul>
             </Scrollbar>
           </div>
