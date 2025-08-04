@@ -4,11 +4,16 @@ import { Link } from '@/i18n/routing'
 import { Typography } from '@/shared/ui/typography'
 import { FollowButton } from '@/features/followUser'
 import { forwardRef } from 'react'
+import { useMeQuery } from '@/shared/api/auth/authApi'
+import { useAppSelector } from '@/shared/hooks'
+import { selectIsLoggedIn } from '@/shared/store'
 
 type Props = { user: PostLikeItem }
 
 export const UserFollowStatus = forwardRef<HTMLDivElement, Props>(({ user }, ref) => {
   const { avatars, userId, userName, isFollowing } = user
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const { data: meData } = useMeQuery(undefined, { skip: !isLoggedIn })
 
   return (
     <div ref={ref} className={s.row}>
@@ -23,12 +28,14 @@ export const UserFollowStatus = forwardRef<HTMLDivElement, Props>(({ user }, ref
           </Typography>
         </span>
       </Link>
-      <FollowButton
-        className={s.btn}
-        isFollowing={isFollowing}
-        userId={userId}
-        userName={userName}
-      />
+      {userId !== meData?.userId && (
+        <FollowButton
+          className={s.btn}
+          isFollowing={isFollowing}
+          userId={userId}
+          userName={userName}
+        />
+      )}
     </div>
   )
 })
