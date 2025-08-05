@@ -15,7 +15,9 @@ export const postLikeApi = baseApi.injectEndpoints({
         if (arg.pageNumber === 1) return newItems
         return { ...newItems, items: [...currentCacheData.items, ...newItems.items] }
       },
-      providesTags: ['PostLikes'],
+      providesTags: (res, error, { postId }) => {
+        return res ? [{ type: 'PostLikes', id: postId }] : ['PostLikes']
+      },
     }),
     likeStatus: build.mutation<void, PostLikesStatus>({
       query: ({ id, likeStatus }) => ({
@@ -25,7 +27,9 @@ export const postLikeApi = baseApi.injectEndpoints({
           likeStatus,
         },
       }),
-      invalidatesTags: ['PostLikes'],
+      invalidatesTags: (res, error, { id }) => {
+        return [{ type: 'PostLikes', id: id }]
+      },
     }),
   }),
 })

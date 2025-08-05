@@ -9,7 +9,7 @@ type Props = {
   id: number
 }
 export const PostLikesAvatars = ({ id }: Props) => {
-  const { data } = useGetPostLikesQuery({ postId: id }, { skip: !id })
+  const { data } = useGetPostLikesQuery({ postId: id, pageNumber: 1 }, { skip: !id })
   const transformedArray = [...(data?.items ?? [])].reverse().slice(0, 3)
   return (
     <div className={s.container}>
