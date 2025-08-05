@@ -31,7 +31,6 @@ export const HomePost = ({ ...props }: Post) => {
 
   const postId = props.id
   const description = props.description
-  const isLiked = props.isLiked
 
   const images = props.images
 
@@ -66,7 +65,6 @@ export const HomePost = ({ ...props }: Post) => {
       <div className={s.footer}>
         <HomePostInteraction
           id={postId}
-          isLiked={isLiked}
           avatarOwner={avatarOwner}
           WIDTH_AVATAR={WIDTH_AVATAR}
           HEIGHT_AVATAR={HEIGHT_AVATAR}

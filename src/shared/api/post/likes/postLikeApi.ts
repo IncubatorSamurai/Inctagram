@@ -1,13 +1,23 @@
 import { baseApi } from '../../baseApi'
-import { PostLike, PostLikesStatus } from './postLikeApi.types'
+import { PostLike, PostLikeRequest, PostLikesStatus } from './postLikeApi.types'
 
 export const postLikeApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    getPostLikes: build.query<PostLike, number>({
-      query: id => ({
-        url: `v1/posts/${id}/likes`,
+    getPostLikes: build.query<PostLike, PostLikeRequest>({
+      query: ({ postId, ...params }) => ({
+        url: `v1/posts/${postId}/likes`,
+        params,
       }),
-      providesTags: ['PostLikes'],
+      serializeQueryArgs: ({ endpointName, queryArgs }) => {
+        return `${endpointName}-${queryArgs.search || ''}-${queryArgs.postId}`
+      },
+      merge: (currentCacheData, newItems, { arg }) => {
+        if (arg.pageNumber === 1) return newItems
+        return { ...newItems, items: [...currentCacheData.items, ...newItems.items] }
+      },
+      providesTags: (res, error, { postId }) => {
+        return res ? [{ type: 'PostLikes', id: postId }] : ['PostLikes']
+      },
     }),
     likeStatus: build.mutation<void, PostLikesStatus>({
       query: ({ id, likeStatus }) => ({
@@ -17,8 +27,10 @@ export const postLikeApi = baseApi.injectEndpoints({
           likeStatus,
         },
       }),
-      invalidatesTags: ['PostLikes'],
+      invalidatesTags: (res, error, { id }) => {
+        return [{ type: 'PostLikes', id: id }]
+      },
     }),
   }),
 })
-export const { useGetPostLikesQuery, useLikeStatusMutation } = postLikeApi
+export const { useGetPostLikesQuery, useLikeStatusMutation, useLazyGetPostLikesQuery } = postLikeApi

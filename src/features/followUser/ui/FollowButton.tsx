@@ -20,9 +20,10 @@ type Props = {
     isFollowing: boolean
   }) => UpdateFollowingThunk
   variant?: 'icon'
+  className?: string
 }
 
-export const FollowButton = ({ userId, userName, isFollowing, variant, updateQuery }: Props) => {
+export const FollowButton = ({ userId, userName, isFollowing, variant, updateQuery, className }: Props) => {
   const t = useTranslations('follow')
   const dispatch = useAppDispatch()
 
@@ -79,5 +80,5 @@ export const FollowButton = ({ userId, userName, isFollowing, variant, updateQue
     } as const
   }
 
-  return <Button {...getButtonProps()} />
+  return <Button className={className} {...getButtonProps()} />
 }

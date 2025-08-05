@@ -9,6 +9,7 @@ import s from './HomePostInteraction.module.scss'
 import { Link } from '@/i18n/routing'
 import { PostInteraction } from '@/shared/api/pageHome/pageHomeApi.types'
 import { LikePost } from '@/features/post-like/LikePost/LikePost'
+import { useGetPostLikesQuery } from '@/shared/api/post/likes/postLikeApi'
 
 type Props = {
   WIDTH_AVATAR: number
@@ -18,16 +19,11 @@ type Props = {
 } & PostInteraction
 
 export const HomePostInteraction = (props: Props) => {
-  const {
-    isLiked,
-    description,
-    avatarOwner,
-    WIDTH_AVATAR,
-    HEIGHT_AVATAR,
-    ownerUserName,
-    id,
-    hrefLinkPost,
-  } = props
+  const { description, avatarOwner, WIDTH_AVATAR, HEIGHT_AVATAR, ownerUserName, id, hrefLinkPost } =
+    props
+
+  const { data } = useGetPostLikesQuery({ postId: id, pageNumber: 1 }, { skip: !id })
+  const isLiked = data?.isLiked
 
   return (
     <>
