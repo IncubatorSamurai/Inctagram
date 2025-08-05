@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react'
-import { useLazyGetPostLikesQuery } from '@/shared/api/post/likes/postLikeApi'
+import { postLikeApi, useLazyGetPostLikesQuery } from '@/shared/api/post/likes/postLikeApi'
+import { UpdateFollowingThunk } from '@/shared/types'
 
 const PAGE_SIZE = 12
 
@@ -22,25 +23,24 @@ export const useInfiniteLikesSearch = ({ postId, searchTerm, pageSize = PAGE_SIZ
     hasNextPage: (data?.page || 0) < (data?.pagesCount || 0),
   }
 
-  // const updateQuery = ({
-  //   userId,
-  //   isFollowing,
-  // }: {
-  //   userId: number
-  //   isFollowing: boolean
-  // }): UpdateFollowingThunk => {
-  //   return usersApi.util.updateQueryData(
-  //     'getFollowingByUserName',
-  //     { userName, search: searchTerm, pageSize },
-  //     draft => {
-  //       const user = draft.items.find(item => item.userId === userId)
-  //       if (user) {
-  //         user.isFollowing = isFollowing
-  //       }
-  //       draft.totalCount += isFollowing ? 1 : -1
-  //     }
-  //   )
-  // }
+  const updateQuery = ({
+    userId,
+    isFollowing,
+  }: {
+    userId: number
+    isFollowing: boolean
+  }): UpdateFollowingThunk => {
+    return postLikeApi.util.updateQueryData(
+      'getPostLikes',
+      { postId, search: searchTerm, pageSize },
+      draft => {
+        const user = draft.items.find(item => item.userId === userId)
+        if (user) {
+          user.isFollowing = isFollowing
+        }
+      }
+    )
+  }
 
   useEffect(() => {
     if (!searchTerm) {
@@ -98,7 +98,7 @@ export const useInfiniteLikesSearch = ({ postId, searchTerm, pageSize = PAGE_SIZ
     lastElementRef,
     isFetching,
     isError,
-    // updateQuery,
+    updateQuery,
     isLoading: isLoading.current,
     hasNextPage: paginationInfo.hasNextPage,
   }

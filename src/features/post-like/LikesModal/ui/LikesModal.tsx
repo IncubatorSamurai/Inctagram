@@ -5,7 +5,6 @@ import { UserFollowStatus } from './UserFollowStatus/UserFollowStatus'
 import { SearchLikes } from './SearchLikes/SearchLikes'
 import { useInfiniteLikesSearch } from '@/features/post-like/LikesModal/model/useInfiniteLikesSearch'
 import { Loader } from '@/shared/ui/loader'
-import { Typography } from '@/shared/ui/typography'
 
 type Props = {
   trigger: ReactNode
@@ -14,7 +13,7 @@ type Props = {
 export const LikesModal = ({ trigger, postId }: Props) => {
   const [searchTerm, setSearchTerm] = useState('')
 
-  const { lastElementRef, likesUsers, isFetching, hasNextPage, isLoading } = useInfiniteLikesSearch(
+  const { lastElementRef, likesUsers, isFetching, isLoading, updateQuery } = useInfiniteLikesSearch(
     {
       postId,
       searchTerm,
@@ -43,15 +42,13 @@ export const LikesModal = ({ trigger, postId }: Props) => {
                     key={user?.id}
                     user={user}
                     ref={isLastUser ? lastElementRef : null}
+                    updateQuery={updateQuery}
                   />
                 )
               })}
             </>
           )}
         </div>
-        {isFetching && hasNextPage && (
-          <Typography variant="regular_text_14">...Loading...</Typography>
-        )}
       </div>
     </Modal>
   )

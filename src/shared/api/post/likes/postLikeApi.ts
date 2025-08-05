@@ -8,9 +8,9 @@ export const postLikeApi = baseApi.injectEndpoints({
         url: `v1/posts/${postId}/likes`,
         params,
       }),
-      // serializeQueryArgs: ({ endpointName, queryArgs }) => {
-      //   return `${endpointName}-${queryArgs.search || ''}-${queryArgs.postId}`
-      // },
+      serializeQueryArgs: ({ endpointName, queryArgs }) => {
+        return `${endpointName}-${queryArgs.search || ''}-${queryArgs.postId}`
+      },
       merge: (currentCacheData, newItems, { arg }) => {
         if (arg.pageNumber === 1) return newItems
         return { ...newItems, items: [...currentCacheData.items, ...newItems.items] }

@@ -28,7 +28,7 @@ export const FollowingModal = ({ followingCount, userName }: Props) => {
   const [searchTerm, setSearchTerm] = useState('')
   useDebouncedEffect(() => setSearchTerm(searchUser.trim()), [searchUser], 500)
 
-  const { lastElementRef, followingUsers, isFetching, hasNextPage, isLoading, updateQuery } =
+  const { lastElementRef, followingUsers, isFetching, isLoading, updateQuery } =
     useInfiniteFollowingSearch({
       searchTerm,
       userName,
@@ -85,7 +85,7 @@ export const FollowingModal = ({ followingCount, userName }: Props) => {
                       ) : (
                         <BlankCover className={s.blankCover} />
                       )}
-                      <Typography>{item.userName}</Typography>
+                      <Typography variant="regular_text_16">{item.userName}</Typography>
                     </Link>
                     {item.userId !== meData?.userId && (
                       <FollowButton
@@ -98,9 +98,6 @@ export const FollowingModal = ({ followingCount, userName }: Props) => {
                   </div>
                 )
               })}
-              {isFetching && hasNextPage && (
-                <Typography variant="regular_text_14">...Loading...</Typography>
-              )}
             </>
           )}
         </div>
