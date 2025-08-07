@@ -24,6 +24,8 @@ type Props = {
 
 export const Follower = forwardRef<HTMLDivElement, Props>(
   ({ avatarSrc, isFollowing, userId, userName, isMe, updateQuery }, ref) => {
+    const profileUrl = `${PATH.MYPROFILE}/${userId}`
+
     return (
       <div className={s.root}>
         <div className={s.avaName} ref={ref}>
@@ -33,7 +35,7 @@ export const Follower = forwardRef<HTMLDivElement, Props>(
             <BlankCover size={'2.25rem'} classNameSvg={s.blankCoverSvg} />
           )}
           <Typography asChild variant="bold_text_14">
-            <Link href={`${PATH.MYPROFILE}/${userId}`}>{userName}</Link>
+            <Link href={profileUrl}>{userName}</Link>
           </Typography>
         </div>
         <div className={s.btnGroup}>
