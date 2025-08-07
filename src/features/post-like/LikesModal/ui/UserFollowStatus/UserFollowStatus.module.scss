@@ -28,13 +28,8 @@
   border-radius: 50%;
 }
 
-.blankCover {
-  width: 2.25rem;
-  height: 2.25rem;
-
-  svg {
-    width: 1.125rem;
-    height: 1.125rem;
-    color: var(--color-light-900);
-  }
+.blankCoverSvg {
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-light-900);
 }

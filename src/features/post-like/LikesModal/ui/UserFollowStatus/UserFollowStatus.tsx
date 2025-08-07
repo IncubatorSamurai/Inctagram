@@ -33,7 +33,7 @@ export const UserFollowStatus = forwardRef<HTMLDivElement, Props>(({ user, updat
         {avatars[0]?.url ? (
           <Image src={avatars[0]?.url} className={s.avatar} width={36} height={36} alt={'avatar'} />
         ) : (
-          <BlankCover className={s.blankCover} />
+          <BlankCover size={'2.25rem'} classNameSvg={s.blankCoverSvg} />
         )}
         <Typography variant="regular_text_16" className={s.user}>
           {userName}

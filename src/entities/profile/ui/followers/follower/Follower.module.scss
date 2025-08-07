@@ -18,12 +18,8 @@
   }
 }
 
-.blancAvatar {
-  width: 36px;
-  height: 36px;
-
-  svg {
-    width: 18px;
-    height: 18px;
-  }
+.blankCoverSvg {
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-light-900);
 }

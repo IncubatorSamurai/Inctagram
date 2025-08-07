@@ -13,31 +13,38 @@ type Props = {
   userName: string
   userId: number
   isMe: boolean
-    updateQuery?: ({
-      userId,
-      isFollowing,
-    }: {
-      userId: number
-      isFollowing: boolean
-    }) => UpdateFollowingThunk
+  updateQuery?: ({
+    userId,
+    isFollowing,
+  }: {
+    userId: number
+    isFollowing: boolean
+  }) => UpdateFollowingThunk
 }
 
 export const Follower = forwardRef<HTMLDivElement, Props>(
-  ({ avatarSrc, isFollowing, userId, userName, isMe , updateQuery}, ref) => {
+  ({ avatarSrc, isFollowing, userId, userName, isMe, updateQuery }, ref) => {
     return (
       <div className={s.root}>
         <div className={s.avaName} ref={ref}>
           {avatarSrc ? (
             <Image src={avatarSrc} className={s.avatar} width={36} height={36} alt={'avatar'} />
           ) : (
-            <BlankCover className={s.blancAvatar} />
+            <BlankCover size={'2.25rem'} classNameSvg={s.blankCoverSvg} />
           )}
           <Typography asChild variant="bold_text_14">
             <Link href={`${PATH.MYPROFILE}/${userId}`}>{userName}</Link>
           </Typography>
         </div>
         <div className={s.btnGroup}>
-          {!isMe && <FollowButton isFollowing={isFollowing} userId={userId} userName={userName} updateQuery={updateQuery} />}
+          {!isMe && (
+            <FollowButton
+              isFollowing={isFollowing}
+              userId={userId}
+              userName={userName}
+              updateQuery={updateQuery}
+            />
+          )}
         </div>
       </div>
     )

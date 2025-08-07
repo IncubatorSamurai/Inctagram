@@ -23,6 +23,8 @@
   margin-bottom: 1.5rem;
 }
 .delete_avatar {
+  composes: icon from '@/shared/ui/button/Button.module.scss';
+
   position: absolute;
   top: 15px;
   right: 20px;

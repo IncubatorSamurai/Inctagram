@@ -83,7 +83,7 @@ export const FollowingModal = ({ followingCount, userName }: Props) => {
                           alt={'avatar'}
                         />
                       ) : (
-                        <BlankCover className={s.blankCover} />
+                        <BlankCover size={'2.25rem'} classNameSvg={s.blankCoverSvg} />
                       )}
                       <Typography variant="regular_text_16">{item.userName}</Typography>
                     </Link>
