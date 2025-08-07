@@ -26,6 +26,8 @@ export const LogOut = () => {
       await logout().unwrap()
       localStorage.removeItem('email')
       localStorage.removeItem('access_token')
+      localStorage.removeItem('userName')
+      localStorage.removeItem('userId')
       dispatch(setIsLoggedIn({ isLoggedIn: false }))
       router.push(PATH.SIGNIN)
     } catch (err) {
