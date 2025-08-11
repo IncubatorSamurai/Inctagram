@@ -16,9 +16,11 @@ type MessengerUserItem = {
   lastName?: string | null
   userSearch: boolean
   userId?: number
+  isActiveChat?: boolean
 }
 export const MessengerUserItem = ({
   userSearch,
+  isActiveChat,
   userId,
   userName,
   ownerId,
@@ -30,7 +32,7 @@ export const MessengerUserItem = ({
   lastName,
 }: MessengerUserItem) => {
   return (
-    <li className={s.user_item} onClick={onClick}>
+    <li className={`${s.user_item} ${isActiveChat ? s.active_chat : ''}`} onClick={onClick}>
       {avatars?.[0]?.url ? (
         <Image src={avatars[0].url} width={48} height={48} alt="avatar" className={s.user_avatar} />
       ) : (

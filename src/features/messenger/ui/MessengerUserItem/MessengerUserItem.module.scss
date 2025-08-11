@@ -1,6 +1,10 @@
 .user_avatar {
   border-radius: 50%;
 }
+.active_chat {
+  background: var(--color-accent-900);
+  pointer-events: none;
+}
 .user_item {
   display: grid;
   grid-template-columns: auto 1fr;
