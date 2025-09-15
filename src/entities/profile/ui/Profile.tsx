@@ -11,7 +11,13 @@ import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import s from './Profile.module.scss'
+import { setSelectedUser } from '@/shared/store/messengerSlice/messengerSlice'
+import { useAppDispatch } from '@/shared/hooks'
 import { Loader } from '@/shared/ui/loader'
+import { PATH } from '@/shared/config/routes'
+import { useRouter } from '@/i18n/routing'
+import { FollowersModal } from './followers/modal/FollowersModal'
+import { FollowingModal } from '@/features/followingModal'
 
 type Props = {
   resPublicData?: ProfileUserResponse
@@ -20,7 +26,19 @@ type Props = {
 
 export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   const t = useTranslations('profile')
+  const dispatch = useAppDispatch()
+  const router = useRouter()
 
+  const handleSendMessageClick = () => {
+    dispatch(
+      setSelectedUser({
+        id: +userId,
+        name: userName || '',
+        avatar: avatarSrc || '',
+      })
+    )
+    router.push(PATH.MESSENGER)
+  }
   const {
     avatarSrc,
     isMyProfile,
@@ -46,7 +64,7 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
   return (
     <div className={s.profilePage}>
       <section className={s.profile}>
-        {avatarSrc ? (
+        {avatarSrc && typeof avatarSrc === 'string' ? (
           <Image src={avatarSrc} className={s.avatar} width={200} height={200} alt={'avatar'} />
         ) : (
           <BlankCover />
@@ -61,19 +79,23 @@ export const Profile = ({ resPublicData, resPublicPosts }: Props) => {
             ) : isLoggedIn ? (
               <div className={s.followButtons}>
                 <FollowButton userId={+userId} userName={userName} isFollowing={isFollowing} />
-                <Button variant="secondary">{t('sendMessage')}</Button>
+                <Button variant="secondary" onClick={handleSendMessageClick}>
+                  {t('sendMessage')}
+                </Button>
               </div>
             ) : null}
           </div>
           <div className={s.statistics}>
             {followArray.map((item, i) => (
               <li key={i} className={s.followInfoItem}>
-                <Typography variant={'bold_text_14'}>{item}</Typography>
-                <Typography variant={'regular_text_14'}>
-                  {i === 0 && t('following')}
-                  {i === 1 && t('followers')}
-                  {i === 2 && t('publications')}
-                </Typography>
+                {i === 0 && <FollowingModal followingCount={item} userName={userName} />}
+                {i === 1 && <FollowersModal fCount={item} userName={userName} />}
+                {i === 2 && (
+                  <>
+                    <Typography variant={'bold_text_14'}>{item}</Typography>
+                    <Typography variant={'regular_text_14'}>{t('publications')}</Typography>
+                  </>
+                )}
               </li>
             ))}
           </div>

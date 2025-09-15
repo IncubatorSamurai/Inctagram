@@ -11,7 +11,7 @@ export const PublicPostsList = ({ items }: PublicPostsList) => {
   return (
     <>
       <ul className={s.public_posts}>
-        {items.map(item => {
+        {items?.map(item => {
           return <PublicPostItem item={item} key={String(item.id)} />
         })}
       </ul>

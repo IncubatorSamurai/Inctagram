@@ -1,11 +1,14 @@
 import { baseApi } from '@/shared/api/baseApi'
 import {
-  GetUsersResponse,
-  GetUsersRequest,
-  GetUserResponse,
-  GetUserRequest,
   FollowRequest,
+  GetUserRequest,
+  GetUserResponse,
+  GetUsersRequest,
+  GetUsersResponse,
   unFollowRequest,
+  Followers,
+  GetFollowingResponse,
+  GetFollowRequest,
 } from './usersApi.types'
 
 export const usersApi = baseApi.injectEndpoints({
@@ -44,8 +47,45 @@ export const usersApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
+
+    getFollowers: builder.query<Followers, GetFollowRequest>({
+      query: args => ({
+        url: `v1/users/${args.userName}/followers`,
+        method: 'GET',
+        params: { ...args },
+      }),
+      serializeQueryArgs: ({ endpointName, queryArgs }) => {
+        return `${endpointName}-${queryArgs.search || ''}-${queryArgs.userName}`
+      },
+      merge: (currentCacheData, newItems, { arg }) => {
+        if (!arg.cursor) return newItems
+        return { ...newItems, items: [...currentCacheData.items, ...newItems.items] }
+      },
+      providesTags: ['Followers'],
+    }),
+    getFollowingByUserName: builder.query<GetFollowingResponse, GetFollowRequest>({
+      query: ({ userName, ...params }) => ({
+        url: `v1/users/${userName}/following`,
+        params,
+      }),
+      serializeQueryArgs: ({ endpointName, queryArgs }) => {
+        return `${endpointName}-${queryArgs.search || ''}-${queryArgs.userName}`
+      },
+      merge: (currentCacheData, newItems, { arg }) => {
+        if (arg.pageNumber === 1) return newItems
+        return { ...newItems, items: [...currentCacheData.items, ...newItems.items] }
+      },
+      providesTags: ['Following'],
+    }),
   }),
 })
 
-export const { useLazyGetUsersQuery, useGetUserQuery, useFollowMutation, useUnfollowMutation } =
-  usersApi
+export const {
+  useGetUsersQuery,
+  useLazyGetUsersQuery,
+  useLazyGetFollowersQuery,
+  useGetUserQuery,
+  useFollowMutation,
+  useUnfollowMutation,
+  useLazyGetFollowingByUserNameQuery,
+} = usersApi

@@ -9,6 +9,7 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import s from './LinkExpiredPage.module.scss'
 import { useTranslations } from 'next-intl'
+import { useOrigin } from '@/shared/hooks/useFullUrl'
 
 export const LinkExpiredPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -17,7 +18,7 @@ export const LinkExpiredPage = () => {
   const router = useRouter()
   const tAuth = useTranslations('auth')
   const tCommon = useTranslations('common')
-  const baseUrl = window.location.origin + '/recovery'
+  const baseUrl = useOrigin() + '/recovery'
 
   const email = searchParams.get('email') as string
 

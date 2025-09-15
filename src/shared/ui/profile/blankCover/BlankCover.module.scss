@@ -3,8 +3,8 @@
   align-items: center;
   justify-content: center;
 
-  width: 192px;
-  height: 192px;
+  width: var(--size, 192px);
+  height: var(--size, 192px);
   border-radius: 50%;
 
   background-color: var(--color-dark-500);
@@ -15,8 +15,8 @@
   align-items: center;
   justify-content: center;
 
-  width: 222px;
-  height: 228px;
+  width: var(--size, 222px);
+  height: var(--size, 228px);
   border-radius: 2px;
 
   background-color: var(--color-dark-500);

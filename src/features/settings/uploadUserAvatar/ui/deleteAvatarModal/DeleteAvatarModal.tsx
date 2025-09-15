@@ -1,4 +1,4 @@
-import { Modal } from '@/shared/ui/modal'
+import { DialogClose, Modal } from '@/shared/ui/modal'
 import { Typography } from '@/shared/ui/typography'
 import { Button } from '@/shared/ui/button'
 import s from './DeleteAvatarModal.module.scss'
@@ -18,7 +18,9 @@ export const DeleteAvatarModal = ({ title, onDeleteAvatar, trigger }: DeleteAvat
           <Button variant={'outline'} onClick={onDeleteAvatar}>
             Yes
           </Button>
-          <Button variant={'primary'}>No</Button>
+          <DialogClose asChild={true}>
+            <Button variant={'primary'}>No</Button>
+          </DialogClose>
         </div>
       </div>
     </Modal>

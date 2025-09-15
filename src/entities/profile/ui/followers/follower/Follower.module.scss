@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  justify-content: space-between;
+
+  .avaName {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+
+    .avatar {
+      border-radius: 50%;
+    }
+  }
+
+  .btnGroup {
+    display: flex;
+    gap: 60px;
+  }
+}
+
+.blankCoverSvg {
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-light-900);
+}

@@ -1,5 +1,4 @@
 'use client'
-import s from './UploadUserAvatar.module.scss'
 import { Button } from '@/shared/ui/button'
 import { UploadUserAvatarModal } from '@/features/settings/uploadUserAvatar/ui/UploadUserAvatarModal/UploadUserAvatarModal'
 import { useDeleteUserAvatarMutation, useGetProfileQuery } from '@/shared/api/profile/profileApi'
@@ -7,6 +6,7 @@ import { BlankCover } from '@/shared/ui/profile/blankCover'
 import Image from 'next/image'
 import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
 import { DeleteAvatarModal } from '@/features/settings/uploadUserAvatar/ui/deleteAvatarModal/DeleteAvatarModal'
+import s from './UploadUserAvatar.module.scss'
 
 export const UploadUserAvatar = () => {
   const { data } = useGetProfileQuery()

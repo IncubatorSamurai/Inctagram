@@ -9,6 +9,7 @@ import {
   ForgotPasswordFormSchema,
   forgotPasswordFormSchema,
 } from '@/shared/schemes/forgotPasswordFormSchema'
+import { useOrigin } from '@/shared/hooks/useFullUrl'
 
 export const useForgotPassword = () => {
   const [submittedEmail, setSubmittedEmail] = useState('')
@@ -16,7 +17,7 @@ export const useForgotPassword = () => {
 
   const recaptchaRef = useRef<ReCAPTCHA>(null)
   const [passwordRecovery, { isLoading, isSuccess }] = usePasswordRecoveryMutation()
-  const baseUrl = window.location.origin + '/recovery'
+  const baseUrl = useOrigin() + '/recovery'
 
   const {
     register,

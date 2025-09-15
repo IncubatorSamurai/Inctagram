@@ -10,6 +10,7 @@ import { useRegistrationMutation } from '@/shared/api/auth/authApi'
 import { catchFormError } from '@/shared/hooks/useCatchFormError'
 
 import { FormSignUP, signUpFormSchema } from '../schemes/signUpFormSchema'
+import { useOrigin } from '@/shared/hooks/useFullUrl'
 
 type DataFormReq = {
   name: string
@@ -21,6 +22,7 @@ type DataFormReq = {
 export const useSignUpForm = () => {
   const [open, setOpen] = useState(false)
   const [registration, { isLoading, isError, isSuccess }] = useRegistrationMutation()
+  const baseUrl = useOrigin() + '/registration-confirmation'
 
   const {
     control,
@@ -42,7 +44,7 @@ export const useSignUpForm = () => {
       const registrationData = {
         userName: dataForm.name,
         password: dataForm.newPassword,
-        baseUrl: window.location.origin,
+        baseUrl: baseUrl,
         email: dataForm.email,
       }
       await registration(registrationData).unwrap()

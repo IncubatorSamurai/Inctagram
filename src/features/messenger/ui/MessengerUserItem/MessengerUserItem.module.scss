@@ -1,0 +1,53 @@
+.user_avatar {
+  border-radius: 50%;
+}
+.user_item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 20px;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px;
+  border-bottom: 1px solid var(--color-dark-100);
+
+  &:hover {
+    background-color: var(--color-dark-100);
+  }
+}
+.noAvatar {
+  width: 48px;
+  height: 48px;
+}
+.user_item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 20px;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px;
+  border-bottom: 1px solid var(--color-dark-100);
+
+  &:hover {
+    background-color: var(--color-dark-100);
+  }
+}
+
+.user_item_name_date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message_time {
+  color: var(--color-light-900);
+}
+
+.message_last_text {
+  color: var(--color-light-900);
+}
+
+.user_text_content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}

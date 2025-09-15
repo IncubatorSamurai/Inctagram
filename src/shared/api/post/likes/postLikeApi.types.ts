@@ -1,7 +1,7 @@
 type LikeStatus = 'NONE' | 'LIKE' | 'DISLIKE'
 
 export type PostLikesStatus = {
-  id: string
+  id: number
   likeStatus: LikeStatus
 }
 
@@ -30,4 +30,13 @@ export type PostLike = {
   pageSize: number
   prevCursor: number
   totalCount: number
+  pagesCount: number
+}
+
+export type PostLikeRequest = {
+  postId: number
+  search?: string
+  pageSize?: number
+  pageNumber?: number
+  cursor?: number
 }

@@ -5,8 +5,8 @@ import { parseIsoDate } from '@/shared/utils'
 import { useGetPostLikesQuery } from '@/shared/api/post/likes/postLikeApi'
 import { useSearchParams } from 'next/navigation'
 import { Typography } from '@/shared/ui/typography'
-import { PostLikesAvatars } from './PostLikesAvatars/PostLikesAvatars'
-import { LikePost } from './LikePost/LikePost'
+import { PostLikesAvatars } from '@/features/post-like/PostLikesAvatars/PostLikesAvatars'
+import { LikePost } from '@/features/post-like/LikePost/LikePost'
 
 type LikesAndCountProps = {
   createdAt: string | undefined
@@ -17,20 +17,21 @@ type LikesAndCountProps = {
 export const PostLikesAndSent = ({ createdAt }: LikesAndCountProps) => {
   const searchParams = useSearchParams()
   const postId = searchParams.get('postId')
-  const { data } = useGetPostLikesQuery(postId ?? '', { skip: !postId })
 
+  const numId = Number(postId)
+  const { data } = useGetPostLikesQuery({ postId: numId, pageNumber: 1 }, { skip: !postId })
   const createDate = createdAt && parseIsoDate(createdAt)
   return (
     <div className={s.postsSideLikes}>
       <div className={s.likeAndSent}>
         <div className={s.likeS}>
-          <LikePost id={postId ?? ''} likesItems={data?.items} />
+          <LikePost id={numId} likesItems={data?.items} isLiked={data?.isLiked} />
           <PaperPlaneIcon />
         </div>
         <BookMarkOutlineIcon />
       </div>
       <div className={s.info}>
-        <PostLikesAvatars id={postId ?? ''} />
+        <PostLikesAvatars id={numId} />
       </div>
       <Typography className={s.date} variant="small_text">
         {createDate}
